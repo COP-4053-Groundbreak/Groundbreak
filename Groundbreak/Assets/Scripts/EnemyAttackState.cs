@@ -1,9 +1,9 @@
 using UnityEngine;
 
-public class EnemyIdleState : EnemyBaseState
+public class EnemyAttackState : EnemyBaseState
 {
     public override void EnterState(EnemyStateManager enemy){
-        Debug.Log("We have switched from Patrolling to IDLE State!!!!");
+
     }
 
     public override void UpdateState(EnemyStateManager enemy, Rigidbody2D rigidbody2D){
