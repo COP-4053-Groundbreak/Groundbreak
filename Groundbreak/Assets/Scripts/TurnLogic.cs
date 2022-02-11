@@ -5,7 +5,7 @@ using UnityEngine;
 public class TurnLogic : MonoBehaviour
 {
     bool isPlayerTurn = true;
-    float dummyTurnTime = 1f;
+    float dummyTurnTime = .01f;
     // Called by end turn button
     public void EndTurnPressed() 
     {
@@ -22,8 +22,12 @@ public class TurnLogic : MonoBehaviour
     IEnumerator DummyEnemyTurn() 
     {
         Debug.Log("AI started their turn");
+        // set enemy turn to true (testing state logic)
+        EnemyIdleState.isEnemyTurn = true;
         yield return new WaitForSeconds(dummyTurnTime);
         Debug.Log("AI ended their turn");
+        // set enemy turn to false. (testing state logic)
+        EnemyIdleState.isEnemyTurn = false;
         isPlayerTurn = true;
     }
 }
