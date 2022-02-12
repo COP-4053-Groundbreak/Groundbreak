@@ -30,8 +30,12 @@ public class TurnLogic : MonoBehaviour
         Debug.Log("AI started their turn");
         yield return new WaitForSeconds(dummyTurnTime);
         Debug.Log("AI ended their turn");
+
+        // Reset player's movement points for new turn
         playerMovement.ResetMovement();
         isPlayerTurn = true;
         
     }
+
+
 }
