@@ -6,6 +6,12 @@ public class TurnLogic : MonoBehaviour
 {
     bool isPlayerTurn = true;
     float dummyTurnTime = 1f;
+    PlayerMovement playerMovement;
+
+    private void Start()
+    {
+        playerMovement = FindObjectOfType<PlayerMovement>();
+    }
     // Called by end turn button
     public void EndTurnPressed() 
     {
@@ -24,6 +30,8 @@ public class TurnLogic : MonoBehaviour
         Debug.Log("AI started their turn");
         yield return new WaitForSeconds(dummyTurnTime);
         Debug.Log("AI ended their turn");
+        playerMovement.ResetMovement();
         isPlayerTurn = true;
+        
     }
 }
