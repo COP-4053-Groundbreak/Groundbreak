@@ -7,10 +7,11 @@ public class TurnLogic : MonoBehaviour
     bool isPlayerTurn = true;
     float dummyTurnTime = 1f;
     PlayerMovement playerMovement;
-
+    PlayerActions playerActions;
     private void Start()
     {
         playerMovement = FindObjectOfType<PlayerMovement>();
+        playerActions = FindObjectOfType<PlayerActions>();
     }
     // Called by end turn button
     public void EndTurnPressed() 
@@ -33,6 +34,7 @@ public class TurnLogic : MonoBehaviour
 
         // Reset player's movement points for new turn
         playerMovement.ResetMovement();
+        playerActions.ResetActions();
         isPlayerTurn = true;
         
     }

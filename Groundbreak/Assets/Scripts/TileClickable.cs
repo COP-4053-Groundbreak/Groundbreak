@@ -17,8 +17,17 @@ public class TileClickable : MonoBehaviour, IPointerDownHandler
     void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
     {
         GameObject ThisTile = eventData.pointerCurrentRaycast.gameObject;
-        // Calls movement checker fucnction in playerMovement script
-        Player.GetComponent<PlayerMovement>().MovePlayer(distance, ThisTile.transform.position.x, ThisTile.transform.position.y);
+        // Left click
+        if (eventData.button == 0)
+        {
+            // Calls movement checker fucnction in playerMovement script
+            Player.GetComponent<PlayerMovement>().MovePlayer(distance, ThisTile.transform.position.x, ThisTile.transform.position.y);
+        }
+        // Right click
+        else if(eventData.button == PointerEventData.InputButton.Right)
+        {
+            Player.GetComponent<PlayerActions>().PickUpTile(ThisTile.GetComponent<Tile>());
+        }
     }
 
     public void updateDistanceToPlayer() 
@@ -31,5 +40,10 @@ public class TileClickable : MonoBehaviour, IPointerDownHandler
         distance = (int)(Mathf.Abs(Player.transform.position.x - this.transform.position.x) +
                             Mathf.Abs(Player.transform.position.y - this.transform.position.y));
         
+    }
+
+    public int GetDistance() 
+    {
+        return distance;
     }
 }
