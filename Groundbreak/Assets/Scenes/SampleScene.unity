@@ -201,6 +201,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canPickUpTile: 1
+  pickupRange: 1
   heldTileElement: 0
 --- !u!1 &519420028
 GameObject:
@@ -526,6 +527,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 3135849581478129407, guid: 987b2a0b0be862a47bef7518b8207d9c, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 987b2a0b0be862a47bef7518b8207d9c, type: 3}
 --- !u!1001 &3743334375805497886
@@ -682,6 +687,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5198626118107145446, guid: cfea7b583bd894749ba51b68b13faacc, type: 3}
       propertyPath: m_Name
+      value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 5198626118107145446, guid: cfea7b583bd894749ba51b68b13faacc, type: 3}
+      propertyPath: m_TagString
       value: Enemy
       objectReference: {fileID: 0}
     m_RemovedComponents: []
