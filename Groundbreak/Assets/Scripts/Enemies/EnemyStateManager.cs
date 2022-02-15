@@ -13,6 +13,7 @@ public class EnemyStateManager : MonoBehaviour
     public EnemyMoveState MoveState = new EnemyMoveState();
     public EnemyPatrollingState PatrollingState = new EnemyPatrollingState();
     public EnemyIdleState IdleState = new EnemyIdleState();
+    public EnemyDeathState DeathState = new EnemyDeathState();
     // Start is called before the first frame update
     void Start()
     {
