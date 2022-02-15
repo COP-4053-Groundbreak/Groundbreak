@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class TileClickable : MonoBehaviour, IPointerDownHandler
+public class TileClickable : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
 {
     GameObject Player;
     int distance = -1;
@@ -27,7 +27,15 @@ public class TileClickable : MonoBehaviour, IPointerDownHandler
         else if(eventData.button == PointerEventData.InputButton.Right)
         {
             Player.GetComponent<PlayerActions>().PickUpTile(ThisTile.GetComponent<Tile>());
+            ThisTile.GetComponent<TilePathNode>().isWalkable = false;
         }
+    }
+
+    // When mouse hovers over this tile
+    void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData) 
+    {
+        GameObject ThisTile = eventData.pointerCurrentRaycast.gameObject;
+        Player.GetComponent<PlayerMovement>().ShowLine(ThisTile.transform.position.x, ThisTile.transform.position.y);
     }
 
     public void updateDistanceToPlayer() 

@@ -61,14 +61,15 @@ public class CameraPan : MonoBehaviour
             camera.orthographicSize -= zoomSpeed;
         }
 
-        if (GetComponent<Camera>().orthographicSize > 10)
+        if (GetComponent<Camera>().orthographicSize > minZoom)
         {
             camera.orthographicSize = 10;
         }
 
-        if (GetComponent<Camera>().orthographicSize < 2)
+        if (GetComponent<Camera>().orthographicSize < maxZoom)
         {
             camera.orthographicSize = 2;
         }
+        
     }
 }

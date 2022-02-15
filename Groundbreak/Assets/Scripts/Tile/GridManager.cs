@@ -50,4 +50,9 @@ public class GridManager : MonoBehaviour
         return width;
     }
 
+    public Tile[,] getGrid() 
+    {
+        return grid;
+    }
+
 }
