@@ -316,7 +316,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2261c8d62c0ac7946bd587fc75627c7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  panSpeed: 0.05
+  panSpeed: 10
+  zoomSpeed: 0.5
+  maxZoom: 2
+  minZoom: 10
 --- !u!1 &1236576281
 GameObject:
   m_ObjectHideFlags: 0
