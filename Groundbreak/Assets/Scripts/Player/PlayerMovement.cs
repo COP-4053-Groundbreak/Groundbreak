@@ -25,7 +25,7 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
         
-        TilePathNode endNode = path[path.Count - 1];
+        TilePathNode endNode = path[0];
         // If path cost is less than movement remaining, take it
         if (endNode.fCost <= currentMovementRemaining)
         {
@@ -35,13 +35,13 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    // Draws line along the path the character takes
     public void ShowLine(float x, float y) 
     {
         List<TilePathNode> path = pathfinding.FindPath((int)gameObject.transform.position.x, (int)gameObject.transform.position.y, (int)x, (int)y);
         if (path != null)
         {
-            TilePathNode endNode = path[path.Count - 1];
-            Debug.Log(endNode.fCost + " , " + currentMovementRemaining);
+            TilePathNode endNode = path[0];
             if (endNode.fCost <= currentMovementRemaining)
             {
                 
@@ -49,7 +49,7 @@ public class PlayerMovement : MonoBehaviour
                 {
                     // Can uncomment to view the path that it takes, generates a 1px line along the path to the hovered tile
                     // Here we draw the line to the hovered over node
-                    Debug.DrawLine(new Vector3(path[i].GetX(), path[i].GetY()), new Vector3(path[i + 1].GetX(), path[i + 1].GetY()), Color.black, 1, false);
+                    //Debug.DrawLine(new Vector3(path[i].GetX(), path[i].GetY()), new Vector3(path[i + 1].GetX(), path[i + 1].GetY()), Color.black, 1, false);
                 }
             }
         }

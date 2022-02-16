@@ -28,7 +28,6 @@ public class Pathfinding: MonoBehaviour
             {
                 TilePathNode tilePathNode = grid[x, y].gameObject.GetComponent<TilePathNode>();
                 tilePathNode.gCost = int.MaxValue;
-                tilePathNode.fCost = int.MaxValue;
                 tilePathNode.CalculateFCost();
                 tilePathNode.previousNode = null;
             }
