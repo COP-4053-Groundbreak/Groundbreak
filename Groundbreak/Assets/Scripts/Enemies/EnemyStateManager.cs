@@ -8,7 +8,7 @@ public class EnemyStateManager : MonoBehaviour
     EnemyBaseState currentState;
     // Rigidbody of the enemy, used for patrolling/movement
     // new Rigidbody2D rigidbody2D;
-    new Pathfinding pathfinding;
+    Pathfinding pathfinding;
     // instantiate  each concrete state
     public EnemyAttackState AttackState = new EnemyAttackState();
     public EnemyMoveState MoveState = new EnemyMoveState();

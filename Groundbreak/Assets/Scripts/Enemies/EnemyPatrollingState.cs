@@ -1,10 +1,14 @@
+using System;
+using System.Timers;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyPatrollingState : EnemyBaseState
 {
-    public float speed = 1f;
+     public float period = 0.0f;
+     public int height = 0;
+     public int max_height = 2;
 
     public override void EnterState(EnemyStateManager enemy){
         Debug.Log("Hello from the EnterState method of the Patrolling state!!!");
@@ -12,10 +16,20 @@ public class EnemyPatrollingState : EnemyBaseState
     }
 
     public override void UpdateState(EnemyStateManager enemy){
-        enemy.MoveEnemy(0,1);
+        float y_value = enemy.transform.position.y;
+        if (period >= 1 && height != max_height)
+        {
+         //Do Stuff
+            enemy.MoveEnemy(0, y_value + 1);
+            height += 1;
+            period = 0;
+        }
+        period += UnityEngine.Time.deltaTime;
+
     }
 
     public override void OnCollosionEnter(EnemyStateManager enemy){
 
     }
 }
+
