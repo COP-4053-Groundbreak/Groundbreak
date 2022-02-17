@@ -6,7 +6,7 @@ public class EnemyAttackState : EnemyBaseState
 
     }
 
-    public override void UpdateState(EnemyStateManager enemy, Rigidbody2D rigidbody2D){
+    public override void UpdateState(EnemyStateManager enemy){
 
     }
 

@@ -6,7 +6,7 @@ public class EnemyIdleState : EnemyBaseState
         Debug.Log("We have switched from Patrolling to IDLE State!!!!");
     }
 
-    public override void UpdateState(EnemyStateManager enemy, Rigidbody2D rigidbody2D){
+    public override void UpdateState(EnemyStateManager enemy){
 
     }
 

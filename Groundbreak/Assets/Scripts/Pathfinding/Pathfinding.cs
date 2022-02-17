@@ -13,7 +13,7 @@ public class Pathfinding: MonoBehaviour
 
     public List<TilePathNode> FindPath(int startX, int startY, int endX, int endY) 
     {
-        Tile[,] grid = GameObject.FindObjectOfType<GridManager>().getGrid();
+        Tile[,] grid = FindObjectOfType<GridManager>().getGrid();
         TilePathNode startNode = grid[startX, startY].gameObject.GetComponent<TilePathNode>();
         TilePathNode endNode = grid[endX, endY].gameObject.GetComponent<TilePathNode>();
 
