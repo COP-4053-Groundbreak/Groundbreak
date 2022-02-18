@@ -6,28 +6,51 @@ using UnityEngine.EventSystems;
 public class TileClickable : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
 {
     GameObject Player;
+    TurnLogic turnLogic;
     int distance = -1;
     private void Start()
     {
         // Gets Reference to player
         Player = FindObjectOfType<PlayerMovement>().gameObject;
+        turnLogic = FindObjectOfType<TurnLogic>();
     }
 
     // Unity event handler only triggers when a click raycast hits the tile.
     void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
     {
         GameObject ThisTile = eventData.pointerCurrentRaycast.gameObject;
-        // Left click
-        if (eventData.button == 0)
+        if (turnLogic.isMovementPhase)
         {
-            // Calls movement checker fucnction in playerMovement script
-            Player.GetComponent<PlayerMovement>().MovePlayer(distance, ThisTile.transform.position.x, ThisTile.transform.position.y);
+            // Left click
+            if (eventData.button == 0)
+            {
+                // Calls movement checker fucnction in playerMovement script
+                Player.GetComponent<PlayerMovement>().MovePlayer(distance, ThisTile.transform.position.x, ThisTile.transform.position.y);
+            }
+            // Right click
+            else if (eventData.button == PointerEventData.InputButton.Right)
+            {
+                Player.GetComponent<PlayerActions>().PickUpTile(ThisTile.GetComponent<Tile>());
+                ThisTile.GetComponent<TilePathNode>().isWalkable = false;
+            }
         }
-        // Right click
-        else if(eventData.button == PointerEventData.InputButton.Right)
+        else if (turnLogic.isThrowPhase)
         {
-            Player.GetComponent<PlayerActions>().PickUpTile(ThisTile.GetComponent<Tile>());
-            ThisTile.GetComponent<TilePathNode>().isWalkable = false;
+            // Left click
+            if (eventData.button == 0) 
+            {
+                Player.GetComponent<PlayerActions>().ThrowTile(ThisTile);
+            }
+            // Right click
+            else if (eventData.button == PointerEventData.InputButton.Right)
+            {
+                Player.GetComponent<PlayerActions>().PickUpTile(ThisTile.GetComponent<Tile>());
+                ThisTile.GetComponent<TilePathNode>().isWalkable = false;
+            }
+        }
+        else 
+        {
+            Debug.Log("Player turn phase not found!");
         }
     }
 

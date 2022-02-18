@@ -6,8 +6,15 @@ public class PlayerActions : MonoBehaviour
 {
     public bool canPickUpTile = true;
     [SerializeField] int pickupRange = 1;
+    [SerializeField] int throwRange = 1;
     [SerializeField] Element heldTileElement;
 
+    private void Start()
+    {
+        heldTileElement = Element.Void;
+
+
+    }
     // Picks up a tile and stores what element it is
     public void PickUpTile(Tile tile) 
     {
@@ -23,6 +30,20 @@ public class PlayerActions : MonoBehaviour
                 tile.setElement(Element.Void);
                 Debug.Log(heldTileElement); 
             }
+        }
+    }
+
+    // Called when player right clicks on a tile
+    // Here you can call your own element interaction functions based on the 
+    // tile game object passed in and the held tile or whatever way you want to implement it
+    public void ThrowTile(GameObject tile) 
+    {
+        if (heldTileElement != Element.Void && tile.GetComponent<TileClickable>().GetDistance() <= throwRange) 
+        {
+            // Right now just replaces whatever tile its thrown on
+            tile.GetComponent<Tile>().setElement(heldTileElement);
+            tile.GetComponent<TilePathNode>().isWalkable = true;
+            heldTileElement = Element.Void;
         }
     }
 
