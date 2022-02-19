@@ -8,6 +8,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] int movementSpeed = 20;
     Pathfinding pathfinding;
     int currentMovementRemaining;
+    [SerializeField] GameObject arrowPrefab;
+    [SerializeField] GameObject pathHolder;
     // Start is called before the first frame update
     private void Start()
     {
@@ -38,20 +40,55 @@ public class PlayerMovement : MonoBehaviour
     // Draws line along the path the character takes
     public void ShowLine(float x, float y) 
     {
-        List<TilePathNode> path = pathfinding.FindPath((int)gameObject.transform.position.x, (int)gameObject.transform.position.y, (int)x, (int)y);
+        List<Transform> path = pathfinding.FindPathWaypoints((int)gameObject.transform.position.x, (int)gameObject.transform.position.y, (int)x, (int)y);
         if (path != null)
         {
-            TilePathNode endNode = path[0];
-            if (endNode.fCost <= currentMovementRemaining)
+            path.Add(transform);
+            Transform endNode = path[0];
+            if (endNode.gameObject.GetComponent<TilePathNode>().fCost <= currentMovementRemaining)
             {
-                
                 for (int i = 0; i < path.Count - 1; i++)
                 {
-                    // Can uncomment to view the path that it takes, generates a 1px line along the path to the hovered tile
-                    // Here we draw the line to the hovered over node
-                    //Debug.DrawLine(new Vector3(path[i].GetX(), path[i].GetY()), new Vector3(path[i + 1].GetX(), path[i + 1].GetY()), Color.black, 1, false);
+                    GameObject thisArrow;
+                    if (path[i].position.x > path[i + 1].position.x)
+                    {
+                        Debug.Log("right");
+                        thisArrow = Instantiate(arrowPrefab, path[i].position, Quaternion.Euler(new Vector3(0, 0, 0)), pathHolder.transform);
+                        thisArrow.transform.position += new Vector3(-0.5f, 0, 0);
+                    }
+                    else if (path[i].position.x < path[i + 1].position.x)
+                    {
+                        Debug.Log("left");
+                        thisArrow = Instantiate(arrowPrefab, path[i].position, Quaternion.Euler(new Vector3(0, 0, 180)), pathHolder.transform);
+                        thisArrow.transform.position += new Vector3(0.5f, 0, 0);
+                    }
+                    else if (path[i].position.y > path[i + 1].position.y)
+                    {
+                        Debug.Log("up");
+                        thisArrow = Instantiate(arrowPrefab, path[i].position, Quaternion.Euler(new Vector3(0, 0, 90)), pathHolder.transform);
+                        thisArrow.transform.position += new Vector3(0, -0.5f, 0);
+                    }
+                    else if (path[i].position.y < path[i + 1].position.y)
+                    {
+                        Debug.Log("down");
+                        thisArrow = Instantiate(arrowPrefab, path[i].position, Quaternion.Euler(new Vector3(0, 0, -90)), pathHolder.transform);
+                        thisArrow.transform.position += new Vector3(0, 0.5f, 0);
+                    }
+                    else 
+                    {
+                        Debug.Log("err");
+                    }
+                    
                 }
             }
+        }
+    }
+
+    public void ClearLine() 
+    {
+        foreach (Transform child in pathHolder.transform) 
+        {
+            Destroy(child.gameObject);
         }
     }
 

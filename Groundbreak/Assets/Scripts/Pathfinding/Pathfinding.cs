@@ -89,6 +89,85 @@ public class Pathfinding: MonoBehaviour
         return null;
     }
 
+    public List<Transform> FindPathWaypoints(int startX, int startY, int endX, int endY)
+    {
+        Tile[,] grid = FindObjectOfType<GridManager>().getGrid();
+        TilePathNode startNode = grid[startX, startY].gameObject.GetComponent<TilePathNode>();
+        TilePathNode endNode = grid[endX, endY].gameObject.GetComponent<TilePathNode>();
+
+        // List of seen nodes and completly seen nodes
+        openList = new List<TilePathNode> { startNode };
+        closedList = new List<TilePathNode>();
+
+        // Reset path costs
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                TilePathNode tilePathNode = grid[x, y].gameObject.GetComponent<TilePathNode>();
+                tilePathNode.gCost = int.MaxValue;
+                tilePathNode.CalculateFCost();
+                tilePathNode.previousNode = null;
+            }
+        }
+
+        // Initilize start cost
+        startNode.gCost = 0;
+        startNode.hCost = CalculateDistance(startNode, endNode);
+        startNode.CalculateFCost();
+
+        // While we have seen nodes
+        while (openList.Count > 0)
+        {
+            // Find the lowest Fcost node we have
+            TilePathNode currentNode = GetLowestFCost(openList);
+            // If that node is the end, retrace the path
+            if (currentNode == endNode)
+            {
+                return CalculateWaypointPath(endNode);
+            }
+
+            // remove it from the seen nodes and put it on the finished nodes
+            openList.Remove(currentNode);
+            closedList.Add(currentNode);
+
+            // for each tile in cardnal directions from this one
+            foreach (TilePathNode neighborNode in GetNeighborList(currentNode, grid))
+            {
+                if (closedList.Contains(neighborNode))
+                {
+                    continue;
+                }
+
+                if (neighborNode.isWalkable == false)
+                {
+                    closedList.Add(neighborNode);
+                    continue;
+                }
+
+                // calculate the cost it would take to get to that neighbor node using this tile
+                // If its cheaper than its already existing cost, update it
+                int tempGCost = currentNode.gCost + CalculateDistance(currentNode, neighborNode);
+                if (tempGCost < neighborNode.gCost)
+                {
+                    neighborNode.previousNode = currentNode;
+                    neighborNode.gCost = tempGCost;
+                    neighborNode.hCost = CalculateDistance(neighborNode, endNode);
+                    neighborNode.CalculateFCost();
+
+                    // if we havent seen this node yet, add it to the list
+                    if (!openList.Contains(neighborNode))
+                    {
+                        openList.Add(neighborNode);
+                    }
+                }
+            }
+        }
+        // No Path Found
+        return null;
+    }
+
+
     // Finds 4 neighbors
     private List<TilePathNode> GetNeighborList(TilePathNode currentNode, Tile[,] grid)
     {
@@ -130,6 +209,20 @@ public class Pathfinding: MonoBehaviour
         return path;
     }
 
+
+    // Retrace linked list and makes it a regular list
+    private List<Transform> CalculateWaypointPath(TilePathNode endNode)
+    {
+        List<Transform> path = new List<Transform>();
+        path.Add(endNode.transform);
+        TilePathNode currentNode = endNode;
+        while (currentNode.previousNode != null)
+        {
+            path.Add(currentNode.transform);
+            currentNode = currentNode.previousNode;
+        }
+        return path;
+    }
     // Calcualtes distance from tile a to tile b
     private int CalculateDistance(TilePathNode a, TilePathNode b) 
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class TileClickable : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
+public class TileClickable : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
 {
     GameObject Player;
     TurnLogic turnLogic;
@@ -59,6 +59,11 @@ public class TileClickable : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     {
         GameObject ThisTile = eventData.pointerCurrentRaycast.gameObject;
         Player.GetComponent<PlayerMovement>().ShowLine(ThisTile.transform.position.x, ThisTile.transform.position.y);
+    }
+
+    void IPointerExitHandler.OnPointerExit(PointerEventData eventData) 
+    {
+        Player.GetComponent<PlayerMovement>().ClearLine();
     }
 
     public void updateDistanceToPlayer() 
