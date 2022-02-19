@@ -52,31 +52,27 @@ public class PlayerMovement : MonoBehaviour
                     GameObject thisArrow;
                     if (path[i].position.x > path[i + 1].position.x)
                     {
-                        Debug.Log("right");
                         thisArrow = Instantiate(arrowPrefab, path[i].position, Quaternion.Euler(new Vector3(0, 0, 0)), pathHolder.transform);
                         thisArrow.transform.position += new Vector3(-0.5f, 0, 0);
                     }
                     else if (path[i].position.x < path[i + 1].position.x)
                     {
-                        Debug.Log("left");
                         thisArrow = Instantiate(arrowPrefab, path[i].position, Quaternion.Euler(new Vector3(0, 0, 180)), pathHolder.transform);
                         thisArrow.transform.position += new Vector3(0.5f, 0, 0);
                     }
                     else if (path[i].position.y > path[i + 1].position.y)
                     {
-                        Debug.Log("up");
                         thisArrow = Instantiate(arrowPrefab, path[i].position, Quaternion.Euler(new Vector3(0, 0, 90)), pathHolder.transform);
                         thisArrow.transform.position += new Vector3(0, -0.5f, 0);
                     }
                     else if (path[i].position.y < path[i + 1].position.y)
                     {
-                        Debug.Log("down");
                         thisArrow = Instantiate(arrowPrefab, path[i].position, Quaternion.Euler(new Vector3(0, 0, -90)), pathHolder.transform);
                         thisArrow.transform.position += new Vector3(0, 0.5f, 0);
                     }
                     else 
                     {
-                        Debug.Log("err");
+
                     }
                     
                 }

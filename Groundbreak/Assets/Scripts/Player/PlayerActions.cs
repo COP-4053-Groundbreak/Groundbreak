@@ -24,6 +24,7 @@ public class PlayerActions : MonoBehaviour
             // Cant pickup tile you are standing on
             if (tile.gameObject.transform.position != this.transform.position) 
             {
+                tile.gameObject.GetComponent<TilePathNode>().isWalkable = false;
                 heldTileElement = tile.getElement();
                 canPickUpTile = false;
                 // Currently sets tile element to void, possibly will change depending on how we want to implement this

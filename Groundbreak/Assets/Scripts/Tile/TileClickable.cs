@@ -31,7 +31,7 @@ public class TileClickable : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
             else if (eventData.button == PointerEventData.InputButton.Right)
             {
                 Player.GetComponent<PlayerActions>().PickUpTile(ThisTile.GetComponent<Tile>());
-                ThisTile.GetComponent<TilePathNode>().isWalkable = false;
+                
             }
         }
         else if (turnLogic.isThrowPhase)
