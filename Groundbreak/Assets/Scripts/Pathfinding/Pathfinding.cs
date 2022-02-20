@@ -8,8 +8,8 @@ public class Pathfinding: MonoBehaviour
     int MOVE_COST = 10;
     private List<TilePathNode> openList;
     private List<TilePathNode> closedList;
-    int width = 3;
-    int height = 3;
+    public int width = 3;
+    public int height = 3;
 
     public List<TilePathNode> FindPath(int startX, int startY, int endX, int endY) 
     {

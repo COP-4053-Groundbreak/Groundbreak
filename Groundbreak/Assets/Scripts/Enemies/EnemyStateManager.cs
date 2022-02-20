@@ -20,9 +20,14 @@ public class EnemyStateManager : MonoBehaviour
     public EnemyPatrollingState PatrollingState = new EnemyPatrollingState();
     public EnemyIdleState IdleState = new EnemyIdleState();
     public EnemyDeathState DeathState = new EnemyDeathState();
+
+    public int width;
+    public int height;
     // Start is called before the first frame update
     void Start()
     {
+        width = FindObjectOfType<Pathfinding>().width;
+        height = FindObjectOfType<Pathfinding>().height;
         pathfinding = FindObjectOfType<Pathfinding>();
         currentState = PatrollingState;
         // "this" is a refrence to the context of the enemy. 
