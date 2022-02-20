@@ -188,8 +188,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 20
+  currentMovementRemaining: 0
   arrowPrefab: {fileID: 4625954176909107163, guid: 73b9a418b03aefa47b4470fe69e7849f, type: 3}
   pathHolder: {fileID: 740047101}
+  slideSpeed: 1
+  isSliding: 0
 --- !u!114 &108454172
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1259,7 +1262,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3135849580474835712, guid: 987b2a0b0be862a47bef7518b8207d9c, type: 3}
       propertyPath: m_SortingOrder
-      value: 10
+      value: 21
       objectReference: {fileID: 0}
     - target: {fileID: 3135849581478129406, guid: 987b2a0b0be862a47bef7518b8207d9c, type: 3}
       propertyPath: m_RootOrder

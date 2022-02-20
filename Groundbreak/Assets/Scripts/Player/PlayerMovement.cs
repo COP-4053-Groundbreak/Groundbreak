@@ -7,9 +7,16 @@ public class PlayerMovement : MonoBehaviour
     // 10 movement speed is 1 tile, used so we can have say 2 tiles take 3 points of movement without needing float math
     [SerializeField] int movementSpeed = 20;
     Pathfinding pathfinding;
-    int currentMovementRemaining;
+
+    [SerializeField] int currentMovementRemaining;
+
     [SerializeField] GameObject arrowPrefab;
     [SerializeField] GameObject pathHolder;
+
+    [SerializeField] float slideSpeed = 1f;
+    List<Transform> slidingPath;
+    bool isSliding = false;
+    int waypointIndex = 0;
     // Start is called before the first frame update
     private void Start()
     {
@@ -17,22 +24,57 @@ public class PlayerMovement : MonoBehaviour
         pathfinding = FindObjectOfType<Pathfinding>();
         currentMovementRemaining = movementSpeed;
     }
+    private void Update()
+    {
+        // Issliding set when we move a player, in update actually move the sprite every frame;
+        if (isSliding) 
+        {
+            SlideThisObjectAlongPath(slidingPath);
+        }
+    }
     // Move player to a spot if they have the movement points remaining
     public void MovePlayer(int distance, float x, float y) 
     {
+        if (isSliding) 
+        {
+            return;
+        }
         // Find a path
-        List<TilePathNode> path = pathfinding.FindPath((int)gameObject.transform.position.x, (int)gameObject.transform.position.y, (int)x, (int)y);
-        if (path == null) 
+        slidingPath = pathfinding.FindPathWaypoints((int)gameObject.transform.position.x, (int)gameObject.transform.position.y, (int)x, (int)y);
+        if (slidingPath == null) 
         {
             return;
         }
         
-        TilePathNode endNode = path[0];
+        TilePathNode endNode = slidingPath[0].gameObject.GetComponent<TilePathNode>();
         // If path cost is less than movement remaining, take it
         if (endNode.fCost <= currentMovementRemaining)
         {
             currentMovementRemaining -= endNode.fCost;
-            gameObject.transform.SetPositionAndRotation(new Vector3(x, y, 0), new Quaternion(0, 0, 0, 0));
+            slidingPath.Reverse();
+            isSliding = true;
+            UpdateTilesAfterMove();
+        }
+    }
+
+    // Takes a transform path, slides sprite along the path
+    void SlideThisObjectAlongPath(List<Transform> path)
+    {
+        
+        if (waypointIndex <= path.Count - 1)
+        {
+            var targetPos = path[waypointIndex].position;
+            var movementThisFrame = slideSpeed * Time.deltaTime;
+            transform.position = Vector2.MoveTowards(transform.position, targetPos, movementThisFrame);
+            if (transform.position == targetPos)
+            {
+                waypointIndex++;
+            }
+        }
+        else 
+        {
+            waypointIndex = 0;
+            isSliding = false;
             UpdateTilesAfterMove();
         }
     }
@@ -40,6 +82,10 @@ public class PlayerMovement : MonoBehaviour
     // Draws line along the path the character takes
     public void ShowLine(float x, float y) 
     {
+        if (isSliding) 
+        {
+            return;
+        }
         List<Transform> path = pathfinding.FindPathWaypoints((int)gameObject.transform.position.x, (int)gameObject.transform.position.y, (int)x, (int)y);
         if (path != null)
         {
@@ -49,6 +95,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 for (int i = 0; i < path.Count - 1; i++)
                 {
+                    // Gets orientation of the arrows correct
                     GameObject thisArrow;
                     if (path[i].position.x > path[i + 1].position.x)
                     {

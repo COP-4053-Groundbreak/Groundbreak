@@ -45,7 +45,7 @@ public class TileClickable : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
             else if (eventData.button == PointerEventData.InputButton.Right)
             {
                 Player.GetComponent<PlayerActions>().PickUpTile(ThisTile.GetComponent<Tile>());
-                ThisTile.GetComponent<TilePathNode>().isWalkable = false;
+                
             }
         }
         else 
@@ -61,6 +61,7 @@ public class TileClickable : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
         Player.GetComponent<PlayerMovement>().ShowLine(ThisTile.transform.position.x, ThisTile.transform.position.y);
     }
 
+    // Clear line when mouse leaves the tile
     void IPointerExitHandler.OnPointerExit(PointerEventData eventData) 
     {
         Player.GetComponent<PlayerMovement>().ClearLine();
