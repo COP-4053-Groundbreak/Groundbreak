@@ -9,6 +9,11 @@ public class EnemyStateManager : MonoBehaviour
     // Rigidbody of the enemy, used for patrolling/movement
     // new Rigidbody2D rigidbody2D;
     Pathfinding pathfinding;
+    // Sliding 
+    [SerializeField] float slideSpeed = 1f;
+    public List<Transform> slidingPath;
+    public bool isSliding = false;
+    int waypointIndex = 0;
     // instantiate  each concrete state
     public EnemyAttackState AttackState = new EnemyAttackState();
     public EnemyMoveState MoveState = new EnemyMoveState();
@@ -38,12 +43,34 @@ public class EnemyStateManager : MonoBehaviour
     public void MoveEnemy(float x, float y) 
     {
         // Find a path
-        List<TilePathNode> path = pathfinding.FindPath((int)gameObject.transform.position.x, (int)gameObject.transform.position.y, (int)x, (int)y);
-        if (path == null) 
+        slidingPath = pathfinding.FindPathWaypoints((int)gameObject.transform.position.x, (int)gameObject.transform.position.y, (int)x, (int)y);
+        if (slidingPath == null) 
         {
             return;
         }
         
-        gameObject.transform.SetPositionAndRotation(new Vector3(x, y, 0), new Quaternion(0, 0, 0, 0));
+        slidingPath.Reverse();
+        isSliding = true;
+        // gameObject.transform.SetPositionAndRotation(new Vector3(x, y, 0), new Quaternion(0, 0, 0, 0));
+    }
+
+    public void SlideThisObjectAlongPath(List<Transform> path)
+    {
+        
+        if (waypointIndex <= path.Count - 1)
+        {
+            var targetPos = path[waypointIndex].position;
+            var movementThisFrame = slideSpeed * Time.deltaTime;
+            transform.position = Vector2.MoveTowards(transform.position, targetPos, movementThisFrame);
+            if (transform.position == targetPos)
+            {
+                waypointIndex++;
+            }
+        }
+        else 
+        {
+            waypointIndex = 0;
+            isSliding = false;
+        }
     }
 }

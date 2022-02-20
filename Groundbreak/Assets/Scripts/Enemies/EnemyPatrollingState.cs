@@ -16,8 +16,17 @@ public class EnemyPatrollingState : EnemyBaseState
     }
 
     public override void UpdateState(EnemyStateManager enemy){
+
+        List<Transform> slidingPath = enemy.slidingPath;
+        bool isSliding = enemy.isSliding;
+
+        if (isSliding) 
+        {
+            enemy.SlideThisObjectAlongPath(slidingPath);
+        }
+
         float y_value = enemy.transform.position.y;
-        if (period >= 1 && height != max_height)
+        if (period >= 3 && height != max_height)
         {
          //Do Stuff
             enemy.MoveEnemy(0, y_value + 1);
