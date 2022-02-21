@@ -11,6 +11,11 @@ public class Pathfinding: MonoBehaviour
     public int width = 3;
     public int height = 3;
 
+    private void Start()
+    {
+        width = FindObjectOfType<GridManager>().getWidth();
+        height = FindObjectOfType<GridManager>().getHeight();
+    }
     public List<TilePathNode> FindPath(int startX, int startY, int endX, int endY) 
     {
         Tile[,] grid = FindObjectOfType<GridManager>().getGrid();

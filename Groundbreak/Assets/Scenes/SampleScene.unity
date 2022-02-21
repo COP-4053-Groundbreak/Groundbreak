@@ -191,8 +191,7 @@ MonoBehaviour:
   currentMovementRemaining: 0
   arrowPrefab: {fileID: 4625954176909107163, guid: 73b9a418b03aefa47b4470fe69e7849f, type: 3}
   pathHolder: {fileID: 740047101}
-  slideSpeed: 1
-  isSliding: 0
+  slideSpeed: 2
 --- !u!114 &108454172
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -326,6 +325,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6851208af1d66414eb0ccdd049b4a471, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slideSpeed: 1
+  slidingPath: []
+  isSliding: 0
+  width: 0
+  height: 0
 --- !u!114 &427625671 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3743334375816379716, guid: a81703c2a464558468e898e6c6700fdf, type: 3}
@@ -1128,6 +1132,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9154da360f9066409456528efface4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  width: 3
+  height: 3
 --- !u!4 &1775715926
 Transform:
   m_ObjectHideFlags: 0
