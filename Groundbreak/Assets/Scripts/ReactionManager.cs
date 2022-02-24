@@ -14,26 +14,73 @@ public class ReactionManager : MonoBehaviour
     //  Non-Base element on different Non-Base element => AoE element reaction
     //  Non-Base element on same Non-Base element => Surrounding tiles imbued with element
     
-    void TileOnTile(Tile a, Tile b){
-        Element aElem = a.getElement();
-        Element bElem = b.getElement();
+    void TileOnTile(Tile movingTile, Tile staticTile){
+        Element movingElem = movingTile.getElement();
+        Element staticElem = staticTile.getElement();
+
+        // No reaction on void tiles
+        if (movingElem == Element.Void || staticElem == Element.Void)
+            return;
 
         // Tiles have same element
-        if (aElem == bElem) {
-            // Nothing happens reaction-wise when both Base. Anything that happens when a tile is thrown should STILL happen.
-            if (aElem != Element.Base) {
-                // Non-Base on same Non-Base
+        // Consume the element of both tiles and make every tile around it the same element
+        if (movingElem == staticElem) {
+            // Non-Base on same Non-Base
+            if (movingElem != Element.Base) { 
+                List<Tile> neighbors = staticTile.neighbors;
                 
-                Vector2 landingPos = b.transform.position;
-
+                // Change the element of each neighbor
+                foreach (Tile neighbor in neighbors){
+                    neighbor.myElement = movingElem;
+                }
                 
+                // Consume the elements
+                movingTile.myElement = Element.Base;
+                staticTile.myElement = Element.Base;
             }
-
+        } else{
+            if (staticElem == Element.Base) {
+                // Regardless of what the other element is, static tile will become this element
+                staticTile.myElement = movingTile.myElement; 
+            } else if (staticElem == Element.Air) {
+                if (staticElem == Element.Earth) {
+                    // Sandstorm
+                } else if (staticElem == Element.Fire) {
+                    // Spreads fire
+                } else if (staticElem == Element.Water) {
+                    // Storm
+                }
+            } else if (staticElem == Element.Earth) {
+                if (staticElem == Element.Air) {
+                    // Sandstorm
+                } else if (staticElem == Element.Fire) {
+                    // Magma
+                } else if (staticElem == Element.Water) {
+                    // Mud
+                }
+            } else if (staticElem == Element.Fire) {
+                if (staticElem == Element.Air) {
+                    // Spreads Fire
+                } else if (staticElem == Element.Earth) {
+                    // Magma
+                } else if (staticElem == Element.Water) {
+                    // Smoke
+                }
+            } else if (staticElem == Element.Water) {
+                if (staticElem == Element.Air) {
+                    // Storm
+                } else if (staticElem == Element.Earth) {
+                    // Mud
+                } else if (staticElem == Element.Fire) {
+                    // Smoke
+                }
+            }
         }
     }
 
-    void TileOnEnemy(){
+    void TileOnEnemy(Tile a, GameObject b){
 
+        
     }
 
     void EnemyOnTile(){

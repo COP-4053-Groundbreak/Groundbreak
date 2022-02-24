@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Tile : MonoBehaviour {
-    Element myElement = Element.Base;
+    public Element myElement = Element.Base;
     LandFeature myLandFeature = LandFeature.None;
     int movementModifier = 0;
     public List<Tile> neighbors;
