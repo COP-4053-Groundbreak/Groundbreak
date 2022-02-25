@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     // 10 movement speed is 1 tile, used so we can have say 2 tiles take 3 points of movement without needing float math
-    [SerializeField] int movementSpeed = 20;
+    [SerializeField] int movementSpeed;
     Pathfinding pathfinding;
 
     [SerializeField] int currentMovementRemaining;
@@ -20,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
+        movementSpeed = gameObject.GetComponent<PlayerStats>().GetMovementPerTurn();
         UpdateTilesAfterMove();
         pathfinding = FindObjectOfType<Pathfinding>();
         currentMovementRemaining = movementSpeed;
@@ -65,6 +66,7 @@ public class PlayerMovement : MonoBehaviour
         {
             var targetPos = path[waypointIndex].position;
             var movementThisFrame = slideSpeed * Time.deltaTime;
+            ClearLine();
             transform.position = Vector2.MoveTowards(transform.position, targetPos, movementThisFrame);
             if (transform.position == targetPos)
             {
@@ -76,13 +78,24 @@ public class PlayerMovement : MonoBehaviour
             waypointIndex = 0;
             isSliding = false;
             UpdateTilesAfterMove();
+            PossiblyShowTile();
+        }
+    }
+
+    // If the player is mousing over a tile when movement ends, show arrow to that tile
+    private void PossiblyShowTile()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), -Vector2.up);
+        if (hit) 
+        {
+            ShowLine(hit.transform.position.x, hit.transform.position.y);
         }
     }
 
     // Draws line along the path the character takes
     public void ShowLine(float x, float y) 
     {
-        if (isSliding) 
+        if (isSliding || FindObjectOfType<TurnLogic>().isThrowPhase) 
         {
             return;
         }

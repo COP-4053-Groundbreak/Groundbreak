@@ -44,6 +44,7 @@ public class PlayerActions : MonoBehaviour
             // Right now just replaces whatever tile its thrown on
             tile.GetComponent<Tile>().setElement(heldTileElement);
             tile.GetComponent<TilePathNode>().isWalkable = true;
+
             heldTileElement = Element.Void;
         }
     }
