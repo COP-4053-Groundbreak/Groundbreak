@@ -29,7 +29,7 @@ public class EnemyStateManager : MonoBehaviour
     // integer, each block will be 1 unit or however we coded it. 
     public int visibilityRange = 7;
     // attack stats:
-    // posible for enemy to miss, 0 miss, 1 attack.
+    // posible for enemy to miss, 0 miss, 1 attack. rename this to attackChance or something. 
     public bool canAttack;
     // how much damage the enemy will do if canAttack is 1.
     public int attackDamage;

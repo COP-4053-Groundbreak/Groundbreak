@@ -348,6 +348,13 @@ MonoBehaviour:
   slideSpeed: 1
   slidingPath: []
   isSliding: 0
+  health: 5
+  movement: 2
+  armor: 0
+  initiative: 0
+  visibilityRange: 7
+  canAttack: 0
+  attackDamage: 0
   width: 0
   height: 0
 --- !u!114 &427625671 stripped
@@ -771,6 +778,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3857721949896168740, guid: b83ea3cb950d81d47a3631b522191215, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3857721949896168740, guid: b83ea3cb950d81d47a3631b522191215, type: 3}
       propertyPath: m_SortingOrder
       value: 5
       objectReference: {fileID: 0}
@@ -828,6 +839,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4515572663489342031, guid: b83ea3cb950d81d47a3631b522191215, type: 3}
       propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7415741825308102080, guid: b83ea3cb950d81d47a3631b522191215, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7415741825308102080, guid: b83ea3cb950d81d47a3631b522191215, type: 3}
