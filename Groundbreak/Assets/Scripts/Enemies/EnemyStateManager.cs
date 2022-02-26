@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemyStateManager : MonoBehaviour
 {
+    // animator
+    public Animator animator;
     // currentState will hold a reference to the active state in the state machine. 
     EnemyBaseState currentState;
     // Rigidbody of the enemy, used for patrolling/movement
@@ -70,6 +72,7 @@ public class EnemyStateManager : MonoBehaviour
         
         slidingPath.Reverse();
         isSliding = true;
+        animator.SetBool("isMoving", true);
         // gameObject.transform.SetPositionAndRotation(new Vector3(x, y, 0), new Quaternion(0, 0, 0, 0));
     }
 
@@ -90,6 +93,7 @@ public class EnemyStateManager : MonoBehaviour
         {
             waypointIndex = 0;
             isSliding = false;
+            animator.SetBool("isMoving", false);
         }
     }
 }
