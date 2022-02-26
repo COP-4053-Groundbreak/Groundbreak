@@ -21,6 +21,20 @@ public class EnemyStateManager : MonoBehaviour
     public EnemyIdleState IdleState = new EnemyIdleState();
     public EnemyDeathState DeathState = new EnemyDeathState();
 
+    // basic stats for enemy, figured i would add it here instead of making a seperate script. Will be easy to acess in other states by just doing enemy.[field].
+    public int health = 5;
+    public int movement = 2;
+    public int armor;
+    public int initiative;
+    // integer, each block will be 1 unit or however we coded it. 
+    public int visibilityRange = 7;
+    // attack stats:
+    // posible for enemy to miss, 0 miss, 1 attack.
+    public bool canAttack;
+    // how much damage the enemy will do if canAttack is 1.
+    public int attackDamage;
+
+    // stuff for pathfinding.
     public int width;
     public int height;
     // Start is called before the first frame update
