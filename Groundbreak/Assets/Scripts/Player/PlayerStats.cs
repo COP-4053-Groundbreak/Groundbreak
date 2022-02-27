@@ -30,4 +30,39 @@ public class PlayerStats : MonoBehaviour
         return movementPerTurn;
     }
 
+    public void ModifyHealth(int value) 
+    {
+        health += value;
+    }
+    public void ModifyMovementSpeed(int value)
+    {
+        movementPerTurn += value;
+    }
+    public void ModifyArmor(int value)
+    {
+        armor += value;
+    }
+    public void ModifyFireMod(float value)
+    {
+        fireMod += value;
+    }
+
+    public void ModifyWaterMod(float value)
+    {
+        waterMod += value;
+    }
+    public void ModifyEarthMod(float value)
+    {
+        earthMod += value;
+    }
+    public void ModifyWindMod(float value)
+    {
+        windMod += value;
+    }
+
+    public void ModifyInitiative(int value)
+    {
+        initiative += value;
+    }
+
 }
