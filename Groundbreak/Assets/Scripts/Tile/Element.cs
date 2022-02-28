@@ -1,8 +1,8 @@
 public enum Element{
-    Air = 0,
-    Earth,
-    Fire,
-    Water,
-    Base,
-    Void
+    Air = 1,
+    Earth = 2,
+    Fire = 4,
+    Water = 8,
+    Base = 16,
+    Void = 32
 }

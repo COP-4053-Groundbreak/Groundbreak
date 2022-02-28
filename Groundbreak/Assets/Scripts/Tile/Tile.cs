@@ -3,16 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Tile : MonoBehaviour {
+
+    [SerializeField] GridManager gridManager;
+    // All tiles start out as base tiles
     public Element myElement = Element.Base;
+    // All tiles start out with a blank land feature
     LandFeature myLandFeature = LandFeature.None;
+    public Effect myEffect = null;
     int movementModifier = 0;
     public List<Tile> neighbors;
+    public bool isThrowable = true;
 
     // Finds up to 8 neighbors around this tile. Does so using a PhysicsOverlap circle which detects
     // the colliders of other tiles
+    public void setEffect(Effect newEffect){
+        myEffect = newEffect;
+    }
     public void findNeighbors(){
+        
         Collider2D[] neighborColliders = Physics2D.OverlapCircleAll(this.transform.position, 1.0f);
-                
+
+             
         Debug.Log($"Tile {this.name} collided with {neighborColliders.Length} neighbors");
         foreach(Collider2D a in neighborColliders){
             if (a.gameObject.tag == "Tile" && a.gameObject.name != this.name){
@@ -20,6 +31,17 @@ public class Tile : MonoBehaviour {
                 addNeighbor(a.gameObject.GetComponent<Tile>());
             }
         }
+        
+        /*
+        int x = (int)transform.position.x;
+        int y = (int)transform.position.y;
+        int[,] add = {{-1,-1},{0,-1},{1,-1},{-1,0},{1,0},{-1,1},{0,1},{1,1}};
+
+        for (int i = 0; i < 8; i ++){
+            if (gridManager.inBounds(x + add[i, 0], y + add[i, 1]))
+                addNeighbor(GridManager.grid[x + add[i, 0], y + add[i, 1]]);
+        }*/
+        
     }
     public void setLF(LandFeature newLand){
         string text = "";
@@ -76,6 +98,7 @@ public class Tile : MonoBehaviour {
                 newColor = Color.white;
                 break;
             default: // grey
+                isThrowable = false;
                 newColor = Color.grey;
                 break;
         }

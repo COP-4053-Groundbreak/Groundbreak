@@ -41,10 +41,10 @@ public class PlayerActions : MonoBehaviour
     {
         if (heldTileElement != Element.Void && tile.GetComponent<TileClickable>().GetDistance() <= throwRange) 
         {
-            // Right now just replaces whatever tile its thrown on
-            tile.GetComponent<Tile>().setElement(heldTileElement);
+            Debug.Log($"Threw a(n) {heldTileElement} tile!");
+            ReactionManager.catchElement(heldTileElement, tile);
+            // Need to check if there is an enemy standing on this tile to deal base throw damage
             tile.GetComponent<TilePathNode>().isWalkable = true;
-
             heldTileElement = Element.Void;
         }
     }

@@ -8,13 +8,14 @@ public class GridManager : MonoBehaviour
     [SerializeField] private Tile tilePrefab;
     [SerializeField] private Transform cam;
 
-    private Tile[,] grid;
+    public static Tile[,] grid;
 
     // Start is called before the first frame update
     void Awake(){
         generateGrid();
         setCameraPos();
     }
+
     void generateGrid(){
         grid = new Tile[width, height];
         
@@ -48,6 +49,10 @@ public class GridManager : MonoBehaviour
     }
     public int getWidth(){
         return width;
+    }
+
+    public bool inBounds(int x, int y){
+        return (x >= 0 && x < width && y >= 0 && y < height);
     }
 
     public Tile[,] getGrid() 
