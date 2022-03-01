@@ -301,6 +301,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1618027768}
     - target: {fileID: 599557085375419742, guid: b83ea3cb950d81d47a3631b522191215, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 599557085375419742, guid: b83ea3cb950d81d47a3631b522191215, type: 3}
       propertyPath: mySpriteRenderer
       value: 
       objectReference: {fileID: 1618027770}
@@ -318,7 +322,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3857721949896168741, guid: b83ea3cb950d81d47a3631b522191215, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 3857721949896168741, guid: b83ea3cb950d81d47a3631b522191215, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2479,7 +2483,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1105098630958343722, guid: 71d23497f347a7246b2d1d79c571b352, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1105098630958343722, guid: 71d23497f347a7246b2d1d79c571b352, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4271,6 +4275,10 @@ PrefabInstance:
     - target: {fileID: 2072216480951150570, guid: 55ecc4fe57ef3984ca34951cd293f360, type: 3}
       propertyPath: m_Name
       value: SkeletonArcher
+      objectReference: {fileID: 0}
+    - target: {fileID: 4009178253768744797, guid: 55ecc4fe57ef3984ca34951cd293f360, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6677564985922170157, guid: 55ecc4fe57ef3984ca34951cd293f360, type: 3}
       propertyPath: m_LocalScale.x

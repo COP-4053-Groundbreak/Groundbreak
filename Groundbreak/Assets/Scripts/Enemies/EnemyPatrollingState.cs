@@ -32,12 +32,12 @@ public class EnemyPatrollingState : EnemyBaseState
             // deal damage, every 3 seconds for testing. 
             enemy.DealDamage(5);
             // enemy.healthSystem.Damage(20);
-            Debug.Log("X-Value current : " + x_value);
+            // Debug.Log("X-Value current : " + x_value);
      
             int random_num_x = random.Next(0,2);
             int random_num_y = random.Next(0,2);
-            Debug.Log("X-Value random 1: " + random_num_x);
-            Debug.Log("Y-Value random 1: " + random_num_y);
+            // Debug.Log("X-Value random 1: " + random_num_x);
+            // Debug.Log("Y-Value random 1: " + random_num_y);
             var x_random = random_num_x;
             var y_random = random_num_y;
             
@@ -59,7 +59,7 @@ public class EnemyPatrollingState : EnemyBaseState
                 y_random = -1;
             }
 
-            Debug.Log("Y-Value random 2: " + random_num_y);
+            // Debug.Log("Y-Value random 2: " + random_num_y);
 
             
             enemy.MoveEnemy(x_value + x_random, y_value + y_random);

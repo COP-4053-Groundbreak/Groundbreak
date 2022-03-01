@@ -76,7 +76,9 @@ public class EnemyStateManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        currentState.UpdateState(this);
+        if(this != null){
+            currentState.UpdateState(this);
+        }
         if(healthSystem.GetHealth() <= 0 && alive == true){
             // Change to death state !!! just doing logic here for testing. 
             Debug.Log("DEAD");
@@ -141,9 +143,20 @@ public class EnemyStateManager : MonoBehaviour
         {
             var targetPos = path[waypointIndex].position;
             var movementThisFrame = slideSpeed * Time.deltaTime;
-            var finalPost = transform.position + targetPos;
+            var newPos = (gameObject.transform.position.x + targetPos.x) / (int)2;
+            // Debug.Log("Game object Transform pos: " + gameObject.transform.position.x);
+            // Debug.Log("new pos: " + newPos);
+            if(newPos > transform.position.x){
+                // Debug.Log("Going to the right");
+                mySpriteRenderer.flipX = true;
+            }
+            else if (newPos < transform.position.x){
+                // Debug.Log("Going to the left");
+                mySpriteRenderer.flipX = false;
+                // animator.SetBool("alive", false);
+            }
+            // if neither its standing still in the x plane
 
-            // Debug.Log(finalPost);
 
             transform.position = Vector2.MoveTowards(transform.position, targetPos, movementThisFrame);
             if (transform.position == targetPos)
