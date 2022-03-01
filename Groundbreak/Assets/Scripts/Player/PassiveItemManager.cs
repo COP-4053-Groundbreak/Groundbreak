@@ -29,6 +29,7 @@ public class PassiveItemManager : MonoBehaviour
     public void EquipHealthRing() 
     {
         playerStats.ModifyHealth(50);
+        playerStats.ModifyMaxHealth(50);
     }
 
     public void EquipSpeedBoots()

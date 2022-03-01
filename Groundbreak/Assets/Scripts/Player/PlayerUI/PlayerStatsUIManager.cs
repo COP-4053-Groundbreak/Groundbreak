@@ -30,7 +30,7 @@ public class PlayerStatsUIManager : MonoBehaviour
     {
         DisplayStats();
         ColorStats();
-        if (Input.GetKeyDown(KeyCode.LeftShift)) 
+        if (Input.GetKeyDown(KeyCode.Tab)) 
         {
             if (uiStats.activeInHierarchy)
             {
@@ -45,15 +45,15 @@ public class PlayerStatsUIManager : MonoBehaviour
 
     private void DisplayStats()
     {
-        healthText.GetComponent<TextMeshProUGUI>().text = playerStats.GetHealth().ToString();
+        healthText.GetComponent<TextMeshProUGUI>().text = playerStats.GetHealth().ToString() + "/" + playerStats.GetMaxHealth().ToString();
         armorText.GetComponent<TextMeshProUGUI>().text = playerStats.GetArmor().ToString();
         speedText.GetComponent<TextMeshProUGUI>().text = playerStats.GetMovementPerTurn().ToString();
         initiativeText.GetComponent<TextMeshProUGUI>().text = playerStats.GetInitiative().ToString();
 
-        fireText.GetComponent<TextMeshProUGUI>().text = playerStats.GetFireMod().ToString();
-        waterText.GetComponent<TextMeshProUGUI>().text = playerStats.GetWaterMod().ToString();
-        earthText.GetComponent<TextMeshProUGUI>().text = playerStats.GetEarthMod().ToString();
-        airText.GetComponent<TextMeshProUGUI>().text = playerStats.GetAirMod().ToString();
+        fireText.GetComponent<TextMeshProUGUI>().text = (playerStats.GetFireMod() * 100).ToString() + "%";
+        waterText.GetComponent<TextMeshProUGUI>().text = (playerStats.GetFireMod() * 100).ToString() + "%";
+        earthText.GetComponent<TextMeshProUGUI>().text = (playerStats.GetFireMod() * 100).ToString() + "%";
+        airText.GetComponent<TextMeshProUGUI>().text = (playerStats.GetFireMod() * 100).ToString() + "%";
     }
 
     private void ColorStats() 

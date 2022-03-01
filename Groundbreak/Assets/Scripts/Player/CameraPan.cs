@@ -24,7 +24,7 @@ public class CameraPan : MonoBehaviour
         CameraZoom(camera);
 
         // Center Camera on player
-        if (Input.GetKey(KeyCode.Tab))
+        if (Input.GetKey(KeyCode.Backspace))
         {
             transform.position = new Vector3(player.transform.position.x, player.transform.position.y, transform.position.z);
         }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class TurnLogic : MonoBehaviour
 {
@@ -50,6 +51,10 @@ public class TurnLogic : MonoBehaviour
 
     public void ThrowPressed()
     {
+        if (!throwTileButton) 
+        {
+            Debug.Log("HERE");
+        }
         throwTileButton.interactable = false;
         moveButton.interactable = true;
 

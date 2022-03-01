@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
-
-    [SerializeField] int health = 100;
+    [SerializeField] int currentHealth = 100;
+    [SerializeField] int maxHealth = 100;
     [SerializeField] int movementPerTurn = 20;
     // Armor stat so we can have items reduce damage
     [SerializeField] int armor = 0;
@@ -28,7 +28,8 @@ public class PlayerStats : MonoBehaviour
 
     private void Start()
     {
-        health = startingHealth;
+        maxHealth = startingHealth;
+        currentHealth = startingHealth;
         movementPerTurn = startingMovement;
         armor = startingArmor;
         initiative = startingInitiative;
@@ -40,8 +41,8 @@ public class PlayerStats : MonoBehaviour
 
     public void DealDamage(int damage) 
     {
-        health = health - (damage - armor);
-        if (health < 0) 
+        currentHealth = currentHealth - (damage - armor);
+        if (currentHealth < 0) 
         {
             // Trigger Game over
         }
@@ -49,8 +50,13 @@ public class PlayerStats : MonoBehaviour
 
     public int GetHealth() 
     {
-        return health;
+        return currentHealth;
     }
+    public int GetMaxHealth()
+    {
+        return maxHealth;
+    }
+
     public int GetArmor()
     {
         return armor;
@@ -83,7 +89,11 @@ public class PlayerStats : MonoBehaviour
 
     public void ModifyHealth(int value) 
     {
-        health += value;
+        currentHealth += value;
+    }
+    public void ModifyMaxHealth(int value)
+    {
+        maxHealth += value;
     }
     public void ModifyMovementSpeed(int value)
     {
