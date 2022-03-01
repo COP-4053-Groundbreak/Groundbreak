@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemyStateManager : MonoBehaviour
 {
+    // sprite rednderer
+    public SpriteRenderer mySpriteRenderer;
     // animator
     public Animator animator;
     // currentState will hold a reference to the active state in the state machine. 
@@ -47,6 +49,8 @@ public class EnemyStateManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // get sprite renderer
+        mySpriteRenderer = GetComponent<SpriteRenderer>();
         // health system stuff 
         healthSystem = new HealthSystem(startHealth);
         // healthSystem.Heal(110);
@@ -61,8 +65,8 @@ public class EnemyStateManager : MonoBehaviour
         healthBar.Setup(healthSystem);
 
         // path finding stuff 
-        width = FindObjectOfType<Pathfinding>().width;
-        height = FindObjectOfType<Pathfinding>().height;
+        width = FindObjectOfType<GridManager>().getWidth();
+        height = FindObjectOfType<GridManager>().getHeight();
         pathfinding = FindObjectOfType<Pathfinding>();
         currentState = PatrollingState;
         // "this" is a refrence to the context of the enemy. 
@@ -78,7 +82,7 @@ public class EnemyStateManager : MonoBehaviour
             Debug.Log("DEAD");
             alive = false;
             animator.SetBool("alive", false);
-            // wait 1.8 seconds for animation to play
+            // wait 1.8 seconds for animation to play TAKE LOOP OFF AND DESTROY LATER. 
             Destroy(gameObject, (float)1.80);
             
         }
@@ -106,6 +110,23 @@ public class EnemyStateManager : MonoBehaviour
         {
             return;
         }
+
+
+        
+        // if going right, flip.
+        if(gameObject.transform.position.x + x > gameObject.transform.position.x && mySpriteRenderer != null) // && enemy.mySpriteRenderer.transform.localScale.x < 0 // x_random + x_value > 0
+        {
+                 // flip the sprite
+                 mySpriteRenderer.flipX = true;
+                // enemy.mySpriteRenderer.transform.localScale.x = 1;
+        }
+        // if going left flip to default. 
+       if((int)gameObject.transform.position.x + x < gameObject.transform.position.x && mySpriteRenderer != null) //  && enemy.mySpriteRenderer.transform.localScale.x > 0
+        {
+                 // flip the sprite
+                 mySpriteRenderer.flipX = false;
+                //  enemy.mySpriteRenderer.transform.localScale.x = -1;
+        }
         
         slidingPath.Reverse();
         isSliding = true;
@@ -120,6 +141,10 @@ public class EnemyStateManager : MonoBehaviour
         {
             var targetPos = path[waypointIndex].position;
             var movementThisFrame = slideSpeed * Time.deltaTime;
+            var finalPost = transform.position + targetPos;
+
+            // Debug.Log(finalPost);
+
             transform.position = Vector2.MoveTowards(transform.position, targetPos, movementThisFrame);
             if (transform.position == targetPos)
             {
