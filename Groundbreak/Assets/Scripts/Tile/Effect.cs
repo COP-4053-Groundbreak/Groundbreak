@@ -4,11 +4,14 @@ public class Effect : MonoBehaviour {
 
     // ID obtained from adding two elements
     int id;
-    SpriteRenderer mySpriteRenderer;
     string effectName;
 
     void Awake(){
-        switch(id){
+    }
+
+    public void Initialize(Element a, Element b){
+          id = (int)a + (int)b;  
+          switch(id){
             case ((int)Element.Air + (int)Element.Earth): // Sandstorm
                 effectName = "Sandstorm";
                 break;
@@ -28,7 +31,7 @@ public class Effect : MonoBehaviour {
                 effectName = "Storm";
                 break;
         }
-        mySpriteRenderer.sprite = Resources.Load<Sprite>($"Assets/Sprites/Effects/{effectName}.png");
+        GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>($"Sprites/Effects/{effectName}");
         GridManager.grid[(int)transform.position.x, (int)transform.position.y].setEffect(this);
     }
 }

@@ -71,6 +71,7 @@ public class ReactionManager : MonoBehaviour
         Debug.Log("Effect will happen!");
         // Two elements are interacting, create an effect!
         GameObject a = Instantiate(effectPrefab, staticTile.transform.position, Quaternion.identity);
+        a.GetComponent<Effect>().Initialize(thrownElem, staticElem);
         return a.GetComponent<Effect>();
     }
 
