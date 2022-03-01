@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2072216480951150567}
   - component: {fileID: 2072216480951150568}
   - component: {fileID: 2072216480951150569}
+  - component: {fileID: 8941162943540840822}
   m_Layer: 0
   m_Name: SkeletonArcher
   m_TagString: Untagged
@@ -102,3 +103,28 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &8941162943540840822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2072216480951150570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6851208af1d66414eb0ccdd049b4a471, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 2072216480951150569}
+  slideSpeed: 1
+  slidingPath: []
+  isSliding: 0
+  health: 5
+  movement: 2
+  armor: 0
+  initiative: 0
+  visibilityRange: 7
+  canAttack: 0
+  attackDamage: 0
+  width: 0
+  height: 0
