@@ -155,7 +155,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2021909139
-  m_SortingLayer: 1
+  m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 7145992305949516054, guid: b86403e682852844faec56ca871f1e9f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -203,7 +203,9 @@ MonoBehaviour:
   slideSpeed: 1
   slidingPath: []
   isSliding: 0
-  health: 5
+  startHealth: 100
+  pfHealthBar: {fileID: 8601539936103537149, guid: 9c241cd300c70dd42bfc6fd13cca7c4b, type: 3}
+  alive: 1
   movement: 2
   armor: 0
   initiative: 0
@@ -227,7 +229,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1

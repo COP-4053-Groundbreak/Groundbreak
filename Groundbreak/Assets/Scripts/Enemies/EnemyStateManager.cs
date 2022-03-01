@@ -23,10 +23,11 @@ public class EnemyStateManager : MonoBehaviour
     public EnemyIdleState IdleState = new EnemyIdleState();
     public EnemyDeathState DeathState = new EnemyDeathState();
 
-    // basic stats for enemy, figured i would add it here instead of making a seperate script. Will be easy to acess in other states by just doing enemy.[field].
+    // health stuff
     public int startHealth = 100;
     public Transform pfHealthBar;
     public HealthSystem healthSystem;
+    public bool alive = true;
 
 
     public int movement = 2;
@@ -48,13 +49,6 @@ public class EnemyStateManager : MonoBehaviour
     {
         // health system stuff 
         healthSystem = new HealthSystem(startHealth);
-        Debug.Log("Health: " + healthSystem.GetHealthPercent());
-        // healthSystem.Damage(10);
-        Debug.Log("Health: " + healthSystem.GetHealthPercent());
-        // healthSystem.Damage(10);
-        // healthSystem.Damage(10);
-        // healthSystem.Damage(10);
-
         // healthSystem.Heal(110);
         // Debug.Log("Health: " + healthSystem.GetHealthPercent());
 
@@ -79,6 +73,14 @@ public class EnemyStateManager : MonoBehaviour
     void Update()
     {
         currentState.UpdateState(this);
+        if(healthSystem.GetHealth() <= 0 && alive == true){
+            Debug.Log("DEAD");
+            alive = false;
+            animator.SetBool("alive", false);
+            // wait 1.4 seconds for animation to play
+            Destroy(gameObject, (float)1.80);
+            
+        }
     }
 
     public void SwitchState(EnemyBaseState state){
@@ -114,7 +116,7 @@ public class EnemyStateManager : MonoBehaviour
                 waypointIndex++;
             }
         }
-        else 
+        else
         {
             waypointIndex = 0;
             isSliding = false;
