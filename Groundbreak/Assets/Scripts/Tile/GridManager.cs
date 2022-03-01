@@ -19,20 +19,14 @@ public class GridManager : MonoBehaviour
     void generateGrid(){
         grid = new Tile[width, height];
         
+        Element[] arr = {Element.Air, Element.Earth, Element.Fire, Element.Water, Element.Base, Element.Void};
+        int arr_len = arr.Length;
         // Place down tiles and set their elements
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 grid[x,y] = Instantiate(tilePrefab, new Vector3(x,y), Quaternion.identity);
                 grid[x,y].name = $"Tile {x} {y}";
-
-                // This part places down elements specifically for 3x3, mainly for testing
-                if (x == 0 && y == 0 || x == 2 && y == 0) grid[x,y].setElement(Element.Air);
-                else if (x == 0 && y == 1 || x == 2 && y == 1) grid[x,y].setElement(Element.Water);
-                else if (x == 0 && y == 2 || x == 2 && y == 2) grid[x,y].setElement(Element.Fire);
-                else {
-                    if (!(x == 1 && y == 1)) grid[x,y].setElement(Element.Earth);
-                    else grid[x,y].setElement(Element.Void);
-                }
+                grid[x,y].setElement(arr[Random.Range(0, arr_len)]);
             }
         }
         // Necessary to find neighbors after procedural generation
