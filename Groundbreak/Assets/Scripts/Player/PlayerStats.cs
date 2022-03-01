@@ -13,9 +13,30 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] float fireMod = 1.0f;
     [SerializeField] float waterMod = 1.0f;
     [SerializeField] float earthMod = 1.0f;
-    [SerializeField] float windMod = 1.0f;
+    [SerializeField] float airMod = 1.0f;
     // Inititive for who goes when during turns
     [SerializeField] int initiative = 5;
+
+    public int startingHealth = 100;
+    public int startingMovement = 20;
+    public int startingArmor = 0;
+    public int startingInitiative = 5;
+    public float startingFire = 1.0f;
+    public float startingWater = 1.0f;
+    public float startingEarth = 1.0f;
+    public float startingAir = 1.0f;
+
+    private void Start()
+    {
+        health = startingHealth;
+        movementPerTurn = startingMovement;
+        armor = startingArmor;
+        initiative = startingInitiative;
+        fireMod = startingFire;
+        waterMod = startingWater;
+        earthMod = startingEarth;
+        airMod = startingAir;
+    }
 
     public void DealDamage(int damage) 
     {
@@ -25,10 +46,40 @@ public class PlayerStats : MonoBehaviour
             // Trigger Game over
         }
     }
+
+    public int GetHealth() 
+    {
+        return health;
+    }
+    public int GetArmor()
+    {
+        return armor;
+    }
     public int GetMovementPerTurn() 
     {
         return movementPerTurn;
     }
+    public int GetInitiative()
+    {
+        return initiative;
+    }
+    public float GetWaterMod()
+    {
+        return waterMod;
+    }
+    public float GetEarthMod()
+    {
+        return earthMod;
+    }
+    public float GetFireMod()
+    {
+        return fireMod;
+    }
+    public float GetAirMod()
+    {
+        return airMod;
+    }
+
 
     public void ModifyHealth(int value) 
     {
@@ -55,9 +106,9 @@ public class PlayerStats : MonoBehaviour
     {
         earthMod += value;
     }
-    public void ModifyWindMod(float value)
+    public void ModifyAirMod(float value)
     {
-        windMod += value;
+        airMod += value;
     }
 
     public void ModifyInitiative(int value)
