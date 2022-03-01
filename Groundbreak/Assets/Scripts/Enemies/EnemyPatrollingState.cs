@@ -28,8 +28,9 @@ public class EnemyPatrollingState : EnemyBaseState
         float x_value = enemy.transform.position.x;
         if (period >= 3)
         {
-            // damage
-            enemy.healthSystem.Damage(20);
+            // deal damage, every 3 seconds for testing. 
+            enemy.DealDamage(40);
+            // enemy.healthSystem.Damage(20);
      
             int random_num_x = random.Next(0,2);
             int random_num_y = random.Next(0,2);
@@ -65,4 +66,3 @@ public class EnemyPatrollingState : EnemyBaseState
 
     }
 }
-

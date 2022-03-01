@@ -74,10 +74,11 @@ public class EnemyStateManager : MonoBehaviour
     {
         currentState.UpdateState(this);
         if(healthSystem.GetHealth() <= 0 && alive == true){
+            // Change to death state !!! just doing logic here for testing. 
             Debug.Log("DEAD");
             alive = false;
             animator.SetBool("alive", false);
-            // wait 1.4 seconds for animation to play
+            // wait 1.8 seconds for animation to play
             Destroy(gameObject, (float)1.80);
             
         }
@@ -86,6 +87,15 @@ public class EnemyStateManager : MonoBehaviour
     public void SwitchState(EnemyBaseState state){
         currentState = state;
         state.EnterState(this);
+    }
+
+    public void DealDamage(int damage){
+        // does the hurt animation.
+        animator.Play("Hurt", 0 ,0.5f);
+        // animator.SetBool("TakeDamage", true);
+        // deals damage via the health system. 
+        healthSystem.Damage(damage);
+        // animator.SetBool("TakeDamage", false);
     }
 
     public void MoveEnemy(float x, float y) 
