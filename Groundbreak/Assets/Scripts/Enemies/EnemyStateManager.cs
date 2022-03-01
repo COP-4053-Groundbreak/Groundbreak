@@ -24,7 +24,11 @@ public class EnemyStateManager : MonoBehaviour
     public EnemyDeathState DeathState = new EnemyDeathState();
 
     // basic stats for enemy, figured i would add it here instead of making a seperate script. Will be easy to acess in other states by just doing enemy.[field].
-    public int health = 5;
+    public int startHealth = 100;
+    public Transform pfHealthBar;
+    public HealthSystem healthSystem;
+
+
     public int movement = 2;
     public int armor;
     public int initiative;
@@ -42,6 +46,27 @@ public class EnemyStateManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // health system stuff 
+        healthSystem = new HealthSystem(startHealth);
+        Debug.Log("Health: " + healthSystem.GetHealthPercent());
+        // healthSystem.Damage(10);
+        Debug.Log("Health: " + healthSystem.GetHealthPercent());
+        // healthSystem.Damage(10);
+        // healthSystem.Damage(10);
+        // healthSystem.Damage(10);
+
+        // healthSystem.Heal(110);
+        // Debug.Log("Health: " + healthSystem.GetHealthPercent());
+
+        // Transform healthBarTransform = Instantiate(pfHealthBar, new Vector3(0, 10), Quaternion.identity );
+        Transform healthBarTransform = Instantiate(pfHealthBar, gameObject.transform);
+        Vector3 healthBarLocalPosition = new Vector3(0, (float)1.50);
+        healthBarTransform.localPosition = healthBarLocalPosition;
+
+        HealthBar healthBar = healthBarTransform.GetComponent<HealthBar>();
+        healthBar.Setup(healthSystem);
+
+        // path finding stuff 
         width = FindObjectOfType<Pathfinding>().width;
         height = FindObjectOfType<Pathfinding>().height;
         pathfinding = FindObjectOfType<Pathfinding>();

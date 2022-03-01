@@ -28,7 +28,9 @@ public class EnemyPatrollingState : EnemyBaseState
         float x_value = enemy.transform.position.x;
         if (period >= 3)
         {
-            
+            // damage
+            enemy.healthSystem.Damage(20);
+     
             int random_num_x = random.Next(0,2);
             int random_num_y = random.Next(0,2);
             var x_random = random_num_x;

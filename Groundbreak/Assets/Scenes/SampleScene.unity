@@ -987,6 +987,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 500948766425687242, guid: 71d23497f347a7246b2d1d79c571b352, type: 3}
+      propertyPath: healthBar
+      value: 
+      objectReference: {fileID: 8601539936103537090, guid: 9c241cd300c70dd42bfc6fd13cca7c4b, type: 3}
+    - target: {fileID: 500948766425687242, guid: 71d23497f347a7246b2d1d79c571b352, type: 3}
+      propertyPath: pfHealthBar
+      value: 
+      objectReference: {fileID: 8601539936103537149, guid: 9c241cd300c70dd42bfc6fd13cca7c4b, type: 3}
     - target: {fileID: 1105098630958343719, guid: 71d23497f347a7246b2d1d79c571b352, type: 3}
       propertyPath: m_Name
       value: SkeletonWarrior
@@ -3096,6 +3104,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8941162943540840822, guid: 55ecc4fe57ef3984ca34951cd293f360, type: 3}
+      propertyPath: healthBar
+      value: 
+      objectReference: {fileID: 8601539936103537090, guid: 9c241cd300c70dd42bfc6fd13cca7c4b, type: 3}
+    - target: {fileID: 8941162943540840822, guid: 55ecc4fe57ef3984ca34951cd293f360, type: 3}
+      propertyPath: pfHealthBar
+      value: 
+      objectReference: {fileID: 8601539936103537149, guid: 9c241cd300c70dd42bfc6fd13cca7c4b, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 55ecc4fe57ef3984ca34951cd293f360, type: 3}
 --- !u!1 &1588569962
