@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -26,6 +27,9 @@ public class PlayerStats : MonoBehaviour
     public float startingEarth = 1.0f;
     public float startingAir = 1.0f;
 
+    public event EventHandler OnHealthChanged;
+    public GameObject playerHealthBar;
+
     private void Start()
     {
         maxHealth = startingHealth;
@@ -37,11 +41,22 @@ public class PlayerStats : MonoBehaviour
         waterMod = startingWater;
         earthMod = startingEarth;
         airMod = startingAir;
+
+        Transform healthBarTransform = Instantiate(playerHealthBar.transform, gameObject.transform);
+        Vector3 healthBarLocalPosition = new Vector3(0, (float)0.5);
+        healthBarTransform.localPosition = healthBarLocalPosition;
+
+        PlayerHealthBar healthBar = healthBarTransform.GetComponent<PlayerHealthBar>();
+        healthBar.Setup(this);
     }
 
     public void DealDamage(int damage) 
     {
         currentHealth = currentHealth - (damage - armor);
+        if (OnHealthChanged != null)
+        {
+            OnHealthChanged(this, EventArgs.Empty);
+        }
         if (currentHealth < 0) 
         {
             // Trigger Game over
@@ -90,6 +105,10 @@ public class PlayerStats : MonoBehaviour
     public void ModifyHealth(int value) 
     {
         currentHealth += value;
+        if (OnHealthChanged != null)
+        {
+            OnHealthChanged(this, EventArgs.Empty);
+        }
     }
     public void ModifyMaxHealth(int value)
     {
@@ -124,6 +143,11 @@ public class PlayerStats : MonoBehaviour
     public void ModifyInitiative(int value)
     {
         initiative += value;
+    }
+
+    public float GetHealthPercent()
+    {
+        return (float)currentHealth / maxHealth;
     }
 
 }

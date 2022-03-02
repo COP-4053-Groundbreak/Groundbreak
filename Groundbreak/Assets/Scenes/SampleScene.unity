@@ -258,7 +258,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 100
   maxHealth: 100
-  movementPerTurn: 200
+  movementPerTurn: 20
   armor: 0
   fireMod: 1
   waterMod: 1
@@ -273,6 +273,7 @@ MonoBehaviour:
   startingWater: 1
   startingEarth: 1
   startingAir: 1
+  playerHealthBar: {fileID: 8601539936103537148, guid: bdea6b40ad769954599a73f9dda10ea6, type: 3}
 --- !u!114 &108454172
 MonoBehaviour:
   m_ObjectHideFlags: 0
