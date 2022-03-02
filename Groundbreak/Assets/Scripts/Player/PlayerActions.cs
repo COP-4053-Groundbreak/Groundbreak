@@ -8,11 +8,12 @@ public class PlayerActions : MonoBehaviour
     [SerializeField] int pickupRange = 1;
     [SerializeField] int throwRange = 1;
     [SerializeField] Element heldTileElement;
+    GameObject[] enemyList;
 
     private void Start()
     {
         heldTileElement = Element.Void;
-
+        enemyList = GameObject.FindGameObjectsWithTag("Enemy");
 
     }
     // Picks up a tile and stores what element it is
@@ -24,6 +25,13 @@ public class PlayerActions : MonoBehaviour
             // Cant pickup tile you are standing on
             if (tile.gameObject.transform.position != this.transform.position) 
             {
+                foreach (GameObject enemy in enemyList) 
+                {
+                    if (enemy.transform.position == tile.transform.position) 
+                    {
+                        return;
+                    }
+                }
                 Element temp = tile.getElement();
                 tile.setElement(heldTileElement);
                 heldTileElement = temp;
