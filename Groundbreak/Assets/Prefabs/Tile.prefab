@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4586667636392655712}
   - component: {fileID: 5430701685202069959}
-  - component: {fileID: 6654832691269167618}
   - component: {fileID: -4315496068596745259}
+  - component: {fileID: 6654832691269167618}
   - component: {fileID: -340918407611052291}
   - component: {fileID: 795746740234941543}
   m_Layer: 0
@@ -86,23 +86,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6654832691269167618
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5107521877984174614}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7ee9ead276f2a54c8396051580b7777, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gridManager: {fileID: 0}
-  myElement: 16
-  myEffect: {fileID: 0}
-  neighbors: []
-  isThrowable: 1
 --- !u!61 &-4315496068596745259
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -129,6 +112,24 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &6654832691269167618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5107521877984174614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7ee9ead276f2a54c8396051580b7777, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gridManager: {fileID: 0}
+  tileHolder: {fileID: 0}
+  myElement: 16
+  myEffect: {fileID: 0}
+  neighbors: []
+  isThrowable: 1
 --- !u!114 &-340918407611052291
 MonoBehaviour:
   m_ObjectHideFlags: 0
