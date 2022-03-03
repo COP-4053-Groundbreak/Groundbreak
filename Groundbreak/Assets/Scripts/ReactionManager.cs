@@ -41,10 +41,15 @@ public class ReactionManager : MonoBehaviour
         Element staticElem = staticTile.getElement();
 
         // No reaction on void tiles (How are you even throwing these?) or throwing base
-        if (thrownElem == Element.Void || staticElem == Element.Void || thrownElem == Element.Base)
+        if (thrownElem == Element.Void || thrownElem == Element.Base)
             return null;
         // Throw element onto base => base tile becomes of that element
         if (staticElem == Element.Base){
+            staticTile.setElement(thrownElem);
+            return null;
+        }
+
+        if (staticElem == Element.Void){
             staticTile.setElement(thrownElem);
             return null;
         }
@@ -68,6 +73,7 @@ public class ReactionManager : MonoBehaviour
 
             return null;
         } 
+        
         Debug.Log("Effect will happen!");
         // Two elements are interacting, create an effect!
         GameObject a = Instantiate(effectPrefab, staticTile.transform.position, Quaternion.identity);

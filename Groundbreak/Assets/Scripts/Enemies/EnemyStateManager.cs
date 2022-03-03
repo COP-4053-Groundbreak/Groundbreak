@@ -25,12 +25,14 @@ public class EnemyStateManager : MonoBehaviour
     public EnemyIdleState IdleState = new EnemyIdleState();
     public EnemyDeathState DeathState = new EnemyDeathState();
 
+    // attacking
+    public int attackCounter = 0;
+
     // health stuff
     public int startHealth = 100;
     public Transform pfHealthBar;
     public HealthSystem healthSystem;
     public bool alive = true;
-
 
     public int movement = 2;
     public int armor;
@@ -46,6 +48,8 @@ public class EnemyStateManager : MonoBehaviour
     // stuff for pathfinding.
     public int width;
     public int height;
+
+    public float period = 0.0f;
     // Start is called before the first frame update
     void Start()
     {
@@ -80,14 +84,49 @@ public class EnemyStateManager : MonoBehaviour
             currentState.UpdateState(this);
         }
         if(healthSystem.GetHealth() <= 0 && alive == true){
-            // Change to death state !!! just doing logic here for testing. 
-            Debug.Log("DEAD");
-            alive = false;
-            animator.SetBool("alive", false);
-            // wait 1.8 seconds for animation to play TAKE LOOP OFF AND DESTROY LATER. 
-            Destroy(gameObject, (float)1.80);
-            
+            Destroy(gameObject, (float)3);
+            SwitchState(DeathState);
         }
+
+
+        // eventually this will move into attack state, and i will check if it is a warrior skeleton. Maybe a switch case depending on which skeleton it is, and do the correct attack.
+        // switch(type),  case warrior :code below: , case archer :new code for distance shooting(should be easy just multiple these values by 2 or however far it can shoot):
+        // get enemy pos
+        Vector2 enemyPos = gameObject.transform.position;
+        // Debug.Log("Eenemy pos " + enemyPos);
+        //get player pos
+        GameObject player = GameObject.FindGameObjectWithTag("Player"); // .transform.position; //gameObject.GetComponent<Player>().transform.position;
+        Vector2 playerPos = player.transform.position;
+        // Debug.Log("Player position: " + playerPos);
+        var distanceBetweenPlayerAndEnemy = Vector2.Distance(enemyPos,playerPos);
+        // Debug.Log("Distance between enemy and player: " + distanceBetweenPlayerAndEnemy);
+        // check if melee enemy is within a 1 block radius of player. && will have to check which state we are in and if its enemy turn (not implemented yet)
+        if(distanceBetweenPlayerAndEnemy <= 1.42 && attackCounter == 0){
+            // play animation.
+            animator.SetBool("isAttacking", true);
+            // sets attackCounter to 1 so we do not attack again and play the animation twice.
+            attackCounter = 1;
+
+            // deal damage to player
+            player.GetComponent<PlayerStats>().DealDamage(30);
+            Debug.Log("Enemy Attacked the Player!!!");
+        }
+        else if(distanceBetweenPlayerAndEnemy > 1.42){
+            // reset the attack counter so we can attack again if enemy goes back in range. 
+            attackCounter = 0;
+        }
+        if(attackCounter == 1){
+            // Debug.Log("We attacked!");
+            Invoke("TurnOffAnimation", 1);
+            // wait 1 second turn off animation. 
+        }
+        
+        
+    }
+
+     private void TurnOffAnimation()
+    {
+        animator.SetBool("isAttacking", false);
     }
 
     public void SwitchState(EnemyBaseState state){
@@ -108,6 +147,7 @@ public class EnemyStateManager : MonoBehaviour
     {
         // Find a path
         slidingPath = pathfinding.FindPathWaypoints((int)gameObject.transform.position.x, (int)gameObject.transform.position.y, (int)x, (int)y);
+        // check if enemy is on tile. 
         if (slidingPath == null) 
         {
             return;
@@ -144,6 +184,7 @@ public class EnemyStateManager : MonoBehaviour
             var targetPos = path[waypointIndex].position;
             var movementThisFrame = slideSpeed * Time.deltaTime;
             var newPos = (gameObject.transform.position.x + targetPos.x) / (int)2;
+            Debug.Log(newPos);
             // Debug.Log("Game object Transform pos: " + gameObject.transform.position.x);
             // Debug.Log("new pos: " + newPos);
             if(newPos > transform.position.x){

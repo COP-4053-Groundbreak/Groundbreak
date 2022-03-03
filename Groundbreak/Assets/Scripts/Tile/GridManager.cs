@@ -7,6 +7,7 @@ public class GridManager : MonoBehaviour
     [SerializeField] private int width, height;
     [SerializeField] private Tile tilePrefab;
     [SerializeField] private Transform cam;
+    [SerializeField] GameObject tileHolder;
 
     public static Tile[,] grid;
 
@@ -24,7 +25,7 @@ public class GridManager : MonoBehaviour
         // Place down tiles and set their elements
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
-                grid[x,y] = Instantiate(tilePrefab, new Vector3(x,y), Quaternion.identity);
+                grid[x,y] = Instantiate(tilePrefab, new Vector3(x,y), Quaternion.identity, tileHolder.transform);
                 grid[x,y].name = $"Tile {x} {y}";
                 grid[x,y].setElement(arr[Random.Range(0, arr_len)]);
             }

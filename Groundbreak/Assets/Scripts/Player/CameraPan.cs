@@ -10,16 +10,22 @@ public class CameraPan : MonoBehaviour
     [SerializeField] float minZoom = 10f;
 
     GameObject player;
+
+    TurnLogic turnLogic;
     private void Start()
     {
         player = FindObjectOfType<PlayerMovement>().gameObject;
+        turnLogic = FindObjectOfType<TurnLogic>();
 
     }
     // Update is called once per frame
     void Update()
     {
         Camera camera = GetComponent<Camera>();
-        MoveCamera();
+        if (turnLogic.isCombatPhase) 
+        {
+            MoveCamera();
+        }
 
         CameraZoom(camera);
 
