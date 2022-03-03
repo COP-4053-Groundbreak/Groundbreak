@@ -24,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
     FreeMoveManager freeMoveManager;
     [SerializeField] float freeMoveSpeed = 5f;
     TurnLogic turnLogic;
-    Rigidbody2D rigidbody2D;
+    Rigidbody2D playerRigidbody2D;
     bool isFreemoving = false;
 
     // Start is called before the first frame update
@@ -40,8 +40,8 @@ public class PlayerMovement : MonoBehaviour
 
         freeMoveManager = FindObjectOfType<FreeMoveManager>();
         turnLogic = FindObjectOfType<TurnLogic>();
-        rigidbody2D = FindObjectOfType<Rigidbody2D>();
-        rigidbody2D.freezeRotation = true;
+        playerRigidbody2D = GetComponent<Rigidbody2D>();
+        playerRigidbody2D.freezeRotation = true;
     }
 
     private Vector2 freeMovementDistance = Vector3.zero;
@@ -62,6 +62,15 @@ public class PlayerMovement : MonoBehaviour
             {
                 playerAnimator.SetBool("IsWalking", false);
             }
+
+            if (xInput <= 0)
+            {
+                playerSpriteRenderer.flipX = true;
+            }
+            else 
+            {
+                playerSpriteRenderer.flipX = false;
+            }
         }
         // Issliding set when we move a player, in update actually move the sprite every frame;
         else if (isSliding)
@@ -73,9 +82,9 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!turnLogic.isCombatPhase)
         {
-            rigidbody2D.MovePosition(rigidbody2D.position + freeMovementDistance * freeMoveSpeed * Time.fixedDeltaTime);
+            playerRigidbody2D.MovePosition(playerRigidbody2D.position + freeMovementDistance * freeMoveSpeed * Time.fixedDeltaTime);
         }
-        rigidbody2D.freezeRotation = true;
+        playerRigidbody2D.freezeRotation = true;
     }
 
 

@@ -45,6 +45,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isMovementPhase: 1
   isThrowPhase: 0
+  isCombatPhase: 0
   endTurnButton: {fileID: 0}
   moveButton: {fileID: 0}
   throwTileButton: {fileID: 0}
+  battleCanvas: {fileID: 0}

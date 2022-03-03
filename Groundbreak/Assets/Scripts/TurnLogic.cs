@@ -17,6 +17,7 @@ public class TurnLogic : MonoBehaviour
     [SerializeField] Button endTurnButton;
     [SerializeField] Button moveButton;
     [SerializeField] Button throwTileButton;
+    [SerializeField] GameObject battleCanvas;
     private void Start()
     {
         moveButton.interactable = false;
@@ -82,11 +83,13 @@ public class TurnLogic : MonoBehaviour
     }
     public void StartCombat()
     {
+        battleCanvas.SetActive(true);
         isCombatPhase = true;
     }
 
     public void EndCombat()
     {
+        battleCanvas.SetActive(false);
         isCombatPhase = false;
     }
 }

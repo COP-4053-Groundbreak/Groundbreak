@@ -22,9 +22,13 @@ public class CameraPan : MonoBehaviour
     void Update()
     {
         Camera camera = GetComponent<Camera>();
-        if (turnLogic.isCombatPhase) 
+        if (turnLogic.isCombatPhase)
         {
             MoveCamera();
+        }
+        else 
+        {
+            transform.position = new Vector3(player.transform.position.x, player.transform.position.y, transform.position.z);
         }
 
         CameraZoom(camera);
