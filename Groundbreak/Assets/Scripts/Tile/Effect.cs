@@ -31,17 +31,23 @@ public class Effect : MonoBehaviour {
                 break;
             default: // Storm
                 effectName = "Storm";
-                // for each neighbor of tile under effect:
-                    // if enemy is on tile
-                    // move enemy way from effect this means:
-                        // enemy.x += enemy.x - this.x
-                        // enemy.y += enemy.y - this.y;
+                // Check each tile adjacent to tile effect is on
+                // Each player or enemy should get pushed by this
+                foreach (Tile adjTile in tileUnderEffect.neighbors){
+                    if (adjTile.gameObjectAbove != null){
+                        if (adjTile.gameObjectAbove.tag == "Player" || adjTile.gameObjectAbove.tag == "Enemy"){
+                            // Push characters
+                            adjTile.gameObjectAbove.transform.position += adjTile.transform.position - this.transform.position;
+                        }
+                    }
+                }
                 break;
         }
         GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>($"Sprites/Effects/{effectName}");
         GridManager.grid[(int)transform.position.x, (int)transform.position.y].setEffect(this);
     }
 
+    //TODO: Fix GO moving out of tile while another remains on top
     private void OnTriggerEnter2D(Collider2D other) {
         Debug.Log("Entered effect collider!");
         if (other.gameObject.tag == "Player" || other.gameObject.tag == "Enemy"){
@@ -69,8 +75,9 @@ public class Effect : MonoBehaviour {
                     break;
                 default: // Storm
                     Debug.Log("Entered Storm!");
-                    // Move GO back to where they came from
-                    // Need to figure out how to get where unit came from
+                    // Move GO back to random position of neighbors
+                    int[] arr = {-1,1};
+                    other.gameObject.transform.position += new Vector3(arr[Random.Range(0,1)], arr[Random.Range(0,1)], 0);
                     break;
             }
         }
