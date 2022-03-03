@@ -80,13 +80,8 @@ public class EnemyStateManager : MonoBehaviour
             currentState.UpdateState(this);
         }
         if(healthSystem.GetHealth() <= 0 && alive == true){
-            // Change to death state !!! just doing logic here for testing. 
-            Debug.Log("DEAD");
-            alive = false;
-            animator.SetBool("alive", false);
-            // wait 1.8 seconds for animation to play TAKE LOOP OFF AND DESTROY LATER. 
-            Destroy(gameObject, (float)1.80);
-            
+            Destroy(gameObject, (float)3);
+            SwitchState(DeathState);
         }
     }
 

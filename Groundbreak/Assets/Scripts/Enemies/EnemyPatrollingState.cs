@@ -30,7 +30,7 @@ public class EnemyPatrollingState : EnemyBaseState
         if (period >= 3)
         {
             // deal damage, every 3 seconds for testing. 
-            enemy.DealDamage(5);
+            enemy.DealDamage(100);
             // enemy.healthSystem.Damage(20);
             // Debug.Log("X-Value current : " + x_value);
      
