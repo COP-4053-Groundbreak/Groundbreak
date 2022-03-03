@@ -21,7 +21,6 @@ public class PlayerMovement : MonoBehaviour
     Animator playerAnimator;
     SpriteRenderer playerSpriteRenderer;
 
-    FreeMoveManager freeMoveManager;
     [SerializeField] float freeMoveSpeed = 5f;
     TurnLogic turnLogic;
     Rigidbody2D playerRigidbody2D;
@@ -38,7 +37,6 @@ public class PlayerMovement : MonoBehaviour
         pathfinding = FindObjectOfType<Pathfinding>();
         currentMovementRemaining = movementSpeed;
 
-        freeMoveManager = FindObjectOfType<FreeMoveManager>();
         turnLogic = FindObjectOfType<TurnLogic>();
         playerRigidbody2D = GetComponent<Rigidbody2D>();
         playerRigidbody2D.freezeRotation = true;

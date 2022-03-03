@@ -18,6 +18,10 @@ public class TurnLogic : MonoBehaviour
     [SerializeField] Button moveButton;
     [SerializeField] Button throwTileButton;
     [SerializeField] GameObject battleCanvas;
+
+    Tile[] tiles;
+    [SerializeField] GameObject empty;
+
     private void Start()
     {
         moveButton.interactable = false;
@@ -91,5 +95,34 @@ public class TurnLogic : MonoBehaviour
     {
         battleCanvas.SetActive(false);
         isCombatPhase = false;
+        CreateVoidColliders();
     }
+
+    void DestroyVoidColliders() 
+    {
+        tiles = FindObjectsOfType<Tile>();
+        foreach (Tile tile in tiles)
+        {
+            if (tile.getElement() == Element.Void)
+            {
+                Transform child = Instantiate(empty.transform, tile.transform);
+                child.gameObject.AddComponent<BoxCollider2D>();
+            }
+        }
+    }
+
+
+    void CreateVoidColliders() 
+    {
+        tiles = FindObjectsOfType<Tile>();
+        foreach (Tile tile in tiles)
+        {
+            if (tile.getElement() == Element.Void)
+            {
+                Transform child = Instantiate(empty.transform, tile.transform);
+                child.gameObject.AddComponent<BoxCollider2D>();
+            }
+        }
+    }
+
 }
