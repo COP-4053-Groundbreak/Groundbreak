@@ -9,6 +9,7 @@ public class TurnLogic : MonoBehaviour
     bool isPlayerTurn = true;
     public bool isMovementPhase = true;
     public bool isThrowPhase = false;
+    public bool isCombatPhase = false;
     float dummyTurnTime = 1f;
     PlayerMovement playerMovement;
     PlayerActions playerActions;
@@ -21,6 +22,7 @@ public class TurnLogic : MonoBehaviour
         moveButton.interactable = false;
         playerMovement = FindObjectOfType<PlayerMovement>();
         playerActions = FindObjectOfType<PlayerActions>();
+        StartCombat();
     }
     // Called by end turn button
     public void EndTurnPressed() 
@@ -77,5 +79,14 @@ public class TurnLogic : MonoBehaviour
         endTurnButton.interactable = true;
         playerMovement.PossiblyShowTile();
 
+    }
+    public void StartCombat()
+    {
+        isCombatPhase = true;
+    }
+
+    public void EndCombat()
+    {
+        isCombatPhase = false;
     }
 }

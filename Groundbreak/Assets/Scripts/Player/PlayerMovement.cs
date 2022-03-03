@@ -20,6 +20,13 @@ public class PlayerMovement : MonoBehaviour
 
     Animator playerAnimator;
     SpriteRenderer playerSpriteRenderer;
+
+    FreeMoveManager freeMoveManager;
+    [SerializeField] float freeMoveSpeed = 5f;
+    TurnLogic turnLogic;
+    Rigidbody2D rigidbody2D;
+    bool isFreemoving = false;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -30,20 +37,52 @@ public class PlayerMovement : MonoBehaviour
         UpdateTilesAfterMove();
         pathfinding = FindObjectOfType<Pathfinding>();
         currentMovementRemaining = movementSpeed;
+
+        freeMoveManager = FindObjectOfType<FreeMoveManager>();
+        turnLogic = FindObjectOfType<TurnLogic>();
+        rigidbody2D = FindObjectOfType<Rigidbody2D>();
+        rigidbody2D.freezeRotation = true;
     }
+
+    private Vector2 freeMovementDistance = Vector3.zero;
+
     private void Update()
     {
-        
+        if (!turnLogic.isCombatPhase) 
+        {
+            float xInput = Input.GetAxisRaw("Horizontal");
+            float yInput = Input.GetAxisRaw("Vertical");
+            isFreemoving = (xInput != 0 || yInput != 0);
+            freeMovementDistance = new Vector2(xInput, yInput);
+            if (isFreemoving)
+            {
+                playerAnimator.SetBool("IsWalking", true);
+            }
+            else 
+            {
+                playerAnimator.SetBool("IsWalking", false);
+            }
+        }
         // Issliding set when we move a player, in update actually move the sprite every frame;
-        if (isSliding) 
+        else if (isSliding)
         {
             SlideThisObjectAlongPath(slidingPath);
         }
     }
+    private void FixedUpdate()
+    {
+        if (!turnLogic.isCombatPhase)
+        {
+            rigidbody2D.MovePosition(rigidbody2D.position + freeMovementDistance * freeMoveSpeed * Time.fixedDeltaTime);
+        }
+        rigidbody2D.freezeRotation = true;
+    }
+
+
     // Move player to a spot if they have the movement points remaining
     public void MovePlayer(int distance, float x, float y) 
     {
-        if (isSliding) 
+        if (isSliding || !turnLogic.isCombatPhase) 
         {
             return;
         }
@@ -117,7 +156,7 @@ public class PlayerMovement : MonoBehaviour
     // Draws line along the path the character takes
     public void ShowLine(float x, float y) 
     {
-        if (isSliding || FindObjectOfType<TurnLogic>().isThrowPhase) 
+        if (isSliding || turnLogic.isThrowPhase || !turnLogic.isCombatPhase) 
         {
             return;
         }
