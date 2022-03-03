@@ -86,7 +86,7 @@ public class Tile : MonoBehaviour {
                 newColor = Color.green;
                 break;
             case Element.Earth: // brown
-                newColor = new Color(188, 152, 106);
+                newColor = new Color(210f/255f, 180f/255f, 140f/255f);
                 break;
             case Element.Fire: // red
                 newColor = Color.red;
