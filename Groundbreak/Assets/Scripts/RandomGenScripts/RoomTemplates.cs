@@ -9,7 +9,13 @@ public class RoomTemplates : MonoBehaviour
     public GameObject[] leftRooms;
     public GameObject[] rightRooms;
 
-    public GameObject closedRoom;
+    //Rooms for Corner Gltich
+    public GameObject TB;
+    public GameObject BL;
+    public GameObject RB;
+    public GameObject TL;
+    public GameObject TR;
+    public GameObject RL;
 
     public List<GameObject> rooms;
 
