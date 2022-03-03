@@ -3,7 +3,7 @@ using UnityEngine;
 public class EnemyIdleState : EnemyBaseState
 {
     public override void EnterState(EnemyStateManager enemy){
-        Debug.Log("We have switched from Patrolling to IDLE State!!!!");
+        Debug.Log("We are in IDLE STATE!!!!!!!!!!!!!!!!!!!!!!!!!");
     }
 
     public override void UpdateState(EnemyStateManager enemy){

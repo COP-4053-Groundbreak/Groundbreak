@@ -13,10 +13,16 @@ public class TurnLogic : MonoBehaviour
     // Determines if combat is taking place
     public bool isCombatPhase = false;
 
-    float dummyTurnTime = 1f;
+    float dummyTurnTime = 3f;
     // Player movment and actions references
     PlayerMovement playerMovement;
     PlayerActions playerActions;
+
+    // enemy state manager
+    // EnemyStateManager enemyStateManager;
+    EnemyStateManager[] enemyStateManagers;
+
+
 
     // Buttons and canvass references 
     [SerializeField] Button endTurnButton;
@@ -35,6 +41,8 @@ public class TurnLogic : MonoBehaviour
         moveButton.interactable = false;
         playerMovement = FindObjectOfType<PlayerMovement>();
         playerActions = FindObjectOfType<PlayerActions>();
+        // grab all the enemy state managers in the room. 
+        enemyStateManagers = UnityEngine.Object.FindObjectsOfType<EnemyStateManager>();
         StartCombat();
     }
 
@@ -83,12 +91,26 @@ public class TurnLogic : MonoBehaviour
     IEnumerator DummyEnemyTurn() 
     {
         Debug.Log("AI started their turn");
+        // enemyStateManager.isEnemyTurn = true;
+        // Set enemy turn to true. 
+        for(int i = 0; i < enemyStateManagers.Length; i++){
+            enemyStateManagers[i].isEnemyTurn = true;
+        }
+        // return from function and come back here. 
         yield return new WaitForSeconds(dummyTurnTime);
+        // set attack counter back to 0 so we can attack again if the player is still in range next turn. 
+        for(int i = 0; i < enemyStateManagers.Length; i++){
+            enemyStateManagers[i].attackCounter = 0;
+        }
         Debug.Log("AI ended their turn");
 
         // Reset player's movement points for new turn
         playerMovement.ResetMovement();
         playerActions.ResetActions();
+        // setting turn back to false. 
+        for(int i = 0; i < enemyStateManagers.Length; i++){
+            enemyStateManagers[i].isEnemyTurn = false;
+        }
         isPlayerTurn = true;
 
         // Enable End Turn Button
