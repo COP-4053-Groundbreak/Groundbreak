@@ -17,6 +17,7 @@ public class Chest : MonoBehaviour
 
     }
 
+    // Add item to player when they collide
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player" && full) 
@@ -26,6 +27,7 @@ public class Chest : MonoBehaviour
         }
     }
 
+    // Wait half a second before opening for game feel
     IEnumerator WaitAndOpenChest()
     {
         yield return new WaitForSeconds(0.5f);

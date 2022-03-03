@@ -7,28 +7,37 @@ using TMPro;
 public class TurnLogic : MonoBehaviour
 {
     bool isPlayerTurn = true;
+    // Determines what action the player is currently performing
     public bool isMovementPhase = true;
     public bool isThrowPhase = false;
+    // Determines if combat is taking place
     public bool isCombatPhase = false;
+
     float dummyTurnTime = 1f;
+    // Player movment and actions references
     PlayerMovement playerMovement;
     PlayerActions playerActions;
 
+    // Buttons and canvass references 
     [SerializeField] Button endTurnButton;
     [SerializeField] Button moveButton;
     [SerializeField] Button throwTileButton;
     [SerializeField] GameObject battleCanvas;
 
+    // List of all tiles for free roaming pathfinding
     Tile[] tiles;
+    // Empty gameobject to instantiate under void tiles to give them colliders
     [SerializeField] GameObject empty;
 
     private void Start()
     {
+        // Start in movephase and grey out move button
         moveButton.interactable = false;
         playerMovement = FindObjectOfType<PlayerMovement>();
         playerActions = FindObjectOfType<PlayerActions>();
         StartCombat();
     }
+
     // Called by end turn button
     public void EndTurnPressed() 
     {
@@ -47,6 +56,7 @@ public class TurnLogic : MonoBehaviour
         }
     }
 
+    // Switch to move phase
     public void MovePressed()
     {
         moveButton.interactable = false;
@@ -56,6 +66,7 @@ public class TurnLogic : MonoBehaviour
         isThrowPhase = false;
     }
 
+    // Switch to throw / pick up phase
     public void ThrowPressed()
     {
         if (!throwTileButton) 
@@ -85,12 +96,17 @@ public class TurnLogic : MonoBehaviour
         playerMovement.PossiblyShowTile();
 
     }
+
+    // Starts combat in a room
     public void StartCombat()
     {
         battleCanvas.SetActive(true);
         isCombatPhase = true;
+        // Probably not needed as we never start combat in the same room again but just incase
+        DestroyVoidColliders();
     }
 
+    // Ends combat in a room and generates colliders for impassable terrain
     public void EndCombat()
     {
         battleCanvas.SetActive(false);
@@ -98,20 +114,38 @@ public class TurnLogic : MonoBehaviour
         CreateVoidColliders();
     }
 
+    // Destroys all children of void tiles
     void DestroyVoidColliders() 
     {
         tiles = FindObjectsOfType<Tile>();
+        GameObject[] allChildren = new GameObject[transform.childCount];
+        int i = 0;
+
         foreach (Tile tile in tiles)
         {
             if (tile.getElement() == Element.Void)
             {
-                Transform child = Instantiate(empty.transform, tile.transform);
-                child.gameObject.AddComponent<BoxCollider2D>();
+                i = 0;
+                //Find all child obj and store to that array
+                foreach (Transform child in transform)
+                {
+                    allChildren[i] = child.gameObject;
+                    i += 1;
+                }
+                //Now destroy them
+                foreach (GameObject child in allChildren)
+                {
+                    DestroyImmediate(child.gameObject);
+                }
             }
         }
+
+
+
+
     }
 
-
+    // Creates children for void tiles and gives them box colliders
     void CreateVoidColliders() 
     {
         tiles = FindObjectsOfType<Tile>();

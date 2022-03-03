@@ -5,6 +5,7 @@ using UnityEngine;
 public class PassiveItemManager : MonoBehaviour
 {
     [SerializeField] float pickUpTime = 1f;
+    // Sprites of items
     [SerializeField] Sprite HealthRingSprite;
     [SerializeField] Sprite SpeedBootsSprite;
     [SerializeField] Sprite LightShieldSprite;
@@ -26,6 +27,7 @@ public class PassiveItemManager : MonoBehaviour
         EquipHealthRing();
     }
 
+    // Adding items
     public void EquipHealthRing() 
     {
         playerStats.ModifyHealth(50);
@@ -65,6 +67,7 @@ public class PassiveItemManager : MonoBehaviour
         playerStats.ModifyInitiative(2);
     }
 
+    // Enumerator to have a delay before item is added
     IEnumerator WaitAndAddItem(GameObject chest)
     {
         chest.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = HealthRingSprite;

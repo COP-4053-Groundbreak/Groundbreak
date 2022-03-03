@@ -6,6 +6,7 @@ public class PlayerHealthBar : MonoBehaviour
 {
     PlayerStats playerStats;
     
+    // Player healthbar modified from enemy healthbar
     public void Setup(PlayerStats playerStats)
     {
         this.playerStats = playerStats;
@@ -20,6 +21,6 @@ public class PlayerHealthBar : MonoBehaviour
 
     private void Update()
     {
-        // transform.Find("Bar").localScale = new Vector3(healthSystem.GetHealthPercent(), 2);
+        //transform.Find("Bar").localScale = new Vector3(healthSystem.GetHealthPercent(), 2);
     }
 }

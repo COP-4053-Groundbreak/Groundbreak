@@ -6,52 +6,65 @@ public class PlayerMovement : MonoBehaviour
 {
     // 10 movement speed is 1 tile, used so we can have say 2 tiles take 3 points of movement without needing float math
     [SerializeField] int movementSpeed;
+    [SerializeField] int currentMovementRemaining;
     Pathfinding pathfinding;
 
-    [SerializeField] int currentMovementRemaining;
-
+    // Gameobjects to instantiate the arrow that shows the path
     [SerializeField] GameObject arrowPrefab;
     [SerializeField] GameObject pathHolder;
 
+    // Speed the character slides at during turn based movement
     [SerializeField] float slideSpeed = 1f;
     List<Transform> slidingPath;
+
+    // Bool to check when the player is moving during turn based movement
     bool isSliding = false;
     int waypointIndex = 0;
 
     Animator playerAnimator;
     SpriteRenderer playerSpriteRenderer;
+    Rigidbody2D playerRigidbody2D;
 
+    // Speed the character slides at during non turn based movement
     [SerializeField] float freeMoveSpeed = 5f;
     TurnLogic turnLogic;
-    Rigidbody2D playerRigidbody2D;
+    // Bool to check when the player is moving during non turn based movement
     bool isFreemoving = false;
 
     // Start is called before the first frame update
     private void Start()
     {
+        // Get references
         playerAnimator = GetComponent<Animator>();
         playerSpriteRenderer = GetComponentInChildren<SpriteRenderer>();
-
         movementSpeed = gameObject.GetComponent<PlayerStats>().GetMovementPerTurn();
-        UpdateTilesAfterMove();
         pathfinding = FindObjectOfType<Pathfinding>();
-        currentMovementRemaining = movementSpeed;
-
         turnLogic = FindObjectOfType<TurnLogic>();
         playerRigidbody2D = GetComponent<Rigidbody2D>();
+
+        // update the distance to the player for each tile's internal value
+        UpdateTilesAfterMove();
+        
+        // Set current movement to the speed stored in player stats
+        currentMovementRemaining = movementSpeed;
+        
+        // Stops the player from rotating if they collide at non 90 degree angles
         playerRigidbody2D.freezeRotation = true;
     }
-
+    // Vector for free moving speed
     private Vector2 freeMovementDistance = Vector3.zero;
 
     private void Update()
     {
         if (!turnLogic.isCombatPhase) 
         {
+            // Get movement input and check if its 0
             float xInput = Input.GetAxisRaw("Horizontal");
             float yInput = Input.GetAxisRaw("Vertical");
             isFreemoving = (xInput != 0 || yInput != 0);
             freeMovementDistance = new Vector2(xInput, yInput);
+
+            // Set animation for running
             if (isFreemoving)
             {
                 playerAnimator.SetBool("IsWalking", true);
@@ -61,6 +74,7 @@ public class PlayerMovement : MonoBehaviour
                 playerAnimator.SetBool("IsWalking", false);
             }
 
+            // Set sprite flip for running
             if (xInput <= 0)
             {
                 playerSpriteRenderer.flipX = true;
@@ -76,6 +90,7 @@ public class PlayerMovement : MonoBehaviour
             SlideThisObjectAlongPath(slidingPath);
         }
     }
+    // FixedUpdate for rigid body calculations
     private void FixedUpdate()
     {
         if (!turnLogic.isCombatPhase)
@@ -113,17 +128,20 @@ public class PlayerMovement : MonoBehaviour
     }
 
     // Takes a transform path, slides sprite along the path
+    // Called every frame we are moving
     void SlideThisObjectAlongPath(List<Transform> path)
     {
         
         if (waypointIndex <= path.Count - 1)
         {
             var targetPos = path[waypointIndex].position;
+            // calculate how much movement we will do this frame
             var movementThisFrame = slideSpeed * Time.deltaTime;
             ClearLine();
 
             var newPos = (gameObject.transform.position.x + targetPos.x) / (int)2;
 
+            // Flip sprite if we move left
             if (newPos < transform.position.x)
             {
                 playerSpriteRenderer.flipX = true;
@@ -133,8 +151,9 @@ public class PlayerMovement : MonoBehaviour
                 playerSpriteRenderer.flipX = false;
             }
 
-
+            // Slide along path however much we do this frame
             transform.position = Vector2.MoveTowards(transform.position, targetPos, movementThisFrame);
+            // When we get to the waypoint, move to the next
             if (transform.position == targetPos)
             {
                 waypointIndex++;
@@ -142,10 +161,12 @@ public class PlayerMovement : MonoBehaviour
         }
         else 
         {
+            // Reset after we reach the end of the move
             waypointIndex = 0;
             isSliding = false;
             playerAnimator.SetBool("IsWalking", false);
             UpdateTilesAfterMove();
+            // Check if mouse is above tile and show line
             PossiblyShowTile();
         }
     }
@@ -163,15 +184,18 @@ public class PlayerMovement : MonoBehaviour
     // Draws line along the path the character takes
     public void ShowLine(float x, float y) 
     {
+        // Dont show line if we are in throw phase, are moving, or not in combat
         if (isSliding || turnLogic.isThrowPhase || !turnLogic.isCombatPhase) 
         {
             return;
         }
+        // Calculate the path to take
         List<Transform> path = pathfinding.FindPathWaypoints((int)gameObject.transform.position.x, (int)gameObject.transform.position.y, (int)x, (int)y);
         if (path != null)
         {
             path.Add(transform);
             Transform endNode = path[0];
+            // Instantiate all arrows along the path
             if (endNode.gameObject.GetComponent<TilePathNode>().fCost <= currentMovementRemaining)
             {
                 for (int i = 0; i < path.Count - 1; i++)
@@ -208,6 +232,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    // Destroy all the arrows
     public void ClearLine() 
     {
         foreach (Transform child in pathHolder.transform) 

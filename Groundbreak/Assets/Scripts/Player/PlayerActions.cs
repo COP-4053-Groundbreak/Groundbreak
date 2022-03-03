@@ -27,14 +27,18 @@ public class PlayerActions : MonoBehaviour
             {
                 foreach (GameObject enemy in enemyList) 
                 {
+                    // Breaks the function if we try to pick up a tile an enemy is standing on
                     if (enemy.transform.position == tile.transform.position) 
                     {
                         return;
                     }
                 }
+                // swap held elements
                 Element temp = tile.getElement();
                 tile.setElement(heldTileElement);
                 heldTileElement = temp;
+
+                // Set walkable
                 if (tile.getElement() == Element.Void)
                 {
                     tile.gameObject.GetComponent<TilePathNode>().isWalkable = false;
@@ -43,6 +47,7 @@ public class PlayerActions : MonoBehaviour
                 {
                     tile.gameObject.GetComponent<TilePathNode>().isWalkable = true;
                 }
+                // Can only pick up one tile a turn
                 canPickUpTile = false;
                 Debug.Log(heldTileElement);
             }

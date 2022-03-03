@@ -7,6 +7,7 @@ using System;
 
 public class PlayerStatsUIManager : MonoBehaviour
 {
+    // Text objects that display the value of the stat
     [SerializeField] GameObject healthText;
     [SerializeField] GameObject armorText;
     [SerializeField] GameObject speedText;
@@ -43,6 +44,7 @@ public class PlayerStatsUIManager : MonoBehaviour
         }
     }
 
+    // Update the stat text
     private void DisplayStats()
     {
         healthText.GetComponent<TextMeshProUGUI>().text = playerStats.GetHealth().ToString() + "/" + playerStats.GetMaxHealth().ToString();
@@ -56,6 +58,7 @@ public class PlayerStatsUIManager : MonoBehaviour
         airText.GetComponent<TextMeshProUGUI>().text = (playerStats.GetFireMod() * 100).ToString() + "%";
     }
 
+    // Color the stats green if they are buffed, red if they are degraded
     private void ColorStats() 
     {
         // Color Health

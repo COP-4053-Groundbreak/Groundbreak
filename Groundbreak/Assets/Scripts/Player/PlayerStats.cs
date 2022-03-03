@@ -18,6 +18,7 @@ public class PlayerStats : MonoBehaviour
     // Inititive for who goes when during turns
     [SerializeField] int initiative = 5;
 
+    // Starting variables to compare to
     public int startingHealth = 100;
     public int startingMovement = 20;
     public int startingArmor = 0;
@@ -42,6 +43,7 @@ public class PlayerStats : MonoBehaviour
         earthMod = startingEarth;
         airMod = startingAir;
 
+        // Create healthbar
         Transform healthBarTransform = Instantiate(playerHealthBar.transform, gameObject.transform);
         Vector3 healthBarLocalPosition = new Vector3(0, (float)0.5);
         healthBarTransform.localPosition = healthBarLocalPosition;
@@ -63,6 +65,7 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
+    // Getters
     public int GetHealth() 
     {
         return currentHealth;
@@ -71,7 +74,6 @@ public class PlayerStats : MonoBehaviour
     {
         return maxHealth;
     }
-
     public int GetArmor()
     {
         return armor;
@@ -101,7 +103,7 @@ public class PlayerStats : MonoBehaviour
         return airMod;
     }
 
-
+    // Modifiers
     public void ModifyHealth(int value) 
     {
         currentHealth += value;
@@ -145,6 +147,7 @@ public class PlayerStats : MonoBehaviour
         initiative += value;
     }
 
+    // Get health as a percent for healthbar
     public float GetHealthPercent()
     {
         return (float)currentHealth / maxHealth;

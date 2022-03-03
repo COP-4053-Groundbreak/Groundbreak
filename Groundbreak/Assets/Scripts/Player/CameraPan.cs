@@ -18,10 +18,10 @@ public class CameraPan : MonoBehaviour
         turnLogic = FindObjectOfType<TurnLogic>();
 
     }
-    // Update is called once per frame
     void Update()
     {
         Camera camera = GetComponent<Camera>();
+        // If combat move camera normally, otherwise lock it to the player 
         if (turnLogic.isCombatPhase)
         {
             MoveCamera();
