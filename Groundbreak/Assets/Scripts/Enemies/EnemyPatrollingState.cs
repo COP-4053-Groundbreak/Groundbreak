@@ -11,7 +11,6 @@ public class EnemyPatrollingState : EnemyBaseState
 
     public override void EnterState(EnemyStateManager enemy){
         Debug.Log("Hello from the EnterState method of the Patrolling state!!!");
-        // enemy.MoveEnemy(0,1);
     }
 
     public override void UpdateState(EnemyStateManager enemy){
@@ -30,7 +29,7 @@ public class EnemyPatrollingState : EnemyBaseState
         if (period >= 3)
         {
             // deal damage, every 3 seconds for testing. 
-            enemy.DealDamage(100);
+            enemy.DealDamage(10);
             // enemy.healthSystem.Damage(20);
             // Debug.Log("X-Value current : " + x_value);
      

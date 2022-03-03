@@ -1741,11 +1741,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1105098630958343722, guid: 71d23497f347a7246b2d1d79c571b352, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1105098630958343722, guid: 71d23497f347a7246b2d1d79c571b352, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1105098630958343722, guid: 71d23497f347a7246b2d1d79c571b352, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2552,6 +2552,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 948249746210068045, guid: 55ecc4fe57ef3984ca34951cd293f360, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2072216480951150567, guid: 55ecc4fe57ef3984ca34951cd293f360, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -4505,6 +4509,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1521670366984945095, guid: b83ea3cb950d81d47a3631b522191215, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3857721949896168738, guid: b83ea3cb950d81d47a3631b522191215, type: 3}
       propertyPath: m_Name
       value: SkeletonWizard
