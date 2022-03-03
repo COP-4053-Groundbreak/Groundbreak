@@ -75,6 +75,7 @@ public class TurnLogic : MonoBehaviour
 
         // Enable End Turn Button
         endTurnButton.interactable = true;
+        playerMovement.PossiblyShowTile();
 
     }
 }

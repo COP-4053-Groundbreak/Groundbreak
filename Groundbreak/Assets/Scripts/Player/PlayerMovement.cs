@@ -17,9 +17,15 @@ public class PlayerMovement : MonoBehaviour
     List<Transform> slidingPath;
     bool isSliding = false;
     int waypointIndex = 0;
+
+    Animator playerAnimator;
+    SpriteRenderer playerSpriteRenderer;
     // Start is called before the first frame update
     private void Start()
     {
+        playerAnimator = GetComponent<Animator>();
+        playerSpriteRenderer = GetComponentInChildren<SpriteRenderer>();
+
         movementSpeed = gameObject.GetComponent<PlayerStats>().GetMovementPerTurn();
         UpdateTilesAfterMove();
         pathfinding = FindObjectOfType<Pathfinding>();
@@ -27,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private void Update()
     {
+        
         // Issliding set when we move a player, in update actually move the sprite every frame;
         if (isSliding) 
         {
@@ -54,6 +61,7 @@ public class PlayerMovement : MonoBehaviour
             currentMovementRemaining -= endNode.fCost;
             slidingPath.Reverse();
             isSliding = true;
+            playerAnimator.SetBool("IsWalking", true);
             UpdateTilesAfterMove();
         }
     }
@@ -67,6 +75,19 @@ public class PlayerMovement : MonoBehaviour
             var targetPos = path[waypointIndex].position;
             var movementThisFrame = slideSpeed * Time.deltaTime;
             ClearLine();
+
+            var newPos = (gameObject.transform.position.x + targetPos.x) / (int)2;
+
+            if (newPos < transform.position.x)
+            {
+                playerSpriteRenderer.flipX = true;
+            }
+            else if (newPos > transform.position.x)
+            {
+                playerSpriteRenderer.flipX = false;
+            }
+
+
             transform.position = Vector2.MoveTowards(transform.position, targetPos, movementThisFrame);
             if (transform.position == targetPos)
             {
@@ -77,13 +98,14 @@ public class PlayerMovement : MonoBehaviour
         {
             waypointIndex = 0;
             isSliding = false;
+            playerAnimator.SetBool("IsWalking", false);
             UpdateTilesAfterMove();
             PossiblyShowTile();
         }
     }
 
     // If the player is mousing over a tile when movement ends, show arrow to that tile
-    private void PossiblyShowTile()
+    public void PossiblyShowTile()
     {
         RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), -Vector2.up);
         if (hit) 
