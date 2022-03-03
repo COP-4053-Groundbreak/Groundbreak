@@ -20,11 +20,10 @@ public class PlayerActions : MonoBehaviour
     public void PickUpTile(Tile tile) 
     {
         // Checks you have an action to pick up tile, the tile's element is void, and that its within range
-        if (canPickUpTile && tile.getElement() != Element.Void && tile.gameObject.GetComponent<TileClickable>().GetDistance() <= pickupRange) 
-        {
-            // Cant pickup tile you are standing on
-            if (tile.gameObject.transform.position != this.transform.position) 
-            {
+        if (canPickUpTile && tile.getElement() != Element.Void && tile.gameObject.GetComponent<TileClickable>().GetDistance() <= pickupRange) {
+
+            // Cant pickup tile with somehting on top of it
+            if (tile.gameObjectAbove == null){
                 foreach (GameObject enemy in enemyList) 
                 {
                     // Breaks the function if we try to pick up a tile an enemy is standing on

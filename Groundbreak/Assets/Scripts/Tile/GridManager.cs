@@ -35,6 +35,8 @@ public class GridManager : MonoBehaviour
             a.findNeighbors();
             a.setLF((LandFeature)Random.Range(0,6));
         }
+
+        grid[0,0].setElement(Element.Base);
     }
     void setCameraPos(){
         cam.transform.position = new Vector3((float)width/2 - 0.5f, (float)height/2 - 0.5f, -10);

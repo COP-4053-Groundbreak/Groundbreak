@@ -9,6 +9,8 @@ public class Tile : MonoBehaviour {
     public Element myElement = Element.Base;
     // All tiles start out with a blank land feature
     LandFeature myLandFeature = LandFeature.None;
+
+    public GameObject gameObjectAbove = null;
     public Effect myEffect = null;
     int movementModifier = 0;
     public List<Tile> neighbors;
@@ -111,5 +113,15 @@ public class Tile : MonoBehaviour {
     }
     public int getMovementModifier(){
         return movementModifier;
+    }
+    private void OnTriggerEnter2D(Collider2D other) {
+        if (other.gameObject.tag != "Effect"){
+            gameObjectAbove = other.gameObject;
+        }
+    }
+    private void OnTriggerExit(Collider other) {
+        if (other.gameObject.tag != "Effect"){
+            gameObjectAbove = null;
+        }
     }
 }
