@@ -37,7 +37,8 @@ public class Effect : MonoBehaviour {
                     if (adjTile.gameObjectAbove != null){
                         if (adjTile.gameObjectAbove.tag == "Player" || adjTile.gameObjectAbove.tag == "Enemy"){
                             // Push characters
-                            adjTile.gameObjectAbove.transform.position += adjTile.transform.position - this.transform.position;
+                            Debug.Log($"Pushing {adjTile.gameObjectAbove.name}");
+                            pushGO(this.gameObject, adjTile.transform.position - this.transform.position, 1, adjTile.gameObjectAbove);
                         }
                     }
                 }
@@ -76,10 +77,47 @@ public class Effect : MonoBehaviour {
                 default: // Storm
                     Debug.Log("Entered Storm!");
                     // Move GO back to random position of neighbors
-                    int[] arr = {-1,1};
-                    other.gameObject.transform.position += new Vector3(arr[Random.Range(0,1)], arr[Random.Range(0,1)], 0);
+                    int[] arr = {-1,0,1};
+                    
+                    int[] rand = {arr[Random.Range(0,3)], arr[Random.Range(0,3)]};
+                    
+                    if (rand[0] == 0 && rand[1] == 0){
+                        rand[0]++;
+                    }
+                    
+                    pushGO(this.gameObject, new Vector2(rand[0], rand[1]), 1, other.gameObject);
                     break;
             }
         }
+    }
+
+    void pushGO(GameObject pushOrigin, Vector2 pushDir, int numPushed, GameObject pushable){
+        // Move the game object
+        int[] arr = {-1, 1};
+
+        // If statements adjust GO pos so it's centered. Since GO gets move before they
+        // reach the center of the tile, we need to figure out how to center them.
+        // GO coming from right
+        if (pushOrigin.transform.position.x < pushable.transform.position.x)
+            pushable.transform.position = new Vector3((int)pushable.transform.position.x, pushable.transform.position.y, 0)
+                                          + new Vector3(pushDir.x * numPushed, 0, 0); 
+        else // GO coming from left
+            pushable.transform.position = new Vector3((int)(pushable.transform.position.x + .5), pushable.transform.position.y, 0)
+                                          + new Vector3(pushDir.x * numPushed, 0, 0); 
+        // GO coming from above
+        if (pushOrigin.transform.position.y < pushable.transform.position.y)
+            pushable.transform.position  = new Vector3(pushable.transform.position.x, (int)pushable.transform.position.y, 0)
+                                           + new Vector3(0, pushDir.y * numPushed);
+        else // GO coming from under
+            pushable.transform.position  = new Vector3(pushable.transform.position.x, (int)(pushable.transform.position.y + .5) , 0)
+                                           + new Vector3(0, pushDir.y * numPushed);
+        // Make sure if they are a player or enemy they don't 
+        // TODO: Implement enemy 
+        if (pushable.tag == "Enemy"){
+            
+        } else if (pushable.tag == "Player"){
+            pushable.GetComponent<PlayerMovement>().endMove();
+        }
+        Debug.Log($"Player new position is {pushable.transform.position}");
     }
 }

@@ -18,7 +18,7 @@ public class PlayerMovement : MonoBehaviour
     List<Transform> slidingPath;
 
     // Bool to check when the player is moving during turn based movement
-    bool isSliding = false;
+    public bool isSliding = false;
     int waypointIndex = 0;
 
     Animator playerAnimator;
@@ -162,13 +162,17 @@ public class PlayerMovement : MonoBehaviour
         else 
         {
             // Reset after we reach the end of the move
-            waypointIndex = 0;
-            isSliding = false;
-            playerAnimator.SetBool("IsWalking", false);
-            UpdateTilesAfterMove();
-            // Check if mouse is above tile and show line
-            PossiblyShowTile();
+            endMove();
         }
+    }
+
+    public void endMove(){
+        waypointIndex = 0;
+        isSliding = false;
+        playerAnimator.SetBool("IsWalking", false);
+        UpdateTilesAfterMove();
+        // Check if mouse is above tile and show line
+        PossiblyShowTile();
     }
 
     // If the player is mousing over a tile when movement ends, show arrow to that tile
