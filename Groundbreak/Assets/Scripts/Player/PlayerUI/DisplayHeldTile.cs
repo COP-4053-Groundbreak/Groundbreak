@@ -11,4 +11,10 @@ public class DisplayHeldTile : MonoBehaviour
        GetComponent<Image>().sprite = tile.GetComponent<SpriteRenderer>().sprite;
        GetComponent<Image>().color = tile.GetComponent<Renderer>().material.color;
     }
+
+    public void ClearTile() 
+    {
+        GetComponent<Image>().sprite = null;
+        GetComponent<Image>().color = Color.clear;
+    }
 }

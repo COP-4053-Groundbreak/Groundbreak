@@ -73,6 +73,7 @@ public class PlayerActions : MonoBehaviour
             tile.GetComponent<TilePathNode>().isWalkable = true;
             heldTileElement = Element.Void;
         }
+        FindObjectOfType<DisplayHeldTile>().ClearTile();
     }
 
     public void ResetActions() 
