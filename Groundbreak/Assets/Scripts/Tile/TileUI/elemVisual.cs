@@ -22,10 +22,12 @@ public class elemVisual : MonoBehaviour
     // Should probably optimize but works for now
     private void Update() {
         if (Input.GetKeyDown(KeyCode.Space)) {
-            setVisibility(!isVisible);
+            setVisibility(!isVisible); // Invert visibility
         }
     }
 
+    // Sets whether the UI is visible or not. GameObject ALWAYS exists and is active,
+    // not sure if this is what's best for performance
     private void setVisibility(bool visible){
         if (visible){
             this.gameObject.transform.localScale = new Vector3(1, 1, 1);
@@ -36,9 +38,10 @@ public class elemVisual : MonoBehaviour
         }
     }
 
+    // Sets symbol of UI to whatever element its parent tile is
     public void setSymbol(){
         idx = ReactionManager.elementToIdx(transform.parent.GetComponent<Tile>().getElement());
-        Debug.Log((idx>=0 && idx < 4) ? "In Bounds of array": $"Out of bounds of array val {idx}");
+         // Debug.Log((idx>=0 && idx < 4) ? "In Bounds of array": $"Out of bounds of array val {idx}");
         this.gameObject.GetComponent<SpriteRenderer>().sprite = (idx < 4) ? elementSymbols[idx] : null;
     }
 }
