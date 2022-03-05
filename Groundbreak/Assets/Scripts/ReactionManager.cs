@@ -106,4 +106,21 @@ public class ReactionManager : MonoBehaviour
         return null;
     }
 
+    public static int elementToIdx(Element a){
+        switch(a) {
+            case Element.Air:
+                Debug.Log("Air index");
+                return 0;
+            case Element.Earth:
+                return 1;
+            case Element.Fire:
+                return 2;
+            case Element.Water:
+                return 3;
+            case Element.Base:
+                return 4;
+            default:
+                return 5;
+        }
+    }
 }

@@ -18,9 +18,6 @@ public class Tile : MonoBehaviour {
 
     // Finds up to 8 neighbors around this tile. Does so using a PhysicsOverlap circle which detects
     // the colliders of other tiles
-    public void setEffect(Effect newEffect){
-        myEffect = newEffect;
-    }
     public void findNeighbors(){
         
         Collider2D[] neighborColliders = Physics2D.OverlapCircleAll(this.transform.position, 1.0f);
@@ -44,6 +41,9 @@ public class Tile : MonoBehaviour {
                 addNeighbor(GridManager.grid[x + add[i, 0], y + add[i, 1]]);
         }*/
         
+    }
+     public void setEffect(Effect newEffect){
+        myEffect = newEffect;
     }
     public void setLF(LandFeature newLand){
         string text = "";
@@ -107,6 +107,9 @@ public class Tile : MonoBehaviour {
 
         // Following for visualization purposes
         this.GetComponent<Renderer>().material.SetColor("_Color", newColor);
+        // Set Tile Element symbol to new element
+        if (transform.childCount > 0)
+            transform.GetChild(0).GetComponent<elemVisual>().setSymbol();
     }
     public void setMovementModifier(int a){
         movementModifier = a;
