@@ -75,11 +75,11 @@ public class PlayerMovement : MonoBehaviour
             }
 
             // Set sprite flip for running
-            if (xInput <= 0)
+            if (xInput <= -0.1)
             {
                 playerSpriteRenderer.flipX = true;
             }
-            else 
+            else if(xInput >= 0.1)
             {
                 playerSpriteRenderer.flipX = false;
             }

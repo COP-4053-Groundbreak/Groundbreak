@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class PlayerActions : MonoBehaviour
 {
@@ -32,6 +33,10 @@ public class PlayerActions : MonoBehaviour
                         return;
                     }
                 }
+
+                // Update UI for tile held
+                FindObjectOfType<DisplayHeldTile>().DisplayTile(tile.gameObject);
+
                 // swap held elements
                 Element temp = tile.getElement();
                 tile.setElement(heldTileElement);
@@ -48,6 +53,7 @@ public class PlayerActions : MonoBehaviour
                 }
                 // Can only pick up one tile a turn
                 canPickUpTile = false;
+                
                 Debug.Log(heldTileElement);
             }
         }

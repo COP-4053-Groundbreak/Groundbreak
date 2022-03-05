@@ -130,6 +130,6 @@ public class PassiveItemManager : MonoBehaviour
                 break;
         }
 
-        //chest.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = null;
+        chest.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = null;
     }
 }
