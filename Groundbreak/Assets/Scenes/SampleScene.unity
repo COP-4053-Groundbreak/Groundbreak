@@ -245,6 +245,7 @@ MonoBehaviour:
   arrowPrefab: {fileID: 4625954176909107163, guid: 73b9a418b03aefa47b4470fe69e7849f, type: 3}
   pathHolder: {fileID: 740047101}
   slideSpeed: 2
+  isSliding: 0
   freeMoveSpeed: 2
 --- !u!114 &108454171
 MonoBehaviour:
@@ -290,7 +291,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canPickUpTile: 1
   pickupRange: 1
-  throwRange: 1
+  throwRange: 3
   heldTileElement: 0
 --- !u!95 &108454174
 Animator:
@@ -686,14 +687,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickUpTime: 1
-  HealthRingSprite: {fileID: 21300000, guid: 25c7880381fdea745830d6be25b9d9cb, type: 3}
-  SpeedBootsSprite: {fileID: 0}
-  LightShieldSprite: {fileID: 0}
-  FirePendantSprite: {fileID: 0}
-  WaterPendantSprite: {fileID: 0}
-  EarthPendantSprite: {fileID: 0}
-  WindPendantSprite: {fileID: 0}
-  InitiativeRingSprite: {fileID: 0}
+  HealthRingSprite: {fileID: 21300000, guid: 5a69f81037ca2ed4881a6ccaaf0900ec, type: 3}
+  SpeedBootsSprite: {fileID: 21300000, guid: 761b54938906f36468682efe003271e7, type: 3}
+  LightShieldSprite: {fileID: 21300000, guid: 62077686143319047a278bb90f8067a3, type: 3}
+  FirePendantSprite: {fileID: 21300000, guid: 282a2a18a7201ad45a02e887f07902da, type: 3}
+  WaterPendantSprite: {fileID: 21300000, guid: 4eeabec31872df340b9e10939991cd45, type: 3}
+  EarthPendantSprite: {fileID: 21300000, guid: 8f42fcfdd550a184ead03b52582c9a99, type: 3}
+  WindPendantSprite: {fileID: 21300000, guid: f4c647a0ace477b459be3ac1b67925d5, type: 3}
+  InitiativeStaffSprite: {fileID: 21300000, guid: 72d8090d81e970448bc3cade9559327f, type: 3}
 --- !u!4 &493575582
 Transform:
   m_ObjectHideFlags: 0

@@ -58,6 +58,7 @@ public class PlayerActions : MonoBehaviour
     // tile game object passed in and the held tile or whatever way you want to implement it
     public void ThrowTile(GameObject tile) 
     {
+        Debug.Log(tile.GetComponent<TileClickable>().GetDistance() + " , " + throwRange);
         if (heldTileElement != Element.Void && tile.GetComponent<TileClickable>().GetDistance() <= throwRange) 
         {
             Debug.Log($"Threw a(n) {heldTileElement} tile at a {tile.GetComponent<Tile>().myElement}!");
