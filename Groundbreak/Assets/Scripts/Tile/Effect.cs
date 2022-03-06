@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class Effect : MonoBehaviour {
 
@@ -7,17 +8,34 @@ public class Effect : MonoBehaviour {
     string effectName;
     Tile tileUnderEffect;
 
+    int effectDuration;
+
+    [SerializeField] const int MAGMA_DMG = 25;
+    [SerializeField] const int SANDSTORM_DMG = 5;
+    [SerializeField] const int SANDSTORM_RANGE = 2;
+    [SerializeField] const int STORM_RANGE = 2;
+    [SerializeField] const int STORM_DMG = 5;
+    // Damage from two units colliding from a push or pull
+    [SerializeField] const int CRASH_DMG = 5;
+    
+    public GridManager gridManager;
 
     // Some effects should be processed immediately upon creation (i.e. mud, smoke)
     public void Initialize(Element a, Element b){
-          id = (int)a + (int)b;  
+          id = (int)a + (int)b;
+          gridManager = FindObjectOfType<GridManager>();  
           tileUnderEffect = GridManager.grid[(int)transform.position.x, (int)transform.position.y];
-          switch(id){
-            case ((int)Element.Air + (int)Element.Earth): // Sandstorm
+          switch(id) {
+              case ((int)Element.Air + (int)Element.Earth): // Sandstorm PUSHES
                 effectName = "Sandstorm";
+                Debug.Log("Sandstorm down effect time!"); 
+                sandStormDownEffect(tileUnderEffect, SANDSTORM_RANGE, new List<Tile>(), new List<GameObject>());
                 break;
             case ((int)Element.Earth + (int)Element.Fire): // Magma
                 effectName = "Magma";
+                if (tileUnderEffect.gameObjectAbove.tag == "Player" || tileUnderEffect.gameObjectAbove.tag == "Enemy"){
+                    dealDamageToChar(tileUnderEffect.gameObject, MAGMA_DMG);
+                }
                 break;
             case ((int)Element.Water + (int)Element.Earth): // Mud
                 effectName = "Mud";
@@ -29,43 +47,42 @@ public class Effect : MonoBehaviour {
             case ((int)Element.Air + (int)Element.Fire): // Spreadfire
                 effectName = "Spreadfire";
                 break;
-            default: // Storm
+            default: // Storm PULLS
                 effectName = "Storm";
-                // Check each tile adjacent to tile effect is on
-                // Each player or enemy should get pushed by this
-                foreach (Tile adjTile in tileUnderEffect.neighbors){
-                    if (adjTile.gameObjectAbove != null){
-                        if (adjTile.gameObjectAbove.tag == "Player" || adjTile.gameObjectAbove.tag == "Enemy"){
-                            // Push characters
-                            Debug.Log($"Pushing {adjTile.gameObjectAbove.name}");
-                            pushGO(this.gameObject, adjTile.transform.position - this.transform.position, 1, adjTile.gameObjectAbove);
-                        }
-                    }
-                }
+                Debug.Log("Storm down effect time!"); 
+                stormDownEffect(tileUnderEffect, STORM_RANGE, new List<Tile>(), new List<GameObject>());
                 break;
         }
         GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>($"Sprites/Effects/{effectName}");
         GridManager.grid[(int)transform.position.x, (int)transform.position.y].setEffect(this);
     }
 
-    //TODO: Fix GO moving out of tile while another remains on top
     private void OnTriggerEnter2D(Collider2D other) {
         Debug.Log("Entered effect collider!");
         if (other.gameObject.tag == "Player" || other.gameObject.tag == "Enemy"){
             switch(id){
                 case ((int)Element.Air + (int)Element.Earth): // Sandstorm
                     Debug.Log("Entered sandstorm!");
+                    // Move GO back to random position of neighbors
+                    int[] arr = {-1,0,1};
+                    int[] rand = {arr[Random.Range(0,3)], arr[Random.Range(0,3)]};
+                    
+                    // To make sure they go in SOME direction, though increases odds for one direction
+                    if (rand[0] == 0 && rand[1] == 0){
+                        rand[0]++;
+                    }
+                    dealDamageToChar(other.gameObject, SANDSTORM_DMG);
+                    pushGO(this.gameObject, new Vector2(rand[0], rand[1]), 1, other.gameObject);
                     break;
                 case ((int)Element.Earth + (int)Element.Fire): // Magma
                     Debug.Log("Entered magma!");
-                    other.gameObject.GetComponentInParent<PlayerStats>().DealDamage(25);
+                    dealDamageToChar(other.gameObject, MAGMA_DMG);
                     break;
                 case ((int)Element.Water + (int)Element.Earth): // Mud
                     // Don't think anything needs to be done if mud is entered, it's an effect that
                     // impacts the player BEFORE entering it and not while on it.
                     break;
                 case ((int)Element.Water + (int)Element.Fire): // Smoke
-                    
                     break;
                 case ((int)Element.Air + (int)Element.Fire): // Spreadfire
                     Debug.Log("Entered spreadfire");
@@ -75,49 +92,172 @@ public class Effect : MonoBehaviour {
                     // with lit fire
                     break;
                 default: // Storm
-                    Debug.Log("Entered Storm!");
-                    // Move GO back to random position of neighbors
-                    int[] arr = {-1,0,1};
-                    
-                    int[] rand = {arr[Random.Range(0,3)], arr[Random.Range(0,3)]};
-                    
-                    if (rand[0] == 0 && rand[1] == 0){
-                        rand[0]++;
-                    }
-                    
-                    pushGO(this.gameObject, new Vector2(rand[0], rand[1]), 1, other.gameObject);
+                    // Temporarily set player movement to 1 
                     break;
             }
         }
     }
-
+    // Pushes pushable towards pushOrigin in pushDir direction numPushed tiles
     void pushGO(GameObject pushOrigin, Vector2 pushDir, int numPushed, GameObject pushable){
-        // Move the game object
-        int[] arr = {-1, 1};
+        Debug.Log($"Pushing in {pushDir.ToString()}");
+        // Use a variable first so as to not modify player position. Check if someone there. If so,
+        // deal more damage and don't move into that tile
+        int postPushX = 0;
+        int postPushY = 0;
+        
+        // "Normalize" vector while keeping negative, then decide which neighbor to go to
+        pushDir = new Vector2(pushDir.x/pushDir.magnitude, pushDir.y/pushDir.magnitude);
+        if (pushDir.x > 0) { pushDir.x = 1;} else if (pushDir.x < 0) { pushDir.x = -1;}
+        if (pushDir.y > 0) { pushDir.y = 1;} else if (pushDir.y < 0) { pushDir.y = -1;}
 
-        // If statements adjust GO pos so it's centered. Since GO gets move before they
-        // reach the center of the tile, we need to figure out how to center them.
-        // GO coming from right
+        Debug.Log($"Adjusted pushDir is {pushDir}");
+
+        // Calculate x position        
+        postPushX = (int)(pushable.transform.position.x + pushDir.x * numPushed);
+        // If player walks into range, they won't be in center of tile. This centers them.
         if (pushOrigin.transform.position.x < pushable.transform.position.x)
-            pushable.transform.position = new Vector3((int)pushable.transform.position.x, pushable.transform.position.y, 0)
-                                          + new Vector3(pushDir.x * numPushed, 0, 0); 
-        else // GO coming from left
-            pushable.transform.position = new Vector3((int)(pushable.transform.position.x + .5), pushable.transform.position.y, 0)
-                                          + new Vector3(pushDir.x * numPushed, 0, 0); 
-        // GO coming from above
+            postPushX = (int)(postPushX + 0.5f);
+
+        // Calculate y position 
+        postPushY = (int)(pushable.transform.position.y + pushDir.y * numPushed);
+        // If player walks into range, they won't be in center of tile. This centers them.
         if (pushOrigin.transform.position.y < pushable.transform.position.y)
-            pushable.transform.position  = new Vector3(pushable.transform.position.x, (int)pushable.transform.position.y, 0)
-                                           + new Vector3(0, pushDir.y * numPushed);
-        else // GO coming from under
-            pushable.transform.position  = new Vector3(pushable.transform.position.x, (int)(pushable.transform.position.y + .5) , 0)
-                                           + new Vector3(0, pushDir.y * numPushed);
-        // Make sure if they are a player or enemy they don't 
-        // TODO: Implement enemy 
+            postPushY = (int)(postPushY + 0.5f);
+        
+        // Prevent out of bounds pushes
+        if (postPushX < 0) {postPushX = 0;}
+        else if (postPushX >= gridManager.getWidth()) {postPushX = gridManager.getWidth() - 1;}
+        if (postPushY < 0) {postPushY = 0;}
+        else if (postPushY >= gridManager.getWidth()) {postPushY = gridManager.getHeight() - 1;}
+
+        Tile endTile = GridManager.grid[postPushX, postPushY];
+        
+        // There's a character at the tile we're being pushed into
+        if (endTile.gameObjectAbove != null && (endTile.gameObjectAbove.tag == "Enemy" || endTile.gameObjectAbove.tag == "Player")){
+            dealDamageToChar(endTile.gameObjectAbove, CRASH_DMG);
+            postPushX = (int)pushable.transform.position.x;
+            postPushY = (int)pushable.transform.position.y;
+        }
+
+        // Set character position
+        pushable.transform.position = new Vector2(postPushX, postPushY);
+
         if (pushable.tag == "Enemy"){
             
         } else if (pushable.tag == "Player"){
             pushable.GetComponent<PlayerMovement>().endMove();
         }
         Debug.Log($"Player new position is {pushable.transform.position}");
+    }
+    // Pulls pullable towards pullOrigin in pullDir direction numPulled tiles 
+    void pullGO(GameObject pullOrigin, Vector2 pullDir, int numPulled, GameObject pullable){
+        Debug.Log($"Pulling in {pullDir.ToString()}");
+        // Use a variable first so as to not modify player position. Check if someone there. If so,
+        // deal more damage and don't move into that tile
+        int postPullX = 0;
+        int postPullY = 0;
+        
+        // "Normalize" vector while keeping negative, then decide which neighbor to go to
+        pullDir = new Vector2(pullDir.x/pullDir.magnitude, pullDir.y/pullDir.magnitude);
+        if (pullDir.x > 0) { pullDir.x = 1;} else if (pullDir.x < 0) { pullDir.x = -1;}
+        if (pullDir.y > 0) { pullDir.y = 1;} else if (pullDir.y < 0) { pullDir.y = -1;}
+
+        Debug.Log($"Adjusted pullDir is {pullDir}");
+
+        // Calculate x position        
+        postPullX = (int)(pullable.transform.position.x + pullDir.x * numPulled);
+        // If player walks into range, they won't be in center of tile. This centers them.
+        if (pullOrigin.transform.position.x > pullable.transform.position.x)
+            postPullX = (int)(postPullX + 0.5f);
+
+        // Calculate y position 
+        postPullY = (int)(pullable.transform.position.y + pullDir.y * numPulled);
+        // If player walks into range, they won't be in center of tile. This centers them.
+        if (pullOrigin.transform.position.y > pullable.transform.position.y)
+            postPullY = (int)(postPullY + 0.5f);
+        
+        // Prevent out of bounds pulls
+        if (postPullX < 0) {postPullX = 0;}
+        else if (postPullX >= gridManager.getWidth()) {postPullX = gridManager.getWidth() - 1;}
+        if (postPullY < 0) {postPullY = 0;}
+        else if (postPullY >= gridManager.getWidth()) {postPullY = gridManager.getHeight() - 1;}
+
+        Tile endTile = GridManager.grid[postPullX, postPullY];
+        // There's a character at the tile we're being pulled into
+        if (endTile.gameObjectAbove != null && (endTile.gameObjectAbove.tag == "Enemy" || endTile.gameObjectAbove.tag == "Player")){
+            dealDamageToChar(endTile.gameObjectAbove, CRASH_DMG);
+            postPullX = (int)pullable.transform.position.x;
+            postPullY = (int)pullable.transform.position.y;
+        }
+
+        // Set character position
+        pullable.transform.position = new Vector2(postPullX, postPullY);
+
+        if (pullable.tag == "Enemy"){
+            
+        } else if (pullable.tag == "Player"){
+            pullable.GetComponent<PlayerMovement>().endMove();
+        }
+        Debug.Log($"Player new position is {pullable.transform.position}");
+    }
+    private void dealDamageToChar(GameObject character, int damageAmount){
+        if (character.gameObject.tag == "Player")
+            character.gameObject.GetComponentInParent<PlayerStats>().DealDamage(damageAmount);
+        else
+            character.gameObject.GetComponent<EnemyStateManager>().DealDamage(damageAmount);
+    }
+    // Works recursively. Pulls units x tiles away, only ONCE
+    private void stormDownEffect(Tile startTile, int range, List<Tile> neighborsVisited, List<GameObject> charactersPulled){
+        // Always happens
+        neighborsVisited.Add(startTile);
+        // Base case: We've looked as many tiles away as desired
+        if (range == 0){
+            return;
+        }
+
+        // Look at current tiles neighbors
+        foreach(Tile neighbor in startTile.neighbors){
+            // If haven't visited before, do effect
+            if (!neighborsVisited.Contains(neighbor)){
+                Debug.Log($"Unvisited tile at {neighbor.name}");
+                // Make sure there's something to pull and that it's a character
+                if (neighbor.gameObjectAbove != null && (neighbor.gameObjectAbove.tag == "Enemy" || neighbor.gameObjectAbove.tag == "Player")){
+                    if (!charactersPulled.Contains(neighbor.gameObjectAbove)){
+                        dealDamageToChar(neighbor.gameObjectAbove, STORM_DMG);
+                        pullGO(this.gameObject, this.transform.position - neighbor.transform.position, 1, neighbor.gameObjectAbove);
+                        charactersPulled.Add(neighbor.gameObject);
+                    }
+                }
+                // Repeat but looking at one less set of neighbors, starting at neighbor
+                stormDownEffect(neighbor, range - 1, neighborsVisited, charactersPulled);
+            }
+        }
+    }
+
+    private void sandStormDownEffect(Tile startTile, int range, List<Tile> neighborsVisited, List<GameObject> charactersPushed){
+        // Always happens
+        neighborsVisited.Add(startTile);
+        // Base case: We've looked as many tiles away as desired
+        if (range == 0){
+            return;
+        }
+
+        // Look at current tiles neighbors
+        foreach(Tile neighbor in startTile.neighbors){
+            // If haven't visited before, do effect
+            if (!neighborsVisited.Contains(neighbor)){
+                Debug.Log($"Unvisited tile at {neighbor.name}");
+                // Make sure there's something to pull and that it's a character
+                if (neighbor.gameObjectAbove != null && (neighbor.gameObjectAbove.tag == "Enemy" || neighbor.gameObjectAbove.tag == "Player")){
+                    if (!charactersPushed.Contains(neighbor.gameObjectAbove)){
+                        dealDamageToChar(neighbor.gameObjectAbove, SANDSTORM_DMG);
+                        pushGO(this.gameObject, neighbor.transform.position -  this.transform.position, 1, neighbor.gameObjectAbove);
+                        charactersPushed.Add(neighbor.gameObject);
+                    }
+                }
+                // Repeat but looking at one less set of neighbors, starting at neighbor
+                sandStormDownEffect(neighbor, range - 1, neighborsVisited, charactersPushed);
+            }
+        }
     }
 }
