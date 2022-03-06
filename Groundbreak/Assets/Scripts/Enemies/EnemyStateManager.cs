@@ -100,7 +100,6 @@ public class EnemyStateManager : MonoBehaviour
         // check if its enemy turn, if it is we will check if we are close enough to player. If not move. If we are in range attack.
         // if enemy turn
         if(isEnemyTurn){
-            Debug.Log("WE ARE IN ");
             // check distance
             // get enemy pos
             Vector2 enemyPos = gameObject.transform.position;
