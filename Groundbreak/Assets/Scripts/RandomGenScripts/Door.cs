@@ -4,10 +4,22 @@ using UnityEngine;
 
 public class Door : MonoBehaviour
 {
-    [SerializeField] private Transform destination;
+    public Transform destination;
+    [SerializeField] private int doorDirection;
+    /*
+    1 -->need bottom door
+    2 -->need top door
+    3 -->need left door
+    4 -->need right door
+     */
 
     public Transform GetDestination()
     {
         return destination;
+    }
+
+    public Transform ChangeDestination(Transform currentDoor)
+    {
+        return null;
     }
 }

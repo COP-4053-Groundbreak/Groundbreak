@@ -5,12 +5,18 @@ using UnityEngine;
 public class RoomSpawner : MonoBehaviour
 {
     public int openingDirection;
+    public GameObject currentDoor;
     //1 -->need bottom door
     //2 -->need top door
     //3 -->need left door
     //4 -->need right door
-
+ 
     private RoomTemplates templates;
+    private GameObject newRoom;
+    //private GameObject newDoor;
+    private Door newDoor;
+    private Transform destination;
+
     private int rand;
     private bool spawned = false;
 
@@ -33,12 +39,17 @@ public class RoomSpawner : MonoBehaviour
                 //Need to spawn a room with a BOTTOM door
                 rand = Random.Range(0, templates.bottomRooms.Length);
                 Instantiate(templates.bottomRooms[rand], transform.position, templates.bottomRooms[rand].transform.rotation);
+
             }
             else if (openingDirection == 2)
             {
                 //Need to spawn a room with a TOP door
                 rand = Random.Range(0, templates.topRooms.Length);
-                Instantiate(templates.topRooms[rand], transform.position, templates.topRooms[rand].transform.rotation);
+                //Instantiate(templates.topRooms[rand], transform.position, templates.topRooms[rand].transform.rotation);
+                newRoom = (GameObject)GameObject.Instantiate(templates.topRooms[rand], transform.position, templates.topRooms[rand].transform.rotation);
+                newDoor = newRoom.transform.Find("Door2").GetComponent<Door>();
+                //newDoor.destination = 
+                //newDoor.
             }
             else if (openingDirection == 3)
             {
