@@ -147,21 +147,23 @@ public class EnemyStateManager : MonoBehaviour
                 attackCounter = 0;
 
                 listOfTiles = pathfinding.FindPathWaypoints((int)enemyPos.x, (int)enemyPos.y, (int)playerPos.x, (int)playerPos.y);
-                // lets strip off first tile, thats the player tile we do not want to land RIGHT ON the player, just next to him.
-                listOfTiles.RemoveAt(0);
-                // null check if there is no path, it would crash. ex: enemy is stuck in a wall of void. 
                 if(listOfTiles != null){
-                    int sizeOfList = listOfTiles.Count;
-                    // check if we have 2 tiles left in list, if so just move to [1].
-                    if(sizeOfList == 2){
-                        // grabbing the 1 tile out of the 2, we do not want to go on top of the player. 
-                        Transform destination = listOfTiles[sizeOfList - 1];
-                        MoveEnemy((float)destination.position.x,(float)destination.position.y);
-                    }
-                    else if(sizeOfList > 2){
-                        // Grabing the 2nd to last tile from list, or we will grab sizeOfList - N, where N is the movement for the enemies. 
-                        Transform destination = listOfTiles[sizeOfList - 2];
-                        MoveEnemy((float)destination.position.x,(float)destination.position.y);
+                    // lets strip off first tile, thats the player tile we do not want to land RIGHT ON the player, just next to him.
+                    listOfTiles.RemoveAt(0);
+                    // null check if there is no path, it would crash. ex: enemy is stuck in a wall of void. 
+                    if(listOfTiles != null){
+                        int sizeOfList = listOfTiles.Count;
+                        // check if we have 2 tiles left in list, if so just move to [1].
+                        if(sizeOfList == 2){
+                            // grabbing the 1 tile out of the 2, we do not want to go on top of the player. 
+                            Transform destination = listOfTiles[sizeOfList - 1];
+                            MoveEnemy((float)destination.position.x,(float)destination.position.y);
+                        }
+                        else if(sizeOfList > 2){
+                            // Grabing the 2nd to last tile from list, or we will grab sizeOfList - N, where N is the movement for the enemies. 
+                            Transform destination = listOfTiles[sizeOfList - 2];
+                            MoveEnemy((float)destination.position.x,(float)destination.position.y);
+                        }
                     }
                 }
                 isEnemyTurn = false;
