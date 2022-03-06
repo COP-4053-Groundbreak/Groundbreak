@@ -30,6 +30,9 @@ public class EnemyStateManager : MonoBehaviour
     // attacking
     public int attackCounter = 0;
 
+    // movement
+    public List<Transform> listOfTiles;
+
     // health stuff
     public int startHealth = 100;
     public Transform pfHealthBar;
@@ -68,9 +71,9 @@ public class EnemyStateManager : MonoBehaviour
         healthBar.Setup(healthSystem);
 
         // path finding stuff  COMMENTED FOR NOW, WE ARE GOING TO START IN IDLE STATE. 
-        // width = FindObjectOfType<GridManager>().getWidth();
-        // height = FindObjectOfType<GridManager>().getHeight();
-        // pathfinding = FindObjectOfType<Pathfinding>();
+        width = FindObjectOfType<GridManager>().getWidth();
+        height = FindObjectOfType<GridManager>().getHeight();
+        pathfinding = FindObjectOfType<Pathfinding>();
         currentState = IdleState;
         // "this" is a refrence to the context of the enemy. 
         currentState.EnterState(this);
@@ -82,9 +85,14 @@ public class EnemyStateManager : MonoBehaviour
         if(this != null && currentState != null){
             currentState.UpdateState(this);
         }
-        if(healthSystem.GetHealth() <= 0 && alive == true){
+        if(healthSystem != null && healthSystem.GetHealth() <= 0 && alive == true){
             Destroy(gameObject, (float)3);
             SwitchState(DeathState);
+        }
+
+        if (isSliding) 
+        {
+            SlideThisObjectAlongPath(slidingPath);
         }
 
         // if !isEnemyTurn, make sure we are in idle state. 
@@ -96,12 +104,17 @@ public class EnemyStateManager : MonoBehaviour
             // check distance
             // get enemy pos
             Vector2 enemyPos = gameObject.transform.position;
-            Debug.Log("Eenemy pos " + enemyPos);
+            // Debug.Log("Eenemy pos " + enemyPos);
             //get player pos
             GameObject player = GameObject.FindGameObjectWithTag("Player"); // .transform.position; //gameObject.GetComponent<Player>().transform.position;
             Vector2 playerPos = player.transform.position;
-            Debug.Log("Player position: " + playerPos);
+            // Debug.Log("Player position: " + playerPos);
             var distanceBetweenPlayerAndEnemy = Vector2.Distance(enemyPos,playerPos);
+            // if deltaX positive, player is to the right, negative to the left
+            var deltaXPLayerandEnemy = playerPos.x - enemyPos.x ;
+            // if deltaY postiive, player is up, Negative he is down. 
+            var deltaYPLayerandEnemy = playerPos.y - enemyPos.y;
+            // Debug.Log("Delta x :" + deltaXPLayerandEnemy);
 
             //do attack or move.
             // check if melee enemy is within a 1 block radius of player. && will have to check which state we are in and if its enemy turn (not implemented yet)
@@ -116,12 +129,33 @@ public class EnemyStateManager : MonoBehaviour
                 Debug.Log("Enemy Attacked the Player!!!");
                 isEnemyTurn = false;
             }
+            // if we hit this we need to move closer to the player. 
             else if(distanceBetweenPlayerAndEnemy > 1.42){
+                if (isSliding) 
+                {
+                    SlideThisObjectAlongPath(slidingPath);
+                }
                 // reset the attack counter so we can attack again if enemy goes back in range. 
                 attackCounter = 0;
-                // move enemy to player.
-                // check which enemy it is to see how close to get to the player.  
-                // call movement state.
+
+                listOfTiles = pathfinding.FindPathWaypoints((int)enemyPos.x, (int)enemyPos.y, (int)playerPos.x, (int)playerPos.y);
+                // lets strip off first tile, thats the player tile we do not want to land RIGHT ON the player, just next to him.
+                listOfTiles.RemoveAt(0);
+                // null check if there is no path, it would crash. ex: enemy is stuck in a wall of void. 
+                if(listOfTiles != null){
+                    int sizeOfList = listOfTiles.Count;
+                    // check if we have 2 tiles left in list, if so just move to [1].
+                    if(sizeOfList == 2){
+                        // grabbing the 1 tile out of the 2, we do not want to go on top of the player. 
+                        Transform destination = listOfTiles[sizeOfList - 1];
+                        MoveEnemy((float)destination.position.x,(float)destination.position.y);
+                    }
+                    else if(sizeOfList > 2){
+                        // Grabing the 2nd to last tile from list, or we will grab sizeOfList - N, where N is the movement for the enemies. 
+                        Transform destination = listOfTiles[sizeOfList - 2];
+                        MoveEnemy((float)destination.position.x,(float)destination.position.y);
+                    }
+                }
                 isEnemyTurn = false;
             }
             if(attackCounter == 1){
@@ -184,7 +218,6 @@ public class EnemyStateManager : MonoBehaviour
     public void DealDamage(int damage){
         // does the hurt animation.
         animator.Play("Hurt", 0 ,0.5f);
-        // animator.SetBool("TakeDamage", true);
         // deals damage via the health system. 
         healthSystem.Damage(damage);
         // animator.SetBool("TakeDamage", false);
@@ -200,8 +233,6 @@ public class EnemyStateManager : MonoBehaviour
             return;
         }
 
-
-        
         // if going right, flip.
         if(gameObject.transform.position.x + x > gameObject.transform.position.x && mySpriteRenderer != null) // && enemy.mySpriteRenderer.transform.localScale.x < 0 // x_random + x_value > 0
         {
@@ -231,7 +262,7 @@ public class EnemyStateManager : MonoBehaviour
             var targetPos = path[waypointIndex].position;
             var movementThisFrame = slideSpeed * Time.deltaTime;
             var newPos = (gameObject.transform.position.x + targetPos.x) / (int)2;
-            Debug.Log(newPos);
+            // Debug.Log(newPos);
             // Debug.Log("Game object Transform pos: " + gameObject.transform.position.x);
             // Debug.Log("new pos: " + newPos);
             if(newPos > transform.position.x){
