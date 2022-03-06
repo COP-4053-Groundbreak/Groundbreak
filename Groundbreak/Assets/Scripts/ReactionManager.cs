@@ -40,16 +40,13 @@ public class ReactionManager : MonoBehaviour
     public static Effect TileOnTile(Element thrownElem, Tile staticTile){
         Element staticElem = staticTile.getElement();
 
-        // No reaction on void tiles (How are you even throwing these?) or throwing base
-        if (thrownElem == Element.Void || thrownElem == Element.Base)
-            return null;
-        // Throw element onto base => base tile becomes of that element
-        if (staticElem == Element.Base){
-            staticTile.setElement(thrownElem);
-            return null;
-        }
+        
 
-        if (staticElem == Element.Void){
+        // No reaction on void tiles (How are you even throwing these?)
+        if (thrownElem == Element.Void)
+            return null;
+        // Throw element onto base or void => tile becomes of that element
+        if (staticElem == Element.Base || staticElem == Element.Void){
             staticTile.setElement(thrownElem);
             return null;
         }
@@ -106,4 +103,21 @@ public class ReactionManager : MonoBehaviour
         return null;
     }
 
+    public static int elementToIdx(Element a){
+        switch(a) {
+            case Element.Air:
+                Debug.Log("Air index");
+                return 0;
+            case Element.Earth:
+                return 1;
+            case Element.Fire:
+                return 2;
+            case Element.Water:
+                return 3;
+            case Element.Base:
+                return 4;
+            default:
+                return 5;
+        }
+    }
 }

@@ -53,9 +53,9 @@ public class PlayerStatsUIManager : MonoBehaviour
         initiativeText.GetComponent<TextMeshProUGUI>().text = playerStats.GetInitiative().ToString();
 
         fireText.GetComponent<TextMeshProUGUI>().text = (playerStats.GetFireMod() * 100).ToString() + "%";
-        waterText.GetComponent<TextMeshProUGUI>().text = (playerStats.GetFireMod() * 100).ToString() + "%";
-        earthText.GetComponent<TextMeshProUGUI>().text = (playerStats.GetFireMod() * 100).ToString() + "%";
-        airText.GetComponent<TextMeshProUGUI>().text = (playerStats.GetFireMod() * 100).ToString() + "%";
+        waterText.GetComponent<TextMeshProUGUI>().text = (playerStats.GetWaterMod() * 100).ToString() + "%";
+        earthText.GetComponent<TextMeshProUGUI>().text = (playerStats.GetEarthMod() * 100).ToString() + "%";
+        airText.GetComponent<TextMeshProUGUI>().text = (playerStats.GetAirMod() * 100).ToString() + "%";
     }
 
     // Color the stats green if they are buffed, red if they are degraded

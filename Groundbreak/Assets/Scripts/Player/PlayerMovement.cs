@@ -18,7 +18,7 @@ public class PlayerMovement : MonoBehaviour
     List<Transform> slidingPath;
 
     // Bool to check when the player is moving during turn based movement
-    bool isSliding = false;
+    public bool isSliding = false;
     int waypointIndex = 0;
 
     Animator playerAnimator;
@@ -30,6 +30,8 @@ public class PlayerMovement : MonoBehaviour
     TurnLogic turnLogic;
     // Bool to check when the player is moving during non turn based movement
     bool isFreemoving = false;
+
+    DisplayMovement displayMovement;
 
     // Start is called before the first frame update
     private void Start()
@@ -50,12 +52,16 @@ public class PlayerMovement : MonoBehaviour
         
         // Stops the player from rotating if they collide at non 90 degree angles
         playerRigidbody2D.freezeRotation = true;
+
+        // Initilize movement text
+        displayMovement = FindObjectOfType<DisplayMovement>();
     }
     // Vector for free moving speed
     private Vector2 freeMovementDistance = Vector3.zero;
 
     private void Update()
     {
+        displayMovement.DisplayMovementText(currentMovementRemaining / 10);
         if (!turnLogic.isCombatPhase) 
         {
             // Get movement input and check if its 0
@@ -75,11 +81,11 @@ public class PlayerMovement : MonoBehaviour
             }
 
             // Set sprite flip for running
-            if (xInput <= 0)
+            if (xInput <= -0.1)
             {
                 playerSpriteRenderer.flipX = true;
             }
-            else 
+            else if(xInput >= 0.1)
             {
                 playerSpriteRenderer.flipX = false;
             }
@@ -125,6 +131,7 @@ public class PlayerMovement : MonoBehaviour
             playerAnimator.SetBool("IsWalking", true);
             UpdateTilesAfterMove();
         }
+        
     }
 
     // Takes a transform path, slides sprite along the path
@@ -162,13 +169,17 @@ public class PlayerMovement : MonoBehaviour
         else 
         {
             // Reset after we reach the end of the move
-            waypointIndex = 0;
-            isSliding = false;
-            playerAnimator.SetBool("IsWalking", false);
-            UpdateTilesAfterMove();
-            // Check if mouse is above tile and show line
-            PossiblyShowTile();
+            endMove();
         }
+    }
+
+    public void endMove(){
+        waypointIndex = 0;
+        isSliding = false;
+        playerAnimator.SetBool("IsWalking", false);
+        UpdateTilesAfterMove();
+        // Check if mouse is above tile and show line
+        PossiblyShowTile();
     }
 
     // If the player is mousing over a tile when movement ends, show arrow to that tile

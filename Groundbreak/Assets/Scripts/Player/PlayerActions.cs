@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class PlayerActions : MonoBehaviour
 {
@@ -32,6 +33,10 @@ public class PlayerActions : MonoBehaviour
                         return;
                     }
                 }
+
+                // Update UI for tile held
+                FindObjectOfType<DisplayHeldTile>().DisplayTile(tile.gameObject);
+
                 // swap held elements
                 Element temp = tile.getElement();
                 tile.setElement(heldTileElement);
@@ -48,6 +53,7 @@ public class PlayerActions : MonoBehaviour
                 }
                 // Can only pick up one tile a turn
                 canPickUpTile = false;
+                FindObjectOfType<PlayerMovement>().ClearLine();
                 Debug.Log(heldTileElement);
             }
         }
@@ -58,6 +64,7 @@ public class PlayerActions : MonoBehaviour
     // tile game object passed in and the held tile or whatever way you want to implement it
     public void ThrowTile(GameObject tile) 
     {
+        Debug.Log(tile.GetComponent<TileClickable>().GetDistance() + " , " + throwRange);
         if (heldTileElement != Element.Void && tile.GetComponent<TileClickable>().GetDistance() <= throwRange) 
         {
             Debug.Log($"Threw a(n) {heldTileElement} tile at a {tile.GetComponent<Tile>().myElement}!");
@@ -66,6 +73,7 @@ public class PlayerActions : MonoBehaviour
             tile.GetComponent<TilePathNode>().isWalkable = true;
             heldTileElement = Element.Void;
         }
+        FindObjectOfType<DisplayHeldTile>().ClearTile();
     }
 
     public void ResetActions() 
