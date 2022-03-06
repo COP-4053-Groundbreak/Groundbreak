@@ -118,12 +118,21 @@ public class EnemyStateManager : MonoBehaviour
 
             //do attack or move.
             // check if melee enemy is within a 1 block radius of player. && will have to check which state we are in and if its enemy turn (not implemented yet)
-            if(distanceBetweenPlayerAndEnemy <= 1.42 && attackCounter == 0){
+            if((gameObject.name.Contains("Archer") || gameObject.name.Contains("Wizard"))  && distanceBetweenPlayerAndEnemy <= 2 && attackCounter == 0){
                 // play animation.
                 animator.SetBool("isAttacking", true);
                 // sets attackCounter to 1 so we do not attack again and play the animation twice.
                 attackCounter = 1;
-
+                // deal damage to player
+                player.GetComponent<PlayerStats>().DealDamage(30);
+                Debug.Log("Enemy Archer Attacked the Player!!!");
+                isEnemyTurn = false;
+            }
+            else if(gameObject.name.Contains("Warrior") && distanceBetweenPlayerAndEnemy <= 1.42 && attackCounter == 0){
+                // play animation.
+                animator.SetBool("isAttacking", true);
+                // sets attackCounter to 1 so we do not attack again and play the animation twice.
+                attackCounter = 1;
                 // deal damage to player
                 player.GetComponent<PlayerStats>().DealDamage(30);
                 Debug.Log("Enemy Attacked the Player!!!");
