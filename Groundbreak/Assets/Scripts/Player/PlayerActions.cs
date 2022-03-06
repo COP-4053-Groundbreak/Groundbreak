@@ -53,7 +53,7 @@ public class PlayerActions : MonoBehaviour
                 }
                 // Can only pick up one tile a turn
                 canPickUpTile = false;
-                
+                FindObjectOfType<PlayerMovement>().ClearLine();
                 Debug.Log(heldTileElement);
             }
         }
