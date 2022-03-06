@@ -16,6 +16,10 @@ public class Tile : MonoBehaviour {
     public List<Tile> neighbors;
     public bool isThrowable = true;
 
+    private void Start() {
+        setElement(this.myElement);    
+    }
+
     // Finds up to 8 neighbors around this tile. Does so using a PhysicsOverlap circle which detects
     // the colliders of other tiles
     public void findNeighbors(){
