@@ -21,8 +21,8 @@ public class PlayerActions : MonoBehaviour
     public void PickUpTile(Tile tile) 
     {
         // Checks you have an action to pick up tile, the tile's element is void, and that its within range
-        if (canPickUpTile && tile.getElement() != Element.Void && tile.gameObject.GetComponent<TileClickable>().GetDistance() <= pickupRange) {
-
+        if (canPickUpTile && tile.getElement() != Element.Void && tile.gameObject.GetComponent<TileClickable>().GetDistance() <= pickupRange) 
+        {
             // Cant pickup tile with somehting on top of it
             if (tile.gameObjectAbove == null){
                 foreach (GameObject enemy in enemyList) 
@@ -64,7 +64,6 @@ public class PlayerActions : MonoBehaviour
     // tile game object passed in and the held tile or whatever way you want to implement it
     public void ThrowTile(GameObject tile) 
     {
-        Debug.Log(tile.GetComponent<TileClickable>().GetDistance() + " , " + throwRange);
         if (heldTileElement != Element.Void && tile.GetComponent<TileClickable>().GetDistance() <= throwRange) 
         {
             Debug.Log($"Threw a(n) {heldTileElement} tile at a {tile.GetComponent<Tile>().myElement}!");
@@ -72,8 +71,9 @@ public class PlayerActions : MonoBehaviour
             // Need to check if there is an enemy standing on this tile to deal base throw damage
             tile.GetComponent<TilePathNode>().isWalkable = true;
             heldTileElement = Element.Void;
+            FindObjectOfType<DisplayHeldTile>().ClearTile();
         }
-        FindObjectOfType<DisplayHeldTile>().ClearTile();
+        
     }
 
     public void ResetActions() 
