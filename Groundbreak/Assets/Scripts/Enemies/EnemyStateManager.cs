@@ -278,9 +278,17 @@ public class EnemyStateManager : MonoBehaviour
         }
         else
         {
-            waypointIndex = 0;
-            isSliding = false;
-            animator.SetBool("isMoving", false);
+            stopEnemyMovement();
+            // waypointIndex = 0;
+            // isSliding = false;
+            // animator.SetBool("isMoving", false);
         }
+    }
+
+    // paul here is the function u needed
+    public void stopEnemyMovement(){
+        waypointIndex = 0;
+        isSliding = false;
+        animator.SetBool("isMoving", false);
     }
 }
