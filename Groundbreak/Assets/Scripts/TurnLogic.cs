@@ -119,8 +119,8 @@ public class TurnLogic : MonoBehaviour
                 if(enemyStateManagers[i].isEnemyTurn == true){
                     enemyStateManagers[i].isEnemyTurn = false;
                     // allows enemy to attack next turn.
-                    enemyStateManagers[i].attackCounter = 0;
                 }
+                enemyStateManagers[i].attackCounter = 0;
             }
             // delete the max from list and keep processing until while loop is donezo.
             listOfInitative.Remove(listOfInitative.Max());
