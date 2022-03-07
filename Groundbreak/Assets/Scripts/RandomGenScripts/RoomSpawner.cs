@@ -48,8 +48,8 @@ public class RoomSpawner : MonoBehaviour
                 //Instantiate(templates.topRooms[rand], transform.position, templates.topRooms[rand].transform.rotation);
                 newRoom = (GameObject)GameObject.Instantiate(templates.topRooms[rand], transform.position, templates.topRooms[rand].transform.rotation);
                 newDoor = newRoom.transform.Find("Door2").GetComponent<Door>();
-                //newDoor.destination = 
-                //newDoor.
+                newDoor.destination = newDoor.transform.position;
+                currentDoor.destination = newDoor.tansform.position;
             }
             else if (openingDirection == 3)
             {
