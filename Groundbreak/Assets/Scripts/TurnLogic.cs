@@ -7,7 +7,7 @@ using TMPro;
 
 public class TurnLogic : MonoBehaviour
 {
-    bool isPlayerTurn = true;
+    bool isPlayerTurn = false;
     // Determines what action the player is currently performing
     public bool isMovementPhase = true;
     public bool isThrowPhase = false;
@@ -19,9 +19,8 @@ public class TurnLogic : MonoBehaviour
     PlayerMovement playerMovement;
     PlayerActions playerActions;
 
-    // enemy state manager
-    // EnemyStateManager enemyStateManager;
-    EnemyStateManager[] enemyStateManagers;
+    // List of players and enemies
+    List<GameObject> actorList = new List<GameObject>();
     List<int> listOfInitative = new List<int>();    
 
 
@@ -37,15 +36,28 @@ public class TurnLogic : MonoBehaviour
     // Empty gameobject to instantiate under void tiles to give them colliders
     [SerializeField] GameObject empty;
 
+    int turnCount = 0;
+
     private void Start()
     {
         // Start in movephase and grey out move button
         moveButton.interactable = false;
         playerMovement = FindObjectOfType<PlayerMovement>();
         playerActions = FindObjectOfType<PlayerActions>();
-        // grab all the enemy state managers in the room. 
-        enemyStateManagers = UnityEngine.Object.FindObjectsOfType<EnemyStateManager>();
+        // grab all the enemy state managers in the room and add their gameobjects to the list
+        EnemyStateManager[] enemyStateManagers = UnityEngine.Object.FindObjectsOfType<EnemyStateManager>();
+        foreach (EnemyStateManager enemy in enemyStateManagers) 
+        {
+            actorList.Add(enemy.gameObject);
+        }
+        // add player gameobject to list
+        actorList.Add(FindObjectOfType<PlayerMovement>().gameObject);
+        // Possibly needed on room change
         StartCombat();
+        // Start not in players turn, check for initative in coroutine 
+        endTurnButton.interactable = false;
+        StartCoroutine(TurnCycle());
+        
     }
 
     // Called by end turn button
@@ -59,10 +71,9 @@ public class TurnLogic : MonoBehaviour
             // Disable End Turn Button
             endTurnButton.interactable = false;
 
-            // Dummy coroutine to simulate ai turn
-            // Replace with actual enemy turn logic function call(s) when they exist
+            // Start turn cycle again
+            StartCoroutine(TurnCycle());
 
-            StartCoroutine(DummyEnemyTurn());
         }
     }
 
@@ -90,53 +101,99 @@ public class TurnLogic : MonoBehaviour
         isThrowPhase = true;
     }
 
-    IEnumerator DummyEnemyTurn() 
+    IEnumerator TurnCycle() 
     {
-        Debug.Log("AI started their turn");
-        // enemyStateManager.isEnemyTurn = true;
-        // Set enemy turn to true. 
-        for(int i = 0; i < enemyStateManagers.Length; i++){
-            // enemyStateManagers[i].isEnemyTurn = true;
-            // Adding the initiatives to a list. 
-            listOfInitative.Add(enemyStateManagers[i].initiative);
-        }
+        // add temp object to get into while loop without messy do while
+        listOfInitative.Add(-1);
         // lets loop while we have initatives to take care of.
         while(listOfInitative.Count != 0){
-            // loop thru enemies and see which has highest initative.
-            for(int i = 0; i < enemyStateManagers.Length; i++){
-                // check initative.
-                if(enemyStateManagers[i].initiative == listOfInitative.Max()){
-                    enemyStateManagers[i].isEnemyTurn = true;
+            // Remove temp object
+            listOfInitative.Remove(-1);
+            // If we have seen every actors once and the list is empty, repopulate it
+            if (listOfInitative.Count == 0)
+            {
+                // This is equivilent to starting a turn
+                turnCount++;
+                Debug.Log("Turn " + turnCount + " has started");
+                for (int i = 0; i < actorList.Count; i++)
+                {
+                    // Adding the initiatives of enemies to a list. 
+                    if (actorList[i].GetComponent<EnemyStateManager>())
+                    {
+                        listOfInitative.Add(actorList[i].GetComponent<EnemyStateManager>().initiative);
+                    }
+                    // Adding the initiative of Player to a list. 
+                    else
+                    {
+                        listOfInitative.Add(actorList[i].GetComponent<PlayerStats>().GetInitiative());
+                    }
                 }
             }
-            // im thinking we can do an else here, if we looped thru the list and none of the enemies initiative matched the max, its the player. so set players turn = true.
+            
+            // loop thru actors and see which has highest initative.
+            for (int i = 0; i < actorList.Count; i++){
+                // check initative.
+                if (actorList[i].GetComponent<EnemyStateManager>())
+                {
+                    if (actorList[i].GetComponent<EnemyStateManager>().initiative == listOfInitative.Max())
+                    {
+                        actorList[i].GetComponent<EnemyStateManager>().isEnemyTurn = true;
+                    }
+                }
+                else 
+                {
+                    // Player has highest initiative, its their phase of the turn
+                    if (actorList[i].GetComponent<PlayerStats>().GetInitiative() == listOfInitative.Max())
+                    {
+                        // Reset player's movement points for new turn
+                        playerMovement.ResetMovement();
+                        playerActions.ResetActions();
+                        isPlayerTurn = true;
+
+                        // Enable End Turn Button
+                        endTurnButton.interactable = true;
+                        playerMovement.PossiblyShowTile();
+
+                        listOfInitative.Remove(listOfInitative.Max());
+
+                        // Wait for player turn to finish
+                        yield return new WaitWhile(() => isPlayerTurn);
+                        // The key statement, we have 2 threads after this yield from calling the coroutine in end turn, kill this one
+                        yield break;
+                    }
+                }
+            }
 
             // lets wait for enemy to finish animation.
             yield return new WaitForSeconds(dummyTurnTime);
             // set enemy turn to false.
-            for(int i = 0; i < enemyStateManagers.Length; i++){
+            for(int i = 0; i < actorList.Count; i++){
                 // check which enemy is on. set to false.
-                if(enemyStateManagers[i].isEnemyTurn == true){
-                    enemyStateManagers[i].isEnemyTurn = false;
-                    // allows enemy to attack next turn.
+                if (actorList[i].GetComponent<EnemyStateManager>())
+                {
+                    if (actorList[i].GetComponent<EnemyStateManager>().isEnemyTurn == true)
+                    {
+                        actorList[i].GetComponent<EnemyStateManager>().isEnemyTurn = false;
+                        // allows enemy to attack next turn.
+                    }
+                    actorList[i].GetComponent<EnemyStateManager>().attackCounter = 0;
                 }
-                enemyStateManagers[i].attackCounter = 0;
             }
             // delete the max from list and keep processing until while loop is donezo.
-            listOfInitative.Remove(listOfInitative.Max());
+            if (listOfInitative.Count != 0) 
+            {
+                listOfInitative.Remove(listOfInitative.Max());
+            }
         }
-        // return from function and come back here. 
-        // yield return new WaitForSeconds(dummyTurnTime);
-        Debug.Log("AI ended their turn");
 
-        // Reset player's movement points for new turn
-        playerMovement.ResetMovement();
-        playerActions.ResetActions();
-        isPlayerTurn = true;
-
-        // Enable End Turn Button
-        endTurnButton.interactable = true;
-        playerMovement.PossiblyShowTile();
+        if (listOfInitative.Count() == 0)
+        {
+            Debug.Log("Turn over");
+            // Start the loop up again, for when we have enemy1, enemy2, player, enemy3
+            // enemy1, enemy2, player go, then when we come back, the list just contains enemy3
+            // So go again, we always wait on player turn so this works
+            StartCoroutine(TurnCycle());
+        }
 
     }
 
@@ -200,6 +257,11 @@ public class TurnLogic : MonoBehaviour
                 child.gameObject.AddComponent<BoxCollider2D>();
             }
         }
+    }
+
+    public bool GetIsPlayerTurn() 
+    {
+        return isPlayerTurn;
     }
 
 }

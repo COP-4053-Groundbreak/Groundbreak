@@ -10,9 +10,11 @@ public class PlayerActions : MonoBehaviour
     [SerializeField] int throwRange = 1;
     [SerializeField] Element heldTileElement;
     GameObject[] enemyList;
+    TurnLogic turnLogic;
 
     private void Start()
     {
+        turnLogic = FindObjectOfType<TurnLogic>();
         heldTileElement = Element.Void;
         enemyList = GameObject.FindGameObjectsWithTag("Enemy");
 
@@ -20,8 +22,8 @@ public class PlayerActions : MonoBehaviour
     // Picks up a tile and stores what element it is
     public void PickUpTile(Tile tile) 
     {
-        // Checks you have an action to pick up tile, the tile's element is void, and that its within range
-        if (canPickUpTile && tile.getElement() != Element.Void && tile.gameObject.GetComponent<TileClickable>().GetDistance() <= pickupRange) 
+        // Checks its your turn, you have an action to pick up tile, the tile's element is void, and that its within range
+        if (turnLogic.GetIsPlayerTurn() && canPickUpTile && tile.getElement() != Element.Void && tile.gameObject.GetComponent<TileClickable>().GetDistance() <= pickupRange) 
         {
             // Cant pickup tile with somehting on top of it
             if (tile.gameObjectAbove == null){
@@ -64,7 +66,7 @@ public class PlayerActions : MonoBehaviour
     // tile game object passed in and the held tile or whatever way you want to implement it
     public void ThrowTile(GameObject tile) 
     {
-        if (heldTileElement != Element.Void && tile.GetComponent<TileClickable>().GetDistance() <= throwRange) 
+        if (turnLogic.GetIsPlayerTurn() && heldTileElement != Element.Void && tile.GetComponent<TileClickable>().GetDistance() <= throwRange) 
         {
             Debug.Log($"Threw a(n) {heldTileElement} tile at a {tile.GetComponent<Tile>().myElement}!");
             ReactionManager.catchElement(heldTileElement, tile);

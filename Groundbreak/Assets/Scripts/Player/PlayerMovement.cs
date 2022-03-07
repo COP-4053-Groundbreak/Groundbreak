@@ -47,8 +47,8 @@ public class PlayerMovement : MonoBehaviour
         // update the distance to the player for each tile's internal value
         UpdateTilesAfterMove();
         
-        // Set current movement to the speed stored in player stats
-        currentMovementRemaining = movementSpeed;
+        // Set current movement null, update when its their turn
+        currentMovementRemaining = 0;
         
         // Stops the player from rotating if they collide at non 90 degree angles
         playerRigidbody2D.freezeRotation = true;
