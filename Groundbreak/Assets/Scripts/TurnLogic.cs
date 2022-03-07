@@ -138,9 +138,30 @@ public class TurnLogic : MonoBehaviour
                     if (actorList[i].GetComponent<EnemyStateManager>().initiative == listOfInitative.Max())
                     {
                         actorList[i].GetComponent<EnemyStateManager>().isEnemyTurn = true;
+                        // lets wait for enemy to finish animation.
+                        yield return new WaitForSeconds(dummyTurnTime);
+                        // set enemy turn to false.
+                        for (int j = 0; j < actorList.Count; j++)
+                        {
+                            // check which enemy is on. set to false.
+                            if (actorList[j].GetComponent<EnemyStateManager>())
+                            {
+                                if (actorList[j].GetComponent<EnemyStateManager>().isEnemyTurn == true)
+                                {
+                                    actorList[j].GetComponent<EnemyStateManager>().isEnemyTurn = false;
+                                    // allows enemy to attack next turn.
+                                }
+                                actorList[j].GetComponent<EnemyStateManager>().attackCounter = 0;
+                            }
+                        }
+                        // delete the max from list and keep processing until while loop is donezo.
+                        if (listOfInitative.Count != 0)
+                        {
+                            listOfInitative.Remove(listOfInitative.Max());
+                        }
                     }
                 }
-                else 
+                else if (listOfInitative.Count() != 0)
                 {
                     // Player has highest initiative, its their phase of the turn
                     if (actorList[i].GetComponent<PlayerStats>().GetInitiative() == listOfInitative.Max())
@@ -164,26 +185,7 @@ public class TurnLogic : MonoBehaviour
                 }
             }
 
-            // lets wait for enemy to finish animation.
-            yield return new WaitForSeconds(dummyTurnTime);
-            // set enemy turn to false.
-            for(int i = 0; i < actorList.Count; i++){
-                // check which enemy is on. set to false.
-                if (actorList[i].GetComponent<EnemyStateManager>())
-                {
-                    if (actorList[i].GetComponent<EnemyStateManager>().isEnemyTurn == true)
-                    {
-                        actorList[i].GetComponent<EnemyStateManager>().isEnemyTurn = false;
-                        // allows enemy to attack next turn.
-                    }
-                    actorList[i].GetComponent<EnemyStateManager>().attackCounter = 0;
-                }
-            }
-            // delete the max from list and keep processing until while loop is donezo.
-            if (listOfInitative.Count != 0) 
-            {
-                listOfInitative.Remove(listOfInitative.Max());
-            }
+
         }
 
         if (listOfInitative.Count() == 0)

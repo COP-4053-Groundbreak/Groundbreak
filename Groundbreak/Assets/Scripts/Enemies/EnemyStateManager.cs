@@ -59,7 +59,7 @@ public class EnemyStateManager : MonoBehaviour
     void Start()
     {
         // set initative
-        if(gameObject.name.Contains("Archer")){
+/*        if(gameObject.name.Contains("Archer")){
             initiative = 4;
         }
         if(gameObject.name.Contains("Warrior")){
@@ -67,7 +67,7 @@ public class EnemyStateManager : MonoBehaviour
         }
         if(gameObject.name.Contains("Wizard")){
             initiative = 6;
-        }
+        }*/
         // get sprite renderer
         mySpriteRenderer = GetComponent<SpriteRenderer>();
         // health system stuff 
