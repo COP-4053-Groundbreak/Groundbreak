@@ -39,7 +39,8 @@ public class EnemyStateManager : MonoBehaviour
     public HealthSystem healthSystem;
     public bool alive = true;
 
-    public int movement = 2;
+    // enemy movement 
+    public int enemyMovementRemaining;
     public int armor;
     public int initiative = 0;
     // integer, each block will be 1 unit or however we coded it. 
@@ -68,6 +69,7 @@ public class EnemyStateManager : MonoBehaviour
         if(gameObject.name.Contains("Wizard")){
             initiative = 6;
         }*/
+        enemyMovementRemaining = 2;
         // get sprite renderer
         mySpriteRenderer = GetComponent<SpriteRenderer>();
         // health system stuff 
@@ -156,26 +158,34 @@ public class EnemyStateManager : MonoBehaviour
                 // reset the attack counter so we can attack again if enemy goes back in range. 
                 attackCounter = 0;
 
+                // find path before moving. 
                 listOfTiles = pathfinding.FindPathWaypoints((int)enemyPos.x, (int)enemyPos.y, (int)playerPos.x, (int)playerPos.y);
-                if(listOfTiles != null){
-                    // lets strip off first tile, thats the player tile we do not want to land RIGHT ON the player, just next to him.
-                    listOfTiles.RemoveAt(0);
-                    // null check if there is no path, it would crash. ex: enemy is stuck in a wall of void. 
+                // lets strip off first tile, thats the player tile we do not want to land RIGHT ON the player, just next to him.
+                listOfTiles.RemoveAt(0);
+                while(enemyMovementRemaining != 0){
                     if(listOfTiles != null){
-                        int sizeOfList = listOfTiles.Count;
-                        // check if we have 2 tiles left in list, if so just move to [1].
-                        if(sizeOfList == 2){
-                            // grabbing the 1 tile out of the 2, we do not want to go on top of the player. 
-                            Transform destination = listOfTiles[sizeOfList - 1];
-                            MoveEnemy((float)destination.position.x,(float)destination.position.y);
-                        }
-                        else if(sizeOfList > 2){
-                            // Grabing the 2nd to last tile from list, or we will grab sizeOfList - N, where N is the movement for the enemies. 
-                            Transform destination = listOfTiles[sizeOfList - 2];
-                            MoveEnemy((float)destination.position.x,(float)destination.position.y);
+                        // null check if there is no path, it would crash. ex: enemy is stuck in a wall of void. 
+                        if(listOfTiles != null){
+                            int sizeOfList = listOfTiles.Count;
+                            // check if we have 2 tiles left in list, if so just move to [1].
+                            if(sizeOfList == 2){
+                                // grabbing the 1 tile out of the 2, we do not want to go on top of the player. 
+                                Transform destination = listOfTiles[sizeOfList - 1];
+                                MoveEnemy((float)destination.position.x,(float)destination.position.y);
+                                enemyMovementRemaining = 0;
+                                listOfTiles.RemoveAt(sizeOfList - 1);
+                            }
+                            else if(sizeOfList > 2){
+                                // Grabing the 2nd to last tile from list, or we will grab sizeOfList - N, where N is the movement for the enemies. 
+                                Transform destination = listOfTiles[sizeOfList - 1];
+                                MoveEnemy((float)destination.position.x,(float)destination.position.y);
+                                enemyMovementRemaining = enemyMovementRemaining - 1;
+                                listOfTiles.RemoveAt(sizeOfList - 1);
+                            }
                         }
                     }
                 }
+                enemyMovementRemaining = 2;
                 isEnemyTurn = false;
             }
             if(attackCounter == 1){
@@ -186,43 +196,6 @@ public class EnemyStateManager : MonoBehaviour
             // reset to idle state.
 
         }
-
-
-
-        // eventually this will move into attack state, and i will check if it is a warrior skeleton. Maybe a switch case depending on which skeleton it is, and do the correct attack.
-        // switch(type),  case warrior :code below: , case archer :new code for distance shooting(should be easy just multiple these values by 2 or however far it can shoot):
-        // // get enemy pos
-        // Vector2 enemyPos = gameObject.transform.position;
-        // // Debug.Log("Eenemy pos " + enemyPos);
-        // //get player pos
-        // GameObject player = GameObject.FindGameObjectWithTag("Player"); // .transform.position; //gameObject.GetComponent<Player>().transform.position;
-        // Vector2 playerPos = player.transform.position;
-        // // Debug.Log("Player position: " + playerPos);
-        // var distanceBetweenPlayerAndEnemy = Vector2.Distance(enemyPos,playerPos);
-        // Debug.Log("Distance between enemy and player: " + distanceBetweenPlayerAndEnemy);
-
-        // // check if melee enemy is within a 1 block radius of player. && will have to check which state we are in and if its enemy turn (not implemented yet)
-        // if(distanceBetweenPlayerAndEnemy <= 1.42 && attackCounter == 0){
-        //     // play animation.
-        //     animator.SetBool("isAttacking", true);
-        //     // sets attackCounter to 1 so we do not attack again and play the animation twice.
-        //     attackCounter = 1;
-
-        //     // deal damage to player
-        //     player.GetComponent<PlayerStats>().DealDamage(30);
-        //     Debug.Log("Enemy Attacked the Player!!!");
-        // }
-        // else if(distanceBetweenPlayerAndEnemy > 1.42){
-        //     // reset the attack counter so we can attack again if enemy goes back in range. 
-        //     attackCounter = 0;
-        // }
-        // if(attackCounter == 1){
-        //     // Debug.Log("We attacked!");
-        //     Invoke("TurnOffAnimation", 1);
-        //     // wait 1 second turn off animation. 
-        // }
-        
-        
     }
 
      private void TurnOffAnimation()
