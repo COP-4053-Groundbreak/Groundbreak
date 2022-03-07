@@ -6,7 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     // 10 movement speed is 1 tile, used so we can have say 2 tiles take 3 points of movement without needing float math
     [SerializeField] int movementSpeed;
-    [SerializeField] int currentMovementRemaining;
+    [SerializeField] public int currentMovementRemaining;
     Pathfinding pathfinding;
 
     // Gameobjects to instantiate the arrow that shows the path

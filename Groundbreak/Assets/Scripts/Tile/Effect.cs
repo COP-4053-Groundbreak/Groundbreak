@@ -10,6 +10,8 @@ public class Effect : MonoBehaviour {
 
     int effectDuration;
 
+    // These should probably be put into reaction manager.
+    // I.e.: doesn't make sense for earth effect to know the magma damage
     [SerializeField] const int MAGMA_DMG = 25;
     [SerializeField] const int SANDSTORM_DMG = 5;
     [SerializeField] const int SANDSTORM_RANGE = 2;
@@ -17,10 +19,13 @@ public class Effect : MonoBehaviour {
     [SerializeField] const int STORM_DMG = 5;
     // Damage from two units colliding from a push or pull
     [SerializeField] const int CRASH_DMG = 5;
+    [SerializeField] const int FIREBALL_DMG = 30;
+    [SerializeField] const int FIREBALL_RANGE = 2;
     
     public GridManager gridManager;
 
     // Some effects should be processed immediately upon creation (i.e. mud, smoke)
+    // TODO: Smoke
     public void Initialize(Element a, Element b){
           id = (int)a + (int)b;
           gridManager = FindObjectOfType<GridManager>();  
@@ -44,8 +49,9 @@ public class Effect : MonoBehaviour {
             case ((int)Element.Water + (int)Element.Fire): // Smoke
                 effectName = "Smoke";
                 break;
-            case ((int)Element.Air + (int)Element.Fire): // Spreadfire
-                effectName = "Spreadfire";
+            case ((int)Element.Air + (int)Element.Fire): // Fireball
+                effectName = "Fireball";
+                fireballEffect(tileUnderEffect, FIREBALL_RANGE, new List<Tile>(), new List<GameObject>());
                 break;
             default: // Storm PULLS
                 effectName = "Storm";
@@ -57,6 +63,7 @@ public class Effect : MonoBehaviour {
         GridManager.grid[(int)transform.position.x, (int)transform.position.y].setEffect(this);
     }
 
+    // TODO: Smoke
     private void OnTriggerEnter2D(Collider2D other) {
         Debug.Log("Entered effect collider!");
         if (other.gameObject.tag == "Player" || other.gameObject.tag == "Enemy"){
@@ -84,15 +91,23 @@ public class Effect : MonoBehaviour {
                     break;
                 case ((int)Element.Water + (int)Element.Fire): // Smoke
                     break;
-                case ((int)Element.Air + (int)Element.Fire): // Spreadfire
-                    Debug.Log("Entered spreadfire");
-                    // Spread fire to three tiles in cone from the direction the tile was thrown
-                    // Draw line from player to tile under effect
-                    // First three tiles this line would touch after touching the efffect become tiles
-                    // with lit fire
+                case ((int)Element.Air + (int)Element.Fire): // Fireball
+                    Debug.Log("Entered Fireball");
+                    // One time effect, shouldn't linger
                     break;
                 default: // Storm
-                    // Temporarily set player movement to 1 
+                    // Temporarily set character movement to 1 if they have any movement left
+                    if (other.gameObject.tag == "Player"){
+                        PlayerMovement moveMng = other.gameObject.GetComponent<PlayerMovement>();
+                        if (moveMng.currentMovementRemaining > 0){
+                            moveMng.currentMovementRemaining = 1;
+                        }
+                    } else if (other.gameObject.tag == "Enemy"){
+                        EnemyStateManager enemyState = other.gameObject.GetComponent<EnemyStateManager>();
+                        if (enemyState.enemyMovementRemaining > 0){
+                            enemyState.enemyMovementRemaining = 1;
+                        }
+                    }
                     break;
             }
         }
@@ -134,7 +149,7 @@ public class Effect : MonoBehaviour {
         
         // There's a character at the tile we're being pushed into
         if (endTile.gameObjectAbove != null && (endTile.gameObjectAbove.tag == "Enemy" || endTile.gameObjectAbove.tag == "Player")){
-            dealDamageToChar(endTile.gameObjectAbove, CRASH_DMG);
+            dealCrashDamage(endTile.gameObjectAbove, pushable);
             postPushX = (int)pushable.transform.position.x;
             postPushY = (int)pushable.transform.position.y;
         }
@@ -143,7 +158,7 @@ public class Effect : MonoBehaviour {
         pushable.transform.position = new Vector2(postPushX, postPushY);
 
         if (pushable.tag == "Enemy"){
-            
+            pushable.GetComponent<EnemyStateManager>().stopEnemyMovement();
         } else if (pushable.tag == "Player"){
             pushable.GetComponent<PlayerMovement>().endMove();
         }
@@ -185,7 +200,7 @@ public class Effect : MonoBehaviour {
         Tile endTile = GridManager.grid[postPullX, postPullY];
         // There's a character at the tile we're being pulled into
         if (endTile.gameObjectAbove != null && (endTile.gameObjectAbove.tag == "Enemy" || endTile.gameObjectAbove.tag == "Player")){
-            dealDamageToChar(endTile.gameObjectAbove, CRASH_DMG);
+            dealCrashDamage(endTile.gameObjectAbove, pullable);
             postPullX = (int)pullable.transform.position.x;
             postPullY = (int)pullable.transform.position.y;
         }
@@ -194,11 +209,15 @@ public class Effect : MonoBehaviour {
         pullable.transform.position = new Vector2(postPullX, postPullY);
 
         if (pullable.tag == "Enemy"){
-            
+            pullable.GetComponent<EnemyStateManager>().stopEnemyMovement();
         } else if (pullable.tag == "Player"){
             pullable.GetComponent<PlayerMovement>().endMove();
         }
         Debug.Log($"Player new position is {pullable.transform.position}");
+    }
+    private void dealCrashDamage(GameObject char1, GameObject char2){
+        dealDamageToChar(char1, CRASH_DMG);
+        dealDamageToChar(char2, CRASH_DMG);
     }
     private void dealDamageToChar(GameObject character, int damageAmount){
         if (character.gameObject.tag == "Player")
@@ -208,8 +227,8 @@ public class Effect : MonoBehaviour {
     }
     // Works recursively. Pulls units x tiles away, only ONCE
     private void stormDownEffect(Tile startTile, int range, List<Tile> neighborsVisited, List<GameObject> charactersPulled){
-        // Always happens
-        neighborsVisited.Add(startTile);
+        // Debug.Log($"My name is {startTile.name} and I have {startTile.neighbors.Count} neighbors");
+        
         // Base case: We've looked as many tiles away as desired
         if (range == 0){
             return;
@@ -218,6 +237,7 @@ public class Effect : MonoBehaviour {
         // Look at current tiles neighbors
         foreach(Tile neighbor in startTile.neighbors){
             // If haven't visited before, do effect
+            // neighbor.GetComponent<Renderer>().material.color = Color.yellow; // TESTING NEIGHBORS INDICATOR
             if (!neighborsVisited.Contains(neighbor)){
                 Debug.Log($"Unvisited tile at {neighbor.name}");
                 // Make sure there's something to pull and that it's a character
@@ -225,18 +245,17 @@ public class Effect : MonoBehaviour {
                     if (!charactersPulled.Contains(neighbor.gameObjectAbove)){
                         dealDamageToChar(neighbor.gameObjectAbove, STORM_DMG);
                         pullGO(this.gameObject, this.transform.position - neighbor.transform.position, 1, neighbor.gameObjectAbove);
-                        charactersPulled.Add(neighbor.gameObject);
+                        charactersPulled.Add(neighbor.gameObjectAbove);
                     }
                 }
+                neighborsVisited.Add(startTile);
                 // Repeat but looking at one less set of neighbors, starting at neighbor
                 stormDownEffect(neighbor, range - 1, neighborsVisited, charactersPulled);
             }
         }
     }
-
     private void sandStormDownEffect(Tile startTile, int range, List<Tile> neighborsVisited, List<GameObject> charactersPushed){
-        // Always happens
-        neighborsVisited.Add(startTile);
+        // Debug.Log($"My name is {startTile.name} and I have {startTile.neighbors.Count} neighbors");
         // Base case: We've looked as many tiles away as desired
         if (range == 0){
             return;
@@ -244,6 +263,7 @@ public class Effect : MonoBehaviour {
 
         // Look at current tiles neighbors
         foreach(Tile neighbor in startTile.neighbors){
+            // neighbor.GetComponent<Renderer>().material.color = Color.yellow; // TESTING NEIGHBORS INDICATOR
             // If haven't visited before, do effect
             if (!neighborsVisited.Contains(neighbor)){
                 Debug.Log($"Unvisited tile at {neighbor.name}");
@@ -252,11 +272,38 @@ public class Effect : MonoBehaviour {
                     if (!charactersPushed.Contains(neighbor.gameObjectAbove)){
                         dealDamageToChar(neighbor.gameObjectAbove, SANDSTORM_DMG);
                         pushGO(this.gameObject, neighbor.transform.position -  this.transform.position, 1, neighbor.gameObjectAbove);
-                        charactersPushed.Add(neighbor.gameObject);
+                        charactersPushed.Add(neighbor.gameObjectAbove);
                     }
                 }
+                neighborsVisited.Add(startTile);
                 // Repeat but looking at one less set of neighbors, starting at neighbor
                 sandStormDownEffect(neighbor, range - 1, neighborsVisited, charactersPushed);
+            }
+        }
+    }
+    private void fireballEffect(Tile startTile, int range, List<Tile> neighborsVisited, List<GameObject> charactersDamaged){
+        // Debug.Log($"My name is {startTile.name} and I have {startTile.neighbors.Count} neighbors");
+        // Base case: We've looked as many tiles away as desired
+        if (range == 0){
+            return;
+        }
+
+        // Look at current tiles neighbors
+        foreach(Tile neighbor in startTile.neighbors){
+            // neighbor.GetComponent<Renderer>().material.color = Color.yellow; // TESTING NEIGHBORS INDICATOR
+            // If haven't visited before, do effect
+            if (!neighborsVisited.Contains(neighbor)){
+                Debug.Log($"Unvisited tile at {neighbor.name}");
+                // Make sure there's something to pull and that it's a character
+                if (neighbor.gameObjectAbove != null && (neighbor.gameObjectAbove.tag == "Enemy" || neighbor.gameObjectAbove.tag == "Player")){
+                    if (!charactersDamaged.Contains(neighbor.gameObjectAbove)){
+                        dealDamageToChar(neighbor.gameObjectAbove, FIREBALL_DMG);
+                        charactersDamaged.Add(neighbor.gameObjectAbove);
+                    }
+                }
+                neighborsVisited.Add(startTile);
+                // Repeat but looking at one less set of neighbors, starting at neighbor
+                fireballEffect(neighbor, range - 1, neighborsVisited, charactersDamaged);
             }
         }
     }

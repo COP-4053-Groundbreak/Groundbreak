@@ -8,6 +8,7 @@ public class TileClickable : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     GameObject Player;
     TurnLogic turnLogic;
     int distance = -1;
+    Tile lastTileHovered;
     private void Start()
     {
         // Gets Reference to player
@@ -55,16 +56,26 @@ public class TileClickable : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     }
 
     // When mouse hovers over this tile
+    // Added some "UI" that would allow to see neighbors more easily to debug. Might be  useful
+    // in the future to show active item effect AoE/MovementRange. They're all the comments with
+    // -P before them
     void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData) 
     {
         GameObject ThisTile = eventData.pointerCurrentRaycast.gameObject;
+        // -P: lastTileHovered = ThisTile.GetComponent<Tile>();
         Player.GetComponent<PlayerMovement>().ShowLine(ThisTile.transform.position.x, ThisTile.transform.position.y);
+        // -P: foreach(Tile neighbor in lastTileHovered.neighbors)
+            // -P: neighbor.GetComponent<Renderer>().material.color = Color.yellow;
     }
 
     // Clear line when mouse leaves the tile
     void IPointerExitHandler.OnPointerExit(PointerEventData eventData) 
     {
         Player.GetComponent<PlayerMovement>().ClearLine();
+        // -P: Debug.Log($"Set {lastTileHovered.name}'s neighbors to original color!");
+        // -P: foreach(Tile neighbor in lastTileHovered.neighbors)
+            // -P: neighbor.setElement(neighbor.myElement);
+        
     }
 
     public void updateDistanceToPlayer() 
