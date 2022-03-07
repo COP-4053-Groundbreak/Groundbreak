@@ -21,11 +21,12 @@ public class Effect : MonoBehaviour {
     [SerializeField] const int CRASH_DMG = 5;
     [SerializeField] const int FIREBALL_DMG = 30;
     [SerializeField] const int FIREBALL_RANGE = 2;
+    [SerializeField] const int SMOKE_RANGE_PLAYER_MOD = 1;
+    [SerializeField] const int SMOKE_RANGE_ENEMY_MOD = 2;
     
     public GridManager gridManager;
 
     // Some effects should be processed immediately upon creation (i.e. mud, smoke)
-    // TODO: Smoke
     public void Initialize(Element a, Element b){
           id = (int)a + (int)b;
           gridManager = FindObjectOfType<GridManager>();  
@@ -51,6 +52,8 @@ public class Effect : MonoBehaviour {
                 break;
             case ((int)Element.Air + (int)Element.Fire): // Fireball
                 effectName = "Fireball";
+                if (tileUnderEffect.gameObjectAbove != null)
+                    dealDamageToChar(tileUnderEffect.gameObjectAbove, FIREBALL_DMG);
                 fireballEffect(tileUnderEffect, FIREBALL_RANGE, new List<Tile>(), new List<GameObject>());
                 break;
             default: // Storm PULLS
@@ -62,10 +65,10 @@ public class Effect : MonoBehaviour {
         GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>($"Sprites/Effects/{effectName}");
         GridManager.grid[(int)transform.position.x, (int)transform.position.y].setEffect(this);
     }
-
-    // TODO: Smoke
     private void OnTriggerEnter2D(Collider2D other) {
         Debug.Log("Entered effect collider!");
+        if (other == null)
+            return;
         if (other.gameObject.tag == "Player" || other.gameObject.tag == "Enemy"){
             switch(id){
                 case ((int)Element.Air + (int)Element.Earth): // Sandstorm
@@ -90,6 +93,11 @@ public class Effect : MonoBehaviour {
                     // impacts the player BEFORE entering it and not while on it.
                     break;
                 case ((int)Element.Water + (int)Element.Fire): // Smoke
+                    if (other.gameObject.tag == "Player"){
+                        other.gameObject.GetComponent<PlayerActions>().throwRange -= SMOKE_RANGE_PLAYER_MOD;
+                    } else if (other.gameObject.tag == "Enemy"){
+                        other.gameObject.GetComponent<EnemyStateManager>().visibilityRange -= SMOKE_RANGE_ENEMY_MOD;
+                    }
                     break;
                 case ((int)Element.Air + (int)Element.Fire): // Fireball
                     Debug.Log("Entered Fireball");
@@ -108,6 +116,7 @@ public class Effect : MonoBehaviour {
                             enemyState.enemyMovementRemaining = 1;
                         }
                     }
+                    dealDamageToChar(other.gameObject, STORM_DMG);
                     break;
             }
         }

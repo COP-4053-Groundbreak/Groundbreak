@@ -40,8 +40,6 @@ public class ReactionManager : MonoBehaviour
     public static Effect TileOnTile(Element thrownElem, Tile staticTile){
         Element staticElem = staticTile.getElement();
 
-        
-
         // No reaction on void tiles (How are you even throwing these?)
         if (thrownElem == Element.Void)
             return null;
@@ -80,21 +78,60 @@ public class ReactionManager : MonoBehaviour
 
     public static void catchElement(Element thrownElem, GameObject thrownAt){
         Debug.Log("In catch element!");
+        // Does the tile thrown at have an enemy above it?
+        // If so, then thrownAt will become an enemy gameobject
+        // If not, then just do the normal tile
+        if (thrownAt.GetComponent<Tile>().gameObjectAbove != null)
+            thrownAt = thrownAt.GetComponent<Tile>().gameObjectAbove;
         if (thrownAt.tag == "Tile"){
             Debug.Log("Element was thrown at a tile!");
             thrownAt.GetComponent<Tile>().myEffect = TileOnTile(thrownElem, thrownAt.GetComponent<Tile>());
         } else if (thrownAt.tag == "Enemy"){
-            // myEffect = myReactionManager.TileOnEnemy(this, other.gameObject.GetComponent<Enemy>());
-            // or
-            // myEffect = myReactionManager.EnemyOnTile(other.gameObject.GetComponent<Enemy>(), this);
+            Debug.Log("Element was thrown at an enemy!");
+            Tile tileUnderEnemy = GridManager.grid[(int)thrownAt.transform.position.x, (int)thrownAt.transform.position.y];
+            tileUnderEnemy.myEffect = TileOnEnemy(thrownElem, thrownAt);
         } else if (thrownAt.tag == "Ability"){
             // myEffect = myReactionManager.AbilityOnTile(other.gameObject.GetComponent<Ability>(), this);
         } else {
             // no elemental reaction here I believe
         }
     }
-    public Effect TileOnEnemy(Tile a, GameObject b){
-        return null;
+    public static Effect TileOnEnemy(Element thrownElem, GameObject enemy){
+        Debug.Log("Enemy catching element!");
+        Element enemyElem = enemy.GetComponent<EnemyStateManager>().myElement;
+
+        // No reaction on void tiles (How are you even throwing these?)
+        if (thrownElem == Element.Void)
+            return null;
+        // Throw element onto base or void => No reaction (Maybe react with tile under?)
+        if (enemyElem == Element.Base || enemyElem == Element.Void){ 
+            return null;
+        }
+
+        // Tile and enemy have same element
+        // Do we consume enemy element? We do spread though
+        if (thrownElem == enemyElem){
+            Debug.Log("Spread the element!");
+            // Non-Base on same Non-Base
+            List<Tile> neighbors = GridManager.grid[(int) enemy.transform.position.x, (int)enemy.transform.position.y].neighbors;
+
+            // Change the element of each neighbor
+            foreach (Tile neighbor in neighbors){
+                if (neighbor.myElement != Element.Void)
+                    neighbor.setElement(thrownElem);
+            }
+
+            // Consume the element
+            enemy.GetComponent<EnemyStateManager>().myElement = Element.Base;
+
+            return null;
+        } 
+        
+        Debug.Log("Effect will happen!");
+        // Two elements are interacting, create an effect!
+        GameObject a = Instantiate(effectPrefab, enemy.transform.position, Quaternion.identity);
+        a.GetComponent<Effect>().Initialize(thrownElem, enemyElem);
+        return a.GetComponent<Effect>();
     }
     public Effect EnemyOnTile(){
         return null;

@@ -50,6 +50,7 @@ public class EnemyStateManager : MonoBehaviour
     public bool canAttack;
     // how much damage the enemy will do if canAttack is 1.
     public int attackDamage;
+    [SerializeField] public Element myElement;
 
     // stuff for pathfinding.
     public int width;
