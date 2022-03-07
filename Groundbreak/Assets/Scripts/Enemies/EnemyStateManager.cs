@@ -41,7 +41,7 @@ public class EnemyStateManager : MonoBehaviour
 
     public int movement = 2;
     public int armor;
-    public int initiative;
+    public int initiative = 0;
     // integer, each block will be 1 unit or however we coded it. 
     public int visibilityRange = 7;
     // attack stats:
@@ -58,6 +58,16 @@ public class EnemyStateManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // set initative
+        if(gameObject.name.Contains("Archer")){
+            initiative = 4;
+        }
+        if(gameObject.name.Contains("Warrior")){
+            initiative = 2;
+        }
+        if(gameObject.name.Contains("Wizard")){
+            initiative = 6;
+        }
         // get sprite renderer
         mySpriteRenderer = GetComponent<SpriteRenderer>();
         // health system stuff 
