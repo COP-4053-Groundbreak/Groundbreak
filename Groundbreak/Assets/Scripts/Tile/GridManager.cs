@@ -17,9 +17,11 @@ public class GridManager : MonoBehaviour
 
     // Start is called before the first frame update
     void Awake(){
+        bottomLeftCorner = new Vector2((int)(this.room.transform.position.x - 5.0f), (int)(this.room.transform.position.y - 5.0f));
+        room = this.gameObject;
         generateGrid();
         setCameraPos();
-        bottomLeftCorner = new Vector2((int)(this.room.transform.position.x - 5.0f), (int)(this.room.transform.position.y - 5.0f));
+        
     }
 
     void generateGrid(){
