@@ -18,7 +18,7 @@ public class Door : MonoBehaviour
         return destination;
     }
 
-    public Transform ChangeDestination(Transform currentDoor)
+    public Transform ChangeDestination(GameObject currentDoor, Transform newDestination)
     {
         return null;
     }
