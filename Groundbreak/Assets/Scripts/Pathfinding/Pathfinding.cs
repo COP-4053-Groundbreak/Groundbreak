@@ -10,6 +10,7 @@ public class Pathfinding: MonoBehaviour
     private List<TilePathNode> closedList;
     public int width = 10;
     public int height = 10;
+    GridManager currRoom;
 
     private void Start()
     {
@@ -19,8 +20,8 @@ public class Pathfinding: MonoBehaviour
     public List<TilePathNode> FindPath(int startX, int startY, int endX, int endY) 
     {
         Tile[,] grid = FindObjectOfType<GridManager>().getGrid();
-        TilePathNode startNode = grid[startX, startY].gameObject.GetComponent<TilePathNode>();
-        TilePathNode endNode = grid[endX, endY].gameObject.GetComponent<TilePathNode>();
+        TilePathNode startNode = currRoom.getTile(startX, startY).gameObject.GetComponent<TilePathNode>();
+        TilePathNode endNode = currRoom.getTile(endX, endY).gameObject.GetComponent<TilePathNode>();
 
         // List of seen nodes and completly seen nodes
         openList = new List<TilePathNode> { startNode };
@@ -31,7 +32,7 @@ public class Pathfinding: MonoBehaviour
         {
             for (int y = 0; y < height; y++) 
             {
-                TilePathNode tilePathNode = grid[x, y].gameObject.GetComponent<TilePathNode>();
+                TilePathNode tilePathNode = currRoom.getTile(x, y).gameObject.GetComponent<TilePathNode>();
                 tilePathNode.gCost = int.MaxValue;
                 tilePathNode.CalculateFCost();
                 tilePathNode.previousNode = null;
@@ -97,8 +98,8 @@ public class Pathfinding: MonoBehaviour
     public List<Transform> FindPathWaypoints(int startX, int startY, int endX, int endY)
     {
         Tile[,] grid = FindObjectOfType<GridManager>().getGrid();
-        TilePathNode startNode = grid[startX, startY].gameObject.GetComponent<TilePathNode>();
-        TilePathNode endNode = grid[endX, endY].gameObject.GetComponent<TilePathNode>();
+        TilePathNode startNode = currRoom.getTile(startX, startY).gameObject.GetComponent<TilePathNode>();
+        TilePathNode endNode = currRoom.getTile(endX, endY).gameObject.GetComponent<TilePathNode>();
 
         // List of seen nodes and completly seen nodes
         openList = new List<TilePathNode> { startNode };
@@ -109,7 +110,7 @@ public class Pathfinding: MonoBehaviour
         {
             for (int y = 0; y < height; y++)
             {
-                TilePathNode tilePathNode = grid[x, y].gameObject.GetComponent<TilePathNode>();
+                TilePathNode tilePathNode = currRoom.getTile(x, y).gameObject.GetComponent<TilePathNode>();
                 tilePathNode.gCost = int.MaxValue;
                 tilePathNode.CalculateFCost();
                 tilePathNode.previousNode = null;
@@ -179,22 +180,22 @@ public class Pathfinding: MonoBehaviour
         List<TilePathNode> neighbors = new List<TilePathNode>();
         if (currentNode.GetX() > 0) 
         {
-            neighbors.Add(grid[currentNode.GetX() - 1, currentNode.GetY()].gameObject.GetComponent<TilePathNode>());
+            neighbors.Add(currRoom.getTile(currentNode.GetX() - 1, currentNode.GetY()).gameObject.GetComponent<TilePathNode>());
         }
 
         if (currentNode.GetX() < width - 1)
         {
-            neighbors.Add(grid[currentNode.GetX() + 1, currentNode.GetY()].gameObject.GetComponent<TilePathNode>());
+            neighbors.Add(currRoom.getTile(currentNode.GetX() + 1, currentNode.GetY()).gameObject.GetComponent<TilePathNode>());
         }
 
         if (currentNode.GetY() > 0)
         {
-            neighbors.Add(grid[currentNode.GetX(), currentNode.GetY() - 1].gameObject.GetComponent<TilePathNode>());
+            neighbors.Add(currRoom.getTile(currentNode.GetX(), currentNode.GetY() - 1).gameObject.GetComponent<TilePathNode>());
         }
 
         if (currentNode.GetY() < height - 1)
         {
-            neighbors.Add(grid[currentNode.GetX(), currentNode.GetY() + 1].gameObject.GetComponent<TilePathNode>());
+            neighbors.Add(currRoom.getTile(currentNode.GetX(), currentNode.GetY() + 1).gameObject.GetComponent<TilePathNode>());
         }
 
         return neighbors;

@@ -5,7 +5,7 @@ using UnityEngine;
 public class ReactionManager : MonoBehaviour
 {
     public static GameObject effectPrefab;
-    [SerializeField] GridManager grid;
+    [SerializeField] static GridManager room;
     public static Dictionary<int, Sprite> comboToVisual = new Dictionary<int, Sprite>();
 
     
@@ -88,7 +88,7 @@ public class ReactionManager : MonoBehaviour
             thrownAt.GetComponent<Tile>().myEffect = TileOnTile(thrownElem, thrownAt.GetComponent<Tile>());
         } else if (thrownAt.tag == "Enemy"){
             Debug.Log("Element was thrown at an enemy!");
-            Tile tileUnderEnemy = GridManager.grid[(int)thrownAt.transform.position.x, (int)thrownAt.transform.position.y];
+            Tile tileUnderEnemy = room.getTile(thrownAt.transform.position.x, thrownAt.transform.position.y);
             tileUnderEnemy.myEffect = TileOnEnemy(thrownElem, thrownAt);
         } else if (thrownAt.tag == "Ability"){
             // myEffect = myReactionManager.AbilityOnTile(other.gameObject.GetComponent<Ability>(), this);
@@ -113,7 +113,7 @@ public class ReactionManager : MonoBehaviour
         if (thrownElem == enemyElem){
             Debug.Log("Spread the element!");
             // Non-Base on same Non-Base
-            List<Tile> neighbors = GridManager.grid[(int) enemy.transform.position.x, (int)enemy.transform.position.y].neighbors;
+            List<Tile> neighbors = room.getTile((int) enemy.transform.position.x, (int)enemy.transform.position.y).neighbors;
 
             // Change the element of each neighbor
             foreach (Tile neighbor in neighbors){
