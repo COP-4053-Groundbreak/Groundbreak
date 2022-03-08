@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 8457020372238808306}
   - component: {fileID: 3606681973063675075}
   - component: {fileID: 948249746210068045}
+  - component: {fileID: 1479579593}
   m_Layer: 0
   m_Name: SkeletonArcher
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 2072216480951150570}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -92,7 +93,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
+  m_SortingLayerID: -1287806477
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 6685025930883475201, guid: a4f0d86405a7dc942a519db8b5964155, type: 3}
@@ -137,19 +138,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6851208af1d66414eb0ccdd049b4a471, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isEnemyTurn: 0
   mySpriteRenderer: {fileID: 8457020372238808306}
   animator: {fileID: 3606681973063675075}
   slideSpeed: 1
   slidingPath: []
   isSliding: 0
+  attackCounter: 0
+  listOfTiles: []
   startHealth: 100
   pfHealthBar: {fileID: 8601539936103537149, guid: 9c241cd300c70dd42bfc6fd13cca7c4b, type: 3}
   alive: 1
-  movement: 2
+  enemyMovementRemaining: 0
   armor: 0
-  initiative: 0
+  initiative: 4
   visibilityRange: 7
   canAttack: 0
   attackDamage: 0
+  myElement: 4
   width: 0
   height: 0
+  period: 0
+--- !u!61 &1479579593
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2072216480951150570}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.18, y: 1.2}
+    newSize: {x: 1.18, y: 1.2}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.3, y: 0.3}
+  m_EdgeRadius: 0
