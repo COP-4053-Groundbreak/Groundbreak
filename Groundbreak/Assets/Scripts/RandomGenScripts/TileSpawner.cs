@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TitleSpawner : MonoBehaviour
+public class TileSpawner : MonoBehaviour
 {
     private int rand;
     private TileTemplates templates;

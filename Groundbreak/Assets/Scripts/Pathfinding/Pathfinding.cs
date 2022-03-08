@@ -8,13 +8,13 @@ public class Pathfinding: MonoBehaviour
     int MOVE_COST = 10;
     private List<TilePathNode> openList;
     private List<TilePathNode> closedList;
-    public int width = 3;
-    public int height = 3;
+    public int width = 10;
+    public int height = 10;
 
     private void Start()
     {
-        width = FindObjectOfType<GridManager>().getWidth();
-        height = FindObjectOfType<GridManager>().getHeight();
+        //width = FindObjectOfType<GridManager>().getWidth();
+        //height = FindObjectOfType<GridManager>().getHeight();
     }
     public List<TilePathNode> FindPath(int startX, int startY, int endX, int endY) 
     {
