@@ -8,13 +8,18 @@ public class GridManager : MonoBehaviour
     [SerializeField] private Tile tilePrefab;
     [SerializeField] private Transform cam;
     [SerializeField] GameObject tileHolder;
+    [SerializeField] Vector2 bottomLeftCorner;
+    [SerializeField] GameObject room;
 
     public static Tile[,] grid;
+
+
 
     // Start is called before the first frame update
     void Awake(){
         generateGrid();
         setCameraPos();
+        bottomLeftCorner = new Vector2((int)(this.room.transform.position.x - 5.0f), (int)(this.room.transform.position.y - 5.0f));
     }
 
     void generateGrid(){
@@ -49,9 +54,17 @@ public class GridManager : MonoBehaviour
     }
 
     public bool inBounds(int x, int y){
-        return (x >= 0 && x < width && y >= 0 && y < height);
+        return (x >= bottomLeftCorner.x && x < bottomLeftCorner.x + width && y >= bottomLeftCorner.y && y < bottomLeftCorner.y + height);
     }
 
+    // Assuming we have the bottom right corner of a room with spawned tiles, this should get the
+    // relative position of any gameobject
+    public  Vector2 getRelativePos(GameObject obj){
+        int x = (int) obj.transform.position.x;
+        int y = (int) obj.transform.position.y;
+
+        return new Vector2(x - bottomLeftCorner.x, y - bottomLeftCorner.y);
+    }
     public Tile[,] getGrid() 
     {
         return grid;
