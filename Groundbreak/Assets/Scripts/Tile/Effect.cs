@@ -30,7 +30,9 @@ public class Effect : MonoBehaviour {
     public void Initialize(Element a, Element b){
           id = (int)a + (int)b;
           gridManager = FindObjectOfType<GridManager>();  
-          tileUnderEffect = GridManager.grid[(int)transform.position.x, (int)transform.position.y];
+          Vector2 pos = gridManager.getRelativePos(transform.position.x, transform.position.y);
+          tileUnderEffect = gridManager.getTile(pos.x, pos.y);
+
           switch(id) {
               case ((int)Element.Air + (int)Element.Earth): // Sandstorm PUSHES
                 effectName = "Sandstorm";
@@ -63,7 +65,7 @@ public class Effect : MonoBehaviour {
                 break;
         }
         GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>($"Sprites/Effects/{effectName}");
-        GridManager.grid[(int)transform.position.x, (int)transform.position.y].setEffect(this);
+        gridManager.getTile(pos.x, pos.y).setEffect(this);
     }
     private void OnTriggerEnter2D(Collider2D other) {
         Debug.Log("Entered effect collider!");
@@ -154,7 +156,7 @@ public class Effect : MonoBehaviour {
         if (postPushY < 0) {postPushY = 0;}
         else if (postPushY >= gridManager.getWidth()) {postPushY = gridManager.getHeight() - 1;}
 
-        Tile endTile = GridManager.grid[postPushX, postPushY];
+        Tile endTile = gridManager.getTile(postPushX, postPushY);
         
         // There's a character at the tile we're being pushed into
         if (endTile.gameObjectAbove != null && (endTile.gameObjectAbove.tag == "Enemy" || endTile.gameObjectAbove.tag == "Player")){
@@ -206,7 +208,7 @@ public class Effect : MonoBehaviour {
         if (postPullY < 0) {postPullY = 0;}
         else if (postPullY >= gridManager.getWidth()) {postPullY = gridManager.getHeight() - 1;}
 
-        Tile endTile = GridManager.grid[postPullX, postPullY];
+        Tile endTile = gridManager.getTile(postPullX, postPullY);
         // There's a character at the tile we're being pulled into
         if (endTile.gameObjectAbove != null && (endTile.gameObjectAbove.tag == "Enemy" || endTile.gameObjectAbove.tag == "Player")){
             dealCrashDamage(endTile.gameObjectAbove, pullable);

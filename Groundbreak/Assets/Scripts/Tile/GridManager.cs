@@ -31,7 +31,6 @@ public class GridManager : MonoBehaviour
         bottomLeftCorner = new Vector2((int)(this.room.transform.position.x - 5.0f), (int)(this.room.transform.position.y - 5.0f));
         room = this.gameObject;
         //generateGrid();
-        setCameraPos();
 
         //Debug.Log(grid[0, 0].getElement());
 
@@ -53,8 +52,12 @@ public class GridManager : MonoBehaviour
         }
     }
 
+    /*
     void generateGrid(){
         grid = new Tile[width, height];
+        
+
+
         
         Element[] arr = {Element.Air, Element.Earth, Element.Fire, Element.Water, Element.Base, Element.Void};
         int arr_len = arr.Length;
@@ -73,15 +76,20 @@ public class GridManager : MonoBehaviour
         }
 
         grid[0,0].setElement(Element.Base);
-    }
-    void setCameraPos(){
-        cam.transform.position = new Vector3((float)width/2 - 0.5f, (float)height/2 - 0.5f, -10);
-    }
+    }*/
+
+
     public int getHeight(){
         return height;
     }
     public int getWidth(){
         return width;
+    }
+    public void setWidth(int width){
+        this.width = width;
+    }
+    public void setHeight(int height){
+        this.height = height;
     }
 
     public bool inBounds(int x, int y){
@@ -90,14 +98,17 @@ public class GridManager : MonoBehaviour
 
     // Assuming we have the bottom right corner of a room with spawned tiles, this should get the
     // relative position of any gameobject
-    public  Vector2 getRelativePos(GameObject obj){
-        int x = (int) obj.transform.position.x;
-        int y = (int) obj.transform.position.y;
+    public  Vector2 getRelativePos(float newX, float newY){
+        int x = (int)newX;
+        int y = (int)newY;
 
-        return new Vector2(x - bottomLeftCorner.x, y - bottomLeftCorner.y);
+        return new Vector2(newX - bottomLeftCorner.x, newY - bottomLeftCorner.y);
     }
-    public Tile[,] getGrid() 
-    {
+    public Tile getTile(float x, float y){
+        return grid[(int)x, (int)y];
+    }
+    
+    public Tile[,] getGrid() {
         return grid;
     }
 
