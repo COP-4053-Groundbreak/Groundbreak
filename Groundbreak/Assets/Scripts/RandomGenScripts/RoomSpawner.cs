@@ -24,7 +24,7 @@ public class RoomSpawner : MonoBehaviour
 
     private void Start()
     {
-        Destroy(gameObject, waitTime);
+        //Destroy(gameObject, waitTime);
         templates = GameObject.FindGameObjectWithTag("Rooms").GetComponent<RoomTemplates>();
         Invoke("Spawn", 0.2f);
     }
@@ -38,42 +38,46 @@ public class RoomSpawner : MonoBehaviour
             {
                 //Need to spawn a room with a BOTTOM door
                 rand = Random.Range(0, templates.bottomRooms.Length);
-                //Instantiate(templates.bottomRooms[rand], transform.position, templates.bottomRooms[rand].transform.rotation);
-                newRoom = (GameObject)GameObject.Instantiate(templates.bottomRooms[rand], transform.position, templates.bottomRooms[rand].transform.rotation);
-                newDoor = newRoom.transform.Find("Door1").GetComponent<Door>();
-                newDoor.destination = newDoor.transform;
-                currentDoor.GetComponent<Door>().destination = newDoor.transform;
+                Instantiate(templates.bottomRooms[rand], transform.position, templates.bottomRooms[rand].transform.rotation);
+                //newRoom = (GameObject)GameObject.Instantiate(templates.bottomRooms[rand], transform.position, templates.bottomRooms[rand].transform.rotation);
+                //newDoor = newRoom.transform.Find("Door1").GetComponent<Door>();
+                //newDoor.destination = newDoor.transform;
+                //currentDoor.GetComponent<Door>().destination = newDoor.transform;
+                //Destroy(gameObject);
 
             }
             else if (openingDirection == 2)
             {
                 //Need to spawn a room with a TOP door
                 rand = Random.Range(0, templates.topRooms.Length);
-                //Instantiate(templates.topRooms[rand], transform.position, templates.topRooms[rand].transform.rotation);
-                newRoom = (GameObject)GameObject.Instantiate(templates.topRooms[rand], transform.position, templates.topRooms[rand].transform.rotation);
-                newDoor = newRoom.transform.Find("Door2").GetComponent<Door>();
-                newDoor.destination = newDoor.transform;
-                currentDoor.GetComponent<Door>().destination = newDoor.transform;
+                Instantiate(templates.topRooms[rand], transform.position, templates.topRooms[rand].transform.rotation);
+                //newRoom = (GameObject)GameObject.Instantiate(templates.topRooms[rand], transform.position, templates.topRooms[rand].transform.rotation);
+                //newDoor = newRoom.transform.Find("Door2").GetComponent<Door>();
+                //newDoor.destination = newDoor.transform;
+                //currentDoor.GetComponent<Door>().destination = newDoor.transform;
+                //Destroy(gameObject);
             }
             else if (openingDirection == 3)
             {
                 //Need to spawn a room with a LEFT door
                 rand = Random.Range(0, templates.leftRooms.Length);
-                //Instantiate(templates.leftRooms[rand], transform.position, templates.leftRooms[rand].transform.rotation);
-                newRoom = (GameObject)GameObject.Instantiate(templates.leftRooms[rand], transform.position, templates.leftRooms[rand].transform.rotation);
-                newDoor = newRoom.transform.Find("Door3").GetComponent<Door>();
-                newDoor.destination = newDoor.transform;
-                currentDoor.GetComponent<Door>().destination = newDoor.transform;
+                Instantiate(templates.leftRooms[rand], transform.position, templates.leftRooms[rand].transform.rotation);
+                //newRoom = (GameObject)GameObject.Instantiate(templates.leftRooms[rand], transform.position, templates.leftRooms[rand].transform.rotation);
+                //newDoor = newRoom.transform.Find("Door3").GetComponent<Door>();
+                //newDoor.destination = newDoor.transform;
+                //currentDoor.GetComponent<Door>().destination = newDoor.transform;
+                //Destroy(gameObject);
             }
             else if (openingDirection == 4)
             {
                 //Need to spawn a room with a RIGHT door
                 rand = Random.Range(0, templates.rightRooms.Length);
                 Instantiate(templates.rightRooms[rand], transform.position, templates.rightRooms[rand].transform.rotation);
-                newRoom = (GameObject)GameObject.Instantiate(templates.rightRooms[rand], transform.position, templates.rightRooms[rand].transform.rotation);
-                newDoor = newRoom.transform.Find("Door4").GetComponent<Door>();
-                newDoor.destination = newDoor.transform;
-                currentDoor.GetComponent<Door>().destination = newDoor.transform;
+                //newRoom = (GameObject)GameObject.Instantiate(templates.rightRooms[rand], transform.position, templates.rightRooms[rand].transform.rotation);
+                //newDoor = newRoom.transform.Find("Door4").GetComponent<Door>();
+                //newDoor.destination = newDoor.transform;
+                //currentDoor.GetComponent<Door>().destination = newDoor.transform;
+                //Destroy(gameObject);
             }
             spawned = true;
         }
