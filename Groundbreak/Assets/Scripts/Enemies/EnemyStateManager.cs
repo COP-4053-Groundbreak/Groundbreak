@@ -143,6 +143,14 @@ public class EnemyStateManager : MonoBehaviour
             if((gameObject.name.Contains("Archer") || gameObject.name.Contains("Wizard"))  && distanceBetweenPlayerAndEnemy <= 2 && attackCounter == 0){
                 // play animation.
                 animator.SetBool("isAttacking", true);
+                // play archer sound
+                if(gameObject.name.Contains("Archer")){
+                    SoundManagerScript.PlaySound("arrowshot");
+                }
+                // play wizard sound
+                if(gameObject.name.Contains("Wizard")){
+                    SoundManagerScript.PlaySound("spellcast");
+                }
                 // sets attackCounter to 1 so we do not attack again and play the animation twice.
                 attackCounter = 1;
                 // deal damage to player
@@ -223,10 +231,14 @@ public class EnemyStateManager : MonoBehaviour
     }
 
     public void DealDamage(int damage){
-        // does the hurt animation.
-        animator.Play("Hurt", 0 ,0.5f);
         // deals damage via the health system. 
         healthSystem.Damage(damage);
+        // does the hurt animation.
+        animator.Play("Hurt", 0 ,0.5f);
+        // play hurt sound.
+        if(gameObject.name.Contains("Skeleton")){
+            SoundManagerScript.PlaySound("skeletonhurt");
+        }
         // animator.SetBool("TakeDamage", false);
     }
 

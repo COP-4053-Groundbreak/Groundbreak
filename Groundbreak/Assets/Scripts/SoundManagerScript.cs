@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class SoundManagerScript : MonoBehaviour
 {
+    // make a sound of type AudioClip
     public static AudioClip swordSound;
+    public static AudioClip arrowShotSound;
+    public static AudioClip spellCastSound;
+    public static AudioClip skeletonHurtSound;
     static AudioSource audioSrc;
 
     // Start is called before the first frame update
@@ -12,6 +16,9 @@ public class SoundManagerScript : MonoBehaviour
     {
         // loading sound from resources folder.
         swordSound = Resources.Load<AudioClip> ("sword");
+        arrowShotSound = Resources.Load<AudioClip> ("arrowshot");
+        spellCastSound = Resources.Load<AudioClip> ("spellcast");
+        skeletonHurtSound = Resources.Load<AudioClip> ("skeletonhurt");
 
         // getting the audioSource component.
         audioSrc = GetComponent<AudioSource> ();
@@ -28,6 +35,15 @@ public class SoundManagerScript : MonoBehaviour
         switch(clip){
             case "sword":
                 audioSrc.PlayOneShot (swordSound);
+                break;
+            case "arrowshot":
+                audioSrc.PlayOneShot (arrowShotSound);
+                break;
+            case "spellcast":
+                audioSrc.PlayOneShot (spellCastSound);
+                break;
+            case "skeletonhurt":
+                audioSrc.PlayOneShot (skeletonHurtSound);
                 break;
         }
     }
