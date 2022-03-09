@@ -19,6 +19,7 @@ public class TileClickable : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     // Unity event handler only triggers when a click raycast hits the tile.
     void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
     {
+        
         GameObject ThisTile = eventData.pointerCurrentRaycast.gameObject;
         if (turnLogic.isMovementPhase)
         {
@@ -26,7 +27,7 @@ public class TileClickable : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
             if (eventData.button == 0)
             {
                 // Calls movement checker fucnction in playerMovement script
-                Player.GetComponent<PlayerMovement>().MovePlayer(distance, ThisTile.transform.position.x, ThisTile.transform.position.y);
+                Player.GetComponent<PlayerMovement>().MovePlayer(distance, ThisTile.GetComponent<TilePathNode>().GetX(), ThisTile.GetComponent<TilePathNode>().GetY());
             }
             // Right click
             else if (eventData.button == PointerEventData.InputButton.Right)
@@ -61,9 +62,10 @@ public class TileClickable : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     // -P before them
     void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData) 
     {
+        
         GameObject ThisTile = eventData.pointerCurrentRaycast.gameObject;
         // -P: lastTileHovered = ThisTile.GetComponent<Tile>();
-        Player.GetComponent<PlayerMovement>().ShowLine(ThisTile.transform.position.x, ThisTile.transform.position.y);
+        Player.GetComponent<PlayerMovement>().ShowLine(ThisTile.GetComponent<TilePathNode>().GetX(), ThisTile.GetComponent<TilePathNode>().GetY());
         // -P: foreach(Tile neighbor in lastTileHovered.neighbors)
             // -P: neighbor.GetComponent<Renderer>().material.color = Color.yellow;
     }
@@ -84,9 +86,10 @@ public class TileClickable : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
         {
             Player = FindObjectOfType<PlayerMovement>().gameObject;
         }
+        
         // Calculates how far this tile is from the player
-        distance = (int)(Mathf.Abs(Player.transform.position.x - this.transform.position.x) +
-                            Mathf.Abs(Player.transform.position.y - this.transform.position.y));
+        distance = (int)(Mathf.Abs(Player.GetComponent<PlayerMovement>().playerX - gameObject.GetComponent<TilePathNode>().GetX()) +
+                            Mathf.Abs(Player.GetComponent<PlayerMovement>().playerY - gameObject.GetComponent<TilePathNode>().GetY()));
         
     }
 

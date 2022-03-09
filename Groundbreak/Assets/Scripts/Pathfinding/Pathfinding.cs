@@ -16,6 +16,7 @@ public class Pathfinding: MonoBehaviour
     {
         //width = FindObjectOfType<GridManager>().getWidth();
         //height = FindObjectOfType<GridManager>().getHeight();
+        currRoom = FindObjectOfType<GridManager>();
     }
     public List<TilePathNode> FindPath(int startX, int startY, int endX, int endY) 
     {
@@ -95,30 +96,38 @@ public class Pathfinding: MonoBehaviour
         return null;
     }
 
+
     public List<Transform> FindPathWaypoints(int startX, int startY, int endX, int endY)
-    {
-        Tile[,] grid = FindObjectOfType<GridManager>().getGrid();
-        TilePathNode startNode = currRoom.getTile(startX, startY).gameObject.GetComponent<TilePathNode>();
-        TilePathNode endNode = currRoom.getTile(endX, endY).gameObject.GetComponent<TilePathNode>();
-
-        // List of seen nodes and completly seen nodes
-        openList = new List<TilePathNode> { startNode };
-        closedList = new List<TilePathNode>();
-
-        // Reset path costs
-        for (int x = 0; x < width; x++)
         {
-            for (int y = 0; y < height; y++)
-            {
-                TilePathNode tilePathNode = currRoom.getTile(x, y).gameObject.GetComponent<TilePathNode>();
-                tilePathNode.gCost = int.MaxValue;
-                tilePathNode.CalculateFCost();
-                tilePathNode.previousNode = null;
-            }
-        }
+            Tile[,] grid = FindObjectOfType<GridManager>().getGrid();
+            //Debug.Log(startX + " " + startY + " " + endX + " " + endY);
+            //Debug.Log(grid[9, 9]);
+            TilePathNode startNode = grid[startX, startY].gameObject.GetComponent<TilePathNode>();
+            TilePathNode endNode = grid[endX, endY].gameObject.GetComponent<TilePathNode>();
 
-        // Initilize start cost
-        startNode.gCost = 0;
+            // List of seen nodes and completly seen nodes
+            openList = new List<TilePathNode> { startNode };
+            closedList = new List<TilePathNode>();
+
+            // Reset path costs
+            for (int x = 0; x < width; x++)
+            {
+                for (int y = 0; y < height; y++)
+                {
+                    if (!grid[x, y])
+                    {
+                        Debug.LogWarning(grid[x, y]);
+                    }
+                    TilePathNode tilePathNode = grid[x, y].gameObject.GetComponent<TilePathNode>();
+                    tilePathNode.gCost = int.MaxValue;
+                    tilePathNode.CalculateFCost();
+                    tilePathNode.previousNode = null;
+                }
+            }
+
+
+            // Initilize start cost
+            startNode.gCost = 0;
         startNode.hCost = CalculateDistance(startNode, endNode);
         startNode.CalculateFCost();
 
@@ -170,6 +179,7 @@ public class Pathfinding: MonoBehaviour
             }
         }
         // No Path Found
+        Debug.Log("No path");
         return null;
     }
 
@@ -227,6 +237,7 @@ public class Pathfinding: MonoBehaviour
             path.Add(currentNode.transform);
             currentNode = currentNode.previousNode;
         }
+        //Debug.Log(path.Count);
         return path;
     }
     // Calcualtes distance from tile a to tile b

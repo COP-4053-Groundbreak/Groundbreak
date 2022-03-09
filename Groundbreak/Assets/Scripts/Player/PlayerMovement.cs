@@ -33,6 +33,11 @@ public class PlayerMovement : MonoBehaviour
 
     DisplayMovement displayMovement;
 
+    public int playerX;
+    public int playerY;
+
+    Tile[,] grid;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -48,19 +53,50 @@ public class PlayerMovement : MonoBehaviour
         UpdateTilesAfterMove();
         
         // Set current movement null, update when its their turn
-        currentMovementRemaining = 0;
+        currentMovementRemaining = 20;
         
         // Stops the player from rotating if they collide at non 90 degree angles
         playerRigidbody2D.freezeRotation = true;
 
         // Initilize movement text
         displayMovement = FindObjectOfType<DisplayMovement>();
+
+        playerX = (int)(transform.position.x + 5f);
+        playerY = (int)(transform.position.y + 5f);
+        grid = FindObjectOfType<GridManager>().getGrid();
+    }
+
+    private void Awake()
+    {
+
+            // Get references
+            playerAnimator = GetComponent<Animator>();
+            playerSpriteRenderer = GetComponentInChildren<SpriteRenderer>();
+            movementSpeed = gameObject.GetComponent<PlayerStats>().GetMovementPerTurn();
+            pathfinding = FindObjectOfType<Pathfinding>();
+            turnLogic = FindObjectOfType<TurnLogic>();
+            playerRigidbody2D = GetComponent<Rigidbody2D>();
+
+            // update the distance to the player for each tile's internal value
+            UpdateTilesAfterMove();
+
+            // Set current movement null, update when its their turn
+            currentMovementRemaining = 0;
+
+            // Stops the player from rotating if they collide at non 90 degree angles
+            playerRigidbody2D.freezeRotation = true;
+
+            // Initilize movement text
+            displayMovement = FindObjectOfType<DisplayMovement>();
+            grid = FindObjectOfType<GridManager>().getGrid();
     }
     // Vector for free moving speed
     private Vector2 freeMovementDistance = Vector3.zero;
 
     private void Update()
     {
+        playerX = (int)(transform.position.x + 5f);
+        playerY = (int)(transform.position.y + 5f);
         displayMovement.DisplayMovementText(currentMovementRemaining / 10);
         if (!turnLogic.isCombatPhase) 
         {
@@ -115,7 +151,7 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
         // Find a path
-        slidingPath = pathfinding.FindPathWaypoints((int)gameObject.transform.position.x, (int)gameObject.transform.position.y, (int)x, (int)y);
+        slidingPath = pathfinding.FindPathWaypoints((int)(playerX), (int)(playerY), (int)x, (int)y);
         if (slidingPath == null) 
         {
             return;
@@ -141,19 +177,19 @@ public class PlayerMovement : MonoBehaviour
         
         if (waypointIndex <= path.Count - 1)
         {
-            var targetPos = path[waypointIndex].position;
+            var targetPos = path[waypointIndex].transform.position;
             // calculate how much movement we will do this frame
             var movementThisFrame = slideSpeed * Time.deltaTime;
             ClearLine();
 
-            var newPos = (gameObject.transform.position.x + targetPos.x) / (int)2;
+            var newPos = (playerX + targetPos.x) / (int)2;
 
             // Flip sprite if we move left
-            if (newPos < transform.position.x)
+            if (newPos < playerX)
             {
                 playerSpriteRenderer.flipX = true;
             }
-            else if (newPos > transform.position.x)
+            else if (newPos > playerX)
             {
                 playerSpriteRenderer.flipX = false;
             }
@@ -161,7 +197,7 @@ public class PlayerMovement : MonoBehaviour
             // Slide along path however much we do this frame
             transform.position = Vector2.MoveTowards(transform.position, targetPos, movementThisFrame);
             // When we get to the waypoint, move to the next
-            if (transform.position == targetPos)
+            if (transform.position  == targetPos)
             {
                 waypointIndex++;
             }
@@ -188,54 +224,68 @@ public class PlayerMovement : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), -Vector2.up);
         if (hit) 
         {
-            ShowLine(hit.transform.position.x, hit.transform.position.y);
+            ShowLine(hit.transform.position.x + 5, hit.transform.position.y + 5);
         }
     }
 
     // Draws line along the path the character takes
     public void ShowLine(float x, float y) 
     {
+        
         // Dont show line if we are in throw phase, are moving, or not in combat
+        if (!turnLogic) 
+        {
+            turnLogic = FindObjectOfType<TurnLogic>();
+        }
         if (isSliding || turnLogic.isThrowPhase || !turnLogic.isCombatPhase) 
         {
             return;
         }
         // Calculate the path to take
-        List<Transform> path = pathfinding.FindPathWaypoints((int)gameObject.transform.position.x, (int)gameObject.transform.position.y, (int)x, (int)y);
+        List<Transform> path = pathfinding.FindPathWaypoints((int)playerX, (int)playerY, (int)x, (int)y);
+        
         if (path != null)
         {
-            path.Add(transform);
+            
+            path.Add(grid[playerX, playerY].gameObject.transform);
             Transform endNode = path[0];
             // Instantiate all arrows along the path
             if (endNode.gameObject.GetComponent<TilePathNode>().fCost <= currentMovementRemaining)
             {
                 for (int i = 0; i < path.Count - 1; i++)
                 {
+                    
                     // Gets orientation of the arrows correct
                     GameObject thisArrow;
-                    if (path[i].position.x > path[i + 1].position.x)
+                    TilePathNode thisPathNode = path[i].gameObject.GetComponent<TilePathNode>();
+                    if (!path[i + 1].gameObject.GetComponent<TilePathNode>()) 
                     {
-                        thisArrow = Instantiate(arrowPrefab, path[i].position, Quaternion.Euler(new Vector3(0, 0, 0)), pathHolder.transform);
+                        //Debug.Log(path[i + 1].gameObject);
+                    }
+                    //Debug.Log(thisPathNode.GetX() + " , " + path[i + 1].gameObject.GetComponent<TilePathNode>().GetX());
+                    if (thisPathNode.GetX() > path[i + 1].gameObject.GetComponent<TilePathNode>().GetX())
+                    {
+                        thisArrow = Instantiate(arrowPrefab, thisPathNode.transform.position, Quaternion.Euler(new Vector3(0, 0, 0)), pathHolder.transform);
                         thisArrow.transform.position += new Vector3(-0.5f, 0, 0);
                     }
-                    else if (path[i].position.x < path[i + 1].position.x)
+                    else if (thisPathNode.GetX() < path[i + 1].gameObject.GetComponent<TilePathNode>().GetX())
                     {
-                        thisArrow = Instantiate(arrowPrefab, path[i].position, Quaternion.Euler(new Vector3(0, 0, 180)), pathHolder.transform);
+                        thisArrow = Instantiate(arrowPrefab, thisPathNode.transform.position, Quaternion.Euler(new Vector3(0, 0, 180)), pathHolder.transform);
                         thisArrow.transform.position += new Vector3(0.5f, 0, 0);
                     }
-                    else if (path[i].position.y > path[i + 1].position.y)
+                    else if (thisPathNode.GetY() > path[i + 1].gameObject.GetComponent<TilePathNode>().GetY())
                     {
-                        thisArrow = Instantiate(arrowPrefab, path[i].position, Quaternion.Euler(new Vector3(0, 0, 90)), pathHolder.transform);
+                        thisArrow = Instantiate(arrowPrefab, thisPathNode.transform.position, Quaternion.Euler(new Vector3(0, 0, 90)), pathHolder.transform);
                         thisArrow.transform.position += new Vector3(0, -0.5f, 0);
                     }
-                    else if (path[i].position.y < path[i + 1].position.y)
+                    else if (thisPathNode.GetY() < path[i + 1].gameObject.GetComponent<TilePathNode>().GetY())
                     {
-                        thisArrow = Instantiate(arrowPrefab, path[i].position, Quaternion.Euler(new Vector3(0, 0, -90)), pathHolder.transform);
+                        thisArrow = Instantiate(arrowPrefab, thisPathNode.transform.position, Quaternion.Euler(new Vector3(0, 0, -90)), pathHolder.transform);
                         thisArrow.transform.position += new Vector3(0, 0.5f, 0);
                     }
                     else 
                     {
-
+                        
                     }
                     
                 }

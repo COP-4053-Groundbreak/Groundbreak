@@ -45,7 +45,7 @@ public class GridManager : MonoBehaviour
             //Debug.Log(spawn.transform.position + new Vector3(4.5f, 4.5f, 0));
             foreach (Transform child in tilePrefab.transform)
             {
-                grid[(int)(child.position.x + 4.5f), (int)(child.position.y + 4.5f)] = child.GetComponent<Tile>();
+                grid[(int)(child.position.x + 5.5f), (int)(child.position.y + 5.5f)] = child.GetComponent<Tile>();
                 //Debug.Log((int)(child.position.x + 4.5f) + " , " + (int)(child.position.y + 4.5f));
             }
             Destroy(spawn);

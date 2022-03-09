@@ -20,8 +20,8 @@ public class TilePathNode: MonoBehaviour
 
     private void Start()
     {
-        x = (int)transform.position.x;
-        y = (int)transform.position.y;
+        x = (int)transform.position.x + 5;
+        y = (int)transform.position.y + 5;
         
         if (gameObject.GetComponent<Tile>().getElement() == Element.Void)
         {
