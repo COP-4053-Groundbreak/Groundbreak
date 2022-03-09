@@ -153,6 +153,8 @@ public class EnemyStateManager : MonoBehaviour
             else if(gameObject.name.Contains("Warrior") && distanceBetweenPlayerAndEnemy <= 1.42 && attackCounter == 0){
                 // play animation.
                 animator.SetBool("isAttacking", true);
+                // play sound clip
+                SoundManagerScript.PlaySound("sword");
                 // sets attackCounter to 1 so we do not attack again and play the animation twice.
                 attackCounter = 1;
                 // deal damage to player
