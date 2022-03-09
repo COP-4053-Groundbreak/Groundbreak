@@ -17,6 +17,8 @@ public class PlayerDoor : MonoBehaviour
         {
             currentTeleporter = collision.gameObject;
         }
+
+        //Make it deactive current room
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -24,9 +26,12 @@ public class PlayerDoor : MonoBehaviour
         if(collision.CompareTag("Door"))
         {
             if(collision.gameObject == currentTeleporter)
+            if(collision.gameObject == currentTeleporter)
             {
                 currentTeleporter = null;
             }
         }
+
+        //Make it active new room?
     }
 }
