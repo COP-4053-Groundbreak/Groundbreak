@@ -57,6 +57,10 @@ public class EnemyStateManager : MonoBehaviour
     public int height;
 
     public float period = 0.0f;
+
+    // Enemy position variables -N
+    public int enemyX;
+    public int enemyY;
     // Start is called before the first frame update
     void Start()
     {
@@ -95,7 +99,11 @@ public class EnemyStateManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(this != null && currentState != null){
+        // Calculate enemy position -N
+        enemyX = (int)(transform.position.x + 5f);
+        enemyY = (int)(transform.position.y + 5f);
+
+        if (this != null && currentState != null){
             currentState.UpdateState(this);
         }
         if(healthSystem != null && healthSystem.GetHealth() <= 0 && alive == true){
@@ -114,12 +122,14 @@ public class EnemyStateManager : MonoBehaviour
         // if enemy turn
         if(isEnemyTurn){
             // check distance
-            // get enemy pos
-            Vector2 enemyPos = gameObject.transform.position;
+
+            // get enemy pos now relitive -N
+            Vector2 enemyPos = new Vector2(enemyX, enemyY);
             // Debug.Log("Eenemy pos " + enemyPos);
             //get player pos
             GameObject player = GameObject.FindGameObjectWithTag("Player"); // .transform.position; //gameObject.GetComponent<Player>().transform.position;
-            Vector2 playerPos = player.transform.position;
+            // Position is now relitive -N
+            Vector2 playerPos = new Vector2(player.GetComponent<PlayerMovement>().playerX, player.GetComponent<PlayerMovement>().playerY);
             // Debug.Log("Player position: " + playerPos);
             var distanceBetweenPlayerAndEnemy = Vector2.Distance(enemyPos,playerPos);
             // if deltaX positive, player is to the right, negative to the left
@@ -160,6 +170,7 @@ public class EnemyStateManager : MonoBehaviour
                 attackCounter = 0;
 
                 // find path before moving. 
+                Debug.Log((int)enemyPos.x + " " + (int)enemyPos.y + " " + (int)playerPos.x + " " + (int)playerPos.y);
                 listOfTiles = pathfinding.FindPathWaypoints((int)enemyPos.x, (int)enemyPos.y, (int)playerPos.x, (int)playerPos.y);
                 // lets strip off first tile, thats the player tile we do not want to land RIGHT ON the player, just next to him.
                 listOfTiles.RemoveAt(0);
@@ -172,14 +183,14 @@ public class EnemyStateManager : MonoBehaviour
                             if(sizeOfList == 2){
                                 // grabbing the 1 tile out of the 2, we do not want to go on top of the player. 
                                 Transform destination = listOfTiles[sizeOfList - 1];
-                                MoveEnemy((float)destination.position.x,(float)destination.position.y);
+                                MoveEnemy((float)destination.gameObject.GetComponent<TilePathNode>().GetX(), (float)destination.gameObject.GetComponent<TilePathNode>().GetY());
                                 enemyMovementRemaining = 0;
                                 listOfTiles.RemoveAt(sizeOfList - 1);
                             }
                             else if(sizeOfList > 2){
                                 // Grabing the 2nd to last tile from list, or we will grab sizeOfList - N, where N is the movement for the enemies. 
                                 Transform destination = listOfTiles[sizeOfList - 1];
-                                MoveEnemy((float)destination.position.x,(float)destination.position.y);
+                                MoveEnemy((float)destination.gameObject.GetComponent<TilePathNode>().GetX(), (float)destination.gameObject.GetComponent<TilePathNode>().GetY());
                                 enemyMovementRemaining = enemyMovementRemaining - 1;
                                 listOfTiles.RemoveAt(sizeOfList - 1);
                             }
@@ -220,7 +231,7 @@ public class EnemyStateManager : MonoBehaviour
     public void MoveEnemy(float x, float y) 
     {
         // Find a path
-        slidingPath = pathfinding.FindPathWaypoints((int)gameObject.transform.position.x, (int)gameObject.transform.position.y, (int)x, (int)y);
+        slidingPath = pathfinding.FindPathWaypoints((int)enemyX, (int)enemyY, (int)x, (int)y);
         // check if enemy is on tile. 
         if (slidingPath == null) 
         {

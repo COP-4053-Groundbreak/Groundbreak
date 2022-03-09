@@ -53,7 +53,7 @@ public class PlayerMovement : MonoBehaviour
         UpdateTilesAfterMove();
         
         // Set current movement null, update when its their turn
-        currentMovementRemaining = 20;
+        currentMovementRemaining = 0;
         
         // Stops the player from rotating if they collide at non 90 degree angles
         playerRigidbody2D.freezeRotation = true;
@@ -224,7 +224,9 @@ public class PlayerMovement : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), -Vector2.up);
         if (hit) 
         {
-            ShowLine(hit.transform.position.x + 5, hit.transform.position.y + 5);
+            // Disabled for now as it causes nulls when trying to show tile 3/8
+            //Debug.Log(hit.transform.position.x + " , " + hit.transform.position.y);
+            //ShowLine(hit.transform.position.x + 5, hit.transform.position.y + 5);
         }
     }
 
