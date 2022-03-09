@@ -177,12 +177,12 @@ public class PlayerMovement : MonoBehaviour
         
         if (waypointIndex <= path.Count - 1)
         {
-            var targetPos = path[waypointIndex].transform.position;
+            var targetPos = path[waypointIndex].transform;
             // calculate how much movement we will do this frame
             var movementThisFrame = slideSpeed * Time.deltaTime;
             ClearLine();
 
-            var newPos = (playerX + targetPos.x) / (int)2;
+            var newPos = (playerX + targetPos.gameObject.GetComponent<TilePathNode>().GetX()) / (int)2;
 
             // Flip sprite if we move left
             if (newPos < playerX)
@@ -195,9 +195,9 @@ public class PlayerMovement : MonoBehaviour
             }
 
             // Slide along path however much we do this frame
-            transform.position = Vector2.MoveTowards(transform.position, targetPos, movementThisFrame);
+            transform.position = Vector2.MoveTowards(transform.position, targetPos.position, movementThisFrame);
             // When we get to the waypoint, move to the next
-            if (transform.position  == targetPos)
+            if (transform.position  == targetPos.position)
             {
                 waypointIndex++;
             }
@@ -224,9 +224,18 @@ public class PlayerMovement : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), -Vector2.up);
         if (hit) 
         {
+
             // Disabled for now as it causes nulls when trying to show tile 3/8
             //Debug.Log(hit.transform.position.x + " , " + hit.transform.position.y);
-            //ShowLine(hit.transform.position.x + 5, hit.transform.position.y + 5);
+/*            if (!hit.rigidbody.gameObject) 
+            {
+                return;
+            }
+            if (hit.rigidbody.gameObject.GetComponent<TilePathNode>()) 
+            {
+                TilePathNode hitTile = hit.rigidbody.gameObject.GetComponent<TilePathNode>();
+                ShowLine(hitTile.GetX(), hitTile.GetY());
+            }*/
         }
     }
 
