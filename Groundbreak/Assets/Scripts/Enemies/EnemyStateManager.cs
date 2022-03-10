@@ -182,7 +182,12 @@ public class EnemyStateManager : MonoBehaviour
                 // play animation.
                 animator.SetBool("isAttacking", true);
                 // play sound clip
-                SoundManagerScript.PlaySound("sword");
+                if(gameObject.name.Contains("Warrior")){
+                    SoundManagerScript.PlaySound("sword");
+                }
+                if(gameObject.name.Contains("Zombie")){
+                    SoundManagerScript.PlaySound("zombieattack");
+                }
                 // sets attackCounter to 1 so we do not attack again and play the animation twice.
                 attackCounter = 1;
                 // deal damage to player
@@ -258,6 +263,9 @@ public class EnemyStateManager : MonoBehaviour
         // play hurt sound.
         if(gameObject.name.Contains("Skeleton")){
             SoundManagerScript.PlaySound("skeletonhurt");
+        }
+        if(gameObject.name.Contains("Zombie")){
+            SoundManagerScript.PlaySound("zombiehurt");
         }
         // animator.SetBool("TakeDamage", false);
     }
