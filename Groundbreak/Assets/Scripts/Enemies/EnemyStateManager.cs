@@ -64,16 +64,6 @@ public class EnemyStateManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // set initative
-/*        if(gameObject.name.Contains("Archer")){
-            initiative = 4;
-        }
-        if(gameObject.name.Contains("Warrior")){
-            initiative = 2;
-        }
-        if(gameObject.name.Contains("Wizard")){
-            initiative = 6;
-        }*/
         enemyMovementRemaining = 2;
         // get sprite renderer
         mySpriteRenderer = GetComponent<SpriteRenderer>();
@@ -82,10 +72,18 @@ public class EnemyStateManager : MonoBehaviour
         // Health bar stuff
         // Transform healthBarTransform = Instantiate(pfHealthBar, new Vector3(0, 10), Quaternion.identity );
         Transform healthBarTransform = Instantiate(pfHealthBar, gameObject.transform);
-        Vector3 healthBarLocalPosition = new Vector3(0, (float)1.50);
-        healthBarTransform.localPosition = healthBarLocalPosition;
-        HealthBar healthBar = healthBarTransform.GetComponent<HealthBar>();
-        healthBar.Setup(healthSystem);
+        if(gameObject.name.Contains("Zombie")){
+            Vector3 healthBarLocalPosition = new Vector3(0, (float)1.25);
+            healthBarTransform.localPosition = healthBarLocalPosition;
+            HealthBar healthBar = healthBarTransform.GetComponent<HealthBar>();
+            healthBar.Setup(healthSystem);
+        }
+        else if(gameObject.name.Contains("Skeleton")){
+            Vector3 healthBarLocalPosition = new Vector3(0, (float)1.60);
+            healthBarTransform.localPosition = healthBarLocalPosition;
+            HealthBar healthBar = healthBarTransform.GetComponent<HealthBar>();
+            healthBar.Setup(healthSystem);
+        }
 
         // path finding stuff  COMMENTED FOR NOW, WE ARE GOING TO START IN IDLE STATE. 
         width = FindObjectOfType<GridManager>().getWidth();
@@ -138,6 +136,28 @@ public class EnemyStateManager : MonoBehaviour
             var deltaYPLayerandEnemy = playerPos.y - enemyPos.y;
             // Debug.Log("Delta x :" + deltaXPLayerandEnemy);
 
+            // check if we need to flip sprite. 
+            if(enemyX < playerPos.x && mySpriteRenderer != null) // && enemy.mySpriteRenderer.transform.localScale.x < 0 // x_random + x_value > 0
+            {
+                    // flip the sprite
+                    if(gameObject.name.Contains("Zombie")){
+                        mySpriteRenderer.flipX = false;
+                    }else{
+                        mySpriteRenderer.flipX = true;
+                    }
+            }
+            if(enemyX > playerPos.x && mySpriteRenderer != null) //  && enemy.mySpriteRenderer.transform.localScale.x > 0
+            {
+                    // flip the sprite
+                    if(gameObject.name.Contains("Zombie")){
+                        mySpriteRenderer.flipX = true;
+                    }else{
+                        mySpriteRenderer.flipX = false;
+                    }
+                    //  enemy.mySpriteRenderer.transform.localScale.x = -1;
+            }
+
+    
             //do attack or move.
             // check if melee enemy is within a 1 block radius of player. && will have to check which state we are in and if its enemy turn (not implemented yet)
             if((gameObject.name.Contains("Archer") || gameObject.name.Contains("Wizard"))  && distanceBetweenPlayerAndEnemy <= 2 && attackCounter == 0){
@@ -158,7 +178,7 @@ public class EnemyStateManager : MonoBehaviour
                 Debug.Log("Enemy Archer Attacked the Player!!!");
                 isEnemyTurn = false;
             }
-            else if(gameObject.name.Contains("Warrior") && distanceBetweenPlayerAndEnemy <= 1.42 && attackCounter == 0){
+            else if((gameObject.name.Contains("Warrior") || gameObject.name.Contains("Zombie")) && distanceBetweenPlayerAndEnemy <= 1.42 && attackCounter == 0){
                 // play animation.
                 animator.SetBool("isAttacking", true);
                 // play sound clip
@@ -251,26 +271,10 @@ public class EnemyStateManager : MonoBehaviour
         {
             return;
         }
-
-        // if going right, flip.
-        if(gameObject.transform.position.x + x > gameObject.transform.position.x && mySpriteRenderer != null) // && enemy.mySpriteRenderer.transform.localScale.x < 0 // x_random + x_value > 0
-        {
-                 // flip the sprite
-                 mySpriteRenderer.flipX = true;
-                // enemy.mySpriteRenderer.transform.localScale.x = 1;
-        }
-        // if going left flip to default. 
-       if((int)gameObject.transform.position.x + x < gameObject.transform.position.x && mySpriteRenderer != null) //  && enemy.mySpriteRenderer.transform.localScale.x > 0
-        {
-                 // flip the sprite
-                 mySpriteRenderer.flipX = false;
-                //  enemy.mySpriteRenderer.transform.localScale.x = -1;
-        }
-        
+    
         slidingPath.Reverse();
         isSliding = true;
         animator.SetBool("isMoving", true);
-        // gameObject.transform.SetPositionAndRotation(new Vector3(x, y, 0), new Quaternion(0, 0, 0, 0));
     }
 
     public void SlideThisObjectAlongPath(List<Transform> path)
@@ -280,22 +284,7 @@ public class EnemyStateManager : MonoBehaviour
         {
             var targetPos = path[waypointIndex].position;
             var movementThisFrame = slideSpeed * Time.deltaTime;
-            var newPos = (gameObject.transform.position.x + targetPos.x) / (int)2;
-            // Debug.Log(newPos);
-            // Debug.Log("Game object Transform pos: " + gameObject.transform.position.x);
-            // Debug.Log("new pos: " + newPos);
-            if(newPos > transform.position.x){
-                // Debug.Log("Going to the right");
-                mySpriteRenderer.flipX = true;
-            }
-            else if (newPos < transform.position.x){
-                // Debug.Log("Going to the left");
-                mySpriteRenderer.flipX = false;
-                // animator.SetBool("alive", false);
-            }
-            // if neither its standing still in the x plane
-
-
+            
             transform.position = Vector2.MoveTowards(transform.position, targetPos, movementThisFrame);
             if (transform.position == targetPos)
             {
@@ -305,9 +294,6 @@ public class EnemyStateManager : MonoBehaviour
         else
         {
             stopEnemyMovement();
-            // waypointIndex = 0;
-            // isSliding = false;
-            // animator.SetBool("isMoving", false);
         }
     }
 

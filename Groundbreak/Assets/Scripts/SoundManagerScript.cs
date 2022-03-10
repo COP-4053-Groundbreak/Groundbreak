@@ -22,6 +22,7 @@ public class SoundManagerScript : MonoBehaviour
 
         // getting the audioSource component.
         audioSrc = GetComponent<AudioSource> ();
+        audioSrc.volume = 0.1f;
     }
 
     // Update is called once per frame

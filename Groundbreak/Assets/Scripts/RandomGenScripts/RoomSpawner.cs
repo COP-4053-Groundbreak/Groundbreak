@@ -25,7 +25,7 @@ public class RoomSpawner : MonoBehaviour
     private void Start()
     {
         //Destroy(gameObject, waitTime);
-        templates = GameObject.FindGameObjectWithTag("Rooms").GetComponent<RoomTemplates>();
+        templates = FindObjectOfType<RoomTemplates>();
         Invoke("Spawn", 0.2f);
     }
 
@@ -91,6 +91,7 @@ public class RoomSpawner : MonoBehaviour
         {
             if (other.GetComponent<RoomSpawner>().spawned == false && spawned == false)
             {
+                templates = FindObjectOfType<RoomTemplates>();
                 if ((other.GetComponent<RoomSpawner>().openingDirection == 1 || other.GetComponent<RoomSpawner>().openingDirection == 2)
                         && (openingDirection == 1 || openingDirection == 2))
                 {
