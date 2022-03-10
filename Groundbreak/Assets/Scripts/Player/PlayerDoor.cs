@@ -18,6 +18,7 @@ public class PlayerDoor : MonoBehaviour
     {
         if(collision.CompareTag("Door"))
         {
+            Debug.Log("Collision with door! This happened");
             currentTeleporter = collision.gameObject;
         }
 
@@ -28,7 +29,6 @@ public class PlayerDoor : MonoBehaviour
     {
         if(collision.CompareTag("Door"))
         {
-            if(collision.gameObject == currentTeleporter)
             if(collision.gameObject == currentTeleporter)
             {
                 currentTeleporter = null;
