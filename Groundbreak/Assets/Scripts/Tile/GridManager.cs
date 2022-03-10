@@ -12,7 +12,7 @@ public class GridManager : MonoBehaviour
     [SerializeField] GameObject room;
 
 
-    public static Tile[,] grid;
+    public Tile[,] grid;
 
     GameObject[] spawnPoints;
     private int rand;
@@ -23,13 +23,14 @@ public class GridManager : MonoBehaviour
     void Awake(){
         grid = new Tile[10, 10];
         spawnPoints = GameObject.FindGameObjectsWithTag("TileSpawnPoint");
-        Debug.Log(spawnPoints.Length);
+        //Debug.Log(spawnPoints.Length);
         templates = GameObject.FindGameObjectWithTag("TileSpawner").GetComponent<TileTemplates>();
         rand = Random.Range(0, templates.normalTileSet.Length);
-        SpawnTilesInRoom();
+        
 
         bottomLeftCorner = new Vector2((int)(this.room.transform.position.x - 5.0f), (int)(this.room.transform.position.y - 5.0f));
         room = this.gameObject;
+        SpawnTilesInRoom();
         //generateGrid();
 
         //Debug.Log(grid[0, 0].getElement());
@@ -45,8 +46,9 @@ public class GridManager : MonoBehaviour
             //Debug.Log(spawn.transform.position + new Vector3(4.5f, 4.5f, 0));
             foreach (Transform child in tilePrefab.transform)
             {
-                //Debug.Log((int)(child.localPosition.x + 5.5f) + " , " + (int)(child.localPosition.y + 5.5f));
-                grid[(int)(child.localPosition.x + 5.5f), (int)(child.localPosition.y + 5.5f)] = child.GetComponent<Tile>();
+                //child.SetParent(tileHolder.transform);
+                Debug.Log(child.name + " " + (int)(child.localPosition.x + child.parent.localPosition.x + child.parent.parent.localPosition.x + 5.5f) + " , " + (int)(child.localPosition.y + child.parent.localPosition.y + child.parent.parent.localPosition.y + 5.5f));
+                grid[(int)(child.localPosition.x + child.parent.localPosition.x + child.parent.parent.localPosition.x + 5.5f), (int)(child.localPosition.y + child.parent.localPosition.y + child.parent.parent.localPosition.y + 5.5f)] = child.GetComponent<Tile>();
                 
             }
             Destroy(spawn);

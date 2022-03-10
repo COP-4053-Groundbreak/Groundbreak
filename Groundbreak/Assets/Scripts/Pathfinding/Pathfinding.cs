@@ -20,7 +20,7 @@ public class Pathfinding: MonoBehaviour
     }
     public List<TilePathNode> FindPath(int startX, int startY, int endX, int endY) 
     {
-        Tile[,] grid = FindObjectOfType<GridManager>().getGrid();
+        Tile[,] grid = currRoom.getGrid();
         TilePathNode startNode = currRoom.getTile(startX, startY).gameObject.GetComponent<TilePathNode>();
         TilePathNode endNode = currRoom.getTile(endX, endY).gameObject.GetComponent<TilePathNode>();
 
@@ -101,7 +101,7 @@ public class Pathfinding: MonoBehaviour
         {
             Tile[,] grid = FindObjectOfType<GridManager>().getGrid();
             Debug.Log(startX + " " + startY + " " + endX + " " + endY);
-            //Debug.Log(grid[9, 9]);
+            //Debug.Log("HERE" + grid[9, 9]);
             TilePathNode startNode = grid[startX, startY].gameObject.GetComponent<TilePathNode>();
             TilePathNode endNode = grid[endX, endY].gameObject.GetComponent<TilePathNode>();
 
