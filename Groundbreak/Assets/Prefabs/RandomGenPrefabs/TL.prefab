@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 932320256519081018}
   m_Layer: 0
   m_Name: PlayerDetector4
-  m_TagString: Untagged
+  m_TagString: PlayerDetector
   m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -100,6 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4950dd5e086d9c144956ce93a788a766, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentRoom: {fileID: 8188966905814601792}
 --- !u!1 &961206282264920280
 GameObject:
   m_ObjectHideFlags: 0
@@ -508,7 +509,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c80402dcf7b9daa4ea81974797f907e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destination: {fileID: 0}
+  destination: {fileID: 3183159983336941590}
   doorDirection: 0
 --- !u!1 &3773551457915879291
 GameObject:
@@ -605,7 +606,7 @@ GameObject:
   - component: {fileID: 2007681854203671432}
   m_Layer: 0
   m_Name: PlayerDetector1
-  m_TagString: Untagged
+  m_TagString: PlayerDetector
   m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -662,6 +663,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4950dd5e086d9c144956ce93a788a766, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentRoom: {fileID: 8188966905814601792}
 --- !u!1 &4111503104605336237
 GameObject:
   m_ObjectHideFlags: 0
@@ -1312,6 +1314,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4430426756900042084}
   - component: {fileID: 2161838152970397907}
+  - component: {fileID: 3617698596398938413}
   m_Layer: 0
   m_Name: TL
   m_TagString: Untagged
@@ -1354,6 +1357,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 74cbd66a106c81648b8420f9ba317cf6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3617698596398938413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8188966905814601792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78971f91b0339a548b63f1ab73050f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &8346293563659492650
@@ -1598,7 +1613,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c80402dcf7b9daa4ea81974797f907e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destination: {fileID: 0}
+  destination: {fileID: 176604398984704457}
   doorDirection: 0
 --- !u!1 &8879181327796232127
 GameObject:

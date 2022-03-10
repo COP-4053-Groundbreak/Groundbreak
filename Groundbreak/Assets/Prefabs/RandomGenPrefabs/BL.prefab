@@ -130,6 +130,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6657757882488788916}
   - component: {fileID: 6318189651507620422}
+  - component: {fileID: 2879500248454724924}
   m_Layer: 0
   m_Name: BL
   m_TagString: Untagged
@@ -172,6 +173,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 74cbd66a106c81648b8420f9ba317cf6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2879500248454724924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1326540822168768995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78971f91b0339a548b63f1ab73050f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1509049842298650179
@@ -217,7 +230,7 @@ GameObject:
   - component: {fileID: 6982284555488276436}
   m_Layer: 0
   m_Name: PlayerDetector2
-  m_TagString: Untagged
+  m_TagString: PlayerDetector
   m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -274,6 +287,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4950dd5e086d9c144956ce93a788a766, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentRoom: {fileID: 1326540822168768995}
 --- !u!1 &1591496159812918556
 GameObject:
   m_ObjectHideFlags: 0
@@ -567,7 +581,7 @@ GameObject:
   - component: {fileID: 539437132292087247}
   m_Layer: 0
   m_Name: PlayerDetector4
-  m_TagString: Untagged
+  m_TagString: PlayerDetector
   m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -624,6 +638,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4950dd5e086d9c144956ce93a788a766, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentRoom: {fileID: 1326540822168768995}
 --- !u!1 &3384847247181636458
 GameObject:
   m_ObjectHideFlags: 0
@@ -918,7 +933,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c80402dcf7b9daa4ea81974797f907e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destination: {fileID: 0}
+  destination: {fileID: 3571468514498452451}
   doorDirection: 0
 --- !u!1 &5006501591037023883
 GameObject:
@@ -1598,7 +1613,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c80402dcf7b9daa4ea81974797f907e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destination: {fileID: 0}
+  destination: {fileID: 3601948440639857298}
   doorDirection: 0
 --- !u!1 &8649898328870776829
 GameObject:
