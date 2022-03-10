@@ -8,7 +8,10 @@ public class PlayerDoor : MonoBehaviour
 
     void Update()
     {
-        //Figure out how to do on contact teleportation
+        if(currentTeleporter != null)
+        {
+            transform.position = currentTeleporter.GetComponent<Door>().GetDestination().position;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
