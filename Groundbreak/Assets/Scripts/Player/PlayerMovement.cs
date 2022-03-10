@@ -66,6 +66,7 @@ public class PlayerMovement : MonoBehaviour
         playerX = (int)(localPos.x + 5);
         playerY = (int)(localPos.y + 5);
         grid = FindObjectOfType<GridManager>().getGrid();
+        FindObjectOfType<FindNewGridManager>().OnGridChanged += GridChanged;
     }
 
     private void Awake()
@@ -332,5 +333,10 @@ public class PlayerMovement : MonoBehaviour
         {
             tile.updateDistanceToPlayer();
         }
+    }
+
+    private void GridChanged(object sender, System.EventArgs e)
+    {
+        grid = FindObjectOfType<GridManager>().grid;
     }
 }

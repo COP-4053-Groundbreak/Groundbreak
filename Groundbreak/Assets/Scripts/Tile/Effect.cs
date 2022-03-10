@@ -26,6 +26,11 @@ public class Effect : MonoBehaviour {
     
     public GridManager gridManager;
 
+    private void Start()
+    {
+        FindObjectOfType<FindNewGridManager>().OnGridChanged += GridChanged;
+    }
+
     // Some effects should be processed immediately upon creation (i.e. mud, smoke)
     public void Initialize(Element a, Element b){
           id = (int)a + (int)b;
@@ -317,5 +322,9 @@ public class Effect : MonoBehaviour {
                 fireballEffect(neighbor, range - 1, neighborsVisited, charactersDamaged);
             }
         }
+    }
+    private void GridChanged(object sender, System.EventArgs e)
+    {
+        gridManager = FindObjectOfType<GridManager>();
     }
 }
