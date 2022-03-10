@@ -72,10 +72,18 @@ public class EnemyStateManager : MonoBehaviour
         // Health bar stuff
         // Transform healthBarTransform = Instantiate(pfHealthBar, new Vector3(0, 10), Quaternion.identity );
         Transform healthBarTransform = Instantiate(pfHealthBar, gameObject.transform);
-        Vector3 healthBarLocalPosition = new Vector3(0, (float)1.50);
-        healthBarTransform.localPosition = healthBarLocalPosition;
-        HealthBar healthBar = healthBarTransform.GetComponent<HealthBar>();
-        healthBar.Setup(healthSystem);
+        if(gameObject.name.Contains("Zombie")){
+            Vector3 healthBarLocalPosition = new Vector3(0, (float)1.25);
+            healthBarTransform.localPosition = healthBarLocalPosition;
+            HealthBar healthBar = healthBarTransform.GetComponent<HealthBar>();
+            healthBar.Setup(healthSystem);
+        }
+        else if(gameObject.name.Contains("Skeleton")){
+            Vector3 healthBarLocalPosition = new Vector3(0, (float)1.60);
+            healthBarTransform.localPosition = healthBarLocalPosition;
+            HealthBar healthBar = healthBarTransform.GetComponent<HealthBar>();
+            healthBar.Setup(healthSystem);
+        }
 
         // path finding stuff  COMMENTED FOR NOW, WE ARE GOING TO START IN IDLE STATE. 
         width = FindObjectOfType<GridManager>().getWidth();
