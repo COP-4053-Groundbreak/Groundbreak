@@ -92,37 +92,37 @@ public class RoomSpawner : MonoBehaviour
             if (other.GetComponent<RoomSpawner>().spawned == false && spawned == false)
             {
                 if ((other.GetComponent<RoomSpawner>().openingDirection == 1 || other.GetComponent<RoomSpawner>().openingDirection == 2)
-                        && openingDirection == 1 || openingDirection == 2)
+                        && (openingDirection == 1 || openingDirection == 2))
                 {
                     //Need a room with bottom and top door
                     Instantiate(templates.TB, transform.position, templates.TB.transform.rotation);
                 }
                 else if ((other.GetComponent<RoomSpawner>().openingDirection == 1 || other.GetComponent<RoomSpawner>().openingDirection == 3)
-                        && openingDirection == 1 || openingDirection == 3)
+                        && (openingDirection == 1 || openingDirection == 3))
                 {
                     //Need a room with a bottom and left door
                     Instantiate(templates.BL, transform.position, templates.BL.transform.rotation);
                 }
                 else if ((other.GetComponent<RoomSpawner>().openingDirection == 1 || other.GetComponent<RoomSpawner>().openingDirection == 4)
-                        && openingDirection == 1 || openingDirection == 4)
+                        && (openingDirection == 1 || openingDirection == 4))
                 {
                     //Need a room with a bottom and right door
                     Instantiate(templates.RB, transform.position, templates.RB.transform.rotation);
                 }
                 else if ((other.GetComponent<RoomSpawner>().openingDirection == 2 || other.GetComponent<RoomSpawner>().openingDirection == 3)
-                        && openingDirection == 2 || openingDirection == 3)
+                        && (openingDirection == 2 || openingDirection == 3))
                 {
                     //Need a room with a top and left door
                     Instantiate(templates.TL, transform.position, templates.TL.transform.rotation);
                 }
                 else if ((other.GetComponent<RoomSpawner>().openingDirection == 2 || other.GetComponent<RoomSpawner>().openingDirection == 4)
-                        && openingDirection == 2 || openingDirection == 4)
+                        && (openingDirection == 2 || openingDirection == 4))
                 {
                     //Need a room with a top and right door
                     Instantiate(templates.TR, transform.position, templates.TR.transform.rotation);
                 }
                 else if ((other.GetComponent<RoomSpawner>().openingDirection == 3 || other.GetComponent<RoomSpawner>().openingDirection == 4)
-                        && openingDirection == 3 || openingDirection == 4)
+                        && (openingDirection == 3 || openingDirection == 4))
                 {
                     //Need a room with a left and right door
                     Instantiate(templates.RL, transform.position, templates.RL.transform.rotation);
