@@ -138,6 +138,20 @@ public class EnemyStateManager : MonoBehaviour
             var deltaYPLayerandEnemy = playerPos.y - enemyPos.y;
             // Debug.Log("Delta x :" + deltaXPLayerandEnemy);
 
+            // check if we need to flip sprite. 
+            if(enemyX < playerPos.x && mySpriteRenderer != null) // && enemy.mySpriteRenderer.transform.localScale.x < 0 // x_random + x_value > 0
+            {
+                    // flip the sprite
+                    mySpriteRenderer.flipX = true;
+            }
+            if(enemyX > playerPos.x && mySpriteRenderer != null) //  && enemy.mySpriteRenderer.transform.localScale.x > 0
+            {
+                    // flip the sprite
+                    mySpriteRenderer.flipX = false;
+                    //  enemy.mySpriteRenderer.transform.localScale.x = -1;
+            }
+
+    
             //do attack or move.
             // check if melee enemy is within a 1 block radius of player. && will have to check which state we are in and if its enemy turn (not implemented yet)
             if((gameObject.name.Contains("Archer") || gameObject.name.Contains("Wizard"))  && distanceBetweenPlayerAndEnemy <= 2 && attackCounter == 0){
