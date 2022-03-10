@@ -100,7 +100,7 @@ public class Pathfinding: MonoBehaviour
     public List<Transform> FindPathWaypoints(int startX, int startY, int endX, int endY)
         {
             Tile[,] grid = FindObjectOfType<GridManager>().getGrid();
-            Debug.Log(startX + " " + startY + " " + endX + " " + endY);
+            // Debug.Log(startX + " " + startY + " " + endX + " " + endY);
             //Debug.Log("HERE" + grid[9, 9]);
             TilePathNode startNode = grid[startX, startY].gameObject.GetComponent<TilePathNode>();
             TilePathNode endNode = grid[endX, endY].gameObject.GetComponent<TilePathNode>();

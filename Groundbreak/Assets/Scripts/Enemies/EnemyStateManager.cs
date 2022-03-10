@@ -158,7 +158,7 @@ public class EnemyStateManager : MonoBehaviour
                 Debug.Log("Enemy Archer Attacked the Player!!!");
                 isEnemyTurn = false;
             }
-            else if(gameObject.name.Contains("Warrior") && distanceBetweenPlayerAndEnemy <= 1.42 && attackCounter == 0){
+            else if((gameObject.name.Contains("Warrior") || gameObject.name.Contains("Zombie")) && distanceBetweenPlayerAndEnemy <= 1.42 && attackCounter == 0){
                 // play animation.
                 animator.SetBool("isAttacking", true);
                 // play sound clip

@@ -131,8 +131,12 @@ public class TurnLogic : MonoBehaviour
             }
             
             // loop thru actors and see which has highest initative.
+            Debug.Log("Count:" +listOfInitative.Count);
             for (int i = 0; i < actorList.Count; i++){
                 // check initative.
+                if(listOfInitative.Count == 0){
+                    break;
+                }
                 if (actorList[i].GetComponent<EnemyStateManager>())
                 {
                     if (actorList[i].GetComponent<EnemyStateManager>().initiative == listOfInitative.Max())
