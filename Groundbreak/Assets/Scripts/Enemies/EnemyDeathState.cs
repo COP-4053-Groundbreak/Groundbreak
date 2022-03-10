@@ -10,6 +10,12 @@ public class EnemyDeathState : EnemyBaseState
         Debug.Log("DEAD STATE WE ARE DYING!");
         enemy.alive = false;
         enemy.animator.SetBool("alive", false);
+        if(enemy.gameObject.name.Contains("Zombie")){
+            SoundManagerScript.PlaySound("zombiedeath");
+        }
+        if(enemy.gameObject.name.Contains("Skeleton")){
+            SoundManagerScript.PlaySound("skeletondeath");
+        }
         // wait 1.8 seconds for animation to play TAKE LOOP OFF AND DESTROY LATER. 
     }
 

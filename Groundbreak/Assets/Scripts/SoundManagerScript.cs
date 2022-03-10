@@ -5,10 +5,19 @@ using UnityEngine;
 public class SoundManagerScript : MonoBehaviour
 {
     // make a sound of type AudioClip
+    // skeleton sounds
     public static AudioClip swordSound;
     public static AudioClip arrowShotSound;
     public static AudioClip spellCastSound;
     public static AudioClip skeletonHurtSound;
+    public static AudioClip skeletonDeathSound;
+    // zombie sounds
+    public static AudioClip zombieHurtSound;
+    public static AudioClip zombieDeathSound;
+    public static AudioClip zombieAttackSound;
+    public static AudioClip zombieBlockSound;
+
+
     static AudioSource audioSrc;
 
     // Start is called before the first frame update
@@ -19,9 +28,16 @@ public class SoundManagerScript : MonoBehaviour
         arrowShotSound = Resources.Load<AudioClip> ("arrowshot");
         spellCastSound = Resources.Load<AudioClip> ("spellcast");
         skeletonHurtSound = Resources.Load<AudioClip> ("skeletonhurt");
+        skeletonDeathSound = Resources.Load<AudioClip> ("skeletondeath");
+        zombieHurtSound = Resources.Load<AudioClip> ("zombiehurt");
+        zombieDeathSound = Resources.Load<AudioClip> ("zombiedeath");
+        zombieAttackSound = Resources.Load<AudioClip> ("zombieattack");
+        zombieBlockSound = Resources.Load<AudioClip> ("zombieblock");
+
 
         // getting the audioSource component.
         audioSrc = GetComponent<AudioSource> ();
+        audioSrc.volume = 0.1f;
     }
 
     // Update is called once per frame
@@ -44,6 +60,21 @@ public class SoundManagerScript : MonoBehaviour
                 break;
             case "skeletonhurt":
                 audioSrc.PlayOneShot (skeletonHurtSound);
+                break;
+            case "skeletondeath":
+                audioSrc.PlayOneShot (skeletonDeathSound);
+                break;
+            case "zombiehurt":
+                audioSrc.PlayOneShot (zombieHurtSound);
+                break;
+            case "zombiedeath":
+                audioSrc.PlayOneShot (zombieDeathSound);
+                break;
+            case "zombieattack":
+                audioSrc.PlayOneShot (zombieAttackSound);
+                break;
+            case "zombieblock":
+                audioSrc.PlayOneShot (zombieBlockSound);
                 break;
         }
     }

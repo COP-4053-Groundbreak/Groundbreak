@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class PlayerDetector : MonoBehaviour
 {
@@ -33,7 +34,7 @@ public class PlayerDetector : MonoBehaviour
                 child.gameObject.SetActive(true);
             }
         }
-
+        FindObjectOfType<FindNewGridManager>().ChangedRoom();
         PlayerRoom.currentRoom = currentRoom;
     }
 
