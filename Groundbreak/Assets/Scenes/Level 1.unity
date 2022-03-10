@@ -1322,6 +1322,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1423082238}
+  - component: {fileID: 1423082239}
   m_Layer: 0
   m_Name: FindNewGridManager
   m_TagString: Untagged
@@ -1343,6 +1344,18 @@ Transform:
   m_Father: {fileID: 279415668}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1423082239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1423082237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40a80685c4c90fb42ae5e699fc7b71f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &1446333921 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6754804229810504224, guid: 325563550f17e5b40af423601173c683, type: 3}
