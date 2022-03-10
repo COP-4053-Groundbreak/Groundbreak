@@ -6,12 +6,30 @@ public class RoomManager : MonoBehaviour
 {
     public void ToggleRoom(bool whatToSet) 
     {
-        foreach (Transform child in transform) 
+        // THIS IS A VERY BAD WAY TO DO THIS
+        // THIS BREAKS IF THE START ROOM IS RENAMED
+        // DO THIS ANOTHER WAY WHEN I CAN SEE PAST NULL REFS
+        // -N
+        if (gameObject.name != "StartRoomV2") 
         {
-            if (!child.CompareTag("SpawnPoint")) 
+            foreach (Transform child in transform)
             {
-                child.gameObject.SetActive(whatToSet);
+                if (!child.CompareTag("SpawnPoint"))
+                {
+                    child.gameObject.SetActive(whatToSet);
+                }
             }
         }
+    }
+
+    private void Start()
+    {
+        StartCoroutine(DelayAndShow());
+    }
+
+    IEnumerator DelayAndShow() 
+    {
+        yield return new WaitForSeconds(10f);
+        ToggleRoom(true);
     }
 }
