@@ -64,16 +64,6 @@ public class EnemyStateManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // set initative
-/*        if(gameObject.name.Contains("Archer")){
-            initiative = 4;
-        }
-        if(gameObject.name.Contains("Warrior")){
-            initiative = 2;
-        }
-        if(gameObject.name.Contains("Wizard")){
-            initiative = 6;
-        }*/
         enemyMovementRemaining = 2;
         // get sprite renderer
         mySpriteRenderer = GetComponent<SpriteRenderer>();
@@ -142,12 +132,20 @@ public class EnemyStateManager : MonoBehaviour
             if(enemyX < playerPos.x && mySpriteRenderer != null) // && enemy.mySpriteRenderer.transform.localScale.x < 0 // x_random + x_value > 0
             {
                     // flip the sprite
-                    mySpriteRenderer.flipX = true;
+                    if(gameObject.name.Contains("Zombie")){
+                        mySpriteRenderer.flipX = false;
+                    }else{
+                        mySpriteRenderer.flipX = true;
+                    }
             }
             if(enemyX > playerPos.x && mySpriteRenderer != null) //  && enemy.mySpriteRenderer.transform.localScale.x > 0
             {
                     // flip the sprite
-                    mySpriteRenderer.flipX = false;
+                    if(gameObject.name.Contains("Zombie")){
+                        mySpriteRenderer.flipX = true;
+                    }else{
+                        mySpriteRenderer.flipX = false;
+                    }
                     //  enemy.mySpriteRenderer.transform.localScale.x = -1;
             }
 
@@ -265,26 +263,10 @@ public class EnemyStateManager : MonoBehaviour
         {
             return;
         }
-
-        // if going right, flip.
-        if(gameObject.transform.position.x + x > gameObject.transform.position.x && mySpriteRenderer != null) // && enemy.mySpriteRenderer.transform.localScale.x < 0 // x_random + x_value > 0
-        {
-                 // flip the sprite
-                 mySpriteRenderer.flipX = true;
-                // enemy.mySpriteRenderer.transform.localScale.x = 1;
-        }
-        // if going left flip to default. 
-       if((int)gameObject.transform.position.x + x < gameObject.transform.position.x && mySpriteRenderer != null) //  && enemy.mySpriteRenderer.transform.localScale.x > 0
-        {
-                 // flip the sprite
-                 mySpriteRenderer.flipX = false;
-                //  enemy.mySpriteRenderer.transform.localScale.x = -1;
-        }
-        
+    
         slidingPath.Reverse();
         isSliding = true;
         animator.SetBool("isMoving", true);
-        // gameObject.transform.SetPositionAndRotation(new Vector3(x, y, 0), new Quaternion(0, 0, 0, 0));
     }
 
     public void SlideThisObjectAlongPath(List<Transform> path)
@@ -294,22 +276,7 @@ public class EnemyStateManager : MonoBehaviour
         {
             var targetPos = path[waypointIndex].position;
             var movementThisFrame = slideSpeed * Time.deltaTime;
-            var newPos = (gameObject.transform.position.x + targetPos.x) / (int)2;
-            // Debug.Log(newPos);
-            // Debug.Log("Game object Transform pos: " + gameObject.transform.position.x);
-            // Debug.Log("new pos: " + newPos);
-            if(newPos > transform.position.x){
-                // Debug.Log("Going to the right");
-                mySpriteRenderer.flipX = true;
-            }
-            else if (newPos < transform.position.x){
-                // Debug.Log("Going to the left");
-                mySpriteRenderer.flipX = false;
-                // animator.SetBool("alive", false);
-            }
-            // if neither its standing still in the x plane
-
-
+            
             transform.position = Vector2.MoveTowards(transform.position, targetPos, movementThisFrame);
             if (transform.position == targetPos)
             {
@@ -319,9 +286,6 @@ public class EnemyStateManager : MonoBehaviour
         else
         {
             stopEnemyMovement();
-            // waypointIndex = 0;
-            // isSliding = false;
-            // animator.SetBool("isMoving", false);
         }
     }
 
