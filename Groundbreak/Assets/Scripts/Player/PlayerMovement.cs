@@ -38,6 +38,8 @@ public class PlayerMovement : MonoBehaviour
 
     Tile[,] grid;
 
+    [SerializeField] GameObject currentRoom;
+    Vector3 localPos;
     // Start is called before the first frame update
     private void Start()
     {
@@ -60,10 +62,11 @@ public class PlayerMovement : MonoBehaviour
 
         // Initilize movement text
         displayMovement = FindObjectOfType<DisplayMovement>();
-
-        playerX = (int)(transform.position.x + 5f);
-        playerY = (int)(transform.position.y + 5f);
+        localPos = currentRoom.transform.InverseTransformPoint(transform.position);
+        playerX = (int)(localPos.x + 5);
+        playerY = (int)(localPos.y + 5);
         grid = FindObjectOfType<GridManager>().getGrid();
+        FindObjectOfType<FindNewGridManager>().OnGridChanged += GridChanged;
     }
 
     private void Awake()
@@ -95,8 +98,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        playerX = (int)(transform.position.x + 5f);
-        playerY = (int)(transform.position.y + 5f);
+        //currentRoom = FindObjectOfType<GridManager>().gameObject.GetComponentInParent<Transform>().gameObject;
+        localPos = currentRoom.transform.InverseTransformPoint(transform.position);
+        playerX = (int)(localPos.x + 5);
+        playerY = (int)(localPos.y + 5);
+
         displayMovement.DisplayMovementText(currentMovementRemaining / 10);
         if (!turnLogic.isCombatPhase) 
         {
@@ -227,7 +233,7 @@ public class PlayerMovement : MonoBehaviour
 
             // Disabled for now as it causes nulls when trying to show tile 3/8
             //Debug.Log(hit.transform.position.x + " , " + hit.transform.position.y);
-/*            if (!hit.rigidbody.gameObject) 
+            if (!hit.rigidbody)
             {
                 return;
             }
@@ -235,7 +241,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 TilePathNode hitTile = hit.rigidbody.gameObject.GetComponent<TilePathNode>();
                 ShowLine(hitTile.GetX(), hitTile.GetY());
-            }*/
+            }
         }
     }
 
@@ -248,7 +254,7 @@ public class PlayerMovement : MonoBehaviour
         {
             turnLogic = FindObjectOfType<TurnLogic>();
         }
-        if (isSliding || turnLogic.isThrowPhase || !turnLogic.isCombatPhase) 
+        if (isSliding || turnLogic.isThrowPhase || !turnLogic.isCombatPhase || !turnLogic.GetIsPlayerTurn()) 
         {
             return;
         }
@@ -327,5 +333,10 @@ public class PlayerMovement : MonoBehaviour
         {
             tile.updateDistanceToPlayer();
         }
+    }
+
+    private void GridChanged(object sender, System.EventArgs e)
+    {
+        grid = FindObjectOfType<GridManager>().grid;
     }
 }

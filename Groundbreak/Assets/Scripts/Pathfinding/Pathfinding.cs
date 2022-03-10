@@ -17,6 +17,7 @@ public class Pathfinding: MonoBehaviour
         //width = FindObjectOfType<GridManager>().getWidth();
         //height = FindObjectOfType<GridManager>().getHeight();
         currRoom = FindObjectOfType<GridManager>();
+        FindObjectOfType<FindNewGridManager>().OnGridChanged += GridChanged;
     }
     public List<TilePathNode> FindPath(int startX, int startY, int endX, int endY) 
     {
@@ -260,4 +261,10 @@ public class Pathfinding: MonoBehaviour
 
         return lowest;
     }
+
+    private void GridChanged(object sender, System.EventArgs e) 
+    {
+        currRoom = FindObjectOfType<GridManager>();
+    }
+
 }

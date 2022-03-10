@@ -209,7 +209,7 @@ GameObject:
   - component: {fileID: 5798126350568033319}
   m_Layer: 0
   m_Name: PlayerDetector3
-  m_TagString: Untagged
+  m_TagString: PlayerDetector
   m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -266,6 +266,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4950dd5e086d9c144956ce93a788a766, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentRoom: {fileID: 1055264733352679840}
 --- !u!1 &1144599225464473493
 GameObject:
   m_ObjectHideFlags: 0
@@ -758,7 +759,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c80402dcf7b9daa4ea81974797f907e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destination: {fileID: 0}
+  destination: {fileID: 5548741470334667820}
   doorDirection: 0
 --- !u!1 &3550937678057844717
 GameObject:
@@ -1020,7 +1021,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c80402dcf7b9daa4ea81974797f907e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destination: {fileID: 0}
+  destination: {fileID: 2979047826589333140}
   doorDirection: 0
 --- !u!1 &4146821175185268173
 GameObject:
@@ -1095,7 +1096,7 @@ GameObject:
   - component: {fileID: 1267014444487875281}
   m_Layer: 0
   m_Name: PlayerDetector4
-  m_TagString: Untagged
+  m_TagString: PlayerDetector
   m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1152,6 +1153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4950dd5e086d9c144956ce93a788a766, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentRoom: {fileID: 1055264733352679840}
 --- !u!1 &4730501940306225630
 GameObject:
   m_ObjectHideFlags: 0
@@ -1707,7 +1709,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c80402dcf7b9daa4ea81974797f907e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destination: {fileID: 0}
+  destination: {fileID: 6972214020623972396}
   doorDirection: 0
 --- !u!1 &7041971739682904154
 GameObject:
@@ -1891,7 +1893,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c80402dcf7b9daa4ea81974797f907e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destination: {fileID: 0}
+  destination: {fileID: 8921894404441045834}
   doorDirection: 0
 --- !u!1 &7508335411885373276
 GameObject:
@@ -2056,7 +2058,7 @@ GameObject:
   - component: {fileID: 5522905562066810400}
   m_Layer: 0
   m_Name: PlayerDetector1
-  m_TagString: Untagged
+  m_TagString: PlayerDetector
   m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2113,6 +2115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4950dd5e086d9c144956ce93a788a766, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentRoom: {fileID: 1055264733352679840}
 --- !u!1 &8359078145592501513
 GameObject:
   m_ObjectHideFlags: 0
@@ -2186,7 +2189,7 @@ GameObject:
   - component: {fileID: 5903798544855558913}
   m_Layer: 0
   m_Name: PlayerDetector2
-  m_TagString: Untagged
+  m_TagString: PlayerDetector
   m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2243,6 +2246,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4950dd5e086d9c144956ce93a788a766, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentRoom: {fileID: 1055264733352679840}
 --- !u!1 &8912721655485916919
 GameObject:
   m_ObjectHideFlags: 0

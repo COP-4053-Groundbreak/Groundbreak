@@ -253,7 +253,7 @@ GameObject:
   - component: {fileID: 3897953635393235631}
   m_Layer: 0
   m_Name: PlayerDetector3
-  m_TagString: Untagged
+  m_TagString: PlayerDetector
   m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -310,6 +310,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4950dd5e086d9c144956ce93a788a766, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentRoom: {fileID: 4237992103546678901}
 --- !u!1 &2561698982033585675
 GameObject:
   m_ObjectHideFlags: 0
@@ -470,6 +471,7 @@ GameObject:
   m_Component:
   - component: {fileID: 327851622525279150}
   - component: {fileID: 6051225602617568664}
+  - component: {fileID: 2586547281496880998}
   m_Layer: 0
   m_Name: RB
   m_TagString: Untagged
@@ -512,6 +514,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 74cbd66a106c81648b8420f9ba317cf6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2586547281496880998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4237992103546678901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78971f91b0339a548b63f1ab73050f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &4519607212872612391
@@ -696,7 +710,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c80402dcf7b9daa4ea81974797f907e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destination: {fileID: 0}
+  destination: {fileID: 6732976586229109174}
   doorDirection: 0
 --- !u!1 &4726688508744737508
 GameObject:
@@ -896,7 +910,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c80402dcf7b9daa4ea81974797f907e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destination: {fileID: 0}
+  destination: {fileID: 5054828620064954954}
   doorDirection: 0
 --- !u!1 &5051685218354348706
 GameObject:
@@ -1483,7 +1497,7 @@ GameObject:
   - component: {fileID: 5083439077554684703}
   m_Layer: 0
   m_Name: PlayerDetector2
-  m_TagString: Untagged
+  m_TagString: PlayerDetector
   m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1540,6 +1554,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4950dd5e086d9c144956ce93a788a766, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentRoom: {fileID: 4237992103546678901}
 --- !u!1 &8581442936701443025
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,7 +14,7 @@ public class RoomManager : MonoBehaviour
         {
             foreach (Transform child in transform)
             {
-                if (!child.CompareTag("SpawnPoint"))
+                if (!(child.CompareTag("SpawnPoint") || child.CompareTag("PlayerDetector")))
                 {
                     child.gameObject.SetActive(whatToSet);
                 }

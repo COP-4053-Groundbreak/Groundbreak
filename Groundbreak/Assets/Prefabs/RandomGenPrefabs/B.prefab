@@ -122,7 +122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c80402dcf7b9daa4ea81974797f907e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destination: {fileID: 0}
+  destination: {fileID: 1719467549928213755}
   doorDirection: 0
 --- !u!1 &360788167274511645
 GameObject:
@@ -227,7 +227,7 @@ GameObject:
   - component: {fileID: 3900916713788235076}
   m_Layer: 0
   m_Name: PlayerDetector2
-  m_TagString: Untagged
+  m_TagString: PlayerDetector
   m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -284,6 +284,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4950dd5e086d9c144956ce93a788a766, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentRoom: {fileID: 5690311667032423814}
 --- !u!1 &1543716997096018982
 GameObject:
   m_ObjectHideFlags: 0

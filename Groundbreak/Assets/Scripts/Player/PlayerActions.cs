@@ -25,16 +25,11 @@ public class PlayerActions : MonoBehaviour
         // Checks its your turn, you have an action to pick up tile, the tile's element is void, and that its within range
         if (turnLogic.GetIsPlayerTurn() && canPickUpTile && tile.getElement() != Element.Void && tile.gameObject.GetComponent<TileClickable>().GetDistance() <= pickupRange) 
         {
+            
             // Cant pickup tile with somehting on top of it
-            if (tile.gameObjectAbove == null){
-                foreach (GameObject enemy in enemyList) 
-                {
-                    // Breaks the function if we try to pick up a tile an enemy is standing on
-                    if (enemy.transform.position == tile.transform.position) 
-                    {
-                        return;
-                    }
-                }
+            if (tile.gameObjectAbove == null)
+            {
+                
 
                 // Update UI for tile held
                 FindObjectOfType<DisplayHeldTile>().DisplayTile(tile.gameObject);
