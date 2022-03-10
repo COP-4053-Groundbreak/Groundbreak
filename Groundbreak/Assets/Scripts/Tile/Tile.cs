@@ -9,7 +9,7 @@ public class Tile : MonoBehaviour {
     public Element myElement = Element.Base;
     // All tiles start out with a blank land feature
     LandFeature myLandFeature = LandFeature.None;
-
+    public GameObject chestAbove = null;
     public GameObject gameObjectAbove = null;
     public Effect myEffect = null;
     int movementModifier = 0;
@@ -112,8 +112,10 @@ public class Tile : MonoBehaviour {
         // Following for visualization purposes
         this.GetComponent<Renderer>().material.SetColor("_Color", newColor);
         // Set Tile Element symbol to new element
-        if (transform.childCount > 0)
+        if (transform.childCount > 0){
+            Debug.Log("I am with child");
             transform.GetChild(0).GetComponent<elemVisual>().setSymbol();
+        }
     }
     public void setMovementModifier(int a){
         movementModifier = a;
@@ -122,14 +124,17 @@ public class Tile : MonoBehaviour {
         return movementModifier;
     }
     private void OnTriggerEnter2D(Collider2D other) {
-        if (other.gameObject.tag != "Effect"){
+        if (other.gameObject.tag == "Chest")
+            chestAbove = other.gameObject;
+        if (other.gameObject.tag != "Effect" && other.gameObject.tag != "Tile"){
             gameObjectAbove = other.gameObject;
         }
     }
     private void OnTriggerExit2D(Collider2D other) {
         Debug.Log($"Exited {name}");
         if (other.gameObject.tag != "Effect"){
-            gameObjectAbove = null;
+            gameObjectAbove = (chestAbove == null) ? null : chestAbove;
         }
+
     }
 }
