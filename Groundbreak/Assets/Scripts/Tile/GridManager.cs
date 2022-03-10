@@ -23,7 +23,7 @@ public class GridManager : MonoBehaviour
     void Awake(){
         grid = new Tile[10, 10];
         spawnPoints = GameObject.FindGameObjectsWithTag("TileSpawnPoint");
-        //Debug.Log(spawnPoints.Length);
+        Debug.Log(spawnPoints.Length);
         templates = GameObject.FindGameObjectWithTag("TileSpawner").GetComponent<TileTemplates>();
         rand = Random.Range(0, templates.normalTileSet.Length);
         SpawnTilesInRoom();
@@ -45,13 +45,13 @@ public class GridManager : MonoBehaviour
             //Debug.Log(spawn.transform.position + new Vector3(4.5f, 4.5f, 0));
             foreach (Transform child in tilePrefab.transform)
             {
-                Vector2 position = getRelativePos(child.position.x, child.position.y);
-                //Debug.Log((int)(position.x + 5.5f) + " , " + (int)(position.y + 5.5f));
-                grid[(int)(position.x + 5.5f), (int)(position.y + 5.5f)] = child.GetComponent<Tile>();
+                //Debug.Log((int)(child.localPosition.x + 5.5f) + " , " + (int)(child.localPosition.y + 5.5f));
+                grid[(int)(child.localPosition.x + 5.5f), (int)(child.localPosition.y + 5.5f)] = child.GetComponent<Tile>();
                 
             }
             Destroy(spawn);
         }
+        GetComponentInParent<RoomManager>().ToggleRoom(false);
     }
 
     /*
