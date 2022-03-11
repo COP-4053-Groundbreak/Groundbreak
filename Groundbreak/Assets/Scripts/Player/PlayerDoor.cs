@@ -15,15 +15,15 @@ public class PlayerDoor : MonoBehaviour
 
             foreach (Transform child in currentRoom.transform)
             {
-                Debug.Log("Inside foreach");
+                //Debug.Log("Inside foreach");
                 if ((child.name == "PlayerDetector1" || child.name == "PlayerDetector2" || child.name == "PlayerDetector3" || child.name == "PlayerDetector4"))
                 {
-                    Debug.Log("set a detector as true");
+                    //Debug.Log("set a detector as true");
                     child.gameObject.SetActive(true);
                 }
                 else
                 {
-                    Debug.Log("set an object as false");
+                    //Debug.Log("set an object as false");
                     child.gameObject.SetActive(false);
                 }
             }
@@ -32,7 +32,7 @@ public class PlayerDoor : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Collision with door! This happened");
+        //Debug.Log("Collision with door! This happened");
 
         if (collision.CompareTag("Door"))
         {
