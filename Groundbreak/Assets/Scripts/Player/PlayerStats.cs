@@ -46,7 +46,7 @@ public class PlayerStats : MonoBehaviour
 
         // Create healthbar
         Transform healthBarTransform = Instantiate(playerHealthBar.transform, gameObject.transform);
-        Vector3 healthBarLocalPosition = new Vector3(0, (float)0.5);
+        Vector3 healthBarLocalPosition = new Vector3(0, (float)1);
         healthBarTransform.localPosition = healthBarLocalPosition;
 
         PlayerHealthBar healthBar = healthBarTransform.GetComponent<PlayerHealthBar>();

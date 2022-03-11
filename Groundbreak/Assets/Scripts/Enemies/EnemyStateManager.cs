@@ -94,12 +94,19 @@ public class EnemyStateManager : MonoBehaviour
         currentState.EnterState(this);
     }
 
+    GameObject currRoom;
+    Vector2 localPos;
     // Update is called once per frame
     void Update()
     {
+        if (!currRoom) 
+        {
+            currRoom = FindObjectOfType<GridManager>().gameObject.transform.parent.gameObject;
+        }
+        localPos = currRoom.transform.InverseTransformPoint(transform.position);
         // Calculate enemy position -N
-        enemyX = (int)(transform.position.x + 5f);
-        enemyY = (int)(transform.position.y + 5f);
+        enemyX = (int)(localPos.x + 5f);
+        enemyY = (int)(localPos.y + 5f);
 
         if (this != null && currentState != null){
             currentState.UpdateState(this);
@@ -310,5 +317,10 @@ public class EnemyStateManager : MonoBehaviour
         waypointIndex = 0;
         isSliding = false;
         animator.SetBool("isMoving", false);
+    }
+
+    private void GridChanged(object sender, System.EventArgs e)
+    {
+        currRoom = FindObjectOfType<GridManager>().gameObject.transform.parent.gameObject;
     }
 }

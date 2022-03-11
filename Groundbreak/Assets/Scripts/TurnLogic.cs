@@ -301,7 +301,7 @@ public class TurnLogic : MonoBehaviour
         }
         // add player gameobject to list
         actorList.Add(FindObjectOfType<PlayerMovement>().gameObject);
-        Debug.LogWarning("AAAAAAA");
+        //Debug.LogWarning("AAAAAAA");
         listOfInitative.Clear();
     }
 
