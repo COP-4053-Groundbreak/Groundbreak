@@ -109,12 +109,16 @@ public class ReactionManager : MonoBehaviour
         // Two elements are interacting, create an effect!
         TilePathNode tp = staticTile.GetComponent<TilePathNode>();
         Vector2 pos = new Vector2(tp.GetX(), tp.GetY());
-        return createEffect(thrownElem, staticElem, pos);
+        return createEffect(thrownElem, staticElem, staticTile.transform.position);
     }
     // Makes an effect combining two elements at pos
-    public static Effect createEffect(Element element1, Element element2, Vector2 pos){
+    public static Effect createEffect(Element element1, Element element2, Vector2 instantiatePos){
         // Make sure position is on integer value
-        pos = new Vector2((int)pos.x, (int)pos.y);
+        instantiatePos = new Vector2((int)instantiatePos.x, (int)instantiatePos.y);
+        Debug.LogWarning("Absolute position of effect to be created is: " + instantiatePos);
+        Vector2 gridPos = gridManager.transform.InverseTransformPoint(instantiatePos) + new Vector3(5,5,0);
+        Debug.LogWarning("Grid position of effect to be created is: " + gridPos);
+        
         
         // Make sure there isn't an effect already here. If there is, delete it.
         for (int i = 0; i < existingEffects.Count; i++){
@@ -124,16 +128,17 @@ public class ReactionManager : MonoBehaviour
             
             // There's already an element existing in this tile, create a new effect while
             // removing the previous one
-            if (effPos == pos){
+            if (effPos == gridPos){
                 Debug.Log("Removing effect");
                 existingEffects.Remove(eff);
                 Destroy(eff.gameObject);
             }
         }
 
-        Effect newEffect = Instantiate(effectPrefab, pos, Quaternion.identity).GetComponent<Effect>();
+
+        Effect newEffect = Instantiate(effectPrefab, instantiatePos, Quaternion.identity, gridManager.transform.parent).GetComponent<Effect>();
         existingEffects.Add(newEffect);
-        newEffect.Initialize(element1, element2);
+        newEffect.Initialize(element1, element2, gridPos);
 
         return newEffect;
     }
@@ -150,13 +155,13 @@ public class ReactionManager : MonoBehaviour
             thrownAt.GetComponent<Tile>().myEffect = TileOnTile(thrownElem, thrownAt.GetComponent<Tile>());
         } else if (thrownAt.tag == "Enemy"){
             Debug.Log("Element was thrown at an enemy!");
-
+            // Once enemyX and enemyY is fixed, TileOnEnemy shoudl work
             Tile tileUnderEnemy = gridManager.getTile(thrownAt.GetComponent<EnemyStateManager>().enemyX, thrownAt.GetComponent<EnemyStateManager>().enemyY);
             tileUnderEnemy.myEffect = TileOnEnemy(thrownElem, thrownAt);
         } else if (thrownAt.tag == "Ability"){
             // myEffect = myReactionManager.AbilityOnTile(other.gameObject.GetComponent<Ability>(), this);
         } else {
-            Debug.Log("Not throwing at enemy or tile!");
+            Debug.Log("Not throwing at enemy or tile! Throwing at " + thrownAt.name);
             // no elemental reaction here I believe
         }
     }
@@ -195,7 +200,7 @@ public class ReactionManager : MonoBehaviour
         
         Debug.Log("Effect will happen!");
         // Two elements are interacting, create an effect!
-        return createEffect(thrownElem, enemyElem, new Vector2(esm.enemyX, esm.enemyY));
+        return createEffect(thrownElem, enemyElem, enemy.transform.position);
     }
     public Effect EnemyOnTile(){
         return null;
@@ -222,7 +227,7 @@ public class ReactionManager : MonoBehaviour
     }
     public static void destroyAllEffects(){
         foreach (Effect eff in existingEffects){
-            Destroy(eff);
+            Destroy(eff.gameObject);
         }
         existingEffects = new List<Effect>();
     }
