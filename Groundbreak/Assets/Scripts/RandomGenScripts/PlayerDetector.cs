@@ -16,21 +16,21 @@ public class PlayerDetector : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Collision with player has happened");
+        //Debug.Log("Collision with player has happened");
 
         //PlayerRoom.currentRoom = currentRoom;
 
         foreach (Transform child in currentRoom.transform)
         {
-            Debug.Log("Inside foreach");
+           //Debug.Log("Inside foreach");
             if ( (child.name == "PlayerDetector1" || child.name == "PlayerDetector2" || child.name == "PlayerDetector3" || child.name == "PlayerDetector4"))
             {
-                Debug.Log("set a detector as false");
+                //Debug.Log("set a detector as false");
                 child.gameObject.SetActive(false);
             }
             else
             {
-                Debug.Log("set an object as true");
+                //Debug.Log("set an object as true");
                 child.gameObject.SetActive(true);
             }
         }
@@ -40,7 +40,7 @@ public class PlayerDetector : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        Debug.Log("Player has left the box thing");
+        //Debug.Log("Player has left the box thing");
         /*foreach (Transform child in currentRoom.transform)
         {
             Debug.Log("Inside foreach");

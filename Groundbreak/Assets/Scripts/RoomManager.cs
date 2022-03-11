@@ -24,12 +24,12 @@ public class RoomManager : MonoBehaviour
 
     private void Start()
     {
-        //StartCoroutine(DelayAndShow());
+        StartCoroutine(DelayAndShow());
     }
 
     IEnumerator DelayAndShow() 
     {
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(5f);
         ToggleRoom(true);
     }
 }

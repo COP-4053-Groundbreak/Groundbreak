@@ -311,6 +311,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentRoom: {fileID: 4237992103546678901}
+  PlayerRoom: {fileID: 0}
 --- !u!1 &2561698982033585675
 GameObject:
   m_ObjectHideFlags: 0
@@ -472,6 +473,7 @@ GameObject:
   - component: {fileID: 327851622525279150}
   - component: {fileID: 6051225602617568664}
   - component: {fileID: 2586547281496880998}
+  - component: {fileID: 7376416695435586316}
   m_Layer: 0
   m_Name: RB
   m_TagString: Untagged
@@ -528,6 +530,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78971f91b0339a548b63f1ab73050f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7376416695435586316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4237992103546678901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82bbb551b2f0c9d4bbd00284fc58e40d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Spawned: 0
+  RoomWidth: 10
+  RoomHeight: 10
+  ChestSpawn: 3
+  Chest: {fileID: 8396762822579587563, guid: 9fbd856e733bf6443b47a4a3ce8cba92, type: 3}
 --- !u!1 &4519607212872612391
 GameObject:
   m_ObjectHideFlags: 0
@@ -1555,6 +1574,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentRoom: {fileID: 4237992103546678901}
+  PlayerRoom: {fileID: 0}
 --- !u!1 &8581442936701443025
 GameObject:
   m_ObjectHideFlags: 0

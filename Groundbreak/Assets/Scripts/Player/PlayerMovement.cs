@@ -71,7 +71,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
-
             // Get references
             playerAnimator = GetComponent<Animator>();
             playerSpriteRenderer = GetComponentInChildren<SpriteRenderer>();
@@ -98,7 +97,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        //currentRoom = FindObjectOfType<GridManager>().gameObject.GetComponentInParent<Transform>().gameObject;
+        currentRoom = FindObjectOfType<GridManager>().gameObject.transform.parent.gameObject;
+        
         localPos = currentRoom.transform.InverseTransformPoint(transform.position);
         playerX = (int)(localPos.x + 5);
         playerY = (int)(localPos.y + 5);
