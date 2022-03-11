@@ -295,6 +295,7 @@ public class TurnLogic : MonoBehaviour
     private void GridChanged(object sender, System.EventArgs e)
     {
         EnemyStateManager[] enemyStateManagers = UnityEngine.Object.FindObjectsOfType<EnemyStateManager>();
+        actorList.Clear();
         foreach (EnemyStateManager enemy in enemyStateManagers)
         {
             actorList.Add(enemy.gameObject);

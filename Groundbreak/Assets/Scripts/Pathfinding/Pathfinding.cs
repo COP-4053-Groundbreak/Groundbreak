@@ -156,10 +156,13 @@ public class Pathfinding: MonoBehaviour
                     continue;
                 }
 
-                if (neighborNode.isWalkable == false)
+                if (neighborNode.isWalkable == false || neighborNode.gameObject.GetComponent<Tile>().gameObjectAbove)
                 {
-                    closedList.Add(neighborNode);
-                    continue;
+                    if (!neighborNode.gameObject.GetComponent<Tile>().gameObjectAbove.CompareTag("Player")) 
+                    {
+                        closedList.Add(neighborNode);
+                        continue;
+                    }
                 }
 
                 // calculate the cost it would take to get to that neighbor node using this tile

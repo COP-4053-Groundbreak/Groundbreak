@@ -69,6 +69,7 @@ public class PlayerActions : MonoBehaviour
         Debug.Log($"Attemptint to throw a {tile.GetComponent<Tile>().myElement}");
         if (turnLogic.GetIsPlayerTurn() && heldTileElement != Element.Void && tile.GetComponent<TileClickable>().GetDistance() <= throwRange) 
         {
+            playerAnimator.SetTrigger("Throw");
             Debug.Log($"Actually threw a {tile.GetComponent<Tile>().myElement}");
             ReactionManager.catchElement(heldTileElement, tile);
             Debug.Log("Out of catch element");
