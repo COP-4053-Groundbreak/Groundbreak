@@ -15,17 +15,17 @@ public class ChestSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        randX = Random.Range(0, RoomWidth);
-        randY = Random.Range(0, RoomHeight);
-        Vector3 posChest = new Vector3(randX, randY, 0);
+        if (Spawned == false)
+        {
+            randX = Random.Range(0, RoomWidth);
+            randY = Random.Range(0, RoomHeight);
+            Vector3 posChest = new Vector3(randX, randY, 0);
 
-        Chest.transform.localPosition = 
-
-
-        //Instantiate a chest
-        Instantiate(Chest, Chest.transform.position, Chest.transform.rotation);
-        Chest.transform.localPosition = posChest;
-        Spawned = true;
+            //Instantiate a chest
+            Instantiate(Chest, transform.position, transform.rotation, gameObject.transform);
+            Chest.transform.localPosition = posChest;
+            Spawned = true;
+        }
     }
 
     
