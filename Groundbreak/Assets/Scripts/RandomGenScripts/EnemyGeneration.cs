@@ -4,21 +4,33 @@ using UnityEngine;
 
 public class EnemyGeneration : MonoBehaviour
 {
-    [SerializeField] bool Spawned = false;
-    [SerializeField] int RoomWidth;
-    [SerializeField] int RoomHeight;
+    private EnemyTemplates templates;
 
+    [SerializeField] bool spawned = false;
+    [SerializeField] int roomWidth;
+    [SerializeField] int roomHeight;
+    [SerializeField] int numOfPossibleEnemies;
 
+    public int test;
 
-    // Start is called before the first frame update
+    private int rand;
+    private int numOfEnemies;
+
     void Start()
     {
-        
-    }
+        //Debug.Log("Inside Start function for EnemyGeneration");
+        templates = FindObjectOfType<EnemyTemplates>();
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (spawned == false)
+        {
+            numOfEnemies = Random.Range(1, numOfPossibleEnemies) + 1;
+            for(int i=1; i< numOfEnemies; i++)
+            {
+                rand = Random.Range(0, templates.enemiesFloorOne.Length);
+                //Debug.Log("Rand value: " + 1);
+                Instantiate(templates.enemiesFloorOne[rand], transform.position, templates.enemiesFloorOne[rand].transform.rotation, gameObject.transform);
+            }
+            spawned = true;
+        }
     }
 }

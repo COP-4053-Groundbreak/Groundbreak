@@ -474,6 +474,7 @@ GameObject:
   - component: {fileID: 6051225602617568664}
   - component: {fileID: 2586547281496880998}
   - component: {fileID: 7376416695435586316}
+  - component: {fileID: 7371887775446820504}
   m_Layer: 0
   m_Name: RB
   m_TagString: Untagged
@@ -547,6 +548,23 @@ MonoBehaviour:
   RoomHeight: 10
   ChestSpawn: 3
   Chest: {fileID: 8396762822579587563, guid: 9fbd856e733bf6443b47a4a3ce8cba92, type: 3}
+--- !u!114 &7371887775446820504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4237992103546678901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f59b637896a06fe459c64c1b36db86ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawned: 0
+  roomWidth: 10
+  roomHeight: 10
+  numOfPossibleEnemies: 4
+  test: 0
 --- !u!1 &4519607212872612391
 GameObject:
   m_ObjectHideFlags: 0
