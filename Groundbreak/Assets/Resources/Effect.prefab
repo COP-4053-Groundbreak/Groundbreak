@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7121022345903861547}
   m_Layer: 0
   m_Name: Effect
-  m_TagString: Untagged
+  m_TagString: Effect
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -122,3 +122,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcb06c91fcdd9b94082b2edf78e9ef23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myDuration: -1
+  gridManager: {fileID: 0}

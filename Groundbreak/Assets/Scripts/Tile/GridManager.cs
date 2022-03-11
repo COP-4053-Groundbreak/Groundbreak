@@ -8,7 +8,7 @@ public class GridManager : MonoBehaviour
     [SerializeField] private Tile tilePrefab;
     [SerializeField] private Transform cam;
     [SerializeField] GameObject tileHolder;
-    [SerializeField] Vector2 bottomLeftCorner;
+    [SerializeField] public Vector2 bottomLeftCorner;
     [SerializeField] GameObject room;
 
 
@@ -31,10 +31,17 @@ public class GridManager : MonoBehaviour
         bottomLeftCorner = new Vector2((int)(this.room.transform.position.x - 5.0f), (int)(this.room.transform.position.y - 5.0f));
         room = this.gameObject;
         SpawnTilesInRoom();
+
         //generateGrid();
 
         //Debug.Log(grid[0, 0].getElement());
 
+    }
+
+    void Start(){
+        foreach (Tile t in grid){
+            t.findNeighbors(this);
+        }
     }
 
     public void SpawnTilesInRoom()
@@ -97,7 +104,13 @@ public class GridManager : MonoBehaviour
     }
 
     public bool inBounds(int x, int y){
-        return (x >= bottomLeftCorner.x && x < bottomLeftCorner.x + width && y >= bottomLeftCorner.y && y < bottomLeftCorner.y + height);
+        bool cond1 = x >= 0;
+        bool cond2 = x < width;
+        bool cond3 = y >= 0;
+        bool cond4 = y < height;
+        //Debug.Log($"Checking if in bounds: {0} <= {x} < {width}");
+        //Debug.Log($"Checking if in bounds: {0} <= {y} < {height}");
+        return (cond1 && cond2 && cond3 && cond4);
     }
 
     // Assuming we have the bottom right corner of a room with spawned tiles, this should get the
@@ -109,6 +122,7 @@ public class GridManager : MonoBehaviour
         return new Vector2(newX - bottomLeftCorner.x, newY - bottomLeftCorner.y);
     }
     public Tile getTile(float x, float y){
+        Debug.Log($"Getting tile at {x},{y}");
         return grid[(int)x, (int)y];
     }
     

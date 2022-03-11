@@ -6,75 +6,80 @@ public class Effect : MonoBehaviour {
     // ID obtained from adding two elements
     int id;
     string effectName;
-    Tile tileUnderEffect;
-
-    int effectDuration;
-
-    // These should probably be put into reaction manager.
-    // I.e.: doesn't make sense for earth effect to know the magma damage
-    [SerializeField] const int MAGMA_DMG = 25;
-    [SerializeField] const int SANDSTORM_DMG = 5;
-    [SerializeField] const int SANDSTORM_RANGE = 2;
-    [SerializeField] const int STORM_RANGE = 2;
-    [SerializeField] const int STORM_DMG = 5;
-    // Damage from two units colliding from a push or pull
-    [SerializeField] const int CRASH_DMG = 5;
-    [SerializeField] const int FIREBALL_DMG = 30;
-    [SerializeField] const int FIREBALL_RANGE = 2;
-    [SerializeField] const int SMOKE_RANGE_PLAYER_MOD = 1;
-    [SerializeField] const int SMOKE_RANGE_ENEMY_MOD = 2;
-    
+    public Tile tileUnderEffect;
+    [SerializeField] public int myDuration = -1;
+        
     public GridManager gridManager;
+    int posX,posY;
+    GameObject currRoom;
 
     private void Start()
     {
         FindObjectOfType<FindNewGridManager>().OnGridChanged += GridChanged;
     }
 
+    // TOD0: FIX EFFECTS USING TRANSFORM.POSITION
+    // FOR EFFECT POS: tileUnderEffect.GetX(), tileUnderEffect.GetY();
+    // FOR ENEMY POS: enemyX, enemyY in EnemyStateManager;
+    // FOR PLAYER POS: playerX, playerY in PlayerMovement;
+
     // Some effects should be processed immediately upon creation (i.e. mud, smoke)
     public void Initialize(Element a, Element b){
           id = (int)a + (int)b;
           gridManager = FindObjectOfType<GridManager>();  
-          Vector2 pos = gridManager.getRelativePos(transform.position.x, transform.position.y);
-          tileUnderEffect = gridManager.getTile(pos.x, pos.y);
+
+          currRoom = gridManager.transform.parent.gameObject;
+          Vector2 localPos = currRoom.transform.InverseTransformPoint(transform.position);
+          posX = (int)(localPos.x + 5);
+          posY = (int)(localPos.y + 5);
+          
+          tileUnderEffect = gridManager.getTile(posX, posY);
 
           switch(id) {
-              case ((int)Element.Air + (int)Element.Earth): // Sandstorm PUSHES
+              case ((int)Element.Air + (int)Element.Earth): // Sandstorm 
                 effectName = "Sandstorm";
                 Debug.Log("Sandstorm down effect time!"); 
-                sandStormDownEffect(tileUnderEffect, SANDSTORM_RANGE, new List<Tile>(), new List<GameObject>());
+                sandStormDownEffect(tileUnderEffect, ReactionManager.SANDSTORM_RANGE, new List<Tile>(), new List<GameObject>());
+                myDuration = ReactionManager.STORM_DUR;
                 break;
-            case ((int)Element.Earth + (int)Element.Fire): // Magma
+            case ((int)Element.Earth + (int)Element.Fire): // Magma 
                 effectName = "Magma";
-                if (tileUnderEffect.gameObjectAbove.tag == "Player" || tileUnderEffect.gameObjectAbove.tag == "Enemy"){
-                    dealDamageToChar(tileUnderEffect.gameObject, MAGMA_DMG);
+                if (tileUnderEffect.gameObjectAbove != null){
+                    if (tileUnderEffect.gameObjectAbove.tag == "Player" || tileUnderEffect.gameObjectAbove.tag == "Enemy"){
+                        dealDamageToChar(tileUnderEffect.gameObjectAbove, ReactionManager.MAGMA_DMG);
+                    }
                 }
+                myDuration = ReactionManager.MAGMA_DUR;
                 break;
             case ((int)Element.Water + (int)Element.Earth): // Mud
                 effectName = "Mud";
-                tileUnderEffect.setMovementModifier(tileUnderEffect.getMovementModifier() - 1);
+                tileUnderEffect.setMovementModifier(tileUnderEffect.getMovementModifier() - ReactionManager.MUD_DEBUFF);
+                myDuration = ReactionManager.MUD_DUR;
                 break;
-            case ((int)Element.Water + (int)Element.Fire): // Smoke
+            case ((int)Element.Water + (int)Element.Fire): // Smoke 
                 effectName = "Smoke";
+                myDuration = ReactionManager.SMOKE_DUR;
                 break;
-            case ((int)Element.Air + (int)Element.Fire): // Fireball
+            case ((int)Element.Air + (int)Element.Fire): // Fireball 
                 effectName = "Fireball";
                 if (tileUnderEffect.gameObjectAbove != null)
-                    dealDamageToChar(tileUnderEffect.gameObjectAbove, FIREBALL_DMG);
-                fireballEffect(tileUnderEffect, FIREBALL_RANGE, new List<Tile>(), new List<GameObject>());
+                    dealDamageToChar(tileUnderEffect.gameObjectAbove, ReactionManager.FIREBALL_DMG);
+                fireballEffect(tileUnderEffect, ReactionManager.FIREBALL_RANGE, new List<Tile>(), new List<GameObject>());
+                myDuration = ReactionManager.FIREBALL_DUR;
                 break;
-            default: // Storm PULLS
+            default: // Storm 
                 effectName = "Storm";
                 Debug.Log("Storm down effect time!"); 
-                stormDownEffect(tileUnderEffect, STORM_RANGE, new List<Tile>(), new List<GameObject>());
+                stormDownEffect(tileUnderEffect, ReactionManager.STORM_RANGE, new List<Tile>(), new List<GameObject>());
+                myDuration = ReactionManager.STORM_DUR;
                 break;
         }
         GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>($"Sprites/Effects/{effectName}");
-        gridManager.getTile(pos.x, pos.y).setEffect(this);
+        tileUnderEffect.setEffect(this);
     }
     private void OnTriggerEnter2D(Collider2D other) {
         Debug.Log("Entered effect collider!");
-        if (other == null)
+        if (other == null || other.gameObject == null)
             return;
         if (other.gameObject.tag == "Player" || other.gameObject.tag == "Enemy"){
             switch(id){
@@ -88,12 +93,12 @@ public class Effect : MonoBehaviour {
                     if (rand[0] == 0 && rand[1] == 0){
                         rand[0]++;
                     }
-                    dealDamageToChar(other.gameObject, SANDSTORM_DMG);
+                    dealDamageToChar(other.gameObject, ReactionManager.SANDSTORM_DMG);
                     pushGO(this.gameObject, new Vector2(rand[0], rand[1]), 1, other.gameObject);
                     break;
                 case ((int)Element.Earth + (int)Element.Fire): // Magma
                     Debug.Log("Entered magma!");
-                    dealDamageToChar(other.gameObject, MAGMA_DMG);
+                    dealDamageToChar(other.gameObject, ReactionManager.MAGMA_DMG);
                     break;
                 case ((int)Element.Water + (int)Element.Earth): // Mud
                     // Don't think anything needs to be done if mud is entered, it's an effect that
@@ -101,9 +106,9 @@ public class Effect : MonoBehaviour {
                     break;
                 case ((int)Element.Water + (int)Element.Fire): // Smoke
                     if (other.gameObject.tag == "Player"){
-                        other.gameObject.GetComponent<PlayerActions>().throwRange -= SMOKE_RANGE_PLAYER_MOD;
+                        other.gameObject.GetComponent<PlayerActions>().throwRange -= ReactionManager.SMOKE_RANGE_PLAYER_MOD;
                     } else if (other.gameObject.tag == "Enemy"){
-                        other.gameObject.GetComponent<EnemyStateManager>().visibilityRange -= SMOKE_RANGE_ENEMY_MOD;
+                        other.gameObject.GetComponent<EnemyStateManager>().visibilityRange -= ReactionManager.SMOKE_RANGE_ENEMY_MOD;
                     }
                     break;
                 case ((int)Element.Air + (int)Element.Fire): // Fireball
@@ -123,16 +128,28 @@ public class Effect : MonoBehaviour {
                             enemyState.enemyMovementRemaining = 1;
                         }
                     }
-                    dealDamageToChar(other.gameObject, STORM_DMG);
+                    dealDamageToChar(other.gameObject, ReactionManager.STORM_DMG);
                     break;
             }
         }
     }
     // Pushes pushable towards pushOrigin in pushDir direction numPushed tiles
-    void pushGO(GameObject pushOrigin, Vector2 pushDir, int numPushed, GameObject pushable){
+    public void pushGO(GameObject pushOrigin, Vector2 pushDir, int numPushed, GameObject pushable){
         Debug.Log($"Pushing in {pushDir.ToString()}");
         // Use a variable first so as to not modify player position. Check if someone there. If so,
         // deal more damage and don't move into that tile
+        int pushableX = 0;
+        int pushableY = 0;
+        if (pushable.gameObject.tag == "Enemy") {
+            pushableX = pushable.gameObject.GetComponent<EnemyStateManager>().enemyX;
+            pushableY = pushable.gameObject.GetComponent<EnemyStateManager>().enemyY;
+        } else if (pushable.gameObject.tag == "Player") {
+            pushableX = pushable.gameObject.GetComponent<PlayerMovement>().playerX;
+            pushableY = pushable.gameObject.GetComponent<PlayerMovement>().playerY;
+        } else {
+            Debug.Log("Why are we here?");
+        }
+        
         int postPushX = 0;
         int postPushY = 0;
         
@@ -181,7 +198,7 @@ public class Effect : MonoBehaviour {
         Debug.Log($"Player new position is {pushable.transform.position}");
     }
     // Pulls pullable towards pullOrigin in pullDir direction numPulled tiles 
-    void pullGO(GameObject pullOrigin, Vector2 pullDir, int numPulled, GameObject pullable){
+    public void pullGO(GameObject pullOrigin, Vector2 pullDir, int numPulled, GameObject pullable){
         Debug.Log($"Pulling in {pullDir.ToString()}");
         // Use a variable first so as to not modify player position. Check if someone there. If so,
         // deal more damage and don't move into that tile
@@ -232,8 +249,8 @@ public class Effect : MonoBehaviour {
         Debug.Log($"Player new position is {pullable.transform.position}");
     }
     private void dealCrashDamage(GameObject char1, GameObject char2){
-        dealDamageToChar(char1, CRASH_DMG);
-        dealDamageToChar(char2, CRASH_DMG);
+        dealDamageToChar(char1, ReactionManager.CRASH_DMG);
+        dealDamageToChar(char2, ReactionManager.CRASH_DMG);
     }
     private void dealDamageToChar(GameObject character, int damageAmount){
         if (character.gameObject.tag == "Player")
@@ -259,7 +276,7 @@ public class Effect : MonoBehaviour {
                 // Make sure there's something to pull and that it's a character
                 if (neighbor.gameObjectAbove != null && (neighbor.gameObjectAbove.tag == "Enemy" || neighbor.gameObjectAbove.tag == "Player")){
                     if (!charactersPulled.Contains(neighbor.gameObjectAbove)){
-                        dealDamageToChar(neighbor.gameObjectAbove, STORM_DMG);
+                        dealDamageToChar(neighbor.gameObjectAbove, ReactionManager.STORM_DMG);
                         pullGO(this.gameObject, this.transform.position - neighbor.transform.position, 1, neighbor.gameObjectAbove);
                         charactersPulled.Add(neighbor.gameObjectAbove);
                     }
@@ -282,11 +299,12 @@ public class Effect : MonoBehaviour {
             // neighbor.GetComponent<Renderer>().material.color = Color.yellow; // TESTING NEIGHBORS INDICATOR
             // If haven't visited before, do effect
             if (!neighborsVisited.Contains(neighbor)){
+                neighbor.GetComponent<Renderer>().material.SetColor("_Color", Color.yellow);
                 Debug.Log($"Unvisited tile at {neighbor.name}");
                 // Make sure there's something to pull and that it's a character
                 if (neighbor.gameObjectAbove != null && (neighbor.gameObjectAbove.tag == "Enemy" || neighbor.gameObjectAbove.tag == "Player")){
                     if (!charactersPushed.Contains(neighbor.gameObjectAbove)){
-                        dealDamageToChar(neighbor.gameObjectAbove, SANDSTORM_DMG);
+                        dealDamageToChar(neighbor.gameObjectAbove, ReactionManager.SANDSTORM_DMG);
                         pushGO(this.gameObject, neighbor.transform.position -  this.transform.position, 1, neighbor.gameObjectAbove);
                         charactersPushed.Add(neighbor.gameObjectAbove);
                     }
@@ -313,7 +331,7 @@ public class Effect : MonoBehaviour {
                 // Make sure there's something to pull and that it's a character
                 if (neighbor.gameObjectAbove != null && (neighbor.gameObjectAbove.tag == "Enemy" || neighbor.gameObjectAbove.tag == "Player")){
                     if (!charactersDamaged.Contains(neighbor.gameObjectAbove)){
-                        dealDamageToChar(neighbor.gameObjectAbove, FIREBALL_DMG);
+                        dealDamageToChar(neighbor.gameObjectAbove, ReactionManager.FIREBALL_DMG);
                         charactersDamaged.Add(neighbor.gameObjectAbove);
                     }
                 }
@@ -327,4 +345,15 @@ public class Effect : MonoBehaviour {
     {
         gridManager = FindObjectOfType<GridManager>();
     }
+
+    public void reduceDuration(){
+        myDuration--;
+        Debug.Log("Reducing duration to " + myDuration);
+        if (myDuration <= 0){
+            Debug.Log("DEEEESTRUCTIOOOOOON");
+            Destroy(this.gameObject);
+        }
+    }
+
+
 }

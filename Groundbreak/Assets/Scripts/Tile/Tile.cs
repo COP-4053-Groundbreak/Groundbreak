@@ -1,10 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Tile : MonoBehaviour {
-
-    [SerializeField] GridManager gridManager;
     // All tiles start out as base tiles
     public Element myElement = Element.Base;
     // All tiles start out with a blank land feature
@@ -17,34 +16,36 @@ public class Tile : MonoBehaviour {
     public bool isThrowable = true;
 
     private void Start() {
-        setElement(this.myElement);    
+        setElement(this.myElement);
     }
 
     // Finds up to 8 neighbors around this tile. Does so using a PhysicsOverlap circle which detects
     // the colliders of other tiles
-    public void findNeighbors(){
-        
-        Collider2D[] neighborColliders = Physics2D.OverlapCircleAll(this.transform.position, 1.0f);
+    public void findNeighbors(GridManager gridManager){
+        StartCoroutine(waitAndFindNeighbors(gridManager));
+    }
 
-             
-        Debug.Log($"Tile {this.name} collided with {neighborColliders.Length} neighbors");
-        foreach(Collider2D a in neighborColliders){
-            if (a.gameObject.tag == "Tile" && a.gameObject.name != this.name){
-                // Can be optimized by making it so that both tiles mark each other as neighbor
-                addNeighbor(a.gameObject.GetComponent<Tile>());
+    IEnumerator waitAndFindNeighbors(GridManager gridManager){
+        yield return new WaitForSeconds(1f);
+        int x = (int)gameObject.GetComponent<TilePathNode>().GetX();
+        int y = (int)gameObject.GetComponent<TilePathNode>().GetY();
+        //Debug.Log($"x:{x},y:{y}");
+        
+        int[] add = {-1, 0, 1};
+        for (int i = 0; i < 3; i++){
+            for (int j = 0; j < 3; j++){
+                bool notCenter = !(i == 1 && j == 1);
+                if (notCenter && gridManager.inBounds(x + add[i], y + add[j])){
+                    //Debug.Log($"{x + add[i]},{y + add[j]} is in bounds!");
+                    addNeighbor(gridManager.getTile(x + add[i], y + add[j]));
+                }   
             }
         }
-        
-        /*
-        int x = (int)transform.position.x;
-        int y = (int)transform.position.y;
-        int[,] add = {{-1,-1},{0,-1},{1,-1},{-1,0},{1,0},{-1,1},{0,1},{1,1}};
 
-        for (int i = 0; i < 8; i ++){
-            if (gridManager.inBounds(x + add[i, 0], y + add[i, 1]))
-                addNeighbor(GridManager.grid[x + add[i, 0], y + add[i, 1]]);
-        }*/
-        
+        Debug.Log($"Tile {this.name} has {neighbors.Count} neighbors!");
+        for(int i = 0; i < neighbors.Count; i++){
+            Debug.Log(neighbors[i].name);
+        }
     }
      public void setEffect(Effect newEffect){
         myEffect = newEffect;

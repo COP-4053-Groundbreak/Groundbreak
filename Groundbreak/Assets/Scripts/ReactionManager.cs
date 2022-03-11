@@ -2,15 +2,52 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class ReactionManager : MonoBehaviour
 {
     public static GameObject effectPrefab;
-    [SerializeField] static GridManager room;
+    [SerializeField] static GridManager gridManager;
     public static Dictionary<int, Sprite> comboToVisual = new Dictionary<int, Sprite>();
 
+    public static List<Effect> existingEffects;
+
+    // Game balance variables for effects
+    // MAGMA VARIABLES:
+    [SerializeField] public static int MAGMA_DMG = 25;
+    [SerializeField] public static int MAGMA_DUR = 2;
+
+    // SANDSTORM VARIABLES:
+    [SerializeField] public static int SANDSTORM_DMG = 5;
+    [SerializeField] public static int SANDSTORM_DUR = 2;
+    [SerializeField] public static int SANDSTORM_RANGE = 2;
     
+    // STORM VARIABLES:
+    [SerializeField] public static int STORM_RANGE = 2;
+    [SerializeField] public static int STORM_DMG = 5;
+    [SerializeField] public static int STORM_DUR = 2;
+    
+    // FIREBALL VARIABLES:
+    [SerializeField] public static int FIREBALL_DMG = 30;
+    [SerializeField] public static int FIREBALL_RANGE = 2;
+    [SerializeField] public static int FIREBALL_DUR = 0;
+
+    // SMOKE VARIABLES:
+    [SerializeField] public static int SMOKE_RANGE_PLAYER_MOD = 1;
+    [SerializeField] public static int SMOKE_RANGE_ENEMY_MOD = 2;
+    [SerializeField] public static int SMOKE_DUR = 2;
+
+    // MUD VARIABLES
+    [SerializeField] public static int MUD_DUR = 2;
+    [SerializeField] public static int MUD_DEBUFF = 1;
+
+    // Damage from two units colliding from a push or pull
+    [SerializeField] public static int CRASH_DMG = 5;
 
     private void Start() {
+        gridManager = FindObjectOfType<GridManager>();
+        FindObjectOfType<FindNewGridManager>().OnGridChanged += GridChanged;
+
+        existingEffects = new List<Effect>();
         effectPrefab = Resources.Load("Effect") as GameObject;
         if (effectPrefab == null)
             Debug.Log("WHY");
@@ -29,7 +66,6 @@ public class ReactionManager : MonoBehaviour
     }
     
     // Reactions will always occur between two different objects, each with an element
-
     // First tile is grabbed one, second tile is stationary one
     // Reaction created when two tiles overlap
     // Different types of tile on tile reactions:
@@ -56,7 +92,7 @@ public class ReactionManager : MonoBehaviour
             // Non-Base on same Non-Base
 
             List<Tile> neighbors = staticTile.neighbors;
-
+            Debug.Log($"Number of neighbors {neighbors.Count}");
             // Change the element of each neighbor
             foreach (Tile neighbor in neighbors){
                 if (neighbor.myElement != Element.Void)
@@ -71,28 +107,56 @@ public class ReactionManager : MonoBehaviour
         
         Debug.Log("Effect will happen!");
         // Two elements are interacting, create an effect!
-        GameObject a = Instantiate(effectPrefab, staticTile.transform.position, Quaternion.identity);
-        a.GetComponent<Effect>().Initialize(thrownElem, staticElem);
-        return a.GetComponent<Effect>();
+        TilePathNode tp = staticTile.GetComponent<TilePathNode>();
+        Vector2 pos = new Vector2(tp.GetX(), tp.GetY());
+        return createEffect(thrownElem, staticElem, pos);
     }
+    // Makes an effect combining two elements at pos
+    public static Effect createEffect(Element element1, Element element2, Vector2 pos){
+        // Make sure position is on integer value
+        pos = new Vector2((int)pos.x, (int)pos.y);
+        
+        // Make sure there isn't an effect already here. If there is, delete it.
+        for (int i = 0; i < existingEffects.Count; i++){
+            Effect eff = existingEffects[i];
+            TilePathNode tp = eff.tileUnderEffect.GetComponent<TilePathNode>();
+            Vector2 effPos = new Vector2(tp.GetX(), tp.GetY());
+            
+            // There's already an element existing in this tile, create a new effect while
+            // removing the previous one
+            if (effPos == pos){
+                Debug.Log("Removing effect");
+                existingEffects.Remove(eff);
+                Destroy(eff.gameObject);
+            }
+        }
 
+        Effect newEffect = Instantiate(effectPrefab, pos, Quaternion.identity).GetComponent<Effect>();
+        existingEffects.Add(newEffect);
+        newEffect.Initialize(element1, element2);
+
+        return newEffect;
+    }
     public static void catchElement(Element thrownElem, GameObject thrownAt){
-        Debug.Log("In catch element!");
+        Debug.Log($"In catch element! {thrownAt.tag} is catching");
         // Does the tile thrown at have an enemy above it?
         // If so, then thrownAt will become an enemy gameobject
         // If not, then just do the normal tile
         if (thrownAt.GetComponent<Tile>().gameObjectAbove != null)
             thrownAt = thrownAt.GetComponent<Tile>().gameObjectAbove;
+        Debug.Log($"Upon further look, {thrownAt.name} is catching");
         if (thrownAt.tag == "Tile"){
             Debug.Log("Element was thrown at a tile!");
             thrownAt.GetComponent<Tile>().myEffect = TileOnTile(thrownElem, thrownAt.GetComponent<Tile>());
         } else if (thrownAt.tag == "Enemy"){
             Debug.Log("Element was thrown at an enemy!");
-            Tile tileUnderEnemy = room.getTile(thrownAt.transform.position.x, thrownAt.transform.position.y);
+
+            Tile tileUnderEnemy = gridManager.getTile(thrownAt.GetComponent<EnemyStateManager>().enemyX, thrownAt.GetComponent<EnemyStateManager>().enemyY);
             tileUnderEnemy.myEffect = TileOnEnemy(thrownElem, thrownAt);
         } else if (thrownAt.tag == "Ability"){
             // myEffect = myReactionManager.AbilityOnTile(other.gameObject.GetComponent<Ability>(), this);
         } else {
+            Debug.Log("Not throwing at enemy or tile!");
             // no elemental reaction here I believe
         }
     }
@@ -108,12 +172,14 @@ public class ReactionManager : MonoBehaviour
             return null;
         }
 
+        EnemyStateManager esm = enemy.GetComponent<EnemyStateManager>();
         // Tile and enemy have same element
         // Do we consume enemy element? We do spread though
         if (thrownElem == enemyElem){
             Debug.Log("Spread the element!");
             // Non-Base on same Non-Base
-            List<Tile> neighbors = room.getTile((int) enemy.transform.position.x, (int)enemy.transform.position.y).neighbors;
+            
+            List<Tile> neighbors = gridManager.getTile((int) esm.enemyX, (int)esm.enemyY).neighbors;
 
             // Change the element of each neighbor
             foreach (Tile neighbor in neighbors){
@@ -129,9 +195,7 @@ public class ReactionManager : MonoBehaviour
         
         Debug.Log("Effect will happen!");
         // Two elements are interacting, create an effect!
-        GameObject a = Instantiate(effectPrefab, enemy.transform.position, Quaternion.identity);
-        a.GetComponent<Effect>().Initialize(thrownElem, enemyElem);
-        return a.GetComponent<Effect>();
+        return createEffect(thrownElem, enemyElem, new Vector2(esm.enemyX, esm.enemyY));
     }
     public Effect EnemyOnTile(){
         return null;
@@ -139,7 +203,6 @@ public class ReactionManager : MonoBehaviour
     public Effect AbilityOnTile(){
         return null;
     }
-
     public static int elementToIdx(Element a){
         switch(a) {
             case Element.Air:
@@ -156,5 +219,16 @@ public class ReactionManager : MonoBehaviour
             default:
                 return 5;
         }
+    }
+    public static void destroyAllEffects(){
+        foreach (Effect eff in existingEffects){
+            Destroy(eff);
+        }
+        existingEffects = new List<Effect>();
+    }
+
+    private void GridChanged(object sender, System.EventArgs e)
+    {
+        gridManager = FindObjectOfType<GridManager>();
     }
 }
