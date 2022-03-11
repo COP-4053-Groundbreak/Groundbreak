@@ -4,28 +4,40 @@ using UnityEngine;
 
 public class ElementDisplayUI : MonoBehaviour
 {
-    [SerializeField] GameObject tileHolder;
+    [SerializeField] GridManager gridManager;
     [SerializeField] GameObject elemVisual;
     
     // Start is called before the first frame update
     private void Start() {
-        foreach (Transform child in tileHolder.transform){
-            Instantiate(elemVisual, child.gameObject.transform.position, Quaternion.identity, child);
+        gridManager = FindObjectOfType<GridManager>();
+        FindObjectOfType<FindNewGridManager>().OnGridChanged += GridChanged;
+        // Create Element UI
+        foreach (Tile t in gridManager.grid){
+            Instantiate(elemVisual, t.gameObject.transform.position, Quaternion.identity, t.transform);
         }
     }  
 
     // Currently called all the time and only shown when player presses space.
     // Should probably optimize but works for now
     private void Update() {
+        // This should probably be done by some sort of control manager I believe
         if (Input.GetKeyDown(KeyCode.Space)){
-            foreach (Transform child in tileHolder.transform){
+            foreach (Tile t in gridManager.grid){
                 Debug.Log("Looking through children");
-                if (child.childCount > 0){
-                    GameObject elemVisual = child.GetChild(0).gameObject;
+                if (t.transform.childCount > 0){
+                    GameObject elemVisual = t.transform.GetChild(0).gameObject;
                     elemVisual.SetActive(!elemVisual.gameObject.activeInHierarchy);
                     Debug.Log($"After the change, the GO is now {elemVisual.gameObject.activeInHierarchy}");
                 }
             }
+        }
+    }
+
+    private void GridChanged(object sender, System.EventArgs e) {
+        gridManager = FindObjectOfType<GridManager>();
+        // When the grid changes, need to create all visual effects for new grid
+        foreach (Tile t in gridManager.grid){
+            Instantiate(elemVisual, t.gameObject.transform.position, Quaternion.identity, t.transform);
         }
     }
 }
