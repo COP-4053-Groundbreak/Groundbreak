@@ -156,7 +156,7 @@ public class Pathfinding: MonoBehaviour
                     continue;
                 }
 
-                if (neighborNode.isWalkable == false || neighborNode.gameObject.GetComponent<Tile>().gameObjectAbove)
+                if (neighborNode.isWalkable == false || neighborNode.gameObject.GetComponent<Tile>().gameObjectAbove != null)
                 {
                     if (!neighborNode.gameObject.GetComponent<Tile>().gameObjectAbove.CompareTag("Player")) 
                     {

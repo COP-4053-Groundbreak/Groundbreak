@@ -6,6 +6,10 @@ using UnityEngine.UI;
 
 public class DisplayHeldTile : MonoBehaviour
 {
+    private void Start()
+    {
+        GetComponent<Image>().color = Color.clear;
+    }
     public void DisplayTile(GameObject tile) 
     {
        GetComponent<Image>().sprite = tile.GetComponent<SpriteRenderer>().sprite;
