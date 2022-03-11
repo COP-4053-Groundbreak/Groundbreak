@@ -10,7 +10,7 @@ public class Effect : MonoBehaviour {
     [SerializeField] public int myDuration = -1;
         
     public GridManager gridManager;
-    int posX,posY;
+    // int posX,posY;
     GameObject currRoom;
 
     private void Start()
@@ -24,16 +24,17 @@ public class Effect : MonoBehaviour {
     // FOR PLAYER POS: playerX, playerY in PlayerMovement;
 
     // Some effects should be processed immediately upon creation (i.e. mud, smoke)
-    public void Initialize(Element a, Element b){
+    public void Initialize(Element a, Element b, Vector2 pos){
           id = (int)a + (int)b;
           gridManager = FindObjectOfType<GridManager>();  
-
-          currRoom = gridManager.transform.parent.gameObject;
-          Vector2 localPos = currRoom.transform.InverseTransformPoint(transform.position);
-          posX = (int)(localPos.x + 5);
-          posY = (int)(localPos.y + 5);
           
-          tileUnderEffect = gridManager.getTile(posX, posY);
+          
+          //currRoom = gridManager.transform.parent.gameObject;
+          //Vector2 localPos = currRoom.transform.InverseTransformPoint(transform.position);
+          //posX = (int)(localPos.x);
+          //posY = (int)(localPos.y);
+          Debug.LogWarning($"Init effect at {pos.x},{pos.y}");
+          tileUnderEffect = gridManager.getTile(pos.x, pos.y);
 
           switch(id) {
               case ((int)Element.Air + (int)Element.Earth): // Sandstorm 

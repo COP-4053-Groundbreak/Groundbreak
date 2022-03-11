@@ -127,7 +127,7 @@ public class Tile : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.gameObject.tag == "Chest")
             chestAbove = other.gameObject;
-        if (other.gameObject.tag != "Effect" && other.gameObject.tag != "Tile"){
+        if (other.gameObject.tag == "Enemy" || other.gameObject.tag == "Player" || other.gameObject.tag == "Chest"){
             gameObjectAbove = other.gameObject;
         }
     }
