@@ -229,7 +229,7 @@ public class TurnLogic : MonoBehaviour
         isCombatPhase = true;
         // Probably not needed as we never start combat in the same room again but just incase
         DestroyVoidColliders();
-        StartCoroutine(TurnCycle());
+        //StartCoroutine(TurnCycle());
 
     }
 
@@ -296,7 +296,7 @@ public class TurnLogic : MonoBehaviour
 
     private void GridChanged(object sender, System.EventArgs e)
     {
-        StopAllCoroutines();
+        //StopAllCoroutines();
         EnemyStateManager[] enemyStateManagers = UnityEngine.Object.FindObjectsOfType<EnemyStateManager>();
         actorList.Clear();
         foreach (EnemyStateManager enemy in enemyStateManagers)
