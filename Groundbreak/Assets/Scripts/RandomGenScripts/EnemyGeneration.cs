@@ -10,6 +10,7 @@ public class EnemyGeneration : MonoBehaviour
     [SerializeField] int roomWidth;
     [SerializeField] int roomHeight;
     [SerializeField] int numOfPossibleEnemies;
+    private GameObject currentEnemy;
 
     public int test;
 
@@ -28,7 +29,8 @@ public class EnemyGeneration : MonoBehaviour
             {
                 rand = Random.Range(0, templates.enemiesFloorOne.Length);
                 //Debug.Log("Rand value: " + 1);
-                Instantiate(templates.enemiesFloorOne[rand], transform.position, templates.enemiesFloorOne[rand].transform.rotation, gameObject.transform);
+                currentEnemy = Instantiate(templates.enemiesFloorOne[rand], transform.position, templates.enemiesFloorOne[rand].transform.rotation, gameObject.transform);
+                currentEnemy.SetActive(false);
             }
             spawned = true;
         }
