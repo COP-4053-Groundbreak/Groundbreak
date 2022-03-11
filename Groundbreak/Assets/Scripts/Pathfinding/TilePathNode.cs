@@ -20,8 +20,10 @@ public class TilePathNode: MonoBehaviour
 
     private void Start()
     {
-        x = (int)transform.position.x + 5;
-        y = (int)transform.position.y + 5;
+        GameObject currentRoom = FindObjectOfType<GridManager>().gameObject.transform.parent.gameObject;
+        Vector3 localPos = currentRoom.transform.InverseTransformPoint(transform.position);
+        x = (int)localPos.x + 5;
+        y = (int)localPos.y + 5;
         
         if (gameObject.GetComponent<Tile>().getElement() == Element.Void)
         {
