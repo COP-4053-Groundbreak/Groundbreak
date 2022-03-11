@@ -10,11 +10,14 @@ public class EnemyGeneration : MonoBehaviour
     [SerializeField] int roomWidth;
     [SerializeField] int roomHeight;
     [SerializeField] int numOfPossibleEnemies;
+    [SerializeField] GameObject spawnPointHolder;
+    private Transform spawnHere;
     private GameObject currentEnemy;
 
     public int test;
 
     private int rand;
+    private int posRand;
     private int numOfEnemies;
 
     void Start()
@@ -28,11 +31,19 @@ public class EnemyGeneration : MonoBehaviour
             for(int i=1; i< numOfEnemies; i++)
             {
                 rand = Random.Range(0, templates.enemiesFloorOne.Length);
-                //Debug.Log("Rand value: " + 1);
-                currentEnemy = Instantiate(templates.enemiesFloorOne[rand], transform.position, templates.enemiesFloorOne[rand].transform.rotation, gameObject.transform);
+                posRand = Random.Range(0, spawnPointHolder.transform.childCount-1);
+
+                spawnHere = spawnPointHolder.transform.GetChild(posRand);
+
+                currentEnemy = Instantiate(templates.enemiesFloorOne[rand], spawnHere.position, templates.enemiesFloorOne[rand].transform.rotation, gameObject.transform);
                 currentEnemy.SetActive(false);
             }
             spawned = true;
+
+            foreach (Transform child in spawnPointHolder.transform)
+            {
+                Destroy(child.gameObject);
+            }
         }
     }
 }
