@@ -52,11 +52,17 @@ public class EnemyStateManager : MonoBehaviour
     public int attackDamage;
     [SerializeField] public Element myElement;
 
+    // turn logic
+    TurnLogic turnLogic;
+    private bool block;
+
+
     // stuff for pathfinding.
     public int width;
     public int height;
 
     public float period = 0.0f;
+    int randomBlockChance;
 
     // Enemy position variables -N
     public int enemyX;
@@ -64,6 +70,7 @@ public class EnemyStateManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        turnLogic = FindObjectOfType<TurnLogic>();
         enemyMovementRemaining = 2;
         // get sprite renderer
         mySpriteRenderer = GetComponent<SpriteRenderer>();
@@ -125,7 +132,29 @@ public class EnemyStateManager : MonoBehaviour
 
         // check if its enemy turn, if it is we will check if we are close enough to player. If not move. If we are in range attack.
         // if enemy turn
+        if(turnLogic.GetIsPlayerTurn()){
+            // chance to block. 
+            if(gameObject.name.Contains("Zombie")){
+                // block animation
+                if(block == false){
+                    // 33% chance to block if its players turn. 
+                    randomBlockChance = Random.Range(0, 3);
+                    Debug.Log("randomBlockChance" + randomBlockChance);
+                    if(randomBlockChance == 2){
+                        animator.SetBool("isBlocking", true);
+                    }
+                    block = true;
+                }
+                // if enemy gets effected by effect, block
+            }
+        }
         if(isEnemyTurn){
+            if(gameObject.name.Contains("Zombie")){
+                if(animator.GetBool("isBlocking") == true){
+                    animator.SetBool("isBlocking", false);
+                }
+                block = false;
+            }
             // check distance
 
             // get enemy pos now relitive -N
