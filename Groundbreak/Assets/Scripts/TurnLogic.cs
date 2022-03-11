@@ -40,6 +40,7 @@ public class TurnLogic : MonoBehaviour
 
     private void Start()
     {
+        FindObjectOfType<FindNewGridManager>().OnGridChanged += GridChanged;
         // Start in movephase and grey out move button
         moveButton.interactable = false;
         playerMovement = FindObjectOfType<PlayerMovement>();
@@ -289,6 +290,19 @@ public class TurnLogic : MonoBehaviour
     public bool GetIsPlayerTurn() 
     {
         return isPlayerTurn;
+    }
+
+    private void GridChanged(object sender, System.EventArgs e)
+    {
+        EnemyStateManager[] enemyStateManagers = UnityEngine.Object.FindObjectsOfType<EnemyStateManager>();
+        foreach (EnemyStateManager enemy in enemyStateManagers)
+        {
+            actorList.Add(enemy.gameObject);
+        }
+        // add player gameobject to list
+        actorList.Add(FindObjectOfType<PlayerMovement>().gameObject);
+        Debug.LogWarning("AAAAAAA");
+        listOfInitative.Clear();
     }
 
 }

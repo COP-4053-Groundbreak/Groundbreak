@@ -17,6 +17,8 @@ public class SoundManagerScript : MonoBehaviour
     public static AudioClip zombieAttackSound;
     public static AudioClip zombieBlockSound;
 
+    // Footstep Sound
+    public static AudioClip footstepSound;
 
     static AudioSource audioSrc;
 
@@ -33,7 +35,7 @@ public class SoundManagerScript : MonoBehaviour
         zombieDeathSound = Resources.Load<AudioClip> ("zombiedeath");
         zombieAttackSound = Resources.Load<AudioClip> ("zombieattack");
         zombieBlockSound = Resources.Load<AudioClip> ("zombieblock");
-
+        footstepSound = Resources.Load<AudioClip>("footstep");
 
         // getting the audioSource component.
         audioSrc = GetComponent<AudioSource> ();
@@ -75,6 +77,21 @@ public class SoundManagerScript : MonoBehaviour
                 break;
             case "zombieblock":
                 audioSrc.PlayOneShot (zombieBlockSound);
+                break;
+            case "footstep":
+                audioSrc.clip = footstepSound;
+                audioSrc.loop = true;
+                audioSrc.Play();
+                break;
+        }
+    }
+    public static void EndSound(string clip) 
+    {
+        switch (clip)
+        {
+            case "footstep":
+                audioSrc.clip = null;
+                audioSrc.loop = false;
                 break;
         }
     }

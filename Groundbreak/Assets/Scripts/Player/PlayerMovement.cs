@@ -169,6 +169,7 @@ public class PlayerMovement : MonoBehaviour
         {
             currentMovementRemaining -= endNode.fCost;
             slidingPath.Reverse();
+            SoundManagerScript.PlaySound("footstep");
             isSliding = true;
             playerAnimator.SetBool("IsWalking", true);
             UpdateTilesAfterMove();
@@ -217,6 +218,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void endMove(){
         waypointIndex = 0;
+        SoundManagerScript.EndSound("footstep");
         isSliding = false;
         playerAnimator.SetBool("IsWalking", false);
         UpdateTilesAfterMove();
