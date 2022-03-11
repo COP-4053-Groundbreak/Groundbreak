@@ -12,8 +12,11 @@ public class PlayerActions : MonoBehaviour
     GameObject[] enemyList;
     TurnLogic turnLogic;
 
+    Animator playerAnimator;
+
     private void Start()
     {
+        playerAnimator = GetComponent<Animator>();
         turnLogic = FindObjectOfType<TurnLogic>();
         heldTileElement = Element.Void;
         enemyList = GameObject.FindGameObjectsWithTag("Enemy");
@@ -29,7 +32,7 @@ public class PlayerActions : MonoBehaviour
             // Cant pickup tile with somehting on top of it
             if (tile.gameObjectAbove == null)
             {
-                
+                playerAnimator.SetTrigger("PickUp");
 
                 // Update UI for tile held
                 FindObjectOfType<DisplayHeldTile>().DisplayTile(tile.gameObject);
@@ -52,7 +55,9 @@ public class PlayerActions : MonoBehaviour
                 canPickUpTile = false;
                 FindObjectOfType<PlayerMovement>().ClearLine();
                 Debug.Log(heldTileElement);
+                
             }
+            
         }
     }
 

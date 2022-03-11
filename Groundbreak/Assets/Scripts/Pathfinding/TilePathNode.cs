@@ -8,8 +8,8 @@ public class TilePathNode: MonoBehaviour
     // gcost is the cost from the start node to here
     // hcost estimates the cheapest cost from here to the end
     // fcost is the final cost
-    private int x;
-    private int y;
+    [SerializeField] private int x;
+    [SerializeField] private int y;
     public bool isWalkable;
 
     public int gCost;

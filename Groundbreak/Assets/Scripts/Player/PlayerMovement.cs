@@ -97,7 +97,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        currentRoom = FindObjectOfType<GridManager>().gameObject.transform.parent.gameObject;
+        
         
         localPos = currentRoom.transform.InverseTransformPoint(transform.position);
         playerX = (int)(localPos.x + 5);
@@ -337,6 +337,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void GridChanged(object sender, System.EventArgs e)
     {
+        currentRoom = FindObjectOfType<GridManager>().gameObject.transform.parent.gameObject;
         grid = FindObjectOfType<GridManager>().grid;
     }
 }
