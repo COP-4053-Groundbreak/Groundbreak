@@ -40,6 +40,8 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] GameObject currentRoom;
     Vector3 localPos;
+
+    bool isPlayingFootstep = false;
     // Start is called before the first frame update
     private void Start()
     {
@@ -116,10 +118,17 @@ public class PlayerMovement : MonoBehaviour
             if (isFreemoving)
             {
                 playerAnimator.SetBool("IsWalking", true);
+                if (!isPlayingFootstep) 
+                {
+                    SoundManagerScript.PlaySound("footstep");
+                    isPlayingFootstep = true;
+                }
             }
             else 
             {
                 playerAnimator.SetBool("IsWalking", false);
+                SoundManagerScript.EndSound("footstep");
+                isPlayingFootstep = false;
             }
 
             // Set sprite flip for running
