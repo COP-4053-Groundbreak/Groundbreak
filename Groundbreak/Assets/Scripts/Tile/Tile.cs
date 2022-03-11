@@ -127,7 +127,7 @@ public class Tile : MonoBehaviour {
         }
     }
     private void OnTriggerExit2D(Collider2D other) {
-        Debug.Log($"Exited {name}");
+        //Debug.Log($"Exited {name}");
         if (other.gameObject.tag != "Effect"){
             gameObjectAbove = null;
         }
