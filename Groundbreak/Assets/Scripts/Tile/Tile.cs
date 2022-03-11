@@ -42,9 +42,9 @@ public class Tile : MonoBehaviour {
             }
         }
 
-        Debug.Log($"Tile {this.name} has {neighbors.Count} neighbors!");
+        //Debug.Log($"Tile {this.name} has {neighbors.Count} neighbors!");
         for(int i = 0; i < neighbors.Count; i++){
-            Debug.Log(neighbors[i].name);
+            //Debug.Log(neighbors[i].name);
         }
     }
      public void setEffect(Effect newEffect){

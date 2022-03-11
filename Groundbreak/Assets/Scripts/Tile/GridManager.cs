@@ -122,7 +122,7 @@ public class GridManager : MonoBehaviour
         return new Vector2(newX - bottomLeftCorner.x, newY - bottomLeftCorner.y);
     }
     public Tile getTile(float x, float y){
-        Debug.Log($"Getting tile at {x},{y}");
+        //Debug.Log($"Getting tile at {x},{y}");
         return grid[(int)x, (int)y];
     }
     
