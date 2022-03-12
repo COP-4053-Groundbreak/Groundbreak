@@ -72,7 +72,7 @@ public class PlayerStatsUIManager : MonoBehaviour
         }
         else 
         {
-            healthText.GetComponent<TextMeshProUGUI>().color = Color.white;
+            healthText.GetComponent<TextMeshProUGUI>().color = Color.black;
         }
         // Color speed
         if (playerStats.GetMovementPerTurn() > playerStats.startingMovement)
@@ -85,7 +85,7 @@ public class PlayerStatsUIManager : MonoBehaviour
         }
         else
         {
-            speedText.GetComponent<TextMeshProUGUI>().color = Color.white;
+            speedText.GetComponent<TextMeshProUGUI>().color = Color.black;
         }
         // Color Armor
         if (playerStats.GetArmor() > playerStats.startingArmor)
@@ -98,7 +98,7 @@ public class PlayerStatsUIManager : MonoBehaviour
         }
         else
         {
-            armorText.GetComponent<TextMeshProUGUI>().color = Color.white;
+            armorText.GetComponent<TextMeshProUGUI>().color = Color.black;
         }
         // Color init
         if (playerStats.GetInitiative() > playerStats.startingInitiative)
@@ -111,7 +111,7 @@ public class PlayerStatsUIManager : MonoBehaviour
         }
         else
         {
-            initiativeText.GetComponent<TextMeshProUGUI>().color = Color.white;
+            initiativeText.GetComponent<TextMeshProUGUI>().color = Color.black;
         }
         // Color Fire Mod
         if (playerStats.GetFireMod() > playerStats.startingFire)
@@ -124,7 +124,7 @@ public class PlayerStatsUIManager : MonoBehaviour
         }
         else
         {
-            fireText.GetComponent<TextMeshProUGUI>().color = Color.white;
+            fireText.GetComponent<TextMeshProUGUI>().color = Color.black;
         }
         // Color Water Mod
         if (playerStats.GetWaterMod() > playerStats.startingWater)
@@ -137,7 +137,7 @@ public class PlayerStatsUIManager : MonoBehaviour
         }
         else
         {
-            waterText.GetComponent<TextMeshProUGUI>().color = Color.white;
+            waterText.GetComponent<TextMeshProUGUI>().color = Color.black;
         }
         // Color Earth Mod
         if (playerStats.GetEarthMod() > playerStats.startingEarth)
@@ -150,7 +150,7 @@ public class PlayerStatsUIManager : MonoBehaviour
         }
         else
         {
-            earthText.GetComponent<TextMeshProUGUI>().color = Color.white;
+            earthText.GetComponent<TextMeshProUGUI>().color = Color.black;
         }
         // Color Air Mod
         if (playerStats.GetAirMod() > playerStats.startingAir)
@@ -163,7 +163,7 @@ public class PlayerStatsUIManager : MonoBehaviour
         }
         else
         {
-            airText.GetComponent<TextMeshProUGUI>().color = Color.white;
+            airText.GetComponent<TextMeshProUGUI>().color = Color.black;
         }
     }
 }
