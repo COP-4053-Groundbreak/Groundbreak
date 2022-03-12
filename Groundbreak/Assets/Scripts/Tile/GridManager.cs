@@ -61,6 +61,7 @@ public class GridManager : MonoBehaviour
             Destroy(spawn);
         }
         GetComponentInParent<RoomManager>().ToggleRoom(false);
+
     }
 
     /*
