@@ -134,19 +134,29 @@ public class PlayerStats : MonoBehaviour
     public void ModifyFireMod(float value)
     {
         fireMod += value;
+        ReactionManager.MAGMA_DMG = (int)(ReactionManager.MAGMA_DMG * (fireMod * earthMod));
+        ReactionManager.FIREBALL_DMG = (int)(ReactionManager.FIREBALL_DMG * (fireMod * airMod));
+        // SMOKE DOESN'T DO DAMAGE
     }
-
     public void ModifyWaterMod(float value)
     {
         waterMod += value;
+        ReactionManager.STORM_DMG = (int)(ReactionManager.STORM_DMG * (waterMod * airMod));
+        // SMOKE AND MUD DO NO DAMAGE
     }
     public void ModifyEarthMod(float value)
     {
         earthMod += value;
+        ReactionManager.MAGMA_DMG = (int)(ReactionManager.MAGMA_DMG * (fireMod * earthMod));
+        ReactionManager.SANDSTORM_DMG = (int)(ReactionManager.SANDSTORM_DMG * (earthMod * airMod));
+        // MUD DOESN'T DO DAMAGE
     }
     public void ModifyAirMod(float value)
     {
         airMod += value;
+        ReactionManager.FIREBALL_DMG = (int)(ReactionManager.FIREBALL_DMG * (fireMod * airMod));
+        ReactionManager.STORM_DMG = (int)(ReactionManager.STORM_DMG * (waterMod * airMod));
+        ReactionManager.SANDSTORM_DMG = (int)(ReactionManager.SANDSTORM_DMG * (earthMod * airMod));
     }
 
     public void ModifyInitiative(int value)
