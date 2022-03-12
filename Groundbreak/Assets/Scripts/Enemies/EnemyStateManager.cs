@@ -143,7 +143,7 @@ public class EnemyStateManager : MonoBehaviour
             // get zombie health, if damage is taken during player turn it will heal
             if(gameObject.name.Contains("Zombie") && triedToBlock == false){
                 zombieHealthStartOfPlayer = healthSystem.GetHealth();
-                randomBlockChance = Random.Range(0, 2);
+                randomBlockChance = Random.Range(0, 3);
                 if(randomBlockChance == 0){
                     animator.SetBool("isBlocking", true);
                 }                
