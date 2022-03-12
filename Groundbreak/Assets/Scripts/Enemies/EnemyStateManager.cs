@@ -146,10 +146,9 @@ public class EnemyStateManager : MonoBehaviour
                     }
                     block = true;
                 }
-                // if enemy gets effected by effect, block
             }
         }
-        if(elementOnEnemy == true && playBlockSound == true){
+        if(elementOnEnemy == true && playBlockSound == true && gameObject.name.Contains("Zombie") && block == true){
             // play sound
             SoundManagerScript.PlaySound("zombieblock");
             playBlockSound = false;

@@ -157,7 +157,9 @@ public class ReactionManager : MonoBehaviour
             thrownAt.GetComponent<Tile>().myEffect = TileOnTile(thrownElem, thrownAt.GetComponent<Tile>());
         } else if (thrownAt.tag == "Enemy"){
             Debug.Log("Element was thrown at an enemy!");
-           EnemyStateManager.elementOnEnemy = true;
+            if(thrownAt.name.Contains("Zombie")){
+                EnemyStateManager.elementOnEnemy = true;
+            }
             // Once enemyX and enemyY is fixed, TileOnEnemy shoudl work
             Tile tileUnderEnemy = gridManager.getTile(thrownAt.GetComponent<EnemyStateManager>().enemyX, thrownAt.GetComponent<EnemyStateManager>().enemyY);
             tileUnderEnemy.myEffect = TileOnEnemy(thrownElem, thrownAt);
