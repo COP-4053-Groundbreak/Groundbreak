@@ -102,8 +102,14 @@ public class Pathfinding: MonoBehaviour
         {
         
             Tile[,] grid = FindObjectOfType<GridManager>().getGrid();
-            // Debug.Log(startX + " " + startY + " " + endX + " " + endY);
-            //Debug.Log("HERE" + grid[9, 9]);
+        
+        //Debug.Log("HERE" + grid[9, 9]);
+            if (startX > 10 || startY > 10 || endX > 10 || endY > 10) 
+            {
+                Debug.LogWarning("ERROR, PATHFINDING OUT OF RANGE");
+                Debug.Log(startX + " " + startY + " " + endX + " " + endY);
+                return null;
+            }
             TilePathNode startNode = grid[startX, startY].gameObject.GetComponent<TilePathNode>();
             TilePathNode endNode = grid[endX, endY].gameObject.GetComponent<TilePathNode>();
 

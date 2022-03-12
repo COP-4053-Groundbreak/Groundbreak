@@ -7,16 +7,16 @@ using System.Linq;
 
 public class DisplayInitiative : MonoBehaviour
 {
-    [SerializeField] TMP_FontAsset font;
-
+    [SerializeField] GameObject template;
     public void SetList(List<GameObject> actorList)
     {
-
+        // Clear old list
         foreach (Transform child in transform)
         {
             Destroy(child.gameObject);
         }
 
+        // Find index of player
         int index = 0;
         List<GameObject> list = actorList;
         foreach (GameObject gameObject in list)
@@ -27,6 +27,7 @@ public class DisplayInitiative : MonoBehaviour
             }
         }
 
+        // Calculate initative list
         List<int> listOfInitative = new List<int>();
         for (int j = 0; j < actorList.Count; j++)
         {
@@ -42,6 +43,7 @@ public class DisplayInitiative : MonoBehaviour
             }
         }
 
+        // Remove player and sort
         list.RemoveAt(index);
         list = list.OrderBy(d => d.GetComponent<EnemyStateManager>().initiative).ToList();
 
@@ -49,6 +51,7 @@ public class DisplayInitiative : MonoBehaviour
 
         list.Reverse();
         bool flag = false;
+        // Insert player back into list
         for (int j = 0; j < list.Count; j++)
         {
             if (playerStats.GetInitiative() > list.ElementAt(j).GetComponent<EnemyStateManager>().initiative)
@@ -58,23 +61,21 @@ public class DisplayInitiative : MonoBehaviour
                 break;
             }
         }
-
+        // If player has lowest initiative
         if (!flag) 
         {
             list.Add(playerStats.gameObject);
         }
 
+        // Create text
         int i = 0;
         foreach (GameObject gameObject in list)
         {
             // Create text object for this enemy
-            GameObject text = new GameObject();
-            text.AddComponent<TextMeshProUGUI>();
+            GameObject text = Instantiate(template);
             text.transform.SetParent(transform);
             text.transform.position = new Vector3(transform.position.x, transform.position.y - 40 * i);
-            text.GetComponent<TextMeshProUGUI>().color = Color.black;
-            text.GetComponent<TextMeshProUGUI>().fontSize = 24;
-            text.GetComponent<TextMeshProUGUI>().font = font;
+            text.name = gameObject.name;
             string temp;
             // remove clone tag on name
             if (gameObject.name.Contains("Clone"))
@@ -86,10 +87,26 @@ public class DisplayInitiative : MonoBehaviour
                 temp = gameObject.name;
             }
             text.GetComponent<TextMeshProUGUI>().text = temp;
-            text.GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.Left;
-
 
             i++;
+        }
+    }
+
+    public void SetTurn(GameObject thisActorsTurn) 
+    {
+        // Reset color
+        foreach (Transform child in transform) 
+        {
+            child.gameObject.GetComponent<TextMeshProUGUI>().color = Color.black;
+        }
+
+        foreach (Transform child in transform)
+        {
+            if (child.gameObject.name == thisActorsTurn.name) 
+            {
+                child.gameObject.GetComponent<TextMeshProUGUI>().color = Color.red;
+                break;
+            }
         }
     }
 }

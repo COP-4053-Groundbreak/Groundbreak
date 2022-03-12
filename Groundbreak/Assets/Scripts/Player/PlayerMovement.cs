@@ -198,14 +198,14 @@ public class PlayerMovement : MonoBehaviour
             var movementThisFrame = slideSpeed * Time.deltaTime;
             ClearLine();
 
-            var newPos = (playerX + targetPos.gameObject.GetComponent<TilePathNode>().GetX()) / (int)2;
+            var newPos = (transform.position.x + targetPos.gameObject.transform.position.x) / (int)2;
 
             // Flip sprite if we move left
-            if (newPos < playerX)
+            if (newPos < transform.position.x)
             {
                 playerSpriteRenderer.flipX = true;
             }
-            else if (newPos > playerX)
+            else if (newPos > transform.position.x)
             {
                 playerSpriteRenderer.flipX = false;
             }

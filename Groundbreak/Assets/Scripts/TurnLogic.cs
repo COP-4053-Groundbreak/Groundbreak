@@ -38,8 +38,11 @@ public class TurnLogic : MonoBehaviour
 
     int turnCount = 0;
 
+    DisplayInitiative displayInitiative;
+
     private void Start()
     {
+        displayInitiative = FindObjectOfType<DisplayInitiative>();
         FindObjectOfType<FindNewGridManager>().OnGridChanged += GridChanged;
         // Start in movephase and grey out move button
         moveButton.interactable = false;
@@ -160,6 +163,7 @@ public class TurnLogic : MonoBehaviour
                 {
                     if (actorList[i].GetComponent<EnemyStateManager>().initiative == listOfInitative.Max())
                     {
+                        displayInitiative.SetTurn(actorList[i]);
                         actorList[i].GetComponent<EnemyStateManager>().isEnemyTurn = true;
                         // lets wait for enemy to finish animation.
                         yield return new WaitForSeconds(dummyTurnTime);
@@ -189,6 +193,7 @@ public class TurnLogic : MonoBehaviour
                     // Player has highest initiative, its their phase of the turn
                     if (actorList[i].GetComponent<PlayerStats>().GetInitiative() == listOfInitative.Max())
                     {
+                        displayInitiative.SetTurn(actorList[i]);
                         // Reset player's movement points for new turn
                         playerMovement.ResetMovement();
                         playerActions.ResetActions();
@@ -233,7 +238,7 @@ public class TurnLogic : MonoBehaviour
         playerActions.gameObject.GetComponent<Animator>().SetBool("IsWalking", false);
         SoundManagerScript.EndSound("footstep");
 
-        FindObjectOfType<DisplayInitiative>().SetList(actorList);
+        displayInitiative.SetList(actorList);
         actorList.Add(FindObjectOfType<PlayerMovement>().gameObject);
         
 
