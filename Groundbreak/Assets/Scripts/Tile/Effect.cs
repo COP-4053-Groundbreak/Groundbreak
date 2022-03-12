@@ -12,6 +12,7 @@ public class Effect : MonoBehaviour {
     public GridManager gridManager;
     // int posX,posY;
     GameObject currRoom;
+    public Vector2 myPos;
 
     private void Start()
     {
@@ -27,7 +28,7 @@ public class Effect : MonoBehaviour {
     public void Initialize(Element a, Element b, Vector2 pos){
           id = (int)a + (int)b;
           gridManager = FindObjectOfType<GridManager>();  
-          
+          myPos = pos;
           
           //currRoom = gridManager.transform.parent.gameObject;
           //Vector2 localPos = currRoom.transform.InverseTransformPoint(transform.position);
@@ -68,16 +69,20 @@ public class Effect : MonoBehaviour {
                 fireballEffect(tileUnderEffect, ReactionManager.FIREBALL_RANGE, new List<Tile>(), new List<GameObject>());
                 myDuration = ReactionManager.FIREBALL_DUR;
                 break;
-            default: // Storm 
+            case ((int)Element.Air + (int)Element.Water): // Storm 
                 effectName = "Storm";
                 Debug.Log("Storm down effect time!"); 
                 stormDownEffect(tileUnderEffect, ReactionManager.STORM_RANGE, new List<Tile>(), new List<GameObject>());
                 myDuration = ReactionManager.STORM_DUR;
                 break;
+            default:
+                Debug.LogWarning("You are never supposed to be here!");
+                break;
         }
         GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>($"Sprites/Effects/{effectName}");
         tileUnderEffect.setEffect(this);
     }
+    
     private void OnTriggerEnter2D(Collider2D other) {
         Debug.Log("Entered effect collider!");
         if (other == null || other.gameObject == null)
@@ -94,8 +99,10 @@ public class Effect : MonoBehaviour {
                     if (rand[0] == 0 && rand[1] == 0){
                         rand[0]++;
                     }
+
                     dealDamageToChar(other.gameObject, ReactionManager.SANDSTORM_DMG);
-                    pushGO(this.gameObject, new Vector2(rand[0], rand[1]), 1, other.gameObject);
+                    goToOpposite(this.gameObject, other.gameObject);
+                    // pushGO(this.gameObject, new Vector2(rand[0], rand[1]), 1, other.gameObject);
                     break;
                 case ((int)Element.Earth + (int)Element.Fire): // Magma
                     Debug.Log("Entered magma!");
@@ -134,6 +141,75 @@ public class Effect : MonoBehaviour {
             }
         }
     }
+    public void goToOpposite(GameObject tpOrigin, GameObject character){
+        int charX = 0, charY = 0;
+        if (character.tag == "Player"){
+            charX = character.GetComponent<PlayerMovement>().playerX;
+            charY = character.GetComponent<PlayerMovement>().playerY;
+        } else if (character.tag == "Enemy"){
+            charX = character.GetComponent<EnemyStateManager>().enemyX;
+            charY = character.GetComponent<EnemyStateManager>().enemyY;
+        }
+        Debug.Log($"Character is at {charX},{charY}");
+        Debug.Log($"Character global position is {character.transform.position}");
+
+        int newX = 0;
+        int newY = 0;
+
+        int tempX = (int)tpOrigin.GetComponent<Effect>().myPos.x;
+        int tempY = (int)tpOrigin.GetComponent<Effect>().myPos.y;
+        Debug.Log(tempX + "qwer,qwer" + tempY);
+
+        if (tpOrigin.transform.position.y > character.transform.position.x){
+            Debug.Log("Character came from under!");
+            if (tempY + 1 > gridManager.getHeight()){
+                newY = tempY - 1;
+            } else {
+                newY = tempY + 1;
+            }  
+            Debug.Log("newY new value" + newY +"qwer,qwer");
+        } else if (tpOrigin.transform.position.y < character.transform.position.y){
+            Debug.Log("Character came from above!");
+            if (tempY - 1 < 0){
+                newY = tempY + 1;
+            } else {
+                newY = tempY - 1;
+            }
+            Debug.Log("newY new value" + newY +"qwer,qwer");  
+        } else {
+            newY = tempY;
+        }
+        if (tpOrigin.transform.position.x < character.transform.position.x){
+            Debug.Log("Character came from right!");
+            if (tempX + 1 > gridManager.getWidth()){
+                newX = tempX - 1;
+            } else {
+                newX = tempX + 1;
+            }  
+        } else if (tpOrigin.transform.position.x > character.transform.position.x){
+            Debug.Log("Character came from left!");
+            if (tempX - 1 < 0){
+                newX = tempX + 1;
+            } else {
+                newX = tempX - 1;
+            }  
+        } else {
+            newX = tempX;
+        }
+        if (gridManager.getTile(newX, newY).gameObjectAbove != null){
+            newX = charX;
+            newY = charY;
+            dealCrashDamage(character, null);
+        }
+        character.transform.position = gridManager.getTile(newX, newY).transform.position;
+        Debug.Log("TP DESTINATION IS " + newX + "qwer,qwer" + newY);
+        if (character.tag == "Enemy"){
+            character.GetComponent<EnemyStateManager>().stopEnemyMovement();
+        } else if (character.tag == "Player"){
+            character.GetComponent<PlayerMovement>().endMove();
+        }
+    }
+
     // Pushes pushable towards pushOrigin in pushDir direction numPushed tiles
     public void pushGO(GameObject pushOrigin, Vector2 pushDir, int numPushed, GameObject pushable){
         Debug.Log($"Pushing in {pushDir.ToString()}");
@@ -150,6 +226,8 @@ public class Effect : MonoBehaviour {
         } else {
             Debug.Log("Why are we here?");
         }
+        // Debug.Log($"Our pushable is {pushable.name}");
+        // Debug.Log($"These are the x and y of pushable {pushableX} {pushableY}");
         
         int postPushX = 0;
         int postPushY = 0;
@@ -159,37 +237,57 @@ public class Effect : MonoBehaviour {
         if (pushDir.x > 0) { pushDir.x = 1;} else if (pushDir.x < 0) { pushDir.x = -1;}
         if (pushDir.y > 0) { pushDir.y = 1;} else if (pushDir.y < 0) { pushDir.y = -1;}
 
-        Debug.Log($"Adjusted pushDir is {pushDir}");
+        // if (pushDir.x > 0)
+            // Debug.Log("Pushable will be pushed right!");
+        // else if(pushDir.x < 0) {
+            // Debug.Log("Pushable will be pushed left!");
+        // }
+
+        // if (pushDir.y > 0){
+            // Debug.Log("Pushable will be pushed up!");
+        // } else if (pushDir.y < 0){
+            // Debug.Log("Pushable will be pushed down!");
+        // }
 
         // Calculate x position        
-        postPushX = (int)(pushable.transform.position.x + pushDir.x * numPushed);
+        postPushX = (int)(pushableX + pushDir.x * numPushed);
+        
+        Vector2 tilePos = gridManager.getTile(pushableX, pushableY).transform.position;
+        if (pushable.transform.position.x < tilePos.x){
+            Debug.Log("Guy moved to right into this effect");
+        } else if (pushable.transform.position.x > tilePos.x){
+            Debug.Log("Guy moved to the left into this effect");
+        }
         // If player walks into range, they won't be in center of tile. This centers them.
-        if (pushOrigin.transform.position.x < pushable.transform.position.x)
+        if (pushOrigin.transform.position.x < pushableX)
             postPushX = (int)(postPushX + 0.5f);
 
         // Calculate y position 
-        postPushY = (int)(pushable.transform.position.y + pushDir.y * numPushed);
+        postPushY = (int)(pushableY + pushDir.y * numPushed);
         // If player walks into range, they won't be in center of tile. This centers them.
-        if (pushOrigin.transform.position.y < pushable.transform.position.y)
+        if (pushOrigin.transform.position.y < pushableY)
             postPushY = (int)(postPushY + 0.5f);
-        
+        Debug.Log($"Pushable should be pushed into the tile at {postPushX} and {postPushY}");
+
         // Prevent out of bounds pushes
         if (postPushX < 0) {postPushX = 0;}
-        else if (postPushX >= gridManager.getWidth()) {postPushX = gridManager.getWidth() - 1;}
+        else if (postPushX >= gridManager.getWidth()) {postPushX = gridManager.getWidth() - 1; dealCrashDamage(pushable, null);}
         if (postPushY < 0) {postPushY = 0;}
-        else if (postPushY >= gridManager.getWidth()) {postPushY = gridManager.getHeight() - 1;}
+        else if (postPushY >= gridManager.getWidth()) {postPushY = gridManager.getHeight() - 1; dealCrashDamage(pushable, null);}
 
         Tile endTile = gridManager.getTile(postPushX, postPushY);
+        Debug.LogWarning($" Pushing {pushable.gameObject.name} to {new Vector2(postPushX, postPushY)}");
         
         // There's a character at the tile we're being pushed into
         if (endTile.gameObjectAbove != null && (endTile.gameObjectAbove.tag == "Enemy" || endTile.gameObjectAbove.tag == "Player")){
+            Debug.LogWarning("Someone's here!");
             dealCrashDamage(endTile.gameObjectAbove, pushable);
-            postPushX = (int)pushable.transform.position.x;
-            postPushY = (int)pushable.transform.position.y;
+            postPushX = pushableX;
+            postPushY = pushableY;
         }
 
         // Set character position
-        pushable.transform.position = new Vector2(postPushX, postPushY);
+        pushable.transform.position = gridManager.getTile(postPushX, postPushY).transform.position;
 
         if (pushable.tag == "Enemy"){
             pushable.GetComponent<EnemyStateManager>().stopEnemyMovement();
@@ -206,41 +304,54 @@ public class Effect : MonoBehaviour {
         int postPullX = 0;
         int postPullY = 0;
         
+        int pullableX = 0;
+        int pullableY = 0;
+        if (pullable.gameObject.tag == "Enemy") {
+            pullableX = pullable.gameObject.GetComponent<EnemyStateManager>().enemyX;
+            pullableY = pullable.gameObject.GetComponent<EnemyStateManager>().enemyY;
+        } else if (pullable.gameObject.tag == "Player") {
+            pullableX = pullable.gameObject.GetComponent<PlayerMovement>().playerX;
+            pullableY = pullable.gameObject.GetComponent<PlayerMovement>().playerY;
+        } else {
+            Debug.Log("Why are we here?");
+        }
+        
         // "Normalize" vector while keeping negative, then decide which neighbor to go to
         pullDir = new Vector2(pullDir.x/pullDir.magnitude, pullDir.y/pullDir.magnitude);
         if (pullDir.x > 0) { pullDir.x = 1;} else if (pullDir.x < 0) { pullDir.x = -1;}
         if (pullDir.y > 0) { pullDir.y = 1;} else if (pullDir.y < 0) { pullDir.y = -1;}
 
-        Debug.Log($"Adjusted pullDir is {pullDir}");
+        // Debug.Log($"Adjusted pullDir is {pullDir}");
 
         // Calculate x position        
-        postPullX = (int)(pullable.transform.position.x + pullDir.x * numPulled);
+        postPullX = (int)(pullableX + pullDir.x * numPulled);
         // If player walks into range, they won't be in center of tile. This centers them.
         if (pullOrigin.transform.position.x > pullable.transform.position.x)
             postPullX = (int)(postPullX + 0.5f);
 
         // Calculate y position 
-        postPullY = (int)(pullable.transform.position.y + pullDir.y * numPulled);
+        postPullY = (int)(pullableY + pullDir.y * numPulled);
         // If player walks into range, they won't be in center of tile. This centers them.
         if (pullOrigin.transform.position.y > pullable.transform.position.y)
             postPullY = (int)(postPullY + 0.5f);
         
         // Prevent out of bounds pulls
         if (postPullX < 0) {postPullX = 0;}
-        else if (postPullX >= gridManager.getWidth()) {postPullX = gridManager.getWidth() - 1;}
+        else if (postPullX >= gridManager.getWidth()) {postPullX = gridManager.getWidth() - 1; dealCrashDamage(pullable, null);}
         if (postPullY < 0) {postPullY = 0;}
-        else if (postPullY >= gridManager.getWidth()) {postPullY = gridManager.getHeight() - 1;}
+        else if (postPullY >= gridManager.getWidth()) {postPullY = gridManager.getHeight() - 1; dealCrashDamage(pullable, null);}
 
         Tile endTile = gridManager.getTile(postPullX, postPullY);
+        
         // There's a character at the tile we're being pulled into
         if (endTile.gameObjectAbove != null && (endTile.gameObjectAbove.tag == "Enemy" || endTile.gameObjectAbove.tag == "Player")){
             dealCrashDamage(endTile.gameObjectAbove, pullable);
-            postPullX = (int)pullable.transform.position.x;
-            postPullY = (int)pullable.transform.position.y;
+            postPullX = (int)pullableX;
+            postPullY = (int)pullableY;
         }
 
         // Set character position
-        pullable.transform.position = new Vector2(postPullX, postPullY);
+        pullable.transform.position = gridManager.getTile(postPullX, postPullY).transform.position;
 
         if (pullable.tag == "Enemy"){
             pullable.GetComponent<EnemyStateManager>().stopEnemyMovement();
@@ -250,8 +361,10 @@ public class Effect : MonoBehaviour {
         Debug.Log($"Player new position is {pullable.transform.position}");
     }
     private void dealCrashDamage(GameObject char1, GameObject char2){
-        dealDamageToChar(char1, ReactionManager.CRASH_DMG);
-        dealDamageToChar(char2, ReactionManager.CRASH_DMG);
+        if (char1 != null)
+            dealDamageToChar(char1, ReactionManager.CRASH_DMG);
+        if (char2 != null)
+            dealDamageToChar(char2, ReactionManager.CRASH_DMG);
     }
     private void dealDamageToChar(GameObject character, int damageAmount){
         if (character.gameObject.tag == "Player")
@@ -274,6 +387,7 @@ public class Effect : MonoBehaviour {
             // neighbor.GetComponent<Renderer>().material.color = Color.yellow; // TESTING NEIGHBORS INDICATOR
             if (!neighborsVisited.Contains(neighbor)){
                 Debug.Log($"Unvisited tile at {neighbor.name}");
+                
                 // Make sure there's something to pull and that it's a character
                 if (neighbor.gameObjectAbove != null && (neighbor.gameObjectAbove.tag == "Enemy" || neighbor.gameObjectAbove.tag == "Player")){
                     if (!charactersPulled.Contains(neighbor.gameObjectAbove)){
@@ -300,8 +414,9 @@ public class Effect : MonoBehaviour {
             // neighbor.GetComponent<Renderer>().material.color = Color.yellow; // TESTING NEIGHBORS INDICATOR
             // If haven't visited before, do effect
             if (!neighborsVisited.Contains(neighbor)){
-                neighbor.GetComponent<Renderer>().material.SetColor("_Color", Color.yellow);
+                //neighbor.GetComponent<Renderer>().material.SetColor("_Color", Color.yellow);
                 Debug.Log($"Unvisited tile at {neighbor.name}");
+                if (neighbor.gameObjectAbove != null) Debug.Log($"On Tile at {neighbor.transform.position} there is a {neighbor.gameObjectAbove.name}");
                 // Make sure there's something to pull and that it's a character
                 if (neighbor.gameObjectAbove != null && (neighbor.gameObjectAbove.tag == "Enemy" || neighbor.gameObjectAbove.tag == "Player")){
                     if (!charactersPushed.Contains(neighbor.gameObjectAbove)){
@@ -346,7 +461,6 @@ public class Effect : MonoBehaviour {
     {
         gridManager = FindObjectOfType<GridManager>();
     }
-
     public void reduceDuration(){
         myDuration--;
         Debug.Log("Reducing duration to " + myDuration);
@@ -355,6 +469,4 @@ public class Effect : MonoBehaviour {
             Destroy(this.gameObject);
         }
     }
-
-
 }
