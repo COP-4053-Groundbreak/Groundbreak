@@ -136,7 +136,7 @@ public class DisplayInitiative : MonoBehaviour
 
     private void Update()
     {
-        Debug.LogWarning(numRepeated);
+       
         if (numRepeated == 1) 
         {
             if (transform.GetChild(0))
