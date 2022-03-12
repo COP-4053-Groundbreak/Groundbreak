@@ -216,9 +216,7 @@ public class EnemyStateManager : MonoBehaviour
                 }
                 // sets attackCounter to 1 so we do not attack again and play the animation twice.
                 attackCounter = 1;
-                // deal damage to player
-                player.GetComponent<PlayerStats>().DealDamage(30);
-                Debug.Log("Enemy Archer Attacked the Player!!!");
+                // damage gets dealt when we turn off the animation. 
                 isEnemyTurn = false;
             }
             else if((gameObject.name.Contains("Warrior") || gameObject.name.Contains("Zombie")) && distanceBetweenPlayerAndEnemy <= 1.42 && attackCounter == 0){
@@ -233,9 +231,6 @@ public class EnemyStateManager : MonoBehaviour
                 }
                 // sets attackCounter to 1 so we do not attack again and play the animation twice.
                 attackCounter = 1;
-                // deal damage to player
-                player.GetComponent<PlayerStats>().DealDamage(30);
-                Debug.Log("Enemy Attacked the Player!!!");
                 isEnemyTurn = false;
             }
             // if we hit this we need to move closer to the player. 
@@ -281,6 +276,7 @@ public class EnemyStateManager : MonoBehaviour
             if(attackCounter == 1){
                 // Debug.Log("We attacked!");
                 Invoke("TurnOffAnimation", 1);
+                StartCoroutine(DamageDelay(player));
                 // wait 1 second turn off animation. 
             }
             // reset to idle state.
@@ -288,9 +284,15 @@ public class EnemyStateManager : MonoBehaviour
         }
     }
 
-     private void TurnOffAnimation()
+    private void TurnOffAnimation()
     {
         animator.SetBool("isAttacking", false);
+    }
+
+    IEnumerator DamageDelay(GameObject player) 
+    {
+        yield return new WaitForSeconds(2f);
+        player.GetComponent<PlayerStats>().DealDamage(20);
     }
 
     public void SwitchState(EnemyBaseState state){
