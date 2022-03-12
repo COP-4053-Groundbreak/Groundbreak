@@ -9,14 +9,17 @@ public class Tile : MonoBehaviour {
     // All tiles start out with a blank land feature
     LandFeature myLandFeature = LandFeature.None;
     public GameObject chestAbove = null;
-    public GameObject gameObjectAbove = null;
+    public GameObject gameObjectAbove;
     public Effect myEffect = null;
     int movementModifier = 0;
     public List<Tile> neighbors;
     public bool isThrowable = true;
+    private TurnLogic tl;
 
     private void Start() {
         setElement(this.myElement);
+        gameObjectAbove = null;
+        tl = FindObjectOfType<TurnLogic>();
     }
 
     // Finds up to 8 neighbors around this tile. Does so using a PhysicsOverlap circle which detects
@@ -24,7 +27,6 @@ public class Tile : MonoBehaviour {
     public void findNeighbors(GridManager gridManager){
         StartCoroutine(waitAndFindNeighbors(gridManager));
     }
-
     IEnumerator waitAndFindNeighbors(GridManager gridManager){
         yield return new WaitForSeconds(1f);
         int x = (int)gameObject.GetComponent<TilePathNode>().GetX();
@@ -128,11 +130,20 @@ public class Tile : MonoBehaviour {
         if (other.gameObject.tag == "Chest")
             chestAbove = other.gameObject;
         if (other.gameObject.tag == "Enemy" || other.gameObject.tag == "Player" || other.gameObject.tag == "Chest"){
+            //if (other.gameObject.tag == "Player") Debug.LogWarning("Player entered a tile!");
             gameObjectAbove = other.gameObject;
         }
+        if (other.gameObject.tag == "Player" && this.myElement == Element.Void && tl.isCombatPhase){
+            other.gameObject.GetComponent<PlayerStats>().DealDamage(99999999);   
+        }
+        if (other.gameObject.tag == "Enemy" && this.myElement == Element.Void && tl.isCombatPhase){
+            other.gameObject.GetComponent<EnemyStateManager>().DealDamage(99999999);   
+        }
+        
     }
     private void OnTriggerExit2D(Collider2D other) {
         //Debug.Log($"Exited {name}");
+        // if (other.gameObject.tag == "Player") Debug.LogWarning("PlayerLeft!");
         if (other.gameObject.tag != "Effect"){
             gameObjectAbove = (chestAbove == null) ? null : chestAbove;
         }
