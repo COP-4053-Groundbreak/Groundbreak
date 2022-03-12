@@ -32,8 +32,11 @@ public class PlayerStats : MonoBehaviour
     public event EventHandler OnHealthChanged;
     public GameObject playerHealthBar;
 
+    Animator playerAnimator;
+
     private void Start()
     {
+        playerAnimator = gameObject.GetComponent<Animator>();
         maxHealth = startingHealth;
         currentHealth = startingHealth;
         movementPerTurn = startingMovement;
@@ -55,6 +58,7 @@ public class PlayerStats : MonoBehaviour
 
     public void DealDamage(int damage) 
     {
+        playerAnimator.SetTrigger("Hit");
         currentHealth = currentHealth - (damage - armor);
         if (OnHealthChanged != null)
         {
