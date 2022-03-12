@@ -33,7 +33,7 @@ public class PlayerActions : MonoBehaviour
             if (tile.gameObjectAbove == null)
             {
                 playerAnimator.SetTrigger("PickUp");
-
+                SoundManagerScript.PlaySound("pickuptile");
                 // Update UI for tile held
                 FindObjectOfType<DisplayHeldTile>().DisplayTile(tile.gameObject);
 
@@ -70,6 +70,7 @@ public class PlayerActions : MonoBehaviour
         if (turnLogic.GetIsPlayerTurn() && heldTileElement != Element.Void && tile.GetComponent<TileClickable>().GetDistance() <= throwRange) 
         {
             playerAnimator.SetTrigger("Throw");
+            SoundManagerScript.PlaySound("throwtile");
             Debug.Log($"Actually threw a {tile.GetComponent<Tile>().myElement}");
             ReactionManager.catchElement(heldTileElement, tile);
             Debug.Log("Out of catch element");

@@ -19,8 +19,11 @@ public class SoundManagerScript : MonoBehaviour
     public static AudioClip zombieBlockSound;
     public static AudioClip zombieFootstepSound;
 
-    // Footstep Sound
+    // Player Sounds
     public static AudioClip footstepSound;
+    public static AudioClip pickupTileSound;
+    public static AudioClip throwTileSound;
+    public static AudioClip playerTakeDamageSound;
 
     static AudioSource audioSrc;
 
@@ -40,7 +43,9 @@ public class SoundManagerScript : MonoBehaviour
         footstepSound = Resources.Load<AudioClip>("footstep");
         skeletonFootstepSound = Resources.Load<AudioClip>("skeletonfootstep");
         zombieFootstepSound = Resources.Load<AudioClip>("zombiefootstep");
-
+        pickupTileSound = Resources.Load<AudioClip>("pickuptile");
+        throwTileSound = Resources.Load<AudioClip>("throwtile");
+        playerTakeDamageSound = Resources.Load<AudioClip>("playerdamage");
         // getting the audioSource component.
         audioSrc = GetComponent<AudioSource> ();
         audioSrc.volume = 0.1f;
@@ -96,6 +101,15 @@ public class SoundManagerScript : MonoBehaviour
                 audioSrc.clip = zombieFootstepSound;
                 audioSrc.loop = true;
                 audioSrc.Play();
+                break;
+            case "pickuptile":
+                audioSrc.PlayOneShot(pickupTileSound);
+                break;
+            case "throwtile":
+                audioSrc.PlayOneShot(throwTileSound);
+                break;
+            case "playerdamage":
+                audioSrc.PlayOneShot(playerTakeDamageSound);
                 break;
         }
     }
