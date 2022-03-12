@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemyStateManager : MonoBehaviour
 {
+    // zombie health at start of player round
+    int zombieHealthStartOfPlayer;
     // boolean for checking if its the enemies turn.
     public bool isEnemyTurn = false; 
     // sprite rednderer
@@ -136,9 +138,11 @@ public class EnemyStateManager : MonoBehaviour
         // check if its enemy turn, if it is we will check if we are close enough to player. If not move. If we are in range attack.
         // if enemy turn
 
-        // 33% chance to have shield up.
+        // 50% chance to have shield up.
         if(turnLogic.GetIsPlayerTurn()){
+            // get zombie health, if damage is taken during player turn it will heal
             if(gameObject.name.Contains("Zombie") && triedToBlock == false){
+                zombieHealthStartOfPlayer = healthSystem.GetHealth();
                 randomBlockChance = Random.Range(0, 3);
                 if(randomBlockChance == 0){
                     animator.SetBool("isBlocking", true);
@@ -146,9 +150,17 @@ public class EnemyStateManager : MonoBehaviour
                 triedToBlock = true;
             }
         }
+
+        // check if we are blocking, if so make zombie not take damage.
+        if(animator.GetBool("isBlocking") == true && gameObject.name.Contains("Zombie")){
+            int healAmmount =  zombieHealthStartOfPlayer - healthSystem.GetHealth();
+            if(healthSystem.GetHealth() != 100){
+                healthSystem.Heal(healAmmount);
+            }
+        }
         
         // play block sound if element hits enemy zombie, and play sound. 
-        if(elementOnEnemy == true && animator.GetBool("isBlocking") == true && playSound == false ){
+        if(elementOnEnemy == true && animator.GetBool("isBlocking") == true && playSound == false){
             SoundManagerScript.PlaySound("zombieblock");
             elementOnEnemy = false;
             playSound = true;
@@ -240,7 +252,7 @@ public class EnemyStateManager : MonoBehaviour
                 attackCounter = 0;
 
                 // find path before moving. 
-                Debug.Log((int)enemyPos.x + " " + (int)enemyPos.y + " " + (int)playerPos.x + " " + (int)playerPos.y);
+                // Debug.Log((int)enemyPos.x + " " + (int)enemyPos.y + " " + (int)playerPos.x + " " + (int)playerPos.y);
                 listOfTiles = pathfinding.FindPathWaypoints((int)enemyPos.x, (int)enemyPos.y, (int)playerPos.x, (int)playerPos.y);
                 // lets strip off first tile, thats the player tile we do not want to land RIGHT ON the player, just next to him.
                 listOfTiles.RemoveAt(0);
@@ -298,6 +310,9 @@ public class EnemyStateManager : MonoBehaviour
     }
 
     public void DealDamage(int damage){
+        if(animator.GetBool("isBlocking") == true && gameObject.name.Contains("Zombie")){
+            return;
+        }
         // deals damage via the health system. 
         healthSystem.Damage(damage);
         // does the hurt animation.
