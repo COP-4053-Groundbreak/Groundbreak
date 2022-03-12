@@ -70,12 +70,21 @@ public class EnemyStateManager : MonoBehaviour
     public float period = 0.0f;
     int randomBlockChance;
 
+    float attackClipLength;
+
     // Enemy position variables -N
     public int enemyX;
     public int enemyY;
     // Start is called before the first frame update
     void Start()
     {
+        // get animation clip length
+        AnimationClip[] clips = animator.runtimeAnimatorController.animationClips;
+        foreach(AnimationClip clip in clips){
+            if(clip.name == "Attack"){
+                attackClipLength = clip.length;
+            }
+        }
         turnLogic = FindObjectOfType<TurnLogic>();
         enemyMovementRemaining = 2;
         // get sprite renderer
@@ -302,8 +311,11 @@ public class EnemyStateManager : MonoBehaviour
 
     IEnumerator DamageDelay(GameObject player) 
     {
-        yield return new WaitForSeconds(2f);
-        player.GetComponent<PlayerStats>().DealDamage(20);
+        if(animator.GetBool("isAttacking") == true){
+            Debug.Log("TIME: " + attackClipLength);
+            yield return new WaitForSeconds(attackClipLength);
+            player.GetComponent<PlayerStats>().DealDamage(20);
+        }
     }
 
     public void SwitchState(EnemyBaseState state){
