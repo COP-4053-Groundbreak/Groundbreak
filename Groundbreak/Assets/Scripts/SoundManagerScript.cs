@@ -11,11 +11,13 @@ public class SoundManagerScript : MonoBehaviour
     public static AudioClip spellCastSound;
     public static AudioClip skeletonHurtSound;
     public static AudioClip skeletonDeathSound;
+    public static AudioClip skeletonFootstepSound;
     // zombie sounds
     public static AudioClip zombieHurtSound;
     public static AudioClip zombieDeathSound;
     public static AudioClip zombieAttackSound;
     public static AudioClip zombieBlockSound;
+    public static AudioClip zombieFootstepSound;
 
     // Footstep Sound
     public static AudioClip footstepSound;
@@ -36,6 +38,8 @@ public class SoundManagerScript : MonoBehaviour
         zombieAttackSound = Resources.Load<AudioClip> ("zombieattack");
         zombieBlockSound = Resources.Load<AudioClip> ("zombieblock");
         footstepSound = Resources.Load<AudioClip>("footstep");
+        skeletonFootstepSound = Resources.Load<AudioClip>("skeletonfootstep");
+        zombieFootstepSound = Resources.Load<AudioClip>("zombiefootstep");
 
         // getting the audioSource component.
         audioSrc = GetComponent<AudioSource> ();
@@ -83,17 +87,23 @@ public class SoundManagerScript : MonoBehaviour
                 audioSrc.loop = true;
                 audioSrc.Play();
                 break;
+            case "skeletonfootstep":
+                audioSrc.clip = skeletonFootstepSound;
+                audioSrc.loop = true;
+                audioSrc.Play();
+                break;
+            case "zombiefootstep":
+                audioSrc.clip = zombieFootstepSound;
+                audioSrc.loop = true;
+                audioSrc.Play();
+                break;
         }
     }
     public static void EndSound(string clip) 
     {
         audioSrc = FindObjectOfType<SoundManagerScript>().gameObject.GetComponent<AudioSource>();
-        switch (clip)
-        {
-            case "footstep":
-                audioSrc.clip = null;
-                audioSrc.loop = false;
-                break;
-        }
+        
+        audioSrc.clip = null;
+        audioSrc.loop = false;
     }
 }

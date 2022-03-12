@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyStateManager : MonoBehaviour
 {
+    bool isPlayingFootstep = false;
     // zombie health at start of player round
     int zombieHealthStartOfPlayer;
     // boolean for checking if its the enemies turn.
@@ -132,7 +133,7 @@ public class EnemyStateManager : MonoBehaviour
         {
             SlideThisObjectAlongPath(slidingPath);
         }
-
+        
         // if !isEnemyTurn, make sure we are in idle state. 
 
         // check if its enemy turn, if it is we will check if we are close enough to player. If not move. If we are in range attack.
@@ -152,7 +153,7 @@ public class EnemyStateManager : MonoBehaviour
         }
 
         // check if we are blocking, if so make zombie not take damage.
-        if(animator.GetBool("isBlocking") == true && gameObject.name.Contains("Zombie")){
+        if(gameObject.name.Contains("Zombie") && animator.GetBool("isBlocking") == true){
             int healAmmount =  zombieHealthStartOfPlayer - healthSystem.GetHealth();
             if(healthSystem.GetHealth() != 100){
                 healthSystem.Heal(healAmmount);
@@ -160,17 +161,18 @@ public class EnemyStateManager : MonoBehaviour
         }
         
         // play block sound if element hits enemy zombie, and play sound. 
-        if(elementOnEnemy == true && animator.GetBool("isBlocking") == true && playSound == false){
+        if(gameObject.name.Contains("Zombie") && elementOnEnemy == true && animator.GetBool("isBlocking") == true && playSound == false){
             SoundManagerScript.PlaySound("zombieblock");
             elementOnEnemy = false;
             playSound = true;
         }
 
         if(isEnemyTurn){
-            animator.SetBool("isBlocking", false);
-            triedToBlock = false;
-            // playBlockSound = true;
-            playSound = false;
+            if(gameObject.name.Contains("Zombie")){
+                animator.SetBool("isBlocking", false);
+                triedToBlock = false;
+                playSound = false;
+            }
             // check distance
 
             // get enemy pos now relitive -N
@@ -339,6 +341,16 @@ public class EnemyStateManager : MonoBehaviour
     
         slidingPath.Reverse();
         isSliding = true;
+        if (!isPlayingFootstep && gameObject.name.Contains("Skeleton")) 
+        {
+            SoundManagerScript.PlaySound("skeletonfootstep");
+            isPlayingFootstep = true;
+        }
+        if (!isPlayingFootstep && gameObject.name.Contains("Zombie")) 
+        {
+            SoundManagerScript.PlaySound("zombiefootstep");
+            isPlayingFootstep = true;
+        }
         animator.SetBool("isMoving", true);
     }
 
@@ -367,6 +379,13 @@ public class EnemyStateManager : MonoBehaviour
         waypointIndex = 0;
         isSliding = false;
         animator.SetBool("isMoving", false);
+        isPlayingFootstep = false;
+        if(gameObject.name.Contains("Skeleton")){
+            SoundManagerScript.EndSound("skeletonfootstep");
+        }
+        if(gameObject.name.Contains("Zombie")){
+            SoundManagerScript.EndSound("zombiefootstep");
+        }
     }
 
     private void GridChanged(object sender, System.EventArgs e)
