@@ -10,6 +10,8 @@ public class EnemyStateManager : MonoBehaviour
     public SpriteRenderer mySpriteRenderer;
     // animator
     public Animator animator;
+    bool playBlockSound = true;
+    public static bool elementOnEnemy;
     // currentState will hold a reference to the active state in the state machine. 
     EnemyBaseState currentState;
     // Rigidbody of the enemy, used for patrolling/movement
@@ -139,7 +141,6 @@ public class EnemyStateManager : MonoBehaviour
                 if(block == false){
                     // 33% chance to block if its players turn. 
                     randomBlockChance = Random.Range(0, 3);
-                    Debug.Log("randomBlockChance" + randomBlockChance);
                     if(randomBlockChance == 2){
                         animator.SetBool("isBlocking", true);
                     }
@@ -148,7 +149,14 @@ public class EnemyStateManager : MonoBehaviour
                 // if enemy gets effected by effect, block
             }
         }
+        if(elementOnEnemy == true && playBlockSound == true){
+            // play sound
+            SoundManagerScript.PlaySound("zombieblock");
+            playBlockSound = false;
+            elementOnEnemy = false;
+        }
         if(isEnemyTurn){
+            playBlockSound = true;
             if(gameObject.name.Contains("Zombie")){
                 if(animator.GetBool("isBlocking") == true){
                     animator.SetBool("isBlocking", false);

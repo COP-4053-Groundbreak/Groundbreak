@@ -11,6 +11,8 @@ public class ReactionManager : MonoBehaviour
 
     public static List<Effect> existingEffects;
 
+    //  [SerializeField] public static bool elementOnEnemy;
+
     // Game balance variables for effects
     // MAGMA VARIABLES:
     [SerializeField] public static int MAGMA_DMG = 25;
@@ -155,6 +157,7 @@ public class ReactionManager : MonoBehaviour
             thrownAt.GetComponent<Tile>().myEffect = TileOnTile(thrownElem, thrownAt.GetComponent<Tile>());
         } else if (thrownAt.tag == "Enemy"){
             Debug.Log("Element was thrown at an enemy!");
+           EnemyStateManager.elementOnEnemy = true;
             // Once enemyX and enemyY is fixed, TileOnEnemy shoudl work
             Tile tileUnderEnemy = gridManager.getTile(thrownAt.GetComponent<EnemyStateManager>().enemyX, thrownAt.GetComponent<EnemyStateManager>().enemyY);
             tileUnderEnemy.myEffect = TileOnEnemy(thrownElem, thrownAt);
