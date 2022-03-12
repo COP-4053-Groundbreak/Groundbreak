@@ -227,12 +227,15 @@ public class TurnLogic : MonoBehaviour
     {
         battleCanvas.SetActive(true);
         isCombatPhase = true;
+        
         // Probably not needed as we never start combat in the same room again but just incase
         DestroyVoidColliders();
         playerActions.gameObject.GetComponent<Animator>().SetBool("IsWalking", false);
         SoundManagerScript.EndSound("footstep");
+
         FindObjectOfType<DisplayInitiative>().SetList(actorList);
-        //StartCoroutine(TurnCycle());
+        actorList.Add(FindObjectOfType<PlayerMovement>().gameObject);
+        
 
     }
 
@@ -313,6 +316,10 @@ public class TurnLogic : MonoBehaviour
         
         //Debug.LogWarning("AAAAAAA");
         listOfInitative.Clear();
+        StopAllCoroutines();
+        endTurnButton.interactable = false;
+        StartCoroutine(TurnCycle());
+        
     }
 
 }

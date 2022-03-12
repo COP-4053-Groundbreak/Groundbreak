@@ -65,6 +65,10 @@ public class TileClickable : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
         
         GameObject ThisTile = eventData.pointerCurrentRaycast.gameObject;
         // -P: lastTileHovered = ThisTile.GetComponent<Tile>();
+        if (ThisTile.GetComponent<TilePathNode>().GetX() >= 10 || ThisTile.GetComponent<TilePathNode>().GetY() >= 10) 
+        {
+            return;
+        }
         Player.GetComponent<PlayerMovement>().ShowLine(ThisTile.GetComponent<TilePathNode>().GetX(), ThisTile.GetComponent<TilePathNode>().GetY());
         // -P: foreach(Tile neighbor in lastTileHovered.neighbors)
             // -P: neighbor.GetComponent<Renderer>().material.color = Color.yellow;

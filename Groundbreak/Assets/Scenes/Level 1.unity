@@ -344,6 +344,10 @@ PrefabInstance:
       propertyPath: currentRoom
       value: 
       objectReference: {fileID: 157091316}
+    - target: {fileID: 108454171, guid: 987b2a0b0be862a47bef7518b8207d9c, type: 3}
+      propertyPath: startingInitiative
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 3135849580474835713, guid: 987b2a0b0be862a47bef7518b8207d9c, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.15
@@ -2207,6 +2211,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7874e976671e9904fa21f76f6217aee8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  font: {fileID: 11400000, guid: a81fae7f64ecc6d488e5c6dd9f2a1da2, type: 2}
 --- !u!222 &1570672069979717096
 CanvasRenderer:
   m_ObjectHideFlags: 0

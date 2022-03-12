@@ -7,12 +7,26 @@ using System.Linq;
 
 public class DisplayInitiative : MonoBehaviour
 {
-    private void Start()
+    [SerializeField] TMP_FontAsset font;
+
+    public void SetList(List<GameObject> actorList)
     {
-        FindObjectOfType<FindNewGridManager>().OnGridChanged += GridChanged;
-    }
-    public void SetList(List<GameObject> actorList) 
-    {
+
+        foreach (Transform child in transform)
+        {
+            Destroy(child.gameObject);
+        }
+
+        int index = 0;
+        List<GameObject> list = actorList;
+        foreach (GameObject gameObject in list)
+        {
+            if (gameObject.GetComponent<PlayerMovement>() == null)
+            {
+                index++;
+            }
+        }
+
         List<int> listOfInitative = new List<int>();
         for (int j = 0; j < actorList.Count; j++)
         {
@@ -28,37 +42,56 @@ public class DisplayInitiative : MonoBehaviour
             }
         }
 
+        list.RemoveAt(index);
+        list = list.OrderBy(d => d.GetComponent<EnemyStateManager>().initiative).ToList();
+
+        PlayerStats playerStats = FindObjectOfType<PlayerStats>();
+
+        list.Reverse();
+        bool flag = false;
+        for (int j = 0; j < list.Count; j++)
+        {
+            if (playerStats.GetInitiative() > list.ElementAt(j).GetComponent<EnemyStateManager>().initiative)
+            {
+                flag = true;
+                list.Insert(j, playerStats.gameObject);
+                break;
+            }
+        }
+
+        if (!flag) 
+        {
+            list.Add(playerStats.gameObject);
+        }
+
         int i = 0;
-        foreach (GameObject gameObject in actorList) 
+        foreach (GameObject gameObject in list)
         {
             // Create text object for this enemy
             GameObject text = new GameObject();
             text.AddComponent<TextMeshProUGUI>();
+            text.transform.SetParent(transform);
+            text.transform.position = new Vector3(transform.position.x, transform.position.y - 40 * i);
             text.GetComponent<TextMeshProUGUI>().color = Color.black;
             text.GetComponent<TextMeshProUGUI>().fontSize = 24;
+            text.GetComponent<TextMeshProUGUI>().font = font;
             string temp;
             // remove clone tag on name
             if (gameObject.name.Contains("Clone"))
             {
                 temp = gameObject.name.Substring(0, gameObject.name.Length - 7);
             }
-            else 
+            else
             {
                 temp = gameObject.name;
             }
             text.GetComponent<TextMeshProUGUI>().text = temp;
             text.GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.Left;
-            Instantiate(text, new Vector3(transform.position.x - 40, transform.position.y - 30 * i), transform.rotation, transform);
+
+
             i++;
         }
     }
-
-    // Clear list on room change
-    private void GridChanged(object sender, System.EventArgs e)
-    {
-        foreach (Transform child in transform) 
-        {
-            Destroy(child.gameObject);
-        }
-    }
 }
+
+

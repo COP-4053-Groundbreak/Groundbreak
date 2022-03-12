@@ -17,13 +17,13 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] float earthMod = 1.0f;
     [SerializeField] float airMod = 1.0f;
     // Inititive for who goes when during turns
-    [SerializeField] int initiative = 5;
+    [SerializeField] int initiative = 3;
 
     // Starting variables to compare to
     public int startingHealth = 100;
     public int startingMovement = 20;
     public int startingArmor = 0;
-    public int startingInitiative = 5;
+    public int startingInitiative = 3;
     public float startingFire = 1.0f;
     public float startingWater = 1.0f;
     public float startingEarth = 1.0f;
