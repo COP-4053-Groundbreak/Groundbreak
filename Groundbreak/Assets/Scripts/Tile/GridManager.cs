@@ -25,7 +25,7 @@ public class GridManager : MonoBehaviour
         spawnPoints = GameObject.FindGameObjectsWithTag("TileSpawnPoint");
         //Debug.Log(spawnPoints.Length);
         templates = GameObject.FindGameObjectWithTag("TileSpawner").GetComponent<TileTemplates>();
-        rand = Random.Range(0, templates.normalTileSet.Length);
+       // rand = Random.Range(0, templates.normalTileSet.Length);
         
 
         bottomLeftCorner = new Vector2((int)(this.room.transform.position.x - 5.0f), (int)(this.room.transform.position.y - 5.0f));
@@ -49,6 +49,7 @@ public class GridManager : MonoBehaviour
 
         foreach (GameObject spawn in spawnPoints)
         {
+            rand = Random.Range(0, templates.normalTileSet.Length);
             GameObject tilePrefab = Instantiate(templates.normalTileSet[rand], spawn.transform.position, templates.normalTileSet[rand].transform.rotation, holder.transform);
             //Debug.Log(spawn.transform.position + new Vector3(4.5f, 4.5f, 0));
             foreach (Transform child in tilePrefab.transform)

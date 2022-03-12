@@ -9,7 +9,9 @@ public class TileSpawner : MonoBehaviour
 
     private void Start()
     {
+
         templates = GameObject.FindGameObjectWithTag("TileSpawner").GetComponent<TileTemplates>();
+
         rand = Random.Range(0, templates.normalTileSet.Length);
     }
 

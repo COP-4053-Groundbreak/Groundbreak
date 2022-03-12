@@ -2433,9 +2433,33 @@ PrefabInstance:
       value: Tile Templates
       objectReference: {fileID: 0}
     - target: {fileID: 1350160648919802539, guid: 9b2573773c0af0240a27a8ec491d324d, type: 3}
+      propertyPath: normalTileSet.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1350160648919802539, guid: 9b2573773c0af0240a27a8ec491d324d, type: 3}
       propertyPath: normalTileSet.Array.data[0]
       value: 
       objectReference: {fileID: 6593193207600274638, guid: b55004947ebbbb5429b6533e50712ff4, type: 3}
+    - target: {fileID: 1350160648919802539, guid: 9b2573773c0af0240a27a8ec491d324d, type: 3}
+      propertyPath: normalTileSet.Array.data[1]
+      value: 
+      objectReference: {fileID: 7021897837388425261, guid: 303ed4d975863e348b1f92ac04fff764, type: 3}
+    - target: {fileID: 1350160648919802539, guid: 9b2573773c0af0240a27a8ec491d324d, type: 3}
+      propertyPath: normalTileSet.Array.data[2]
+      value: 
+      objectReference: {fileID: 419108076113177073, guid: 0b00ce4f9a337b34cba329350e4fa6ec, type: 3}
+    - target: {fileID: 1350160648919802539, guid: 9b2573773c0af0240a27a8ec491d324d, type: 3}
+      propertyPath: normalTileSet.Array.data[3]
+      value: 
+      objectReference: {fileID: 2573639310965748731, guid: ee3bf3d411c041a44b6ea93ca3633a9e, type: 3}
+    - target: {fileID: 1350160648919802539, guid: 9b2573773c0af0240a27a8ec491d324d, type: 3}
+      propertyPath: normalTileSet.Array.data[4]
+      value: 
+      objectReference: {fileID: 3295617576225851030, guid: a25594ef27bcf854d88e71f372b014c3, type: 3}
+    - target: {fileID: 1350160648919802539, guid: 9b2573773c0af0240a27a8ec491d324d, type: 3}
+      propertyPath: normalTileSet.Array.data[5]
+      value: 
+      objectReference: {fileID: 227517319461634261, guid: fb8d31de1da5f15459bd147a22916ab3, type: 3}
     - target: {fileID: 1350160648919802548, guid: 9b2573773c0af0240a27a8ec491d324d, type: 3}
       propertyPath: m_RootOrder
       value: 0
