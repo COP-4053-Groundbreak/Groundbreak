@@ -74,6 +74,7 @@ public class PlayerMovement : MonoBehaviour
         
         // Make sure tile under player knows player is above it
         StartCoroutine(waitAndNotifyTile());
+
     }
 
     private void Awake()
@@ -98,17 +99,22 @@ public class PlayerMovement : MonoBehaviour
             // Initilize movement text
             displayMovement = FindObjectOfType<DisplayMovement>();
             grid = FindObjectOfType<GridManager>().getGrid();
+        
     }
     // Vector for free moving speed
     private Vector2 freeMovementDistance = Vector3.zero;
-
+    private bool startFlag = false;
     private void Update()
     {
         
         localPos = currentRoom.transform.InverseTransformPoint(transform.position);
         playerX = (int)(localPos.x + 5.5);
         playerY = (int)(localPos.y + 5.5);
-
+        if (!startFlag) 
+        {
+            UpdateTilesAfterMove();
+            startFlag = true;
+        }
         displayMovement.DisplayMovementText(currentMovementRemaining / 10);
         if (!turnLogic.isCombatPhase) 
         {
