@@ -15,6 +15,10 @@ public class HealthSystem
         return health;
     }
 
+    public void SetHealth(int healthAmmount){
+        health = healthAmmount;
+    }
+
     public float GetHealthPercent(){
         return (float) health / healthMax;
     }
