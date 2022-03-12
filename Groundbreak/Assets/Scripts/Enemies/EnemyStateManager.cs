@@ -140,7 +140,6 @@ public class EnemyStateManager : MonoBehaviour
         if(turnLogic.GetIsPlayerTurn()){
             if(gameObject.name.Contains("Zombie") && triedToBlock == false){
                 randomBlockChance = Random.Range(0, 3);
-                Debug.Log("RANDOM: " + randomBlockChance);
                 if(randomBlockChance == 0){
                     animator.SetBool("isBlocking", true);
                 }                
