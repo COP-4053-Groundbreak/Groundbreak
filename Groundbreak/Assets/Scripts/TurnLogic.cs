@@ -61,7 +61,6 @@ public class TurnLogic : MonoBehaviour
         // Start not in players turn, check for initative in coroutine 
         endTurnButton.interactable = false;
         StartCoroutine(TurnCycle());
-        
     }
 
     // Called by end turn button
@@ -119,6 +118,7 @@ public class TurnLogic : MonoBehaviour
                 // This is equivilent to starting a turn
                 turnCount++;
                 Debug.Log("Turn " + turnCount + " has started");
+                
                 for (int i = 0; i < actorList.Count; i++)
                 {
                     // Adding the initiatives of enemies to a list. 
@@ -163,7 +163,7 @@ public class TurnLogic : MonoBehaviour
                 {
                     if (actorList[i].GetComponent<EnemyStateManager>().initiative == listOfInitative.Max())
                     {
-                        displayInitiative.SetTurn(actorList[i]);
+                        displayInitiative.SetTurn();
                         actorList[i].GetComponent<EnemyStateManager>().isEnemyTurn = true;
                         // lets wait for enemy to finish animation.
                         yield return new WaitForSeconds(dummyTurnTime);
@@ -173,6 +173,7 @@ public class TurnLogic : MonoBehaviour
                             // check which enemy is on. set to false.
                             if (actorList[j].GetComponent<EnemyStateManager>())
                             {
+                                
                                 if (actorList[j].GetComponent<EnemyStateManager>().isEnemyTurn == true)
                                 {
                                     actorList[j].GetComponent<EnemyStateManager>().isEnemyTurn = false;
@@ -193,7 +194,7 @@ public class TurnLogic : MonoBehaviour
                     // Player has highest initiative, its their phase of the turn
                     if (actorList[i].GetComponent<PlayerStats>().GetInitiative() == listOfInitative.Max())
                     {
-                        displayInitiative.SetTurn(actorList[i]);
+                        displayInitiative.SetTurn();
                         // Reset player's movement points for new turn
                         playerMovement.ResetMovement();
                         playerActions.ResetActions();
@@ -325,6 +326,11 @@ public class TurnLogic : MonoBehaviour
         endTurnButton.interactable = false;
         StartCoroutine(TurnCycle());
         
+    }
+
+    public void ToggleEndTurn(bool toggle) 
+    {
+        endTurnButton.interactable = toggle;
     }
 
 }

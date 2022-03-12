@@ -42,6 +42,8 @@ public class PlayerMovement : MonoBehaviour
     Vector3 localPos;
 
     bool isPlayingFootstep = false;
+
+    [SerializeField] 
     // Start is called before the first frame update
     private void Start()
     {
@@ -103,10 +105,9 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         
-        
         localPos = currentRoom.transform.InverseTransformPoint(transform.position);
-        playerX = (int)(localPos.x + 5);
-        playerY = (int)(localPos.y + 5);
+        playerX = (int)(localPos.x + 5.5);
+        playerY = (int)(localPos.y + 5.5);
 
         displayMovement.DisplayMovementText(currentMovementRemaining / 10);
         if (!turnLogic.isCombatPhase) 
@@ -184,6 +185,7 @@ public class PlayerMovement : MonoBehaviour
             currentMovementRemaining -= endNode.fCost;
             slidingPath.Reverse();
             SoundManagerScript.PlaySound("footstep");
+            turnLogic.ToggleEndTurn(false);
             isSliding = true;
             playerAnimator.SetBool("IsWalking", true);
             UpdateTilesAfterMove();
@@ -232,6 +234,7 @@ public class PlayerMovement : MonoBehaviour
     public void endMove(){
         waypointIndex = 0;
         SoundManagerScript.EndSound("footstep");
+        turnLogic.ToggleEndTurn(true);
         isSliding = false;
         playerAnimator.SetBool("IsWalking", false);
         UpdateTilesAfterMove();

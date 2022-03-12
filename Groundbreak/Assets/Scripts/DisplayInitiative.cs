@@ -8,8 +8,17 @@ using System.Linq;
 public class DisplayInitiative : MonoBehaviour
 {
     [SerializeField] GameObject template;
+    int numRepeated = 0;
+    List<GameObject> list;
+
+    private void Start()
+    {
+        FindObjectOfType<FindNewGridManager>().OnGridChanged += GridChanged;
+    }
+
     public void SetList(List<GameObject> actorList)
     {
+
         // Clear old list
         foreach (Transform child in transform)
         {
@@ -18,7 +27,7 @@ public class DisplayInitiative : MonoBehaviour
 
         // Find index of player
         int index = 0;
-        List<GameObject> list = actorList;
+        list = actorList;
         foreach (GameObject gameObject in list)
         {
             if (gameObject.GetComponent<PlayerMovement>() == null)
@@ -62,7 +71,7 @@ public class DisplayInitiative : MonoBehaviour
             }
         }
         // If player has lowest initiative
-        if (!flag) 
+        if (!flag)
         {
             list.Add(playerStats.gameObject);
         }
@@ -90,25 +99,53 @@ public class DisplayInitiative : MonoBehaviour
 
             i++;
         }
+        StartDisplay();
     }
 
-    public void SetTurn(GameObject thisActorsTurn) 
+    public void SetTurn() 
     {
         // Reset color
         foreach (Transform child in transform) 
         {
             child.gameObject.GetComponent<TextMeshProUGUI>().color = Color.black;
         }
-
-        foreach (Transform child in transform)
+        
+        if (numRepeated < list.Count)
         {
-            if (child.gameObject.name == thisActorsTurn.name) 
+            transform.GetChild(numRepeated).GetComponent<TextMeshProUGUI>().color = Color.red;
+        }
+        else 
+        {
+            numRepeated = 0;
+            transform.GetChild(numRepeated).GetComponent<TextMeshProUGUI>().color = Color.red;
+        }
+        numRepeated++;
+    }
+
+
+    private void GridChanged(object sender, System.EventArgs e)
+    {
+        numRepeated = 1;
+        StartDisplay();
+    }
+
+    public void StartDisplay() 
+    {
+        transform.GetChild(0).GetComponent<TextMeshProUGUI>().color = Color.red;
+    }
+
+    private void Update()
+    {
+        Debug.LogWarning(numRepeated);
+        if (numRepeated == 1) 
+        {
+            if (transform.GetChild(0))
             {
-                child.gameObject.GetComponent<TextMeshProUGUI>().color = Color.red;
-                break;
+                transform.GetChild(0).GetComponent<TextMeshProUGUI>().color = Color.red;
             }
         }
     }
+
 }
 
 

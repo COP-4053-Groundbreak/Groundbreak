@@ -117,8 +117,8 @@ public class EnemyStateManager : MonoBehaviour
         }
         localPos = currRoom.transform.InverseTransformPoint(transform.position);
         // Calculate enemy position -N
-        enemyX = (int)(localPos.x + 5f);
-        enemyY = (int)(localPos.y + 5f);
+        enemyX = (int)(localPos.x + 5.5f);
+        enemyY = (int)(localPos.y + 5.5f);
 
         if (this != null && currentState != null){
             currentState.UpdateState(this);
