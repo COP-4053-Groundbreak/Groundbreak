@@ -19,23 +19,25 @@ public class PlayerDetector : MonoBehaviour
         //Debug.Log("Collision with player has happened");
 
         //PlayerRoom.currentRoom = currentRoom;
-
-        foreach (Transform child in currentRoom.transform)
+        if (collision.CompareTag("Player"))
         {
-           //Debug.Log("Inside foreach");
-            if ( (child.name == "PlayerDetector1" || child.name == "PlayerDetector2" || child.name == "PlayerDetector3" || child.name == "PlayerDetector4"))
+            foreach (Transform child in currentRoom.transform)
             {
-                //Debug.Log("set a detector as false");
-                child.gameObject.SetActive(false);
+                //Debug.Log("Inside foreach");
+                if ((child.name == "PlayerDetector1" || child.name == "PlayerDetector2" || child.name == "PlayerDetector3" || child.name == "PlayerDetector4"))
+                {
+                    //Debug.Log("set a detector as false");
+                    child.gameObject.SetActive(false);
+                }
+                else
+                {
+                    //Debug.Log("set an object as true");
+                    child.gameObject.SetActive(true);
+                }
             }
-            else
-            {
-                //Debug.Log("set an object as true");
-                child.gameObject.SetActive(true);
-            }
+            FindObjectOfType<FindNewGridManager>().ChangedRoom();
+            PlayerRoom.currentRoom = currentRoom;
         }
-        FindObjectOfType<FindNewGridManager>().ChangedRoom();
-        PlayerRoom.currentRoom = currentRoom;
     }
 
     private void OnTriggerExit2D(Collider2D collision)
