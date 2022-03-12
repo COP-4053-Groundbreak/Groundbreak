@@ -87,6 +87,7 @@ public class SoundManagerScript : MonoBehaviour
     }
     public static void EndSound(string clip) 
     {
+        audioSrc = FindObjectOfType<SoundManagerScript>().gameObject.GetComponent<AudioSource>();
         switch (clip)
         {
             case "footstep":
