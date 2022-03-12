@@ -350,7 +350,7 @@ public class PlayerMovement : MonoBehaviour
 
     // Calculates the distance from each tile to the player
     // Needed if we want to say highlight tiles that they can move to
-    private void UpdateTilesAfterMove()
+    public void UpdateTilesAfterMove()
     {
         TileClickable[] TileList = FindObjectsOfType<TileClickable>();
         foreach (TileClickable tile in TileList)

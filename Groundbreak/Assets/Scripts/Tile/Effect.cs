@@ -207,6 +207,7 @@ public class Effect : MonoBehaviour {
             character.GetComponent<EnemyStateManager>().stopEnemyMovement();
         } else if (character.tag == "Player"){
             character.GetComponent<PlayerMovement>().endMove();
+            character.GetComponent<PlayerMovement>().UpdateTilesAfterMove();
         }
     }
 
@@ -293,8 +294,10 @@ public class Effect : MonoBehaviour {
             pushable.GetComponent<EnemyStateManager>().stopEnemyMovement();
         } else if (pushable.tag == "Player"){
             pushable.GetComponent<PlayerMovement>().endMove();
+            pushable.GetComponent<PlayerMovement>().UpdateTilesAfterMove();
         }
         Debug.Log($"Player new position is {pushable.transform.position}");
+
     }
     // Pulls pullable towards pullOrigin in pullDir direction numPulled tiles 
     public void pullGO(GameObject pullOrigin, Vector2 pullDir, int numPulled, GameObject pullable){
@@ -357,6 +360,7 @@ public class Effect : MonoBehaviour {
             pullable.GetComponent<EnemyStateManager>().stopEnemyMovement();
         } else if (pullable.tag == "Player"){
             pullable.GetComponent<PlayerMovement>().endMove();
+            pullable.GetComponent<PlayerMovement>().UpdateTilesAfterMove();
         }
         Debug.Log($"Player new position is {pullable.transform.position}");
     }
