@@ -69,6 +69,9 @@ public class PlayerMovement : MonoBehaviour
         playerY = (int)(localPos.y + 5);
         grid = FindObjectOfType<GridManager>().getGrid();
         FindObjectOfType<FindNewGridManager>().OnGridChanged += GridChanged;
+        
+        // Make sure tile under player knows player is above it
+        StartCoroutine(waitAndNotifyTile());
     }
 
     private void Awake()
@@ -146,6 +149,8 @@ public class PlayerMovement : MonoBehaviour
         {
             SlideThisObjectAlongPath(slidingPath);
         }
+
+        
     }
     // FixedUpdate for rigid body calculations
     private void FixedUpdate()
@@ -224,7 +229,6 @@ public class PlayerMovement : MonoBehaviour
             endMove();
         }
     }
-
     public void endMove(){
         waypointIndex = 0;
         SoundManagerScript.EndSound("footstep");
@@ -350,5 +354,11 @@ public class PlayerMovement : MonoBehaviour
     {
         currentRoom = FindObjectOfType<GridManager>().gameObject.transform.parent.gameObject;
         grid = FindObjectOfType<GridManager>().grid;
+    }
+
+    IEnumerator waitAndNotifyTile(){
+        yield return new WaitForSeconds(1f);
+        grid[playerX, playerY].gameObjectAbove = this.gameObject;
+        yield break;
     }
 }
