@@ -18,6 +18,7 @@ public class PlayerStatsUIManager : MonoBehaviour
     [SerializeField] GameObject airText;
 
     [SerializeField] GameObject uiStats;
+    [SerializeField] GameObject quickref;
 
     PlayerStats playerStats;
     
@@ -36,10 +37,12 @@ public class PlayerStatsUIManager : MonoBehaviour
             if (uiStats.activeInHierarchy)
             {
                 uiStats.SetActive(false);
+                quickref.SetActive(false);
             }
             else
             {
                 uiStats.SetActive(true);
+                quickref.SetActive(true);
             }
         }
     }
