@@ -10,7 +10,6 @@ public class EnemyStateManager : MonoBehaviour
     public SpriteRenderer mySpriteRenderer;
     // animator
     public Animator animator;
-    bool playBlockSound = true;
     public static bool elementOnEnemy;
     // currentState will hold a reference to the active state in the state machine. 
     EnemyBaseState currentState;
@@ -31,6 +30,9 @@ public class EnemyStateManager : MonoBehaviour
 
     // attacking
     public int attackCounter = 0;
+
+    bool triedToBlock = false;
+    bool playSound = false;
 
     // movement
     public List<Transform> listOfTiles;
@@ -56,7 +58,6 @@ public class EnemyStateManager : MonoBehaviour
 
     // turn logic
     TurnLogic turnLogic;
-    private bool block;
 
 
     // stuff for pathfinding.
@@ -134,34 +135,31 @@ public class EnemyStateManager : MonoBehaviour
 
         // check if its enemy turn, if it is we will check if we are close enough to player. If not move. If we are in range attack.
         // if enemy turn
+
+        // 33% chance to have shield up.
         if(turnLogic.GetIsPlayerTurn()){
-            // chance to block. 
-            if(gameObject.name.Contains("Zombie")){
-                // block animation
-                if(block == false){
-                    // 33% chance to block if its players turn. 
-                    randomBlockChance = Random.Range(0, 3);
-                    if(randomBlockChance == 2){
-                        animator.SetBool("isBlocking", true);
-                    }
-                    block = true;
-                }
+            if(gameObject.name.Contains("Zombie") && triedToBlock == false){
+                randomBlockChance = Random.Range(0, 3);
+                Debug.Log("RANDOM: " + randomBlockChance);
+                if(randomBlockChance == 0){
+                    animator.SetBool("isBlocking", true);
+                }                
+                triedToBlock = true;
             }
         }
-        if(elementOnEnemy == true && playBlockSound == true && gameObject.name.Contains("Zombie") && block == true){
-            // play sound
+        
+        // play block sound if element hits enemy zombie, and play sound. 
+        if(elementOnEnemy == true && animator.GetBool("isBlocking") == true && playSound == false ){
             SoundManagerScript.PlaySound("zombieblock");
-            playBlockSound = false;
             elementOnEnemy = false;
+            playSound = true;
         }
+
         if(isEnemyTurn){
-            playBlockSound = true;
-            if(gameObject.name.Contains("Zombie")){
-                if(animator.GetBool("isBlocking") == true){
-                    animator.SetBool("isBlocking", false);
-                }
-                block = false;
-            }
+            animator.SetBool("isBlocking", false);
+            triedToBlock = false;
+            // playBlockSound = true;
+            playSound = false;
             // check distance
 
             // get enemy pos now relitive -N
