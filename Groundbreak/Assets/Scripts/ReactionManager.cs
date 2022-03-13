@@ -117,9 +117,9 @@ public class ReactionManager : MonoBehaviour
     public static Effect createEffect(Element element1, Element element2, Vector2 instantiatePos){
         // Make sure position is on integer value
         instantiatePos = new Vector2((int)instantiatePos.x, (int)instantiatePos.y);
-        Debug.LogWarning("Absolute position of effect to be created is: " + instantiatePos);
+        //Debug.LogWarning("Absolute position of effect to be created is: " + instantiatePos);
         Vector2 gridPos = gridManager.transform.InverseTransformPoint(instantiatePos) + new Vector3(5,5,0);
-        Debug.LogWarning("Grid position of effect to be created is: " + gridPos);
+        // Debug.LogWarning("Grid position of effect to be created is: " + gridPos);
         
         
         // Make sure there isn't an effect already here. If there is, delete it.
@@ -235,6 +235,15 @@ public class ReactionManager : MonoBehaviour
             Destroy(eff.gameObject);
         }
         existingEffects = new List<Effect>();
+    }
+    public static void reduceDuration(Effect eff){
+        eff.myDuration--;
+        // Debug.Log("Reducing duration to " + eff.myDuration);
+        if (eff.myDuration <= 0){
+            Debug.Log("DEEEESTRUCTIOOOOOON");
+            existingEffects.Remove(eff);
+            Destroy(eff.gameObject);
+        }
     }
 
     private void GridChanged(object sender, System.EventArgs e)

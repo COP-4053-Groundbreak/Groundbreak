@@ -8,6 +8,7 @@ public class Effect : MonoBehaviour {
     string effectName;
     public Tile tileUnderEffect;
     [SerializeField] public int myDuration = -1;
+    public Animator myAnimator;
         
     public GridManager gridManager;
     // int posX,posY;
@@ -17,6 +18,7 @@ public class Effect : MonoBehaviour {
     private void Start()
     {
         FindObjectOfType<FindNewGridManager>().OnGridChanged += GridChanged;
+        
     }
 
     // TOD0: FIX EFFECTS USING TRANSFORM.POSITION
@@ -29,14 +31,15 @@ public class Effect : MonoBehaviour {
           id = (int)a + (int)b;
           gridManager = FindObjectOfType<GridManager>();  
           myPos = pos;
+          myAnimator = GetComponent<Animator>();
           
           //currRoom = gridManager.transform.parent.gameObject;
           //Vector2 localPos = currRoom.transform.InverseTransformPoint(transform.position);
           //posX = (int)(localPos.x);
           //posY = (int)(localPos.y);
-          Debug.LogWarning($"Init effect at {pos.x},{pos.y}");
+          // Debug.LogWarning($"Init effect at {pos.x},{pos.y}");
           tileUnderEffect = gridManager.getTile(pos.x, pos.y);
-
+          myAnimator.SetInteger("effectID", id);
           switch(id) {
               case ((int)Element.Air + (int)Element.Earth): // Sandstorm 
                 effectName = "Sandstorm";
@@ -68,6 +71,7 @@ public class Effect : MonoBehaviour {
                     dealDamageToChar(tileUnderEffect.gameObjectAbove, ReactionManager.FIREBALL_DMG);
                 fireballEffect(tileUnderEffect, ReactionManager.FIREBALL_RANGE, new List<Tile>(), new List<GameObject>());
                 myDuration = ReactionManager.FIREBALL_DUR;
+                
                 break;
             case ((int)Element.Air + (int)Element.Water): // Storm 
                 effectName = "Storm";
@@ -79,10 +83,14 @@ public class Effect : MonoBehaviour {
                 Debug.LogWarning("You are never supposed to be here!");
                 break;
         }
-        GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>($"Sprites/Effects/{effectName}");
+        this.name = effectName;
+        //GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>($"Sprites/Effects/{effectName}");
         tileUnderEffect.setEffect(this);
     }
     
+    public void reduceFireballDuration(){
+        ReactionManager.reduceDuration(this);
+    }
     private void OnTriggerEnter2D(Collider2D other) {
         Debug.Log("Entered effect collider!");
         if (other == null || other.gameObject == null)
@@ -464,13 +472,5 @@ public class Effect : MonoBehaviour {
     private void GridChanged(object sender, System.EventArgs e)
     {
         gridManager = FindObjectOfType<GridManager>();
-    }
-    public void reduceDuration(){
-        myDuration--;
-        Debug.Log("Reducing duration to " + myDuration);
-        if (myDuration <= 0){
-            Debug.Log("DEEEESTRUCTIOOOOOON");
-            Destroy(this.gameObject);
-        }
     }
 }

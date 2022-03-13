@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5723348331804699658}
   - component: {fileID: 6570695920032057152}
   - component: {fileID: 7121022345903861547}
+  - component: {fileID: 5394872501651813450}
   m_Layer: 0
   m_Name: Effect
   m_TagString: Effect
@@ -122,5 +123,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcb06c91fcdd9b94082b2edf78e9ef23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tileUnderEffect: {fileID: 0}
   myDuration: -1
   gridManager: {fileID: 0}
+  myPos: {x: 0, y: 0}
+--- !u!95 &5394872501651813450
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3460704300000529689}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8bf7761d601d0a342ab51c013fd6ad31, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

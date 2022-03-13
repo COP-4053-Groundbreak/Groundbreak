@@ -67,7 +67,7 @@ public class PlayerActions : MonoBehaviour
     public void ThrowTile(GameObject tile) 
     {
         Debug.Log($"Attemptint to throw a {tile.GetComponent<Tile>().myElement}");
-        Debug.LogWarning(tile.GetComponent<TileClickable>().GetDistance());
+        // Debug.LogWarning(tile.GetComponent<TileClickable>().GetDistance());
         if (turnLogic.GetIsPlayerTurn() && heldTileElement != Element.Void && tile.GetComponent<TileClickable>().GetDistance() <= throwRange) 
         {
             playerAnimator.SetTrigger("Throw");
