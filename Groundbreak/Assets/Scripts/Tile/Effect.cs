@@ -56,6 +56,9 @@ public class Effect : MonoBehaviour {
                         dealDamageToChar(tileUnderEffect.gameObjectAbove, ReactionManager.MAGMA_DMG);
                     }
                 }
+                this.transform.localScale = new Vector2(2,3);
+                this.GetComponent<BoxCollider2D>().size = new Vector2(0.1f,0.1f);
+                this.transform.position = this.transform.position - new Vector3(0.1f, -0.2f);
                 myDuration = ReactionManager.MAGMA_DUR;
                 break;
             case ((int)Element.Water + (int)Element.Earth): // Mud
