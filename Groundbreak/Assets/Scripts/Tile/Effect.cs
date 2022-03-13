@@ -45,7 +45,9 @@ public class Effect : MonoBehaviour {
                 effectName = "Sandstorm";
                 Debug.Log("Sandstorm down effect time!"); 
                 sandStormDownEffect(tileUnderEffect, ReactionManager.SANDSTORM_RANGE, new List<Tile>(), new List<GameObject>());
-                myDuration = ReactionManager.STORM_DUR;
+                myDuration = ReactionManager.SANDSTORM_DUR;
+                this.transform.localScale = new Vector2(5,5);
+                this.GetComponent<BoxCollider2D>().size = new Vector2(0.1f,0.1f);
                 break;
             case ((int)Element.Earth + (int)Element.Fire): // Magma 
                 effectName = "Magma";
@@ -64,20 +66,27 @@ public class Effect : MonoBehaviour {
             case ((int)Element.Water + (int)Element.Fire): // Smoke 
                 effectName = "Smoke";
                 myDuration = ReactionManager.SMOKE_DUR;
+                this.transform.localScale = new Vector2(5,5);
+                this.GetComponent<BoxCollider2D>().size = new Vector2(0.1f,0.1f);
+                this.transform.position = this.transform.position + new Vector3(0,0.5f);
                 break;
             case ((int)Element.Air + (int)Element.Fire): // Fireball 
                 effectName = "Fireball";
                 if (tileUnderEffect.gameObjectAbove != null)
                     dealDamageToChar(tileUnderEffect.gameObjectAbove, ReactionManager.FIREBALL_DMG);
                 fireballEffect(tileUnderEffect, ReactionManager.FIREBALL_RANGE, new List<Tile>(), new List<GameObject>());
+                this.transform.localScale = new Vector2(5,5);
+                this.GetComponent<BoxCollider2D>().size = new Vector2(0.1f,0.1f);
                 myDuration = ReactionManager.FIREBALL_DUR;
-                
+                transform.position = transform.position - new Vector3(-0.5f, 0.5f);
                 break;
             case ((int)Element.Air + (int)Element.Water): // Storm 
                 effectName = "Storm";
                 Debug.Log("Storm down effect time!"); 
                 stormDownEffect(tileUnderEffect, ReactionManager.STORM_RANGE, new List<Tile>(), new List<GameObject>());
                 myDuration = ReactionManager.STORM_DUR;
+                this.transform.localScale = new Vector2(5,5);
+                this.GetComponent<BoxCollider2D>().size = new Vector2(0.1f,0.1f);
                 break;
             default:
                 Debug.LogWarning("You are never supposed to be here!");

@@ -20,13 +20,13 @@ public class ReactionManager : MonoBehaviour
 
     // SANDSTORM VARIABLES:
     [SerializeField] public static int SANDSTORM_DMG = 5;
-    [SerializeField] public static int SANDSTORM_DUR = 2;
+    [SerializeField] public static int SANDSTORM_DUR = 8;
     [SerializeField] public static int SANDSTORM_RANGE = 2;
     
     // STORM VARIABLES:
     [SerializeField] public static int STORM_RANGE = 2;
     [SerializeField] public static int STORM_DMG = 5;
-    [SerializeField] public static int STORM_DUR = 2;
+    [SerializeField] public static int STORM_DUR = 8;
     
     // FIREBALL VARIABLES:
     [SerializeField] public static int FIREBALL_DMG = 30;
@@ -44,6 +44,8 @@ public class ReactionManager : MonoBehaviour
 
     // Damage from two units colliding from a push or pull
     [SerializeField] public static int CRASH_DMG = 5;
+    // THROW DAMAGE
+    [SerializeField] public static int THROW_DMG = 10;
 
     private void Start() {
         gridManager = FindObjectOfType<GridManager>();
@@ -156,12 +158,21 @@ public class ReactionManager : MonoBehaviour
             Debug.Log("Element was thrown at a tile!");
             thrownAt.GetComponent<Tile>().myEffect = TileOnTile(thrownElem, thrownAt.GetComponent<Tile>());
         } else if (thrownAt.tag == "Enemy"){
+            Tile tileUnderEnemy;
             Debug.Log("Element was thrown at an enemy!");
             if(thrownAt.name.Contains("Zombie")){
-                EnemyStateManager.elementOnEnemy = true;
+                EnemyStateManager bossESM = thrownAt.GetComponent<EnemyStateManager>();
+                bossESM.elementOnEnemy = true;
+                if (bossESM.animator.GetBool("isBlocking")){
+                    PlayerMovement playerMov = FindObjectOfType<PlayerMovement>();
+                    tileUnderEnemy = gridManager.getTile(playerMov.playerX, playerMov.playerY);
+                    tileUnderEnemy.myEffect = TileOnTile(thrownElem, gridManager.getTile(playerMov.playerX, playerMov.playerY));
+                    dealDamageToChar(gridManager.getTile(playerMov.playerX, playerMov.playerY).gameObjectAbove, THROW_DMG);
+                    return ;
+                }
             }
-            // Once enemyX and enemyY is fixed, TileOnEnemy shoudl work
-            Tile tileUnderEnemy = gridManager.getTile(thrownAt.GetComponent<EnemyStateManager>().enemyX, thrownAt.GetComponent<EnemyStateManager>().enemyY);
+            dealDamageToChar(gridManager.getTile(thrownAt.GetComponent<EnemyStateManager>().enemyX, thrownAt.GetComponent<EnemyStateManager>().enemyY).gameObjectAbove, THROW_DMG);
+            tileUnderEnemy = gridManager.getTile(thrownAt.GetComponent<EnemyStateManager>().enemyX, thrownAt.GetComponent<EnemyStateManager>().enemyY);
             tileUnderEnemy.myEffect = TileOnEnemy(thrownElem, thrownAt);
         } else if (thrownAt.tag == "Ability"){
             // myEffect = myReactionManager.AbilityOnTile(other.gameObject.GetComponent<Ability>(), this);
@@ -244,6 +255,13 @@ public class ReactionManager : MonoBehaviour
             existingEffects.Remove(eff);
             Destroy(eff.gameObject);
         }
+    }
+
+    private static void dealDamageToChar(GameObject character, int damageAmount){
+        if (character.gameObject.tag == "Player")
+            character.gameObject.GetComponentInParent<PlayerStats>().DealDamage(damageAmount);
+        else
+            character.gameObject.GetComponent<EnemyStateManager>().DealDamage(damageAmount);
     }
 
     private void GridChanged(object sender, System.EventArgs e)

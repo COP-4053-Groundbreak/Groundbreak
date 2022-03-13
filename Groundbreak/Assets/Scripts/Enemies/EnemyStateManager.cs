@@ -13,7 +13,7 @@ public class EnemyStateManager : MonoBehaviour
     public SpriteRenderer mySpriteRenderer;
     // animator
     public Animator animator;
-    public static bool elementOnEnemy;
+    public bool elementOnEnemy;
     // currentState will hold a reference to the active state in the state machine. 
     EnemyBaseState currentState;
     // Rigidbody of the enemy, used for patrolling/movement
