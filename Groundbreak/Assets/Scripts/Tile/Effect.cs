@@ -119,6 +119,20 @@ public class Effect : MonoBehaviour {
                 case ((int)Element.Water + (int)Element.Earth): // Mud
                     // Don't think anything needs to be done if mud is entered, it's an effect that
                     // impacts the player BEFORE entering it and not while on it.
+                    if (other.gameObject.tag == "Player"){
+                        PlayerMovement moveMng = other.gameObject.GetComponent<PlayerMovement>();
+                        if (moveMng.currentMovementRemaining > 0){
+                            moveMng.currentMovementRemaining = 0;
+                        }
+                    } else if (other.gameObject.tag == "Enemy"){
+                        EnemyStateManager enemyState = other.gameObject.GetComponent<EnemyStateManager>();
+                        if (enemyState.enemyMovementRemaining > 0){
+                            other.gameObject.transform.position = this.transform.position;
+                            enemyState.stopEnemyMovement();
+                            enemyState.enemyMovementRemaining = 2;
+                            enemyState.isEnemyTurn = false;
+                        }
+                    }
                     break;
                 case ((int)Element.Water + (int)Element.Fire): // Smoke
                     if (other.gameObject.tag == "Player"){

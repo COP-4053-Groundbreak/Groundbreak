@@ -134,20 +134,22 @@ public class TurnLogic : MonoBehaviour
                 }
 
                 // Upon a new turn starting, reduce the duration of existing effects
-                Debug.Log("how many effects? " + ReactionManager.existingEffects.Count);
+                // Debug.Log("how many effects? " + ReactionManager.existingEffects.Count);
                 if (ReactionManager.existingEffects.Count > 0)
                     for (int i = 0; i < ReactionManager.existingEffects.Count; i++){
+                        i = (i < 0)? 0 : i;
                         if (ReactionManager.existingEffects[i] == null)
                             continue;
 
                         int effectID = ReactionManager.existingEffects[i].gameObject.GetInstanceID();
-                        Debug.Log("About to reduce duration");
+                        // Debug.Log("About to reduce duration");
+
                         ReactionManager.reduceDuration(ReactionManager.existingEffects[i]);
                         // Once we remove something, we have to make sure that we don't accidentally
                         // skip something in the list
-                        Debug.Log($"{effectID} vs {ReactionManager.existingEffects[i].gameObject.GetInstanceID()}");
-                        if (effectID != ReactionManager.existingEffects[i].gameObject.GetInstanceID()){
-                            i--;
+                        //Debug.Log($"{effectID} vs {ReactionManager.existingEffects[i].gameObject.GetInstanceID()}");
+                        if (ReactionManager.existingEffects.Count != 0 && effectID != ReactionManager.existingEffects[i].gameObject.GetInstanceID()){
+                            i--;    
                         }
                     }                 
             }
