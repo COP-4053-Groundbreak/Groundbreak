@@ -73,7 +73,6 @@ public class EnemyStateManager : MonoBehaviour
     public int height;
 
     public float period = 0.0f;
-    int randomBlockChance;
 
     float attackClipLength;
 
@@ -189,8 +188,8 @@ public class EnemyStateManager : MonoBehaviour
             // get zombie health, if damage is taken during player turn it will heal
             if(gameObject.name.Contains("Zombie") && triedToBlock == false){
                 zombieHealthStartOfPlayer = healthSystem.GetHealth();
-                randomBlockChance = Random.Range(0, 3);
-                if(randomBlockChance == 0){
+                turnLogic = FindObjectOfType<TurnLogic>();
+                if(turnLogic.turnCount % 2 == 0){
                     animator.SetBool("isBlocking", true);
                 }                
                 triedToBlock = true;

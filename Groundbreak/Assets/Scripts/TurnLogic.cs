@@ -36,7 +36,7 @@ public class TurnLogic : MonoBehaviour
     // Empty gameobject to instantiate under void tiles to give them colliders
     [SerializeField] GameObject empty;
 
-    int turnCount = 0;
+    public int turnCount = 0;
 
     DisplayInitiative displayInitiative;
 
