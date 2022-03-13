@@ -301,6 +301,9 @@ public class EnemyStateManager : MonoBehaviour
                 // Debug.Log((int)enemyPos.x + " " + (int)enemyPos.y + " " + (int)playerPos.x + " " + (int)playerPos.y);
                 listOfTiles = pathfinding.FindPathWaypoints((int)enemyPos.x, (int)enemyPos.y, (int)playerPos.x, (int)playerPos.y);
                 // lets strip off first tile, thats the player tile we do not want to land RIGHT ON the player, just next to him.
+                if(listOfTiles == null){
+                    return;
+                }
                 listOfTiles.RemoveAt(0);
                 while(enemyMovementRemaining != 0){
                     if(listOfTiles != null){
