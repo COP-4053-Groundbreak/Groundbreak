@@ -15,7 +15,7 @@ public class ReactionManager : MonoBehaviour
 
     // Game balance variables for effects
     // MAGMA VARIABLES:
-    [SerializeField] public static int MAGMA_DMG = 25;
+    [SerializeField] public static int MAGMA_DMG = 12;
     [SerializeField] public static int MAGMA_DUR = 2;
 
     // SANDSTORM VARIABLES:
