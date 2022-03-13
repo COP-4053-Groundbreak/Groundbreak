@@ -65,6 +65,9 @@ public class Effect : MonoBehaviour {
                 effectName = "Mud";
                 tileUnderEffect.setMovementModifier(tileUnderEffect.getMovementModifier() - ReactionManager.MUD_DEBUFF);
                 myDuration = ReactionManager.MUD_DUR;
+                this.transform.localScale = new Vector2(2,3);
+                this.GetComponent<BoxCollider2D>().size = new Vector2(0.1f,0.1f);
+                this.transform.position = this.transform.position - new Vector3(0.1f, -0.6f);
                 break;
             case ((int)Element.Water + (int)Element.Fire): // Smoke 
                 effectName = "Smoke";
