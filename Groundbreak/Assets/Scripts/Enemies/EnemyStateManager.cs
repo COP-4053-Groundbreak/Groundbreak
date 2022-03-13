@@ -128,12 +128,6 @@ public class EnemyStateManager : MonoBehaviour
             healthBarTransform.localPosition = healthBarLocalPosition;
             HealthBar healthBar = healthBarTransform.GetComponent<HealthBar>();
             healthBar.Setup(healthSystem);
-
-            // element symbol
-            Vector3 elementSymbolPosition = new Vector3(1, (float)1.25);
-            elementSymbolTransform.localPosition = elementSymbolPosition;
-            elementSymbolTransform.localPosition = new Vector3(-0.6f,0.75f,0f);
-            elementSymbolTransform.localScale = new Vector2(0.5f,0.5f);
         }
         else if(gameObject.name.Contains("Skeleton")){
             Vector3 healthBarLocalPosition = new Vector3(0, (float)1.60);

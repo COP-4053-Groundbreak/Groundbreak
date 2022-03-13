@@ -120,6 +120,7 @@ MonoBehaviour:
   isEnemyTurn: 0
   mySpriteRenderer: {fileID: 7027631797718925011}
   animator: {fileID: 7027631797718925020}
+  elementOnEnemy: 0
   slideSpeed: 1
   slidingPath: []
   isSliding: 0
@@ -131,7 +132,7 @@ MonoBehaviour:
   listOfTiles: []
   startHealth: 100
   pfHealthBar: {fileID: 8601539936103537149, guid: 9c241cd300c70dd42bfc6fd13cca7c4b, type: 3}
-  elementSymbol: {fileID: 418799989095823320, guid: d9a1687d184532b499e0c3ed0bbad292, type: 3}
+  elementSymbol: {fileID: 6325677712846221419, guid: 4372e7b3ade76a6459e466c2681f480c, type: 3}
   alive: 1
   enemyMovementRemaining: 0
   initiative: 0
