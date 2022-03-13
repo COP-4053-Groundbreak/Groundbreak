@@ -42,7 +42,7 @@ public class Effect : MonoBehaviour {
           myAnimator.SetInteger("effectID", id);
           switch(id) {
               case ((int)Element.Air + (int)Element.Earth): // Sandstorm 
-                effectName = "Sandstorm";
+                effectName = "sandstorm";
                 Debug.Log("Sandstorm down effect time!"); 
                 sandStormDownEffect(tileUnderEffect, ReactionManager.SANDSTORM_RANGE, new List<Tile>(), new List<GameObject>());
                 myDuration = ReactionManager.SANDSTORM_DUR;
@@ -50,7 +50,7 @@ public class Effect : MonoBehaviour {
                 this.GetComponent<BoxCollider2D>().size = new Vector2(0.1f,0.1f);
                 break;
             case ((int)Element.Earth + (int)Element.Fire): // Magma 
-                effectName = "Magma";
+                effectName = "magma";
                 if (tileUnderEffect.gameObjectAbove != null){
                     if (tileUnderEffect.gameObjectAbove.tag == "Player" || tileUnderEffect.gameObjectAbove.tag == "Enemy"){
                         dealDamageToChar(tileUnderEffect.gameObjectAbove, ReactionManager.MAGMA_DMG);
@@ -62,7 +62,7 @@ public class Effect : MonoBehaviour {
                 myDuration = ReactionManager.MAGMA_DUR;
                 break;
             case ((int)Element.Water + (int)Element.Earth): // Mud
-                effectName = "Mud";
+                effectName = "mud";
                 tileUnderEffect.setMovementModifier(tileUnderEffect.getMovementModifier() - ReactionManager.MUD_DEBUFF);
                 myDuration = ReactionManager.MUD_DUR;
                 this.transform.localScale = new Vector2(2,3);
@@ -70,14 +70,14 @@ public class Effect : MonoBehaviour {
                 this.transform.position = this.transform.position - new Vector3(0.1f, -0.6f);
                 break;
             case ((int)Element.Water + (int)Element.Fire): // Smoke 
-                effectName = "Smoke";
+                effectName = "smoke";
                 myDuration = ReactionManager.SMOKE_DUR;
                 this.transform.localScale = new Vector2(5,5);
                 this.GetComponent<BoxCollider2D>().size = new Vector2(0.1f,0.1f);
                 this.transform.position = this.transform.position + new Vector3(0,0.5f);
                 break;
             case ((int)Element.Air + (int)Element.Fire): // Fireball 
-                effectName = "Fireball";
+                effectName = "fireball";
                 if (tileUnderEffect.gameObjectAbove != null)
                     dealDamageToChar(tileUnderEffect.gameObjectAbove, ReactionManager.FIREBALL_DMG);
                 fireballEffect(tileUnderEffect, ReactionManager.FIREBALL_RANGE, new List<Tile>(), new List<GameObject>());
@@ -87,7 +87,7 @@ public class Effect : MonoBehaviour {
                 transform.position = transform.position - new Vector3(-0.5f, 0.5f);
                 break;
             case ((int)Element.Air + (int)Element.Water): // Storm 
-                effectName = "Storm";
+                effectName = "storm";
                 Debug.Log("Storm down effect time!"); 
                 stormDownEffect(tileUnderEffect, ReactionManager.STORM_RANGE, new List<Tile>(), new List<GameObject>());
                 myDuration = ReactionManager.STORM_DUR;
@@ -98,6 +98,7 @@ public class Effect : MonoBehaviour {
                 Debug.LogWarning("You are never supposed to be here!");
                 break;
         }
+        SoundManagerScript.PlaySound(effectName);
         this.name = effectName;
         //GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>($"Sprites/Effects/{effectName}");
         tileUnderEffect.setEffect(this);

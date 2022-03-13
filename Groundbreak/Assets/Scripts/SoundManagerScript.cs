@@ -25,6 +25,14 @@ public class SoundManagerScript : MonoBehaviour
     public static AudioClip throwTileSound;
     public static AudioClip playerTakeDamageSound;
 
+    // Effect Sounds
+    public static AudioClip magmaSound;
+    public static AudioClip fireballSound; 
+    public static AudioClip smokeSound;
+    public static AudioClip sandstormSound;  
+    public static AudioClip stormSound; 
+    public static AudioClip mudSound; 
+
     static AudioSource audioSrc;
 
     // Start is called before the first frame update
@@ -46,6 +54,12 @@ public class SoundManagerScript : MonoBehaviour
         pickupTileSound = Resources.Load<AudioClip>("pickuptile");
         throwTileSound = Resources.Load<AudioClip>("throwtile");
         playerTakeDamageSound = Resources.Load<AudioClip>("playerdamage");
+        magmaSound = Resources.Load<AudioClip>("magma");
+        fireballSound = Resources.Load<AudioClip>("fireball");
+        smokeSound = Resources.Load<AudioClip>("smoke");
+        sandstormSound = Resources.Load<AudioClip>("sandstorm");
+        stormSound = Resources.Load<AudioClip>("storm");
+        mudSound = Resources.Load<AudioClip>("mud"); 
         // getting the audioSource component.
         audioSrc = GetComponent<AudioSource> ();
         audioSrc.volume = 0.1f;
@@ -110,6 +124,24 @@ public class SoundManagerScript : MonoBehaviour
                 break;
             case "playerdamage":
                 audioSrc.PlayOneShot(playerTakeDamageSound);
+                break;
+            case "magma":
+                audioSrc.PlayOneShot(magmaSound);
+                break;
+            case "fireball":
+                audioSrc.PlayOneShot(fireballSound);
+                break;
+            case "smoke":
+                audioSrc.PlayOneShot(smokeSound);
+                break;
+            case "sandstorm":
+                audioSrc.PlayOneShot(sandstormSound);
+                break;
+            case "storm":
+                audioSrc.PlayOneShot(stormSound);
+                break;
+            case "mud":
+                audioSrc.PlayOneShot(mudSound);
                 break;
         }
     }
