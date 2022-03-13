@@ -78,25 +78,25 @@ public class DisplayInitiative : MonoBehaviour
 
         // Create text
         int i = 0;
-        foreach (GameObject gameObject in list)
+        foreach (GameObject subObject in list)
         {
             // Create text object for this enemy
             GameObject text = Instantiate(template);
             text.transform.SetParent(transform);
             text.transform.position = new Vector3(transform.position.x, transform.position.y - 40 * i);
-            text.name = gameObject.name;
+            text.name = subObject.name;
             string temp;
             // remove clone tag on name
-            if (gameObject.name.Contains("Clone"))
+            if (subObject.name.Contains("Clone"))
             {
-                temp = gameObject.name.Substring(0, gameObject.name.Length - 7);
+                temp = subObject.name.Substring(0, subObject.name.Length - 7);
             }
             else
             {
-                temp = gameObject.name;
+                temp = subObject.name;
             }
             text.GetComponent<TextMeshProUGUI>().text = temp;
-
+            text.GetComponent<InitiativeText>().ID = subObject.GetInstanceID();
             i++;
         }
         StartDisplay();
@@ -108,8 +108,25 @@ public class DisplayInitiative : MonoBehaviour
         foreach (Transform child in transform) 
         {
             child.gameObject.GetComponent<TextMeshProUGUI>().color = Color.black;
+
         }
-        
+
+
+        if (numRepeated >= transform.childCount) 
+        {
+            numRepeated = 0;
+        }
+
+        while (!transform.GetChild(numRepeated).GetComponent<InitiativeText>().isAlive) 
+        {
+            numRepeated++;
+            if (numRepeated >= transform.childCount)
+            {
+                numRepeated = 0;
+            }
+        }
+
+
         if (numRepeated < list.Count)
         {
             transform.GetChild(numRepeated).GetComponent<TextMeshProUGUI>().color = Color.red;
@@ -132,6 +149,17 @@ public class DisplayInitiative : MonoBehaviour
     public void StartDisplay() 
     {
         transform.GetChild(0).GetComponent<TextMeshProUGUI>().color = Color.red;
+    }
+
+    public void Strikethrough(int instanceId) 
+    {
+        foreach (Transform child in transform) 
+        {
+            if (child.gameObject.GetComponent<InitiativeText>().ID == instanceId) 
+            {
+                child.GetComponent<TextMeshProUGUI>().fontStyle = FontStyles.Strikethrough;
+            }
+        }
     }
 
     private void Update()

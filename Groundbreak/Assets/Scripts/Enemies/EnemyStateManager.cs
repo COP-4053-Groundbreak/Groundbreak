@@ -140,6 +140,13 @@ public class EnemyStateManager : MonoBehaviour
         if(healthSystem != null && healthSystem.GetHealth() <= 0 && alive == true){
             Destroy(gameObject, (float)3);
             SwitchState(DeathState);
+            turnLogic.listOfInitative.Remove(this.initiative);
+            foreach (InitiativeText text in FindObjectsOfType<InitiativeText>()) 
+            {
+                text.CheckAlive(gameObject.GetInstanceID());
+            }
+            FindObjectOfType<DisplayInitiative>().Strikethrough(gameObject.GetInstanceID());
+            turnLogic.CheckForRoomClear();
         }
 
         if (isSliding) 

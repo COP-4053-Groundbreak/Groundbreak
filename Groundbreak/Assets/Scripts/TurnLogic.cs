@@ -20,8 +20,8 @@ public class TurnLogic : MonoBehaviour
     PlayerActions playerActions;
 
     // List of players and enemies
-    List<GameObject> actorList = new List<GameObject>();
-    List<int> listOfInitative = new List<int>();    
+    public List<GameObject> actorList = new List<GameObject>();
+    public List<int> listOfInitative = new List<int>();    
 
 
 
@@ -68,6 +68,10 @@ public class TurnLogic : MonoBehaviour
     {
         if (isPlayerTurn) 
         {
+            if (CheckForRoomClear()) 
+            {
+                return;
+            }
             Debug.Log("Player ended their turn");
             isPlayerTurn = false;
 
@@ -104,6 +108,26 @@ public class TurnLogic : MonoBehaviour
         isThrowPhase = true;
     }
 
+    public bool CheckForRoomClear() 
+    {
+        
+        int numAlive = 0;
+        for (int i = 0; i < actorList.Count; i++) 
+        {
+            if (actorList[i] != null) 
+            {
+                numAlive++;
+            }
+        }
+        if (numAlive <= 1) 
+        {
+            StopAllCoroutines();
+            EndCombat();
+            return true;
+        }
+        return false;
+    }
+
     IEnumerator TurnCycle() 
     {
         // add temp object to get into while loop without messy do while
@@ -115,15 +139,24 @@ public class TurnLogic : MonoBehaviour
             // If we have seen every actors once and the list is empty, repopulate it
             if (listOfInitative.Count == 0)
             {
+                CheckForRoomClear();
                 // This is equivilent to starting a turn
                 turnCount++;
                 Debug.Log("Turn " + turnCount + " has started");
-                
                 for (int i = 0; i < actorList.Count; i++)
                 {
+                    if (actorList[i] == null) 
+                    {
+                        continue;
+                    }
+
                     // Adding the initiatives of enemies to a list. 
                     if (actorList[i].GetComponent<EnemyStateManager>())
                     {
+                        if (!actorList[i].GetComponent<EnemyStateManager>().alive)
+                        {
+                            continue;
+                        }
                         listOfInitative.Add(actorList[i].GetComponent<EnemyStateManager>().initiative);
                     }
                     // Adding the initiative of Player to a list. 
@@ -161,8 +194,16 @@ public class TurnLogic : MonoBehaviour
                 if(listOfInitative.Count == 0){
                     break;
                 }
+                if (!actorList[i]) 
+                {
+                    continue;
+                }
                 if (actorList[i].GetComponent<EnemyStateManager>())
                 {
+                    if (!actorList[i].GetComponent<EnemyStateManager>().alive) 
+                    {
+                        continue;
+                    }
                     if (actorList[i].GetComponent<EnemyStateManager>().initiative == listOfInitative.Max())
                     {
                         displayInitiative.SetTurn();
@@ -172,10 +213,19 @@ public class TurnLogic : MonoBehaviour
                         // set enemy turn to false.
                         for (int j = 0; j < actorList.Count; j++)
                         {
+                            if (actorList[j] == null) 
+                            {
+                                continue;
+                            }
                             // check which enemy is on. set to false.
                             if (actorList[j].GetComponent<EnemyStateManager>())
                             {
-                                
+
+                                if (!actorList[j].GetComponent<EnemyStateManager>().alive) 
+                                {
+                                    continue;
+                                }
+
                                 if (actorList[j].GetComponent<EnemyStateManager>().isEnemyTurn == true)
                                 {
                                     actorList[j].GetComponent<EnemyStateManager>().isEnemyTurn = false;
@@ -185,9 +235,12 @@ public class TurnLogic : MonoBehaviour
                             }
                         }
                         // delete the max from list and keep processing until while loop is donezo.
+                        
                         if (listOfInitative.Count != 0)
                         {
+                            
                             listOfInitative.Remove(listOfInitative.Max());
+                            Debug.LogWarning(listOfInitative.Count);
                         }
                     }
                 }
