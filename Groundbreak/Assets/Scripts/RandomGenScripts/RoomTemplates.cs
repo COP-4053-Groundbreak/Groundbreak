@@ -21,13 +21,24 @@ public class RoomTemplates : MonoBehaviour
 
     public float waitTime;
     private bool spawnedBoss;
-    public GameObject boss;
+    [SerializeField] GameObject boss;
+    private GameObject bossPos;
+
+
 
     private void Update()
     {
         if(waitTime <= 0 && spawnedBoss == false)
         {
-            Instantiate(boss, rooms[rooms.Count - 1].transform.position, Quaternion.identity);
+            foreach (Transform child in rooms[rooms.Count - 1].transform)
+            {
+                if (child.CompareTag("Enemy"))
+                {
+                    Destroy(child.gameObject);
+                }
+            }
+            bossPos = Instantiate(boss, rooms[rooms.Count - 1].transform.position, Quaternion.identity, rooms[rooms.Count - 1].transform);
+            bossPos.SetActive(false);
             spawnedBoss = true;
         }
         else
