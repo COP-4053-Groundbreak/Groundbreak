@@ -145,16 +145,17 @@ MonoBehaviour:
   slidingPath: []
   isSliding: 0
   attackCounter: 0
+  archerDamage: 5
+  swordDamage: 10
+  mageDamage: 15
+  bossDamage: 20
   listOfTiles: []
-  startHealth: 100
+  startHealth: 50
   pfHealthBar: {fileID: 8601539936103537149, guid: 9c241cd300c70dd42bfc6fd13cca7c4b, type: 3}
   alive: 1
   enemyMovementRemaining: 0
-  armor: 0
   initiative: 4
   visibilityRange: 7
-  canAttack: 0
-  attackDamage: 0
   myElement: 4
   width: 0
   height: 0
