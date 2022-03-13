@@ -48,6 +48,7 @@ public class EnemyStateManager : MonoBehaviour
     // health stuff
     public int startHealth = 50;
     public Transform pfHealthBar;
+    public Transform elementSymbol;
     public HealthSystem healthSystem;
     public bool alive = true;
 
@@ -82,6 +83,29 @@ public class EnemyStateManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // elementSymbol.AddComponent<SpriteRenderer>();
+        // string elementToLoad = "";
+        // switch(myElement){
+        //     case Element.Air: // green
+        //         elementToLoad = "air";
+        //         break;
+        //     case Element.Earth: // brown
+        //         elementToLoad = "earth";
+        //         break;
+        //     case Element.Fire: // red
+        //         elementToLoad = "fire";
+        //         break;
+        //     case Element.Water: // blue
+        //         elementToLoad = "water";
+        //         break;
+        //     // case Element.Base: // white
+        //     //     newColor = Color.white;
+        //     //     break;
+        //     // default: // grey
+        //     //     elementToLoad = ""
+        //     //     break;
+        // }
+        // elementSymbol.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(elementToLoad);
         // get animation clip length
         AnimationClip[] clips = animator.runtimeAnimatorController.animationClips;
         foreach(AnimationClip clip in clips){
@@ -98,11 +122,18 @@ public class EnemyStateManager : MonoBehaviour
         // Health bar stuff
         // Transform healthBarTransform = Instantiate(pfHealthBar, new Vector3(0, 10), Quaternion.identity );
         Transform healthBarTransform = Instantiate(pfHealthBar, gameObject.transform);
+        Transform elementSymbolTransform = Instantiate(elementSymbol, gameObject.transform);
         if(gameObject.name.Contains("Zombie")){
             Vector3 healthBarLocalPosition = new Vector3(0, (float)1.25);
             healthBarTransform.localPosition = healthBarLocalPosition;
             HealthBar healthBar = healthBarTransform.GetComponent<HealthBar>();
             healthBar.Setup(healthSystem);
+
+            // element symbol
+            Vector3 elementSymbolPosition = new Vector3(1, (float)1.25);
+            elementSymbolTransform.localPosition = elementSymbolPosition;
+            elementSymbolTransform.localPosition = new Vector3(-0.6f,0.75f,0f);
+            elementSymbolTransform.localScale = new Vector2(0.5f,0.5f);
         }
         else if(gameObject.name.Contains("Skeleton")){
             Vector3 healthBarLocalPosition = new Vector3(0, (float)1.60);
