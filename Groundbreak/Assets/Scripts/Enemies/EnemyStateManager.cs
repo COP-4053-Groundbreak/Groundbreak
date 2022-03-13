@@ -33,7 +33,12 @@ public class EnemyStateManager : MonoBehaviour
 
     // attacking
     public int attackCounter = 0;
+    public int archerDamage = 5;
+    public int swordDamage = 10;
+    public int mageDamage = 15;
+    public int bossDamage = 20;
 
+    // blocking
     bool triedToBlock = false;
     bool playSound = false;
 
@@ -41,22 +46,21 @@ public class EnemyStateManager : MonoBehaviour
     public List<Transform> listOfTiles;
 
     // health stuff
-    public int startHealth = 100;
+    public int startHealth = 50;
     public Transform pfHealthBar;
     public HealthSystem healthSystem;
     public bool alive = true;
 
     // enemy movement 
     public int enemyMovementRemaining;
-    public int armor;
     public int initiative = 0;
     // integer, each block will be 1 unit or however we coded it. 
     public int visibilityRange = 7;
     // attack stats:
     // posible for enemy to miss, 0 miss, 1 attack. rename this to attackChance or something. 
-    public bool canAttack;
+    // public bool canAttack;
     // how much damage the enemy will do if canAttack is 1.
-    public int attackDamage;
+    // public int attackDamage;
     [SerializeField] public Element myElement;
 
     // turn logic
@@ -223,7 +227,7 @@ public class EnemyStateManager : MonoBehaviour
     
             //do attack or move.
             // check if melee enemy is within a 1 block radius of player. && will have to check which state we are in and if its enemy turn (not implemented yet)
-            if((gameObject.name.Contains("Archer") || gameObject.name.Contains("Wizard"))  && distanceBetweenPlayerAndEnemy <= 2 && attackCounter == 0){
+            if((gameObject.name.Contains("Archer") || gameObject.name.Contains("Wizard") || gameObject.name.Contains("Zombie"))  && distanceBetweenPlayerAndEnemy <= 2 && attackCounter == 0){
                 // play animation.
                 animator.SetBool("isAttacking", true);
                 // play archer sound
@@ -234,20 +238,20 @@ public class EnemyStateManager : MonoBehaviour
                 if(gameObject.name.Contains("Wizard")){
                     SoundManagerScript.PlaySound("spellcast");
                 }
+                if(gameObject.name.Contains("Zombie")){
+                    SoundManagerScript.PlaySound("zombieattack");
+                }
                 // sets attackCounter to 1 so we do not attack again and play the animation twice.
                 attackCounter = 1;
                 // damage gets dealt when we turn off the animation. 
                 isEnemyTurn = false;
             }
-            else if((gameObject.name.Contains("Warrior") || gameObject.name.Contains("Zombie")) && distanceBetweenPlayerAndEnemy <= 1.42 && attackCounter == 0){
+            else if(gameObject.name.Contains("Warrior")  && distanceBetweenPlayerAndEnemy <= 1.42 && attackCounter == 0){
                 // play animation.
                 animator.SetBool("isAttacking", true);
                 // play sound clip
                 if(gameObject.name.Contains("Warrior")){
                     SoundManagerScript.PlaySound("sword");
-                }
-                if(gameObject.name.Contains("Zombie")){
-                    SoundManagerScript.PlaySound("zombieattack");
                 }
                 // sets attackCounter to 1 so we do not attack again and play the animation twice.
                 attackCounter = 1;
@@ -312,9 +316,25 @@ public class EnemyStateManager : MonoBehaviour
     IEnumerator DamageDelay(GameObject player) 
     {
         if(animator.GetBool("isAttacking") == true){
-            Debug.Log("TIME: " + attackClipLength);
             yield return new WaitForSeconds(attackClipLength);
-            player.GetComponent<PlayerStats>().DealDamage(20);
+            int damageToDeal = 0;
+
+            switch(gameObject.name){
+            case "SkeletonArcher":
+                damageToDeal = archerDamage;
+                break;
+            case "SkeletonWizard":
+                damageToDeal = mageDamage;
+                break;
+            case "SkeletonWarrior":
+                damageToDeal = swordDamage;
+                break;
+            case "Fantasy Zombie":
+                damageToDeal = bossDamage;
+                break;
+            }
+
+            player.GetComponent<PlayerStats>().DealDamage(damageToDeal);
         }
     }
 
@@ -324,7 +344,7 @@ public class EnemyStateManager : MonoBehaviour
     }
 
     public void DealDamage(int damage){
-        if(animator.GetBool("isBlocking") == true && gameObject.name.Contains("Zombie")){
+        if(gameObject.name.Contains("Zombie") && animator.GetBool("isBlocking") == true){
             return;
         }
         // deals damage via the health system. 
