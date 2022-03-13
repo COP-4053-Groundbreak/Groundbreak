@@ -16,5 +16,4 @@ public class InitiativeText : MonoBehaviour
             GetComponent<TextMeshProUGUI>().fontStyle = FontStyles.Strikethrough;
         }
     }
-
 }
