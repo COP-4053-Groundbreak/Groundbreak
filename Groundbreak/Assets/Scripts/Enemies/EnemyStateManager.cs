@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EnemyStateManager : MonoBehaviour
 {
@@ -162,6 +163,8 @@ public class EnemyStateManager : MonoBehaviour
             currentState.UpdateState(this);
         }
         if(healthSystem != null && healthSystem.GetHealth() <= 0 && alive == true){
+            if (this.gameObject.name.Contains("Zombie"))
+                SceneManager.LoadSceneAsync("EndScene");
             Destroy(gameObject, (float)3);
             SwitchState(DeathState);
             turnLogic.listOfInitative.Remove(this.initiative);
