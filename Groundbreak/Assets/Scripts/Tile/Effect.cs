@@ -108,7 +108,7 @@ public class Effect : MonoBehaviour {
         ReactionManager.reduceDuration(this);
     }
     private void OnTriggerEnter2D(Collider2D other) {
-        Debug.Log("Entered effect collider!");
+        Debug.Log(other.name + "Entered effect collider!");
         if (other == null || other.gameObject == null)
             return;
         if (other.gameObject.tag == "Player" || other.gameObject.tag == "Enemy"){
