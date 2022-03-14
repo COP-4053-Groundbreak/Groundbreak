@@ -54,6 +54,7 @@ public class PlayerStats : MonoBehaviour
 
         PlayerHealthBar healthBar = healthBarTransform.GetComponent<PlayerHealthBar>();
         healthBar.Setup(this);
+        
     }
 
     public void DealDamage(int damage) 
