@@ -11,11 +11,10 @@ public class DisplayInitiative : MonoBehaviour
     int numRepeated = 0;
     List<GameObject> list;
 
-    private void Start()
+    private void FixedUpdate()
     {
         FindObjectOfType<FindNewGridManager>().OnGridChanged += GridChanged;
     }
-
     public void SetList(List<GameObject> actorList)
     {
 
@@ -119,6 +118,7 @@ public class DisplayInitiative : MonoBehaviour
 
         while (!transform.GetChild(numRepeated).GetComponent<InitiativeText>().isAlive) 
         {
+            
             numRepeated++;
             if (numRepeated >= transform.childCount)
             {
@@ -162,16 +162,10 @@ public class DisplayInitiative : MonoBehaviour
         }
     }
 
-    private void Update()
+
+    public void ResetRepeat() 
     {
-       
-        if (numRepeated == 1) 
-        {
-            if (transform.GetChild(0))
-            {
-                transform.GetChild(0).GetComponent<TextMeshProUGUI>().color = Color.red;
-            }
-        }
+        numRepeated = 1;
     }
 
 }
