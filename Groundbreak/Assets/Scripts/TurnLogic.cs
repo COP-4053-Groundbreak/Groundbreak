@@ -240,7 +240,6 @@ public class TurnLogic : MonoBehaviour
                         {
                             
                             listOfInitative.Remove(listOfInitative.Max());
-                            Debug.LogWarning(listOfInitative.Count);
                         }
                     }
                 }

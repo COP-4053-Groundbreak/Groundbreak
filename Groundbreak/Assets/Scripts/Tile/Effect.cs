@@ -114,16 +114,6 @@ public class Effect : MonoBehaviour {
         if (other.gameObject.tag == "Player" || other.gameObject.tag == "Enemy"){
             switch(id){
                 case ((int)Element.Air + (int)Element.Earth): // Sandstorm
-                    Debug.Log("Entered sandstorm!");
-                    // Move GO back to random position of neighbors
-                    int[] arr = {-1,0,1};
-                    int[] rand = {arr[Random.Range(0,3)], arr[Random.Range(0,3)]};
-                    
-                    // To make sure they go in SOME direction, though increases odds for one direction
-                    if (rand[0] == 0 && rand[1] == 0){
-                        rand[0]++;
-                    }
-
                     dealDamageToChar(other.gameObject, ReactionManager.SANDSTORM_DMG);
                     goToOpposite(this.gameObject, other.gameObject);
                     // pushGO(this.gameObject, new Vector2(rand[0], rand[1]), 1, other.gameObject);
@@ -198,9 +188,9 @@ public class Effect : MonoBehaviour {
         int tempY = (int)tpOrigin.GetComponent<Effect>().myPos.y;
         Debug.Log(tempX + "qwer,qwer" + tempY);
 
-        if (tpOrigin.transform.position.y > character.transform.position.x){
+        if (tpOrigin.transform.position.y > character.transform.position.y){
             Debug.Log("Character came from under!");
-            if (tempY + 1 > gridManager.getHeight()){
+            if (tempY + 1 >= gridManager.getHeight()){
                 newY = tempY - 1;
             } else {
                 newY = tempY + 1;
@@ -219,22 +209,24 @@ public class Effect : MonoBehaviour {
         }
         if (tpOrigin.transform.position.x < character.transform.position.x){
             Debug.Log("Character came from right!");
-            if (tempX + 1 > gridManager.getWidth()){
-                newX = tempX - 1;
-            } else {
-                newX = tempX + 1;
-            }  
-        } else if (tpOrigin.transform.position.x > character.transform.position.x){
-            Debug.Log("Character came from left!");
             if (tempX - 1 < 0){
                 newX = tempX + 1;
             } else {
                 newX = tempX - 1;
             }  
+        } else if (tpOrigin.transform.position.x > character.transform.position.x){
+            Debug.Log("Character came from left!");
+            if (tempX + 1 >= gridManager.getWidth()){
+                newX = tempX - 1;
+            } else {
+                newX = tempX + 1;
+            }  
         } else {
             newX = tempX;
         }
+        Debug.Log($"Before check destination is {newX}, {newY}");
         if (gridManager.getTile(newX, newY).gameObjectAbove != null){
+            Debug.Log($"{gridManager.getTile(newX, newY).gameObjectAbove.name} at destination!");
             newX = charX;
             newY = charY;
             dealCrashDamage(character, null);
