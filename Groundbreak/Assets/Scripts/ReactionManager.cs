@@ -20,13 +20,13 @@ public class ReactionManager : MonoBehaviour
 
     // SANDSTORM VARIABLES:
     [SerializeField] public static int SANDSTORM_DMG = 5;
-    [SerializeField] public static int SANDSTORM_DUR = 8;
+    [SerializeField] public static int SANDSTORM_DUR = 2;
     [SerializeField] public static int SANDSTORM_RANGE = 2;
     
     // STORM VARIABLES:
     [SerializeField] public static int STORM_RANGE = 2;
     [SerializeField] public static int STORM_DMG = 5;
-    [SerializeField] public static int STORM_DUR = 8;
+    [SerializeField] public static int STORM_DUR = 2;
     
     // FIREBALL VARIABLES:
     [SerializeField] public static int FIREBALL_DMG = 30;

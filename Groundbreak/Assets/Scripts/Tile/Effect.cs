@@ -67,6 +67,7 @@ public class Effect : MonoBehaviour {
                 myDuration = ReactionManager.MUD_DUR;
                 this.transform.localScale = new Vector2(2,3);
                 this.GetComponent<BoxCollider2D>().size = new Vector2(0.1f,0.1f);
+                this.GetComponent<BoxCollider2D>().offset = new Vector2(0.0f, -0.2f);
                 this.transform.position = this.transform.position - new Vector3(0.1f, -0.6f);
                 break;
             case ((int)Element.Water + (int)Element.Fire): // Smoke 
@@ -133,7 +134,7 @@ public class Effect : MonoBehaviour {
                     } else if (other.gameObject.tag == "Enemy"){
                         EnemyStateManager enemyState = other.gameObject.GetComponent<EnemyStateManager>();
                         if (enemyState.enemyMovementRemaining > 0){
-                            other.gameObject.transform.position = this.transform.position;
+                            other.gameObject.transform.position = tileUnderEffect.transform.position;
                             enemyState.stopEnemyMovement();
                             enemyState.enemyMovementRemaining = 2;
                             enemyState.isEnemyTurn = false;
