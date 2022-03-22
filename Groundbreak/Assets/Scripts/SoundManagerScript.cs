@@ -73,6 +73,11 @@ public class SoundManagerScript : MonoBehaviour
 
     public static void PlaySound (string clip){
         // switch statment to see which clip to play.
+        if (audioSrc == null) 
+        {
+            audioSrc = FindObjectOfType<SoundManagerScript>().gameObject.GetComponent<AudioSource>();
+        }
+
         switch(clip){
             case "sword":
                 audioSrc.PlayOneShot (swordSound);

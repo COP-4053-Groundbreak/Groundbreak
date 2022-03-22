@@ -115,7 +115,11 @@ public class PlayerMovement : MonoBehaviour
             UpdateTilesAfterMove();
             startFlag = true;
         }
-        displayMovement.DisplayMovementText(currentMovementRemaining / 10);
+        displayMovement = FindObjectOfType<DisplayMovement>();
+        if (displayMovement) 
+        {
+            displayMovement.DisplayMovementText(currentMovementRemaining / 10);
+        }
         if (!turnLogic.isCombatPhase) 
         {
             // Get movement input and check if its 0

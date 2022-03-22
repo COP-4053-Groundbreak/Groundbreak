@@ -145,6 +145,13 @@ public class EnemyStateManager : MonoBehaviour
         currentState.EnterState(this);
     }
 
+    IEnumerator WaitAndWin() 
+    {
+        
+        yield return new WaitForSeconds(2.95f);
+        SceneManager.LoadSceneAsync("EndScene");
+    }
+
     GameObject currRoom;
     Vector2 localPos;
     // Update is called once per frame
@@ -164,7 +171,7 @@ public class EnemyStateManager : MonoBehaviour
         }
         if(healthSystem != null && healthSystem.GetHealth() <= 0 && alive == true){
             if (this.gameObject.name.Contains("Zombie"))
-                SceneManager.LoadSceneAsync("EndScene");
+                StartCoroutine(WaitAndWin());
             Destroy(gameObject, (float)3);
             SwitchState(DeathState);
             turnLogic.listOfInitative.Remove(this.initiative);
@@ -356,7 +363,20 @@ public class EnemyStateManager : MonoBehaviour
             yield return new WaitForSeconds(attackClipLength);
             int damageToDeal = 0;
 
-            switch(gameObject.name){
+            string temp;
+            // remove clone tag on name
+            if (gameObject.name.Contains("Clone"))
+            {
+                temp = gameObject.name.Substring(0, gameObject.name.Length - 7);
+            }
+            else
+            {
+                temp = gameObject.name;
+            }
+
+
+            switch (temp)
+            {
             case "SkeletonArcher":
                 damageToDeal = archerDamage;
                 break;
