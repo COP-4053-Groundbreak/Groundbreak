@@ -83,6 +83,7 @@ public class DisplayInitiative : MonoBehaviour
             GameObject text = Instantiate(template);
             text.transform.SetParent(transform);
             text.transform.position = new Vector3(transform.position.x, transform.position.y - 40 * i);
+            text.transform.localScale = new Vector3(1, 1, 1);
             text.name = subObject.name;
             string temp;
             // remove clone tag on name
