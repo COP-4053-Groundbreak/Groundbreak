@@ -168,7 +168,8 @@ public class TurnLogic : MonoBehaviour
 
                 // Upon a new turn starting, reduce the duration of existing effects
                 // Debug.Log("how many effects? " + ReactionManager.existingEffects.Count);
-                if (ReactionManager.existingEffects.Count > 0)
+
+                if (ReactionManager.existingEffects != null && ReactionManager.existingEffects.Count > 0)
                     for (int i = 0; i < ReactionManager.existingEffects.Count; i++){
                         i = (i < 0)? 0 : i;
                         if (ReactionManager.existingEffects[i] == null)

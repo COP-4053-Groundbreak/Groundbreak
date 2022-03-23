@@ -242,8 +242,12 @@ public class ReactionManager : MonoBehaviour
         }
     }
     public static void destroyAllEffects(){
+        if (existingEffects == null)
+            return;
         foreach (Effect eff in existingEffects){
-            Destroy(eff.gameObject);
+            if (eff != null){
+                Destroy(eff.gameObject);
+            }
         }
         existingEffects = new List<Effect>();
     }
