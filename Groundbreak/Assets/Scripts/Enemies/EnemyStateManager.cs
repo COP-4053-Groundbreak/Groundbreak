@@ -233,7 +233,7 @@ public class EnemyStateManager : MonoBehaviour
             Vector2 enemyPos = new Vector2(enemyX, enemyY);
             // Debug.Log("Eenemy pos " + enemyPos);
             //get player pos
-            GameObject player = GameObject.FindGameObjectWithTag("Player"); // .transform.position; //gameObject.GetComponent<Player>().transform.position;
+            GameObject player = FindObjectOfType<PlayerMovement>().gameObject; // .transform.position; //gameObject.GetComponent<Player>().transform.position;
             // Position is now relitive -N
             Vector2 playerPos = new Vector2(player.GetComponent<PlayerMovement>().playerX, player.GetComponent<PlayerMovement>().playerY);
             // Debug.Log("Player position: " + playerPos);
