@@ -7,6 +7,13 @@ public class DisplayMovement : MonoBehaviour
 {
     public void DisplayMovementText(int movement)
     {
-        this.GetComponent<TextMeshProUGUI>().text = movement.ToString();
+        if (FindObjectOfType<TurnLogic>().isCombatPhase == false)
+        {
+            this.GetComponent<TextMeshProUGUI>().text = "N / A";
+        }
+        else
+        {
+            this.GetComponent<TextMeshProUGUI>().text = movement.ToString();
+        }
     }
 }

@@ -25,6 +25,7 @@ public class PlayerActions : MonoBehaviour
     // Picks up a tile and stores what element it is
     public void PickUpTile(Tile tile) 
     {
+        tile.gameObject.GetComponent<TileClickable>().updateDistanceToPlayer();
         // Checks its your turn, you have an action to pick up tile, the tile's element is void, and that its within range
         if (turnLogic.GetIsPlayerTurn() && canPickUpTile && tile.getElement() != Element.Void && tile.gameObject.GetComponent<TileClickable>().GetDistance() <= pickupRange) 
         {

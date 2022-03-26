@@ -309,6 +309,8 @@ public class TurnLogic : MonoBehaviour
 
         // Destroy all effects
         ReactionManager.destroyAllEffects();
+
+        FindObjectOfType<PlayerActions>().canPickUpTile = true;
     }
 
     // Destroys all children of void tiles
