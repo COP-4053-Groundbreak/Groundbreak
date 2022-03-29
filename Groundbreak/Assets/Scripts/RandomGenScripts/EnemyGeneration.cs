@@ -39,8 +39,8 @@ public class EnemyGeneration : MonoBehaviour
                 rand = Random.Range(0, templates.enemiesFloorOne.Length);
                 posRand = Random.Range(0, spawnPointHolder.transform.childCount-1);
 
-                Debug.Log("posRand = " + posRand);
-                Debug.Log("spawnPointHolder.transform.childCount-1 = " + (spawnPointHolder.transform.childCount - 1));
+                //Debug.Log("posRand = " + posRand);
+                //Debug.Log("spawnPointHolder.transform.childCount-1 = " + (spawnPointHolder.transform.childCount - 1));
 
                 //Check if we used this position already
                 for (int j = 0; j < counter; j++)

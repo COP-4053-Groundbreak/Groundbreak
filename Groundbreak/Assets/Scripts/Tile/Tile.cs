@@ -116,7 +116,7 @@ public class Tile : MonoBehaviour {
         this.GetComponent<Renderer>().material.SetColor("_Color", newColor);
         // Set Tile Element symbol to new element
         if (transform.childCount > 0){
-            Debug.Log("I am with child");
+            //Debug.Log("I am with child");
             transform.GetChild(0).GetComponent<elemVisual>().setSymbol();
         }
     }
