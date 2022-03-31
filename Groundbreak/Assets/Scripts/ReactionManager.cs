@@ -214,7 +214,7 @@ public class ReactionManager : MonoBehaviour
             return null;
         } 
         
-        Debug.Log("Effect will happen!");
+        //Debug.Log("Effect will happen!");
         // Two elements are interacting, create an effect!
         return createEffect(thrownElem, enemyElem, enemy.transform.position);
     }
@@ -227,7 +227,7 @@ public class ReactionManager : MonoBehaviour
     public static int elementToIdx(Element a){
         switch(a) {
             case Element.Air:
-                Debug.Log("Air index");
+                //Debug.Log("Air index");
                 return 0;
             case Element.Earth:
                 return 1;
@@ -255,7 +255,7 @@ public class ReactionManager : MonoBehaviour
         eff.myDuration--;
         // Debug.Log("Reducing duration to " + eff.myDuration);
         if (eff.myDuration <= 0){
-            Debug.Log("DEEEESTRUCTIOOOOOON");
+            //Debug.Log("DEEEESTRUCTIOOOOOON");
             existingEffects.Remove(eff);
             Destroy(eff.gameObject);
         }

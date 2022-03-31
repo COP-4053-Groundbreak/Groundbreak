@@ -17,8 +17,15 @@ public class RoomTemplates : MonoBehaviour
     public GameObject TR;
     public GameObject RL;
 
+    //Rooms to close off when we hit the max
+    public GameObject R;
+    public GameObject L;
+    public GameObject T;
+    public GameObject B;
+
     public List<GameObject> rooms;
 
+    public int roomLimit;
     public float waitTime;
     private bool spawnedBoss;
     [SerializeField] GameObject boss;

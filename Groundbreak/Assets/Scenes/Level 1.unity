@@ -1119,6 +1119,22 @@ PrefabInstance:
       value: Room Templates
       objectReference: {fileID: 0}
     - target: {fileID: 8015807224521309527, guid: 2e2ce0d219d012d44b4c92779a897337, type: 3}
+      propertyPath: B
+      value: 
+      objectReference: {fileID: 375733109297776786, guid: 123a07f452a08b444a18c9f794ed0e5c, type: 3}
+    - target: {fileID: 8015807224521309527, guid: 2e2ce0d219d012d44b4c92779a897337, type: 3}
+      propertyPath: L
+      value: 
+      objectReference: {fileID: 8066755191202818241, guid: 6112b55341ac80746836a48c834a7897, type: 3}
+    - target: {fileID: 8015807224521309527, guid: 2e2ce0d219d012d44b4c92779a897337, type: 3}
+      propertyPath: R
+      value: 
+      objectReference: {fileID: 5217924195635808222, guid: 22e5b14ec8d7f7b4f9a19180d0d3601d, type: 3}
+    - target: {fileID: 8015807224521309527, guid: 2e2ce0d219d012d44b4c92779a897337, type: 3}
+      propertyPath: T
+      value: 
+      objectReference: {fileID: 8309668280894911856, guid: 5cdd5cc32a5691e4da07edecaca91fbe, type: 3}
+    - target: {fileID: 8015807224521309527, guid: 2e2ce0d219d012d44b4c92779a897337, type: 3}
       propertyPath: BL
       value: 
       objectReference: {fileID: 4435577604679024377, guid: 03755a4e11e2f124db20f33250683f43, type: 3}
@@ -1146,6 +1162,10 @@ PrefabInstance:
       propertyPath: boss
       value: 
       objectReference: {fileID: 7027631797718925021, guid: ff2d04568e1b3d04fbd5789b48fecc40, type: 3}
+    - target: {fileID: 8015807224521309527, guid: 2e2ce0d219d012d44b4c92779a897337, type: 3}
+      propertyPath: roomLimit
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 8015807224521309527, guid: 2e2ce0d219d012d44b4c92779a897337, type: 3}
       propertyPath: topRooms.Array.data[0]
       value: 
