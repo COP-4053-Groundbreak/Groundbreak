@@ -146,6 +146,7 @@ public class Effect : MonoBehaviour {
                         other.gameObject.GetComponent<PlayerActions>().throwRange -= ReactionManager.SMOKE_RANGE_PLAYER_MOD;
                     } else if (other.gameObject.tag == "Enemy"){
                         other.gameObject.GetComponent<EnemyStateManager>().visibilityRange -= ReactionManager.SMOKE_RANGE_ENEMY_MOD;
+                        if (other.gameObject.GetComponent<EnemyStateManager>().visibilityRange <= 1) { other.gameObject.GetComponent<EnemyStateManager>().visibilityRange = 1;}
                     }
                     break;
                 case ((int)Element.Air + (int)Element.Fire): // Fireball

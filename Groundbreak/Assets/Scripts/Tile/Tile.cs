@@ -8,7 +8,7 @@ public class Tile : MonoBehaviour {
     public Element myElement = Element.Base;
     // All tiles start out with a blank land feature
     LandFeature myLandFeature = LandFeature.None;
-    public GameObject chestAbove = null;
+    public GameObject staticObjAbove = null;
     public GameObject gameObjectAbove;
     public Effect myEffect = null;
     int movementModifier = 0;
@@ -128,7 +128,7 @@ public class Tile : MonoBehaviour {
     }
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.gameObject.tag == "Chest")
-            chestAbove = other.gameObject;
+            staticObjAbove = other.gameObject;
         if (other.gameObject.tag == "Enemy" || other.gameObject.tag == "Player" || other.gameObject.tag == "Chest"){
             //if (other.gameObject.tag == "Player") Debug.LogWarning("Player entered a tile!");
             gameObjectAbove = other.gameObject;
@@ -145,7 +145,7 @@ public class Tile : MonoBehaviour {
         //Debug.Log($"Exited {name}");
         // if (other.gameObject.tag == "Player") Debug.LogWarning("PlayerLeft!");
         if (other.gameObject.tag != "Effect"){
-            gameObjectAbove = (chestAbove == null) ? null : chestAbove;
+            gameObjectAbove = (staticObjAbove == null) ? null : staticObjAbove;
         }
 
     }
