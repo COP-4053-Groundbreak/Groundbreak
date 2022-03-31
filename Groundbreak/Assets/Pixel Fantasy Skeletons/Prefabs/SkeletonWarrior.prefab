@@ -141,6 +141,7 @@ MonoBehaviour:
   isEnemyTurn: 0
   mySpriteRenderer: {fileID: 7104348348714108643}
   animator: {fileID: 2275167269694572739}
+  elementOnEnemy: 0
   slideSpeed: 1
   slidingPath: []
   isSliding: 0
@@ -156,7 +157,7 @@ MonoBehaviour:
   alive: 1
   enemyMovementRemaining: 0
   initiative: 2
-  visibilityRange: 7
+  visibilityRange: 1
   myElement: 8
   width: 0
   height: 0

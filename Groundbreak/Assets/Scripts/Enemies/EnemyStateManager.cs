@@ -57,7 +57,7 @@ public class EnemyStateManager : MonoBehaviour
     public int enemyMovementRemaining;
     public int initiative = 0;
     // integer, each block will be 1 unit or however we coded it. 
-    public int visibilityRange = 7;
+    public int visibilityRange = 2;
     // attack stats:
     // posible for enemy to miss, 0 miss, 1 attack. rename this to attackChance or something. 
     // public bool canAttack;
@@ -268,7 +268,7 @@ public class EnemyStateManager : MonoBehaviour
     
             //do attack or move.
             // check if melee enemy is within a 1 block radius of player. && will have to check which state we are in and if its enemy turn (not implemented yet)
-            if((gameObject.name.Contains("Archer") || gameObject.name.Contains("Wizard") || gameObject.name.Contains("Zombie"))  && distanceBetweenPlayerAndEnemy <= 2 && attackCounter == 0){
+            if((gameObject.name.Contains("Archer") || gameObject.name.Contains("Wizard") || gameObject.name.Contains("Zombie"))  && distanceBetweenPlayerAndEnemy <= visibilityRange && attackCounter == 0){
                 // play animation.
                 animator.SetBool("isAttacking", true);
                 // play archer sound
