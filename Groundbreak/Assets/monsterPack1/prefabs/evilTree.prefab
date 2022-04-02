@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 95997926456556550}
   - component: {fileID: 114243328845650074}
   - component: {fileID: 82916198638166442}
+  - component: {fileID: 965432158210743106}
   m_Layer: 0
   m_Name: evilTree
   m_TagString: Untagged
@@ -28,8 +29,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1188038229463054}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2, y: 0.21, z: 0}
-  m_LocalScale: {x: 9, y: 9, z: 1}
+  m_LocalPosition: {x: 2, y: 0, z: 0}
+  m_LocalScale: {x: 4, y: 4, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -73,7 +74,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: 8c10d9b04f99e4c03bd8f27325d8e2dd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -111,7 +112,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1188038229463054}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2d74d392de25d45be85f88a3e671dd6c, type: 3}
   m_Name: 
@@ -125,7 +126,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1188038229463054}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: c1beb4f1286fe443389c8b0dfae54f8e, type: 3}
@@ -214,3 +215,41 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!114 &965432158210743106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1188038229463054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6851208af1d66414eb0ccdd049b4a471, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isEnemyTurn: 0
+  mySpriteRenderer: {fileID: 212762594611841668}
+  animator: {fileID: 95997926456556550}
+  elementOnEnemy: 0
+  slideSpeed: 1
+  slidingPath: []
+  isSliding: 0
+  attackCounter: 0
+  archerDamage: 5
+  swordDamage: 10
+  mageDamage: 15
+  bossDamage: 20
+  listOfTiles: []
+  startHealth: 50
+  pfHealthBar: {fileID: 8601539936103537149, guid: 9c241cd300c70dd42bfc6fd13cca7c4b, type: 3}
+  elementSymbol: {fileID: 6629443390726111209, guid: 5492896dfbf68a242856e3ac0a9fc3ff, type: 3}
+  alive: 1
+  enemyMovementRemaining: 0
+  initiative: 0
+  visibilityRange: 2
+  myElement: 2
+  width: 0
+  height: 0
+  period: 0
+  enemyX: 0
+  enemyY: 0

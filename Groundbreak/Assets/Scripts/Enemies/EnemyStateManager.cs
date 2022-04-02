@@ -129,6 +129,26 @@ public class EnemyStateManager : MonoBehaviour
             HealthBar healthBar = healthBarTransform.GetComponent<HealthBar>();
             healthBar.Setup(healthSystem);
         }
+        else if(gameObject.name.Contains("evil")){
+            // scale down element symbol. 
+            Vector3 newScale = elementSymbolTransform.localScale;
+            newScale *= 0.5f;
+            elementSymbolTransform.localScale = newScale;
+            // move element symbol
+            Vector3 elementSymbolLocalPosition = new Vector3((float)-0.37, (float)0.32);
+            elementSymbolTransform.localPosition = elementSymbolLocalPosition;
+
+            // health bar position. 
+            Vector3 healthBarLocalPosition = new Vector3((float)-0.05, (float)0.75);
+            healthBarTransform.localPosition = healthBarLocalPosition;
+            HealthBar healthBar = healthBarTransform.GetComponent<HealthBar>();
+            // scale down health bar 
+            Vector3 newScaleHealth = healthBarTransform.localScale;
+            newScaleHealth *= 0.5f;
+            healthBarTransform.localScale = newScaleHealth;
+            // initiate health bar. 
+            healthBar.Setup(healthSystem);
+        }
         else if(gameObject.name.Contains("Skeleton")){
             Vector3 healthBarLocalPosition = new Vector3(0, (float)1.60);
             healthBarTransform.localPosition = healthBarLocalPosition;
@@ -248,7 +268,7 @@ public class EnemyStateManager : MonoBehaviour
             if(enemyX < playerPos.x && mySpriteRenderer != null) // && enemy.mySpriteRenderer.transform.localScale.x < 0 // x_random + x_value > 0
             {
                     // flip the sprite
-                    if(gameObject.name.Contains("Zombie")){
+                    if(gameObject.name.Contains("Zombie") || gameObject.name.Contains("Tree") ){
                         mySpriteRenderer.flipX = false;
                     }else{
                         mySpriteRenderer.flipX = true;
@@ -257,7 +277,7 @@ public class EnemyStateManager : MonoBehaviour
             if(enemyX > playerPos.x && mySpriteRenderer != null) //  && enemy.mySpriteRenderer.transform.localScale.x > 0
             {
                     // flip the sprite
-                    if(gameObject.name.Contains("Zombie")){
+                    if(gameObject.name.Contains("Zombie") || gameObject.name.Contains("Tree")){
                         mySpriteRenderer.flipX = true;
                     }else{
                         mySpriteRenderer.flipX = false;
@@ -287,7 +307,7 @@ public class EnemyStateManager : MonoBehaviour
                 // damage gets dealt when we turn off the animation. 
                 isEnemyTurn = false;
             }
-            else if(gameObject.name.Contains("Warrior")  && distanceBetweenPlayerAndEnemy <= 1.42 && attackCounter == 0){
+            else if((gameObject.name.Contains("Warrior") || gameObject.name.Contains("Tree") )  && distanceBetweenPlayerAndEnemy <= 1.42 && attackCounter == 0){
                 // play animation.
                 animator.SetBool("isAttacking", true);
                 // play sound clip
