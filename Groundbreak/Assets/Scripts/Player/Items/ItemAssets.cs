@@ -12,7 +12,7 @@ public class ItemAssets : MonoBehaviour
     {
         Instance = this;
     }
-
+    // Passive items
     public Sprite healthRingSprite;
     public Sprite speedBootsSprite;
     public Sprite lightShieldSprite;
@@ -21,5 +21,10 @@ public class ItemAssets : MonoBehaviour
     public Sprite earthPendantSprite;
     public Sprite airPendantSprite;
     public Sprite initiativeWandSprite;
+
+    // Consumable Items
+    public Sprite smallHealthPotion;
+    public Sprite largeHealthPotion;
+
 
 }

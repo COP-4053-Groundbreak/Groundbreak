@@ -170,4 +170,9 @@ public class PlayerStats : MonoBehaviour
         return (float)currentHealth / maxHealth;
     }
 
+    public void MaxOutHealth() 
+    {
+        currentHealth = maxHealth;
+    }
+
 }

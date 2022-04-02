@@ -54,7 +54,7 @@ public class PlayerConsumableInventory
 
         // Update list using unity event manager
         UpdateItemList?.Invoke(this, EventArgs.Empty);
-
+        
     }
 
     public List<ConsumableItem> GetItemList()

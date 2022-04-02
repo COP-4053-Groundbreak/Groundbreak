@@ -30,8 +30,8 @@ public class UIConsumableInventory : MonoBehaviour
     {
         this.consumableInventory = comsumableInventory;
         comsumableInventory.UpdateItemList += Inventory_UpdateItemList;
-        comsumableInventory.AddItem(new ConsumableItem { itemName = ConsumableItem.ItemName.test, amount = 3 });
-        comsumableInventory.AddItem(new ConsumableItem { itemName = ConsumableItem.ItemName.test2, amount = 2 });
+        comsumableInventory.AddItem(new ConsumableItem { itemName = ConsumableItem.ItemName.smallHealthPotion, amount = 3 });
+        comsumableInventory.AddItem(new ConsumableItem { itemName = ConsumableItem.ItemName.largeHealthPotion, amount = 2 });
         RefreshInventory();
     }
     // On the event, refresh the inventory visuals
@@ -82,6 +82,7 @@ public class UIConsumableInventory : MonoBehaviour
             // On left click
             itemSlotRectTransform.GetComponent<ConsumableItemClickable>().onLeftClick = () =>
             {
+                item.ConsumeItem(FindObjectOfType<PlayerStats>());
                 consumableInventory.RemoveItem(item);
             };
 

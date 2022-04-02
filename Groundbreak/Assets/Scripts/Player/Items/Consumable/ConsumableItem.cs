@@ -6,8 +6,8 @@ public class ConsumableItem
 {
     public enum ItemName
     {
-        test,
-        test2
+        smallHealthPotion,
+        largeHealthPotion
     }
 
     public ItemName itemName;
@@ -17,13 +17,31 @@ public class ConsumableItem
     {
         switch (itemName) 
         {
-            case ItemName.test:
-                return ItemAssets.Instance.lightShieldSprite;
-            case ItemName.test2:
-                return ItemAssets.Instance.airPendantSprite;
+            case ItemName.smallHealthPotion:
+                return ItemAssets.Instance.smallHealthPotion;
+            case ItemName.largeHealthPotion:
+                return ItemAssets.Instance.largeHealthPotion;
         }
 
         return null;
+    }
+
+    public void ConsumeItem(PlayerStats playerStats) 
+    {
+        switch (itemName)
+        {
+
+            case ItemName.smallHealthPotion:
+                playerStats.ModifyHealth(playerStats.GetHealth() + 30);
+                break;
+            case ItemName.largeHealthPotion:
+                playerStats.ModifyHealth(playerStats.GetHealth() + 60);
+                break;
+        }
+        if (playerStats.GetHealth() > playerStats.GetMaxHealth()) 
+        {
+            playerStats.MaxOutHealth();
+        }
     }
 
 }
