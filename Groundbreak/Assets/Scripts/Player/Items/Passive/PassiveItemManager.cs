@@ -21,6 +21,14 @@ public class PassiveItemManager : MonoBehaviour
 
     }
 
+    public void AddRandomConsumableItem(GameObject chest) 
+    {
+        ConsumableItem item = ConsumableItem.GetRandomConsumableItem();
+        chest.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = item.GetSprite();
+        chest.transform.GetChild(1).GetComponent<TextMeshPro>().text = item.GetDescription();
+        chest.transform.GetChild(2).gameObject.SetActive(true);
+        StartCoroutine(WaitAndAddConsumableItem(chest, item));
+    }
 
 
     // Adding items
@@ -94,6 +102,15 @@ public class PassiveItemManager : MonoBehaviour
     {
         yield return new WaitForSeconds(pickUpTime);
         EquipPassiveItem(item);
+        chest.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = null;
+        chest.transform.GetChild(1).GetComponent<TextMeshPro>().text = "";
+        chest.transform.GetChild(2).gameObject.SetActive(false);
+    }
+
+    IEnumerator WaitAndAddConsumableItem(GameObject chest, ConsumableItem item)
+    {
+        yield return new WaitForSeconds(pickUpTime);
+        FindObjectOfType<UIConsumableInventoryController>().uIInventory.consumableInventory.AddItem(item);
         chest.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = null;
         chest.transform.GetChild(1).GetComponent<TextMeshPro>().text = "";
         chest.transform.GetChild(2).gameObject.SetActive(false);

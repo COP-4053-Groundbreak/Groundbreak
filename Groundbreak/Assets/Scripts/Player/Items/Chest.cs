@@ -7,6 +7,7 @@ public class Chest : MonoBehaviour
     [SerializeField] Sprite OpenSprite;
     PassiveItemManager passiveItemManager;
     bool full = true;
+    public int passiveConsumableActive = 1;
     private void Start()
     {
         passiveItemManager = FindObjectOfType<PassiveItemManager>();
@@ -32,6 +33,13 @@ public class Chest : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         GetComponent<SpriteRenderer>().sprite = OpenSprite;
-        passiveItemManager.AddRandomItem(this.gameObject);
+        if (passiveConsumableActive == 0)
+        {
+            passiveItemManager.AddRandomItem(this.gameObject);
+        }
+        else 
+        {
+            passiveItemManager.AddRandomConsumableItem(this.gameObject);
+        }
     }
 }
