@@ -75,6 +75,15 @@ public class Pathfinding: MonoBehaviour
                     continue;
                 }
 
+                if (neighborNode.gameObject.GetComponent<Tile>().gameObjectAbove != null) 
+                {
+                    if (!neighborNode.gameObject.GetComponent<Tile>().gameObjectAbove.CompareTag("Player")) 
+                    {
+                        closedList.Add(neighborNode);
+                        continue;
+                    }
+                }
+
                 // calculate the cost it would take to get to that neighbor node using this tile
                 // If its cheaper than its already existing cost, update it
                 int tempGCost = currentNode.gCost + CalculateDistance(currentNode, neighborNode);
