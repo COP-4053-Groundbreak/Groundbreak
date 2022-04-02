@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1482483640718570295}
   - component: {fileID: 1482483640718570280}
   - component: {fileID: 1482483640718570281}
+  - component: {fileID: 6098100243554920513}
   m_Layer: 0
   m_Name: Goblin
   m_TagString: Untagged
@@ -28,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1482483640718570282}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2, y: 0, z: -0.62614584}
+  m_LocalPosition: {x: 0, y: 0, z: -0.62614584}
   m_LocalScale: {x: 3.5, y: 3.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -151,3 +152,43 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &6098100243554920513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1482483640718570282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6851208af1d66414eb0ccdd049b4a471, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isEnemyTurn: 0
+  mySpriteRenderer: {fileID: 1482483640718570294}
+  animator: {fileID: 1482483640718570295}
+  elementOnEnemy: 0
+  slideSpeed: 1
+  slidingPath: []
+  isSliding: 0
+  attackCounter: 0
+  archerDamage: 5
+  swordDamage: 10
+  mageDamage: 15
+  bossDamage: 20
+  goblinDamage: 10
+  treeDamage: 10
+  listOfTiles: []
+  startHealth: 50
+  pfHealthBar: {fileID: 8601539936103537149, guid: 9c241cd300c70dd42bfc6fd13cca7c4b, type: 3}
+  elementSymbol: {fileID: 656180300502052948, guid: 631a5f24fa1041d4ea416e3a54a061d1, type: 3}
+  alive: 1
+  enemyMovementRemaining: 0
+  initiative: 0
+  visibilityRange: 2
+  myElement: 1
+  width: 0
+  height: 0
+  period: 0
+  enemyX: 0
+  enemyY: 0
