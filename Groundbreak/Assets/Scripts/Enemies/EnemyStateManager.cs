@@ -316,6 +316,12 @@ public class EnemyStateManager : MonoBehaviour
                 if(gameObject.name.Contains("Warrior")){
                     SoundManagerScript.PlaySound("sword");
                 }
+                if(gameObject.name.Contains("Tree")){
+                    SoundManagerScript.PlaySound("treeAttack");
+                }
+                if(gameObject.name.Contains("Goblin")){
+                    SoundManagerScript.PlaySound("goblinAttack");
+                }
                 // sets attackCounter to 1 so we do not attack again and play the animation twice.
                 attackCounter = 1;
                 isEnemyTurn = false;
@@ -382,6 +388,7 @@ public class EnemyStateManager : MonoBehaviour
     IEnumerator DamageDelay(GameObject player) 
     {
         if(animator.GetBool("isAttacking") == true){
+            Debug.Log(attackClipLength);
             yield return new WaitForSeconds(attackClipLength);
             int damageToDeal = 0;
 
@@ -443,6 +450,12 @@ public class EnemyStateManager : MonoBehaviour
         if(gameObject.name.Contains("Zombie")){
             SoundManagerScript.PlaySound("zombiehurt");
         }
+        if(gameObject.name.Contains("Tree")){
+            SoundManagerScript.PlaySound("treeHurt");
+        }
+        if(gameObject.name.Contains("Goblin")){
+            SoundManagerScript.PlaySound("goblinHurt");
+        }
         // animator.SetBool("TakeDamage", false);
     }
 
@@ -466,6 +479,16 @@ public class EnemyStateManager : MonoBehaviour
         if (!isPlayingFootstep && gameObject.name.Contains("Zombie")) 
         {
             SoundManagerScript.PlaySound("zombiefootstep");
+            isPlayingFootstep = true;
+        }
+        if (!isPlayingFootstep && gameObject.name.Contains("Tree")) 
+        {
+            SoundManagerScript.PlaySound("treeWalking");
+            isPlayingFootstep = true;
+        }
+        if (!isPlayingFootstep && gameObject.name.Contains("Goblin")) 
+        {
+            SoundManagerScript.PlaySound("goblinWalk");
             isPlayingFootstep = true;
         }
         animator.SetBool("isMoving", true);
@@ -502,6 +525,12 @@ public class EnemyStateManager : MonoBehaviour
         }
         if(gameObject.name.Contains("Zombie")){
             SoundManagerScript.EndSound("zombiefootstep");
+        }
+        if(gameObject.name.Contains("Tree")){
+            SoundManagerScript.EndSound("treeWalking");
+        }
+        if(gameObject.name.Contains("Goblin")){
+            SoundManagerScript.EndSound("goblinWalk");
         }
     }
 

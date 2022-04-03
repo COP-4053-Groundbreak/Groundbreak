@@ -33,27 +33,60 @@ public class SoundManagerScript : MonoBehaviour
     public static AudioClip stormSound; 
     public static AudioClip mudSound; 
 
+    // Tree sounds
+    public static AudioClip treeWalkSound;
+    public static AudioClip treeHurtSound;
+    public static AudioClip treeAttackSound;
+    public static AudioClip treeDeadSound;
+
+    // goblin 
+    public static AudioClip goblinWalkSound;
+    public static AudioClip goblinHurtSound;
+    public static AudioClip goblinDeadSound;
+    public static AudioClip goblinAttackSound;
+
+
     static AudioSource audioSrc;
 
     // Start is called before the first frame update
     void Start()
     {
         // loading sound from resources folder.
+        
+        // zombie boss sound
+        zombieHurtSound = Resources.Load<AudioClip> ("zombiehurt");
+        zombieDeathSound = Resources.Load<AudioClip> ("zombiedeath");
+        zombieAttackSound = Resources.Load<AudioClip> ("zombieattack");
+        zombieBlockSound = Resources.Load<AudioClip> ("zombieblock");
+        zombieFootstepSound = Resources.Load<AudioClip>("zombiefootstep");
+
+        // skeleton
+        skeletonFootstepSound = Resources.Load<AudioClip>("skeletonfootstep");
         swordSound = Resources.Load<AudioClip> ("sword");
         arrowShotSound = Resources.Load<AudioClip> ("arrowshot");
         spellCastSound = Resources.Load<AudioClip> ("spellcast");
         skeletonHurtSound = Resources.Load<AudioClip> ("skeletonhurt");
         skeletonDeathSound = Resources.Load<AudioClip> ("skeletondeath");
-        zombieHurtSound = Resources.Load<AudioClip> ("zombiehurt");
-        zombieDeathSound = Resources.Load<AudioClip> ("zombiedeath");
-        zombieAttackSound = Resources.Load<AudioClip> ("zombieattack");
-        zombieBlockSound = Resources.Load<AudioClip> ("zombieblock");
-        footstepSound = Resources.Load<AudioClip>("footstep");
-        skeletonFootstepSound = Resources.Load<AudioClip>("skeletonfootstep");
-        zombieFootstepSound = Resources.Load<AudioClip>("zombiefootstep");
+
+        // tree sounds
+        treeWalkSound = Resources.Load<AudioClip> ("treeWalking");
+        treeHurtSound = Resources.Load<AudioClip> ("treeHurt");
+        treeAttackSound = Resources.Load<AudioClip> ("treeAttack");
+        treeDeadSound = Resources.Load<AudioClip> ("treeDead");
+
+        // goblin
+        goblinWalkSound = Resources.Load<AudioClip> ("goblinWalk");
+        goblinHurtSound = Resources.Load<AudioClip> ("goblinHurt");
+        goblinDeadSound = Resources.Load<AudioClip> ("goblinDead");
+        goblinAttackSound = Resources.Load<AudioClip> ("goblinAttack");
+
+        // player
         pickupTileSound = Resources.Load<AudioClip>("pickuptile");
         throwTileSound = Resources.Load<AudioClip>("throwtile");
         playerTakeDamageSound = Resources.Load<AudioClip>("playerdamage");
+        footstepSound = Resources.Load<AudioClip>("footstep");
+
+        // effects
         magmaSound = Resources.Load<AudioClip>("magma");
         fireballSound = Resources.Load<AudioClip>("fireball");
         smokeSound = Resources.Load<AudioClip>("smoke");
@@ -120,6 +153,34 @@ public class SoundManagerScript : MonoBehaviour
                 audioSrc.clip = zombieFootstepSound;
                 audioSrc.loop = true;
                 audioSrc.Play();
+                break;
+            case "treeWalking":
+                audioSrc.clip = treeWalkSound;
+                audioSrc.loop = true;
+                audioSrc.Play();
+                break;
+            case "treeHurt":
+                audioSrc.PlayOneShot (treeHurtSound);
+                break;
+            case "treeAttack":
+                audioSrc.PlayOneShot (treeAttackSound);
+                break;
+            case "treeDead":
+                audioSrc.PlayOneShot (treeDeadSound);
+                break;
+            case "goblinWalk":
+                audioSrc.clip = goblinWalkSound;
+                audioSrc.loop = true;
+                audioSrc.Play();
+                break;
+            case "goblinHurt":
+                audioSrc.PlayOneShot (goblinHurtSound);
+                break;
+            case "goblinDead":
+                audioSrc.PlayOneShot (goblinDeadSound);
+                break;
+            case "goblinAttack":
+                audioSrc.PlayOneShot (goblinAttackSound);
                 break;
             case "pickuptile":
                 audioSrc.PlayOneShot(pickupTileSound);

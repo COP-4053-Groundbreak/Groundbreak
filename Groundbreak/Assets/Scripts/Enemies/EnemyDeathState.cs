@@ -16,6 +16,12 @@ public class EnemyDeathState : EnemyBaseState
         if(enemy.gameObject.name.Contains("Skeleton")){
             SoundManagerScript.PlaySound("skeletondeath");
         }
+        if(enemy.gameObject.name.Contains("Tree")){
+            SoundManagerScript.PlaySound("treeDead");
+        }
+        if(enemy.gameObject.name.Contains("Goblin")){
+            SoundManagerScript.PlaySound("goblinDead");
+        }
         // wait 1.8 seconds for animation to play TAKE LOOP OFF AND DESTROY LATER. 
     }
 
