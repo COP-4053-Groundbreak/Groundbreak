@@ -412,6 +412,9 @@ public class EnemyStateManager : MonoBehaviour
             case "SkeletonWizard":
                 damageToDeal = mageDamage;
                 break;
+            case "GreenSkeletonWizard":
+                damageToDeal = mageDamage;
+                break;
             case "SkeletonWarrior":
                 damageToDeal = swordDamage;
                 break;
