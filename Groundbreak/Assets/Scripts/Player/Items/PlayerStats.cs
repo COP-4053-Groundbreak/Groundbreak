@@ -175,4 +175,13 @@ public class PlayerStats : MonoBehaviour
         currentHealth = maxHealth;
     }
 
+    public void ModifyThrowRange(int value) 
+    {
+        FindObjectOfType<PlayerActions>().throwRange += value;
+        if (FindObjectOfType<PlayerActions>().throwRange < 0) 
+        {
+            FindObjectOfType<PlayerActions>().throwRange = 0;
+        }
+    }
+
 }

@@ -16,11 +16,12 @@ public class UIConsumableInventory : MonoBehaviour
     public HoldPlayerStats playerInformation;
     [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip[] sounds;
+    TurnLogic turnLogic;
 
     private void Awake()
     {
 
-
+        turnLogic = FindObjectOfType<TurnLogic>();
         itemContainer = transform.Find("itemContainer");
         itemTemplate = transform.Find("itemTemplate");
 
@@ -32,6 +33,12 @@ public class UIConsumableInventory : MonoBehaviour
         comsumableInventory.UpdateItemList += Inventory_UpdateItemList;
         comsumableInventory.AddItem(new ConsumableItem { itemName = ConsumableItem.ItemName.smallHealthPotion, amount = 3 });
         comsumableInventory.AddItem(new ConsumableItem { itemName = ConsumableItem.ItemName.largeHealthPotion, amount = 2 });
+        comsumableInventory.AddItem(new ConsumableItem { itemName = ConsumableItem.ItemName.smallSpeedPotion, amount = 3 });
+        comsumableInventory.AddItem(new ConsumableItem { itemName = ConsumableItem.ItemName.largeSpeedPotion, amount = 2 });
+        comsumableInventory.AddItem(new ConsumableItem { itemName = ConsumableItem.ItemName.smallStoneSkinPotion, amount = 3 });
+        comsumableInventory.AddItem(new ConsumableItem { itemName = ConsumableItem.ItemName.largeStoneSkinPotion, amount = 2 });
+        comsumableInventory.AddItem(new ConsumableItem { itemName = ConsumableItem.ItemName.smallStrengthPotion, amount = 3 });
+        comsumableInventory.AddItem(new ConsumableItem { itemName = ConsumableItem.ItemName.largeStrengthPotion, amount = 2 });
         RefreshInventory();
     }
     // On the event, refresh the inventory visuals
@@ -84,6 +91,20 @@ public class UIConsumableInventory : MonoBehaviour
             {
                 item.ConsumeItem(FindObjectOfType<PlayerStats>());
                 consumableInventory.RemoveItem(item);
+                // Update movement remaining so you get benefits this turn
+                switch (item.itemName) 
+                {
+                    case ConsumableItem.ItemName.smallSpeedPotion:
+                        FindObjectOfType<PlayerMovement>().currentMovementRemaining += 10;
+                        break;
+                    case ConsumableItem.ItemName.largeSpeedPotion:
+                        FindObjectOfType<PlayerMovement>().currentMovementRemaining += 20;
+                        break;
+                }
+                if (item.hasDuration()) 
+                {
+                    StartCoroutine(PotionDuration(item, turnLogic.turnCount));
+                }
             };
 
             // Get position of next item slot by multiplying its number by the size of the slot in pixels
@@ -110,7 +131,7 @@ public class UIConsumableInventory : MonoBehaviour
             // Increment position in the inventory to the right
             xPos++;
             // if we are at the right edge, reset and move down a row
-            if (xPos > 3)
+            if (xPos > 7)
             {
                 xPos = 0;
                 yPos--;
@@ -119,6 +140,11 @@ public class UIConsumableInventory : MonoBehaviour
         }
     }
 
+    IEnumerator PotionDuration(ConsumableItem item, int startTurn) 
+    {
+        yield return new WaitUntil(() => Check(startTurn));
+        item.UnConsumeItem(FindObjectOfType<PlayerStats>());
+    }
 
     // Nessicary to unsubscribe from event to prevent broken references when reloading scene
     private void OnDestroy()
@@ -127,5 +153,14 @@ public class UIConsumableInventory : MonoBehaviour
         {
             consumableInventory.UpdateItemList -= Inventory_UpdateItemList;
         }
+    }
+
+    private bool Check(int startTurn) 
+    {
+        if (turnLogic.turnCount == startTurn + 2 || !turnLogic.isCombatPhase) 
+        {
+            return true;
+        }
+        return false;
     }
 }

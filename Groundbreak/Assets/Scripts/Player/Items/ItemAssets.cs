@@ -25,6 +25,11 @@ public class ItemAssets : MonoBehaviour
     // Consumable Items
     public Sprite smallHealthPotion;
     public Sprite largeHealthPotion;
-
+    public Sprite smallSpeedPotion;
+    public Sprite largeSpeedPotion;
+    public Sprite smallStoneSkinPotion;
+    public Sprite largeStoneSkinPotion;
+    public Sprite smallStrengthPotion;
+    public Sprite largeStrengthPotion;
 
 }

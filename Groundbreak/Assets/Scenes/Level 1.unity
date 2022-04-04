@@ -2421,7 +2421,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &778906130
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3410,7 +3410,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 999997987}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -3421,7 +3421,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -350, y: 200}
+  m_AnchoredPosition: {x: -349.99994, y: 200.00003}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!50 &999997989
@@ -4399,7 +4399,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1166870412
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5239,7 +5239,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1305384624
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5694,7 +5694,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1356954808
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6219,6 +6219,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8070673054040716968, guid: 09256a8c1befb4f43ba13a3c23fcde2a, type: 3}
+      propertyPath: largeSpeedPotion
+      value: 
+      objectReference: {fileID: 21300000, guid: 735e17b44443d6642900fa782545642a, type: 3}
+    - target: {fileID: 8070673054040716968, guid: 09256a8c1befb4f43ba13a3c23fcde2a, type: 3}
+      propertyPath: smallSpeedPotion
+      value: 
+      objectReference: {fileID: 21300000, guid: c06fa83069b9f634999e91c3469d174e, type: 3}
+    - target: {fileID: 8070673054040716968, guid: 09256a8c1befb4f43ba13a3c23fcde2a, type: 3}
       propertyPath: largeHealthPotion
       value: 
       objectReference: {fileID: 21300000, guid: f33c1ce943fc5f642a22bf34e7835ed0, type: 3}
@@ -6226,6 +6234,22 @@ PrefabInstance:
       propertyPath: smallHealthPotion
       value: 
       objectReference: {fileID: 21300000, guid: adb29d89fd19f7d44896345872f66c9e, type: 3}
+    - target: {fileID: 8070673054040716968, guid: 09256a8c1befb4f43ba13a3c23fcde2a, type: 3}
+      propertyPath: largeStrengthPotion
+      value: 
+      objectReference: {fileID: 21300000, guid: ab54ca4799abc8449846231ba4bb2081, type: 3}
+    - target: {fileID: 8070673054040716968, guid: 09256a8c1befb4f43ba13a3c23fcde2a, type: 3}
+      propertyPath: smallStrengthPotion
+      value: 
+      objectReference: {fileID: 21300000, guid: 5d9b7e7ae794c7f4ba87d8be5e6bb9e9, type: 3}
+    - target: {fileID: 8070673054040716968, guid: 09256a8c1befb4f43ba13a3c23fcde2a, type: 3}
+      propertyPath: largeStoneSkinPotion
+      value: 
+      objectReference: {fileID: 21300000, guid: b5739d3fbff85ab4db260b60d89483f0, type: 3}
+    - target: {fileID: 8070673054040716968, guid: 09256a8c1befb4f43ba13a3c23fcde2a, type: 3}
+      propertyPath: smallStoneSkinPotion
+      value: 
+      objectReference: {fileID: 21300000, guid: 519a8b88ed492764cae8a84be6a41519, type: 3}
     - target: {fileID: 8070673054040716970, guid: 09256a8c1befb4f43ba13a3c23fcde2a, type: 3}
       propertyPath: pickUpTime
       value: 2
@@ -6644,7 +6668,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1663203723
 RectTransform:
   m_ObjectHideFlags: 0

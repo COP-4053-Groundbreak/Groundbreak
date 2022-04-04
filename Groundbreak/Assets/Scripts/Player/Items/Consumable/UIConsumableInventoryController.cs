@@ -13,15 +13,24 @@ public class UIConsumableInventoryController : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.I)) 
+        if (Input.GetKeyDown(KeyCode.I))
         {
-            if (uIInventory.gameObject.activeInHierarchy)
+            if (uIInventory.gameObject.transform.GetChild(0).gameObject.activeInHierarchy)
             {
-                uIInventory.gameObject.SetActive(false);
+                foreach (Transform child in uIInventory.transform)
+                {
+                    child.gameObject.SetActive(false);
+                }
             }
-            else 
+            else
             {
-                uIInventory.gameObject.SetActive(true);
+                foreach (Transform child in uIInventory.transform)
+                {
+                    if (child.gameObject.name != "itemTemplate")
+                    {
+                        child.gameObject.SetActive(true);
+                    }
+                }
             }
         }
     }
