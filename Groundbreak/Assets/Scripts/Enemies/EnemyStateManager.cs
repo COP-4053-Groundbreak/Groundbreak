@@ -85,28 +85,6 @@ public class EnemyStateManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // elementSymbol.AddComponent<SpriteRenderer>();
-        // string elementToLoad = "";
-        // switch(myElement){
-        //     case Element.Air: // green
-        //         elementToLoad = "air";
-        //         break;
-        //     case Element.Earth: // brown
-        //         elementToLoad = "earth";
-        //         break;
-        //     case Element.Fire: // red
-        //         elementToLoad = "fire";
-        //         break;
-        //     case Element.Water: // blue
-        //         elementToLoad = "water";
-        //         break;
-        //     // case Element.Base: // white
-        //     //     newColor = Color.white;
-        //     //     break;
-        //     // default: // grey
-        //     //     elementToLoad = ""
-        //     //     break;
-        // }
         // elementSymbol.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(elementToLoad);
         // get animation clip length
         AnimationClip[] clips = animator.runtimeAnimatorController.animationClips;
@@ -416,6 +394,9 @@ public class EnemyStateManager : MonoBehaviour
                 damageToDeal = mageDamage;
                 break;
             case "SkeletonWarrior":
+                damageToDeal = swordDamage;
+                break;
+            case "GreenSkeletonWarrior":
                 damageToDeal = swordDamage;
                 break;
             case "Fantasy Zombie":
