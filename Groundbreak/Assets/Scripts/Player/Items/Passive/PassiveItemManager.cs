@@ -6,9 +6,11 @@ public class PassiveItemManager : MonoBehaviour
 {
     [SerializeField] float pickUpTime = 1f;
     PlayerStats playerStats;
+    public HoldPlayerStats holdPlayerStats;
     private void Start()
     {
         playerStats = FindObjectOfType<PlayerStats>();
+        
     }
 
     public void AddRandomItem(GameObject chest)
@@ -32,76 +34,16 @@ public class PassiveItemManager : MonoBehaviour
 
 
     // Adding items
-    void EquipPassiveItem(PassiveItem item) 
-    {
-        switch (item.itemName)
-        {
-            case PassiveItem.PassiveItemName.HealthRing:
-                playerStats.ModifyHealth(50);
-                playerStats.ModifyMaxHealth(50);
-                break;
-            case PassiveItem.PassiveItemName.SpeedBoots:
-                playerStats.ModifyMovementSpeed(10);
-                break;
-            case PassiveItem.PassiveItemName.LightShield:
-                playerStats.ModifyArmor(1);
-                break;
-            case PassiveItem.PassiveItemName.FirePendant:
-                playerStats.ModifyFireMod(0.25f);
-                break;
-            case PassiveItem.PassiveItemName.WaterPendant:
-                playerStats.ModifyWaterMod(0.25f);
-                break;
-            case PassiveItem.PassiveItemName.EarthPendant:
-                playerStats.ModifyEarthMod(0.25f);
-                break;
-            case PassiveItem.PassiveItemName.AirPendant:
-                playerStats.ModifyAirMod(0.25f);
-                break;
-            case PassiveItem.PassiveItemName.InitiativeWand:
-                playerStats.ModifyInitiative(2);
-                break;
-        }
-    }
+
 
     // Remove item
-    void UnequipPassiveItem(PassiveItem item)
-    {
-        switch (item.itemName)
-        {
-            case PassiveItem.PassiveItemName.HealthRing:
-                playerStats.ModifyHealth(-50);
-                playerStats.ModifyMaxHealth(-50);
-                break;
-            case PassiveItem.PassiveItemName.SpeedBoots:
-                playerStats.ModifyMovementSpeed(-10);
-                break;
-            case PassiveItem.PassiveItemName.LightShield:
-                playerStats.ModifyArmor(-1);
-                break;
-            case PassiveItem.PassiveItemName.FirePendant:
-                playerStats.ModifyFireMod(-0.25f);
-                break;
-            case PassiveItem.PassiveItemName.WaterPendant:
-                playerStats.ModifyWaterMod(-0.25f);
-                break;
-            case PassiveItem.PassiveItemName.EarthPendant:
-                playerStats.ModifyEarthMod(-0.25f);
-                break;
-            case PassiveItem.PassiveItemName.AirPendant:
-                playerStats.ModifyAirMod(-0.25f);
-                break;
-            case PassiveItem.PassiveItemName.InitiativeWand:
-                playerStats.ModifyInitiative(-2);
-                break;
-        }
-    }
+
 
     // Enumerator to have a delay before item is added
     IEnumerator WaitAndAddItem(GameObject chest, PassiveItem item)
     {
         yield return new WaitForSeconds(pickUpTime);
-        EquipPassiveItem(item);
+        holdPlayerStats.playerPassiveInventory.AddItem(item, playerStats);
         chest.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = null;
         chest.transform.GetChild(1).GetComponent<TextMeshPro>().text = "";
         chest.transform.GetChild(2).gameObject.SetActive(false);

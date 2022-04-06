@@ -7,7 +7,7 @@ using UnityEngine;
 public class HoldPlayerStats : ScriptableObject
 {
     public PlayerConsumableInventory playerConsumableInventory = new PlayerConsumableInventory();
-
+    public PlayerPassiveInventory playerPassiveInventory = new PlayerPassiveInventory();
     private void OnEnable()
     {
         

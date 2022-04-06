@@ -17,7 +17,7 @@ public class PassiveItem {
     }
 
     public PassiveItemName itemName;
-
+    public int amount;
     public Sprite GetSprite() 
     {
         switch (itemName) 
@@ -94,5 +94,68 @@ public class PassiveItem {
                 return null;
         }
     }
+    public void EquipPassiveItem(PlayerStats playerStats)
+    {
+        switch (itemName)
+        {
+            case PassiveItem.PassiveItemName.HealthRing:
+                playerStats.ModifyHealth(50);
+                playerStats.ModifyMaxHealth(50);
+                break;
+            case PassiveItem.PassiveItemName.SpeedBoots:
+                playerStats.ModifyMovementSpeed(10);
+                break;
+            case PassiveItem.PassiveItemName.LightShield:
+                playerStats.ModifyArmor(1);
+                break;
+            case PassiveItem.PassiveItemName.FirePendant:
+                playerStats.ModifyFireMod(0.25f);
+                break;
+            case PassiveItem.PassiveItemName.WaterPendant:
+                playerStats.ModifyWaterMod(0.25f);
+                break;
+            case PassiveItem.PassiveItemName.EarthPendant:
+                playerStats.ModifyEarthMod(0.25f);
+                break;
+            case PassiveItem.PassiveItemName.AirPendant:
+                
+                playerStats.ModifyAirMod(0.25f);
+                break;
+            case PassiveItem.PassiveItemName.InitiativeWand:
+                playerStats.ModifyInitiative(2);
+                break;
+        }
+    }
 
+    public void UnequipPassiveItem(PlayerStats playerStats)
+    {
+        switch (itemName)
+        {
+            case PassiveItem.PassiveItemName.HealthRing:
+                playerStats.ModifyHealth(-50);
+                playerStats.ModifyMaxHealth(-50);
+                break;
+            case PassiveItem.PassiveItemName.SpeedBoots:
+                playerStats.ModifyMovementSpeed(-10);
+                break;
+            case PassiveItem.PassiveItemName.LightShield:
+                playerStats.ModifyArmor(-1);
+                break;
+            case PassiveItem.PassiveItemName.FirePendant:
+                playerStats.ModifyFireMod(-0.25f);
+                break;
+            case PassiveItem.PassiveItemName.WaterPendant:
+                playerStats.ModifyWaterMod(-0.25f);
+                break;
+            case PassiveItem.PassiveItemName.EarthPendant:
+                playerStats.ModifyEarthMod(-0.25f);
+                break;
+            case PassiveItem.PassiveItemName.AirPendant:
+                playerStats.ModifyAirMod(-0.25f);
+                break;
+            case PassiveItem.PassiveItemName.InitiativeWand:
+                playerStats.ModifyInitiative(-2);
+                break;
+        }
+    }
 }

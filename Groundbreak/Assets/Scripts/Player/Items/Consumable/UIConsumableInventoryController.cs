@@ -6,11 +6,13 @@ public class UIConsumableInventoryController : MonoBehaviour
 {
     public HoldPlayerStats playerInformation;
     public UIConsumableInventory uIInventory;
-
+    public UIPassiveInventory UIPassiveInventory;
     private void Start()
     {
         uIInventory.SetConsumableInventory(playerInformation.playerConsumableInventory, true);
+        UIPassiveInventory.SetPassiveInventory(playerInformation.playerPassiveInventory, true);
     }
+    // Alow for disable of whole inventroy
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.I))
@@ -26,7 +28,7 @@ public class UIConsumableInventoryController : MonoBehaviour
             {
                 foreach (Transform child in uIInventory.transform)
                 {
-                    if (child.gameObject.name != "itemTemplate")
+                    if (child.gameObject.name != "itemTemplate" && child.gameObject.name != "passiveItemTemplate")
                     {
                         child.gameObject.SetActive(true);
                     }
