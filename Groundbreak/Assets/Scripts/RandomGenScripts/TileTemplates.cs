@@ -6,6 +6,7 @@ public class TileTemplates : MonoBehaviour
 {
     //2x2 set of tiles that are all Elementle titles(Air, Earth, Fire, Water)
     public GameObject[] normalTileSet;
+    public GameObject[] threeByThreeTileSet;
     //2x2 set of NULL titles
     public GameObject nullTileSet;
 }
