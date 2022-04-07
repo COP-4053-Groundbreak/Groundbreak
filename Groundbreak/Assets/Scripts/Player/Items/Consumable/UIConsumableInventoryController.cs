@@ -34,6 +34,7 @@ public class UIConsumableInventoryController : MonoBehaviour
                     }
                 }
             }
+            FindObjectOfType<ToolTipController>().HideToolTip();
         }
     }
 }
