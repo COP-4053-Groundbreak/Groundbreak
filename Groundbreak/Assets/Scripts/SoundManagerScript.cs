@@ -39,6 +39,12 @@ public class SoundManagerScript : MonoBehaviour
     public static AudioClip treeAttackSound;
     public static AudioClip treeDeadSound;
 
+    // Mushroom Sounds
+    public static AudioClip mushroomWalkSound;
+    public static AudioClip mushroomHurtSound;
+    public static AudioClip mushroomAttackSound;
+    public static AudioClip mushroomDeadSound;
+
     // goblin 
     public static AudioClip goblinWalkSound;
     public static AudioClip goblinHurtSound;
@@ -85,6 +91,12 @@ public class SoundManagerScript : MonoBehaviour
         throwTileSound = Resources.Load<AudioClip>("throwtile");
         playerTakeDamageSound = Resources.Load<AudioClip>("playerdamage");
         footstepSound = Resources.Load<AudioClip>("footstep");
+
+        // mushroom
+        mushroomAttackSound = Resources.Load<AudioClip>("mushroomPunch");
+        mushroomHurtSound = Resources.Load<AudioClip>("mushroomHurt");
+        mushroomDeadSound = Resources.Load<AudioClip>("mushroomDead");
+        mushroomWalkSound = Resources.Load<AudioClip>("mushroomWalk");
 
         // effects
         magmaSound = Resources.Load<AudioClip>("magma");
@@ -167,6 +179,20 @@ public class SoundManagerScript : MonoBehaviour
                 break;
             case "treeDead":
                 audioSrc.PlayOneShot (treeDeadSound);
+                break;
+            case "mushroomHurt":
+                audioSrc.PlayOneShot (mushroomHurtSound);
+                break;
+            case "mushroomDead":
+                audioSrc.PlayOneShot (mushroomDeadSound);
+                break;
+            case "mushroomAttack":
+                audioSrc.PlayOneShot (mushroomAttackSound);
+                break;
+            case "mushroomWalk":
+                audioSrc.clip = mushroomWalkSound;
+                audioSrc.loop = true;
+                audioSrc.Play();
                 break;
             case "goblinWalk":
                 audioSrc.clip = goblinWalkSound;

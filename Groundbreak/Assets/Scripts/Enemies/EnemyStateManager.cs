@@ -301,6 +301,9 @@ public class EnemyStateManager : MonoBehaviour
                 if(gameObject.name.Contains("Goblin")){
                     SoundManagerScript.PlaySound("goblinAttack");
                 }
+                if(gameObject.name.Contains("Mushroom")){
+                    SoundManagerScript.PlaySound("mushroomAttack");
+                }
                 // sets attackCounter to 1 so we do not attack again and play the animation twice.
                 attackCounter = 1;
                 isEnemyTurn = false;
@@ -444,6 +447,9 @@ public class EnemyStateManager : MonoBehaviour
         if(gameObject.name.Contains("Goblin")){
             SoundManagerScript.PlaySound("goblinHurt");
         }
+        if(gameObject.name.Contains("Mushroom")){
+            SoundManagerScript.PlaySound("mushroomHurt");
+        }
         // animator.SetBool("TakeDamage", false);
     }
 
@@ -472,6 +478,11 @@ public class EnemyStateManager : MonoBehaviour
         if (!isPlayingFootstep && gameObject.name.Contains("Tree")) 
         {
             SoundManagerScript.PlaySound("treeWalking");
+            isPlayingFootstep = true;
+        }
+        if (!isPlayingFootstep && gameObject.name.Contains("Mushroom")) 
+        {
+            SoundManagerScript.PlaySound("mushroomWalk");
             isPlayingFootstep = true;
         }
         if (!isPlayingFootstep && gameObject.name.Contains("Goblin")) 
@@ -519,6 +530,9 @@ public class EnemyStateManager : MonoBehaviour
         }
         if(gameObject.name.Contains("Goblin")){
             SoundManagerScript.EndSound("goblinWalk");
+        }
+        if(gameObject.name.Contains("Mushroom")){
+            SoundManagerScript.EndSound("mushroomWalk");
         }
     }
 
