@@ -32,4 +32,13 @@ public class ItemAssets : MonoBehaviour
     public Sprite smallStrengthPotion;
     public Sprite largeStrengthPotion;
 
+    // Active Items
+    public Sprite swordSprite;
+    public Sprite bowSprite;
+    public Sprite blinkRuneSprite;
+    public Sprite fireballScrollSprite;
+    public Sprite repulsionWandSprite;
+    public Sprite attractionWandSprite;
+
+
 }
