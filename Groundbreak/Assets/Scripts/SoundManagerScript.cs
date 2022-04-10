@@ -51,6 +51,12 @@ public class SoundManagerScript : MonoBehaviour
     public static AudioClip goblinDeadSound;
     public static AudioClip goblinAttackSound;
 
+    // troll 2nd boss
+    public static AudioClip trollWalkSound;
+    public static AudioClip trollHurtSound;
+    public static AudioClip trollAttackSound;
+    public static AudioClip trollDeadSound;
+
 
     static AudioSource audioSrc;
 
@@ -85,6 +91,12 @@ public class SoundManagerScript : MonoBehaviour
         goblinHurtSound = Resources.Load<AudioClip> ("goblinHurt");
         goblinDeadSound = Resources.Load<AudioClip> ("goblinDead");
         goblinAttackSound = Resources.Load<AudioClip> ("goblinAttack");
+
+        // troll
+        trollWalkSound = Resources.Load<AudioClip> ("trollWalk");
+        trollHurtSound = Resources.Load<AudioClip> ("trollHurt");
+        trollAttackSound = Resources.Load<AudioClip> ("trollAttack");
+        trollDeadSound = Resources.Load<AudioClip> ("trollDead");
 
         // player
         pickupTileSound = Resources.Load<AudioClip>("pickuptile");
@@ -207,6 +219,20 @@ public class SoundManagerScript : MonoBehaviour
                 break;
             case "goblinAttack":
                 audioSrc.PlayOneShot (goblinAttackSound);
+                break;
+            case "trollHurt":
+                audioSrc.PlayOneShot (trollHurtSound);
+                break;
+            case "trollDead":
+                audioSrc.PlayOneShot (trollDeadSound);
+                break;
+            case "trollAttack":
+                audioSrc.PlayOneShot (trollAttackSound);
+                break;
+            case "trollWalk":
+                audioSrc.clip = trollWalkSound;
+                audioSrc.loop = true;
+                audioSrc.Play();
                 break;
             case "pickuptile":
                 audioSrc.PlayOneShot(pickupTileSound);

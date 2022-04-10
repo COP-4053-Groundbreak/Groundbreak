@@ -41,6 +41,8 @@ public class EnemyStateManager : MonoBehaviour
     public int goblinDamage = 10;
     public int treeDamage = 10;
     public int mushroomDamage = 10;
+    public int trollDamage = 15;
+
 
     // blocking
     bool triedToBlock = false;
@@ -130,7 +132,14 @@ public class EnemyStateManager : MonoBehaviour
             // initiate health bar. 
             healthBar.Setup(healthSystem);
         }
-        else if(gameObject.name.Contains("Skeleton")){
+        else if(gameObject.name.Contains("Skeleton") || gameObject.name.Contains("Troll")){
+            if(gameObject.name.Contains("Troll")){
+                Vector3 elementSymbolLocalPosition = new Vector3((float)-0.65, (float)0.75);
+                elementSymbolTransform.localPosition = elementSymbolLocalPosition;
+                Vector3 newScale = elementSymbolTransform.localScale;
+                newScale *= 1.25f;
+                elementSymbolTransform.localScale = newScale;
+            }
             Vector3 healthBarLocalPosition = new Vector3(0, (float)1.60);
             healthBarTransform.localPosition = healthBarLocalPosition;
             HealthBar healthBar = healthBarTransform.GetComponent<HealthBar>();
@@ -249,7 +258,7 @@ public class EnemyStateManager : MonoBehaviour
             if(enemyX < playerPos.x && mySpriteRenderer != null) // && enemy.mySpriteRenderer.transform.localScale.x < 0 // x_random + x_value > 0
             {
                     // flip the sprite
-                    if(gameObject.name.Contains("Zombie") || gameObject.name.Contains("Tree") || gameObject.name.Contains("Goblin") || gameObject.name.Contains("Mushroom") ){
+                    if(gameObject.name.Contains("Zombie") || gameObject.name.Contains("Tree") || gameObject.name.Contains("Goblin") || gameObject.name.Contains("Mushroom") || gameObject.name.Contains("Troll") ){
                         mySpriteRenderer.flipX = false;
                     }else{
                         mySpriteRenderer.flipX = true;
@@ -258,7 +267,7 @@ public class EnemyStateManager : MonoBehaviour
             if(enemyX > playerPos.x && mySpriteRenderer != null) //  && enemy.mySpriteRenderer.transform.localScale.x > 0
             {
                     // flip the sprite
-                    if(gameObject.name.Contains("Zombie") || gameObject.name.Contains("Tree") || gameObject.name.Contains("Goblin") || gameObject.name.Contains("Mushroom")){
+                    if(gameObject.name.Contains("Zombie") || gameObject.name.Contains("Tree") || gameObject.name.Contains("Goblin") || gameObject.name.Contains("Mushroom") || gameObject.name.Contains("Troll")){
                         mySpriteRenderer.flipX = true;
                     }else{
                         mySpriteRenderer.flipX = false;
@@ -288,7 +297,7 @@ public class EnemyStateManager : MonoBehaviour
                 // damage gets dealt when we turn off the animation. 
                 isEnemyTurn = false;
             }
-            else if((gameObject.name.Contains("Warrior") || gameObject.name.Contains("Tree")  || gameObject.name.Contains("Goblin") || gameObject.name.Contains("Mushroom")  )  && distanceBetweenPlayerAndEnemy <= 1.42 && attackCounter == 0){
+            else if((gameObject.name.Contains("Warrior") || gameObject.name.Contains("Tree")  || gameObject.name.Contains("Goblin") || gameObject.name.Contains("Mushroom") || gameObject.name.Contains("Troll")  )  && distanceBetweenPlayerAndEnemy <= 1.42 && attackCounter == 0){
                 // play animation.
                 animator.SetBool("isAttacking", true);
                 // play sound clip
@@ -303,6 +312,9 @@ public class EnemyStateManager : MonoBehaviour
                 }
                 if(gameObject.name.Contains("Mushroom")){
                     SoundManagerScript.PlaySound("mushroomAttack");
+                }
+                if(gameObject.name.Contains("Troll")){
+                    SoundManagerScript.PlaySound("trollAttack");
                 }
                 // sets attackCounter to 1 so we do not attack again and play the animation twice.
                 attackCounter = 1;
@@ -415,6 +427,9 @@ public class EnemyStateManager : MonoBehaviour
             case "evilTree":
                 damageToDeal = treeDamage;
                 break;
+            case "Fantasy Troll":
+                damageToDeal = trollDamage;
+                break;
             }
 
             player.GetComponent<PlayerStats>().DealDamage(damageToDeal);
@@ -449,6 +464,9 @@ public class EnemyStateManager : MonoBehaviour
         }
         if(gameObject.name.Contains("Mushroom")){
             SoundManagerScript.PlaySound("mushroomHurt");
+        }
+        if(gameObject.name.Contains("Troll")){
+            SoundManagerScript.PlaySound("trollHurt");
         }
         // animator.SetBool("TakeDamage", false);
     }
@@ -488,6 +506,11 @@ public class EnemyStateManager : MonoBehaviour
         if (!isPlayingFootstep && gameObject.name.Contains("Goblin")) 
         {
             SoundManagerScript.PlaySound("goblinWalk");
+            isPlayingFootstep = true;
+        }
+        if (!isPlayingFootstep && gameObject.name.Contains("Troll")) 
+        {
+            SoundManagerScript.PlaySound("trollWalk");
             isPlayingFootstep = true;
         }
         animator.SetBool("isMoving", true);
@@ -533,6 +556,9 @@ public class EnemyStateManager : MonoBehaviour
         }
         if(gameObject.name.Contains("Mushroom")){
             SoundManagerScript.EndSound("mushroomWalk");
+        }
+        if(gameObject.name.Contains("Troll")){
+            SoundManagerScript.EndSound("trollWalk");
         }
     }
 
