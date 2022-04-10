@@ -97,7 +97,12 @@ public class EnemyStateManager : MonoBehaviour
             }
         }
         turnLogic = FindObjectOfType<TurnLogic>();
-        enemyMovementRemaining = 2;
+        if(gameObject.name.Contains("Mushroom")){
+            enemyMovementRemaining = 4;
+        }
+        else{
+            enemyMovementRemaining = 2;
+        }
         // get sprite renderer
         mySpriteRenderer = GetComponent<SpriteRenderer>();
         // health system stuff 
@@ -275,6 +280,8 @@ public class EnemyStateManager : MonoBehaviour
                     //  enemy.mySpriteRenderer.transform.localScale.x = -1;
             }
 
+            // check if we are 30% health or lower, if so retreat. 
+
     
             //do attack or move.
             // check if melee enemy is within a 1 block radius of player. && will have to check which state we are in and if its enemy turn (not implemented yet)
@@ -338,6 +345,7 @@ public class EnemyStateManager : MonoBehaviour
                 }
                 listOfTiles.RemoveAt(0);
                 while(enemyMovementRemaining != 0){
+                    Debug.Log("START" + enemyMovementRemaining);
                     if(listOfTiles != null){
                         // null check if there is no path, it would crash. ex: enemy is stuck in a wall of void. 
                         if(listOfTiles != null){
@@ -360,7 +368,14 @@ public class EnemyStateManager : MonoBehaviour
                         }
                     }
                 }
-                enemyMovementRemaining = 2;
+                if(gameObject.name.Contains("Mushroom")){
+                    Debug.Log("4");
+                    enemyMovementRemaining = 4;
+                }
+                else{
+                    Debug.Log("2");
+                    enemyMovementRemaining = 2;
+                }
                 isEnemyTurn = false;
             }
             if(attackCounter == 1){
