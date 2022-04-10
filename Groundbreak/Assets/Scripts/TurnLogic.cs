@@ -11,6 +11,7 @@ public class TurnLogic : MonoBehaviour
     // Determines what action the player is currently performing
     public bool isMovementPhase = true;
     public bool isThrowPhase = false;
+    public bool isActivePhase = false;
     // Determines if combat is taking place
     public bool isCombatPhase = false;
 
@@ -28,6 +29,7 @@ public class TurnLogic : MonoBehaviour
     // Buttons and canvass references 
     [SerializeField] Button endTurnButton;
     [SerializeField] Button moveButton;
+    [SerializeField] Button activeButton;
     [SerializeField] Button throwTileButton;
     [SerializeField] GameObject battleCanvas;
 
@@ -89,9 +91,11 @@ public class TurnLogic : MonoBehaviour
     {
         moveButton.interactable = false;
         throwTileButton.interactable = true;
+        activeButton.interactable = true;
 
         isMovementPhase = true;
         isThrowPhase = false;
+        isActivePhase = false;
     }
 
     // Switch to throw / pick up phase
@@ -103,9 +107,22 @@ public class TurnLogic : MonoBehaviour
         }
         throwTileButton.interactable = false;
         moveButton.interactable = true;
+        activeButton.interactable = true;
 
         isMovementPhase = false;
         isThrowPhase = true;
+        isActivePhase = false;
+    }
+
+    public void ActivePressed() 
+    {
+        throwTileButton.interactable = true;
+        moveButton.interactable = true;
+        activeButton.interactable = false;
+
+        isActivePhase = true;
+        isMovementPhase = false;
+        isThrowPhase = false;
     }
 
     public bool CheckForRoomClear() 
