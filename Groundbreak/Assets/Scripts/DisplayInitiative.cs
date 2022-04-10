@@ -92,7 +92,14 @@ public class DisplayInitiative : MonoBehaviour
 
             float yPixelDistance = Mathf.Abs(lowerLeftPoint.y - upperRightPoint.y);
 
-            text.transform.position = new Vector3(transform.position.x, transform.position.y - yPixelDistance * i);
+            if (Camera.main.aspect >= 1.7)
+            {
+                text.transform.position = new Vector3(transform.position.x, transform.position.y - yPixelDistance * i * 1080 / Screen.width);
+            }
+            else 
+            {
+                text.transform.position = new Vector3(transform.position.x, transform.position.y - (yPixelDistance - 10) * i);
+            }
             text.transform.localScale = new Vector3(1, 1, 1);
             text.name = subObject.name;
             string temp;
