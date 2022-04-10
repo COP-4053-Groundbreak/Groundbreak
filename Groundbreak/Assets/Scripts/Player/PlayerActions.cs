@@ -6,12 +6,13 @@ using System;
 public class PlayerActions : MonoBehaviour
 {
     public bool canPickUpTile = true;
+    public bool canUseActive = true;
     [SerializeField] int pickupRange = 1;
     [SerializeField] public int throwRange = 1;
     [SerializeField] Element heldTileElement;
     GameObject[] enemyList;
     TurnLogic turnLogic;
-
+    [SerializeField] HoldPlayerStats playerStats;
     Animator playerAnimator;
 
     private void Start()
@@ -80,6 +81,38 @@ public class PlayerActions : MonoBehaviour
             tile.GetComponent<TilePathNode>().isWalkable = true;
             heldTileElement = Element.Void;
             FindObjectOfType<DisplayHeldTile>().ClearTile();
+        }
+        
+    }
+
+    public void UseActiveItem(GameObject tile) 
+    {
+        if (!canUseActive) 
+        {
+            return;
+        }
+        tile.GetComponent<TileClickable>().updateDistanceToPlayer();
+        switch (playerStats.playerActiveItem.itemName) 
+        {
+            
+            case ActiveItem.ActiveItemName.Sword:
+                if (tile.GetComponent<Tile>().gameObjectAbove && tile.GetComponent<Tile>().gameObjectAbove.CompareTag("Enemy") && tile.GetComponent<TileClickable>().GetDistance() <= 1) 
+                {
+                    tile.GetComponent<Tile>().gameObjectAbove.GetComponent<EnemyStateManager>().DealDamage(10);
+                    canUseActive = false;
+                    playerAnimator.SetTrigger("Attack");
+                }
+                break;
+            case ActiveItem.ActiveItemName.Bow:
+                break;
+            case ActiveItem.ActiveItemName.BlinkRune:
+                break;
+            case ActiveItem.ActiveItemName.FireballScroll:
+                break;
+            case ActiveItem.ActiveItemName.RepulsionWand:
+                break;
+            case ActiveItem.ActiveItemName.AttractionWand:
+                break;
         }
         
     }

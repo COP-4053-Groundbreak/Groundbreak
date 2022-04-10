@@ -282,7 +282,7 @@ public class PlayerMovement : MonoBehaviour
         {
             turnLogic = FindObjectOfType<TurnLogic>();
         }
-        if (isSliding || turnLogic.isThrowPhase || !turnLogic.isCombatPhase || !turnLogic.GetIsPlayerTurn()) 
+        if (isSliding || turnLogic.isThrowPhase || !turnLogic.isCombatPhase || !turnLogic.GetIsPlayerTurn() || turnLogic.isActivePhase) 
         {
             return;
         }

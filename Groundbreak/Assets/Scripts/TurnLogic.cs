@@ -14,7 +14,6 @@ public class TurnLogic : MonoBehaviour
     public bool isActivePhase = false;
     // Determines if combat is taking place
     public bool isCombatPhase = false;
-
     float dummyTurnTime = 3f;
     // Player movment and actions references
     PlayerMovement playerMovement;
@@ -226,6 +225,7 @@ public class TurnLogic : MonoBehaviour
                     {
                         displayInitiative.SetTurn();
                         actorList[i].GetComponent<EnemyStateManager>().isEnemyTurn = true;
+                        isPlayerTurn = false;
                         // lets wait for enemy to finish animation.
                         yield return new WaitForSeconds(dummyTurnTime);
                         // set enemy turn to false.
