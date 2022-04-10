@@ -8,6 +8,7 @@ public class HoldPlayerStats : ScriptableObject
 {
     public PlayerConsumableInventory playerConsumableInventory = new PlayerConsumableInventory();
     public PlayerPassiveInventory playerPassiveInventory = new PlayerPassiveInventory();
+    public ActiveItem playerActiveItem = null;
     private void OnEnable()
     {
         
