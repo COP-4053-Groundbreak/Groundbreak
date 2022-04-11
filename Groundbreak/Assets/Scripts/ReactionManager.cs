@@ -268,6 +268,191 @@ public class ReactionManager : MonoBehaviour
             character.gameObject.GetComponent<EnemyStateManager>().DealDamage(damageAmount);
     }
 
+    public static void pushGO(GameObject pushOrigin, Vector2 pushDir, int numPushed, GameObject pushable)
+    {
+        Debug.Log($"Pushing in {pushDir.ToString()}");
+        // Use a variable first so as to not modify player position. Check if someone there. If so,
+        // deal more damage and don't move into that tile
+        int pushableX = 0;
+        int pushableY = 0;
+        if (pushable.gameObject.tag == "Enemy")
+        {
+            pushableX = pushable.gameObject.GetComponent<EnemyStateManager>().enemyX;
+            pushableY = pushable.gameObject.GetComponent<EnemyStateManager>().enemyY;
+        }
+        else if (pushable.gameObject.tag == "Player")
+        {
+            pushableX = pushable.gameObject.GetComponent<PlayerMovement>().playerX;
+            pushableY = pushable.gameObject.GetComponent<PlayerMovement>().playerY;
+        }
+        else
+        {
+            Debug.Log("Why are we here?");
+        }
+        // Debug.Log($"Our pushable is {pushable.name}");
+        // Debug.Log($"These are the x and y of pushable {pushableX} {pushableY}");
+
+        int postPushX = 0;
+        int postPushY = 0;
+
+        // "Normalize" vector while keeping negative, then decide which neighbor to go to
+        pushDir = new Vector2(pushDir.x / pushDir.magnitude, pushDir.y / pushDir.magnitude);
+        if (pushDir.x > 0) { pushDir.x = 1; } else if (pushDir.x < 0) { pushDir.x = -1; }
+        if (pushDir.y > 0) { pushDir.y = 1; } else if (pushDir.y < 0) { pushDir.y = -1; }
+
+        // if (pushDir.x > 0)
+        // Debug.Log("Pushable will be pushed right!");
+        // else if(pushDir.x < 0) {
+        // Debug.Log("Pushable will be pushed left!");
+        // }
+
+        // if (pushDir.y > 0){
+        // Debug.Log("Pushable will be pushed up!");
+        // } else if (pushDir.y < 0){
+        // Debug.Log("Pushable will be pushed down!");
+        // }
+
+        // Calculate x position        
+        postPushX = (int)(pushableX + pushDir.x * numPushed);
+
+        Vector2 tilePos = gridManager.getTile(pushableX, pushableY).transform.position;
+        if (pushable.transform.position.x < tilePos.x)
+        {
+            Debug.Log("Guy moved to right into this effect");
+        }
+        else if (pushable.transform.position.x > tilePos.x)
+        {
+            Debug.Log("Guy moved to the left into this effect");
+        }
+        // If player walks into range, they won't be in center of tile. This centers them.
+        if (pushOrigin.transform.position.x < pushableX)
+            postPushX = (int)(postPushX + 0.5f);
+
+        // Calculate y position 
+        postPushY = (int)(pushableY + pushDir.y * numPushed);
+        // If player walks into range, they won't be in center of tile. This centers them.
+        if (pushOrigin.transform.position.y < pushableY)
+            postPushY = (int)(postPushY + 0.5f);
+        Debug.Log($"Pushable should be pushed into the tile at {postPushX} and {postPushY}");
+
+        // Prevent out of bounds pushes
+        if (postPushX < 0) { postPushX = 0; }
+        else if (postPushX >= gridManager.getWidth()) { postPushX = gridManager.getWidth() - 1; dealCrashDamage(pushable, null); }
+        if (postPushY < 0) { postPushY = 0; }
+        else if (postPushY >= gridManager.getWidth()) { postPushY = gridManager.getHeight() - 1; dealCrashDamage(pushable, null); }
+
+        Tile endTile = gridManager.getTile(postPushX, postPushY);
+        Debug.LogWarning($" Pushing {pushable.gameObject.name} to {new Vector2(postPushX, postPushY)}");
+
+        // There's a character at the tile we're being pushed into
+        if (endTile.gameObjectAbove != null && (endTile.gameObjectAbove.tag == "Enemy" || endTile.gameObjectAbove.tag == "Player"))
+        {
+            Debug.LogWarning("Someone's here!");
+            dealCrashDamage(endTile.gameObjectAbove, pushable);
+            postPushX = pushableX;
+            postPushY = pushableY;
+        }
+
+        // Set character position
+        pushable.transform.position = gridManager.getTile(postPushX, postPushY).transform.position;
+
+        if (pushable.tag == "Enemy")
+        {
+            pushable.GetComponent<EnemyStateManager>().stopEnemyMovement();
+        }
+        else if (pushable.tag == "Player")
+        {
+            pushable.GetComponent<PlayerMovement>().endMove();
+            pushable.GetComponent<PlayerMovement>().UpdateTilesAfterMove();
+        }
+        Debug.Log($"Player new position is {pushable.transform.position}");
+
+    }
+    // Pulls pullable towards pullOrigin in pullDir direction numPulled tiles 
+    public static void pullGO(GameObject pullOrigin, Vector2 pullDir, int numPulled, GameObject pullable)
+    {
+        Debug.Log($"Pulling in {pullDir.ToString()}");
+        // Use a variable first so as to not modify player position. Check if someone there. If so,
+        // deal more damage and don't move into that tile
+        int postPullX = 0;
+        int postPullY = 0;
+
+        int pullableX = 0;
+        int pullableY = 0;
+        if (pullable.gameObject.tag == "Enemy")
+        {
+            pullableX = pullable.gameObject.GetComponent<EnemyStateManager>().enemyX;
+            pullableY = pullable.gameObject.GetComponent<EnemyStateManager>().enemyY;
+        }
+        else if (pullable.gameObject.tag == "Player")
+        {
+            pullableX = pullable.gameObject.GetComponent<PlayerMovement>().playerX;
+            pullableY = pullable.gameObject.GetComponent<PlayerMovement>().playerY;
+        }
+        else
+        {
+            Debug.Log("Why are we here?");
+        }
+
+        // "Normalize" vector while keeping negative, then decide which neighbor to go to
+        pullDir = new Vector2(pullDir.x / pullDir.magnitude, pullDir.y / pullDir.magnitude);
+        if (pullDir.x > 0) { pullDir.x = 1; } else if (pullDir.x < 0) { pullDir.x = -1; }
+        if (pullDir.y > 0) { pullDir.y = 1; } else if (pullDir.y < 0) { pullDir.y = -1; }
+
+        // Debug.Log($"Adjusted pullDir is {pullDir}");
+
+        // Calculate x position        
+        postPullX = (int)(pullableX + pullDir.x * numPulled);
+        // If player walks into range, they won't be in center of tile. This centers them.
+        if (pullOrigin.transform.position.x > pullable.transform.position.x)
+            postPullX = (int)(postPullX + 0.5f);
+
+        // Calculate y position 
+        postPullY = (int)(pullableY + pullDir.y * numPulled);
+        // If player walks into range, they won't be in center of tile. This centers them.
+        if (pullOrigin.transform.position.y > pullable.transform.position.y)
+            postPullY = (int)(postPullY + 0.5f);
+
+        // Prevent out of bounds pulls
+        if (postPullX < 0) { postPullX = 0; }
+        else if (postPullX >= gridManager.getWidth()) { postPullX = gridManager.getWidth() - 1; dealCrashDamage(pullable, null); }
+        if (postPullY < 0) { postPullY = 0; }
+        else if (postPullY >= gridManager.getWidth()) { postPullY = gridManager.getHeight() - 1; dealCrashDamage(pullable, null); }
+
+        Tile endTile = gridManager.getTile(postPullX, postPullY);
+
+        // There's a character at the tile we're being pulled into
+        if (endTile.gameObjectAbove != null && (endTile.gameObjectAbove.tag == "Enemy" || endTile.gameObjectAbove.tag == "Player"))
+        {
+            dealCrashDamage(endTile.gameObjectAbove, pullable);
+            postPullX = (int)pullableX;
+            postPullY = (int)pullableY;
+        }
+
+        // Set character position
+        pullable.transform.position = gridManager.getTile(postPullX, postPullY).transform.position;
+
+        if (pullable.tag == "Enemy")
+        {
+            pullable.GetComponent<EnemyStateManager>().stopEnemyMovement();
+        }
+        else if (pullable.tag == "Player")
+        {
+            pullable.GetComponent<PlayerMovement>().endMove();
+            pullable.GetComponent<PlayerMovement>().UpdateTilesAfterMove();
+        }
+        Debug.Log($"Player new position is {pullable.transform.position}");
+    }
+
+    private static void dealCrashDamage(GameObject char1, GameObject char2)
+    {
+        if (char1 != null)
+            dealDamageToChar(char1, ReactionManager.CRASH_DMG);
+        if (char2 != null)
+            dealDamageToChar(char2, ReactionManager.CRASH_DMG);
+    }
+
+
     private void GridChanged(object sender, System.EventArgs e)
     {
         gridManager = FindObjectOfType<GridManager>();

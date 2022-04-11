@@ -20,7 +20,11 @@ public class TileClickable : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     // Unity event handler only triggers when a click raycast hits the tile.
     void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
     {
-        
+        // Dont do anything not on player turn
+        if (!turnLogic.GetIsPlayerTurn()) 
+        {
+            return;
+        }
         GameObject ThisTile = eventData.pointerCurrentRaycast.gameObject;
         if (turnLogic.isMovementPhase)
         {
@@ -34,13 +38,13 @@ public class TileClickable : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
             else if (eventData.button == PointerEventData.InputButton.Right)
             {
                 Player.GetComponent<PlayerActions>().PickUpTile(ThisTile.GetComponent<Tile>());
-                
+
             }
         }
         else if (turnLogic.isThrowPhase)
         {
             // Left click
-            if (eventData.button == 0) 
+            if (eventData.button == 0)
             {
                 Player.GetComponent<PlayerActions>().ThrowTile(ThisTile);
             }
@@ -48,10 +52,24 @@ public class TileClickable : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
             else if (eventData.button == PointerEventData.InputButton.Right)
             {
                 Player.GetComponent<PlayerActions>().PickUpTile(ThisTile.GetComponent<Tile>());
-                
+
             }
         }
-        else 
+        else if (turnLogic.isActivePhase) 
+        {
+            // Left click
+            if (eventData.button == 0)
+            {
+                Player.GetComponent<PlayerActions>().UseActiveItem(ThisTile);
+            }
+            // Right click
+            else if (eventData.button == PointerEventData.InputButton.Right)
+            {
+                Player.GetComponent<PlayerActions>().PickUpTile(ThisTile.GetComponent<Tile>());
+
+            }
+        }
+        else
         {
             Debug.Log("Player turn phase not found!");
         }

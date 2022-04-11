@@ -82,7 +82,24 @@ public class DisplayInitiative : MonoBehaviour
             // Create text object for this enemy
             GameObject text = Instantiate(template);
             text.transform.SetParent(transform);
-            text.transform.position = new Vector3(transform.position.x, transform.position.y - 40 * i);
+
+            float depth = gameObject.transform.lossyScale.z;
+            float width = gameObject.transform.lossyScale.x;
+            float height = gameObject.transform.lossyScale.y;
+
+            Vector3 lowerLeftPoint = Camera.main.WorldToScreenPoint(new Vector3(gameObject.transform.position.x - width / 2, gameObject.transform.position.y - height / 2, gameObject.transform.position.z - depth / 2));
+            Vector3 upperRightPoint = Camera.main.WorldToScreenPoint(new Vector3(gameObject.transform.position.x + width / 2, gameObject.transform.position.y + height / 2, gameObject.transform.position.z - depth / 2));
+
+            float yPixelDistance = Mathf.Abs(lowerLeftPoint.y - upperRightPoint.y);
+
+            if (Camera.main.aspect >= 1.7)
+            {
+                text.transform.position = new Vector3(transform.position.x, transform.position.y - yPixelDistance * i * 1080 / Screen.width);
+            }
+            else 
+            {
+                text.transform.position = new Vector3(transform.position.x, transform.position.y - (yPixelDistance - 10) * i);
+            }
             text.transform.localScale = new Vector3(1, 1, 1);
             text.name = subObject.name;
             string temp;

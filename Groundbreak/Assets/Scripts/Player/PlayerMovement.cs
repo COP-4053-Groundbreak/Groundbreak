@@ -282,7 +282,7 @@ public class PlayerMovement : MonoBehaviour
         {
             turnLogic = FindObjectOfType<TurnLogic>();
         }
-        if (isSliding || turnLogic.isThrowPhase || !turnLogic.isCombatPhase || !turnLogic.GetIsPlayerTurn()) 
+        if (isSliding || turnLogic.isThrowPhase || !turnLogic.isCombatPhase || !turnLogic.GetIsPlayerTurn() || turnLogic.isActivePhase) 
         {
             return;
         }
@@ -373,5 +373,11 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(1f);
         grid[playerX, playerY].gameObjectAbove = this.gameObject;
         yield break;
+    }
+
+    public void TeleportTo(GameObject destination) 
+    {
+        gameObject.transform.position = destination.transform.position;
+        UpdateTilesAfterMove();
     }
 }

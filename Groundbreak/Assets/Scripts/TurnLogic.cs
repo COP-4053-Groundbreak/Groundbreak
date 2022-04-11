@@ -11,9 +11,9 @@ public class TurnLogic : MonoBehaviour
     // Determines what action the player is currently performing
     public bool isMovementPhase = true;
     public bool isThrowPhase = false;
+    public bool isActivePhase = false;
     // Determines if combat is taking place
     public bool isCombatPhase = false;
-
     float dummyTurnTime = 3f;
     // Player movment and actions references
     PlayerMovement playerMovement;
@@ -28,6 +28,7 @@ public class TurnLogic : MonoBehaviour
     // Buttons and canvass references 
     [SerializeField] Button endTurnButton;
     [SerializeField] Button moveButton;
+    public Button activeButton;
     [SerializeField] Button throwTileButton;
     [SerializeField] GameObject battleCanvas;
 
@@ -94,9 +95,11 @@ public class TurnLogic : MonoBehaviour
         throwTileButton.interactable = true;
         Tile playerTile = ReactionManager.gridManager.getTile(playerActions.gameObject.transform.position.x, playerActions.gameObject.transform.position.y);
         clearRangeIndicator();
+        activeButton.interactable = true;
 
         isMovementPhase = true;
         isThrowPhase = false;
+        isActivePhase = false;
     }
 
     // Switch to throw / pick up phase
@@ -114,9 +117,22 @@ public class TurnLogic : MonoBehaviour
         
         throwTileButton.interactable = false;
         moveButton.interactable = true;
+        activeButton.interactable = true;
 
         isMovementPhase = false;
         isThrowPhase = true;
+        isActivePhase = false;
+    }
+
+    public void ActivePressed() 
+    {
+        throwTileButton.interactable = true;
+        moveButton.interactable = true;
+        activeButton.interactable = false;
+
+        isActivePhase = true;
+        isMovementPhase = false;
+        isThrowPhase = false;
     }
 
     public bool CheckForRoomClear() 
@@ -220,6 +236,7 @@ public class TurnLogic : MonoBehaviour
                     {
                         displayInitiative.SetTurn();
                         actorList[i].GetComponent<EnemyStateManager>().isEnemyTurn = true;
+                        isPlayerTurn = false;
                         // lets wait for enemy to finish animation.
                         yield return new WaitForSeconds(dummyTurnTime);
                         // set enemy turn to false.

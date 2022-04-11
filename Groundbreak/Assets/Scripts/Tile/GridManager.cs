@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
+
 
 public class GridManager : MonoBehaviour
 {
@@ -15,6 +17,8 @@ public class GridManager : MonoBehaviour
     public Tile[,] grid;
 
     GameObject[] spawnPoints;
+    GameObject[] test1;
+    GameObject[] test2;
     private int rand;
     private TileTemplates templates;
     [SerializeField] GameObject holder;
@@ -22,14 +26,18 @@ public class GridManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake(){
         grid = new Tile[10, 10];
-        spawnPoints = GameObject.FindGameObjectsWithTag("TileSpawnPoint");
+
+        test1 = GameObject.FindGameObjectsWithTag("TileSpawnPoint");
+        test2 = GameObject.FindGameObjectsWithTag("TileSpawnPoint2");
+        spawnPoints = test1.Concat(test2).ToArray();
         //Debug.Log(spawnPoints.Length);
+
         templates = GameObject.FindGameObjectWithTag("TileSpawner").GetComponent<TileTemplates>();
-       // rand = Random.Range(0, templates.normalTileSet.Length);
         
 
         bottomLeftCorner = new Vector2((int)(this.room.transform.position.x - 5.0f), (int)(this.room.transform.position.y - 5.0f));
         room = this.gameObject;
+
         SpawnTilesInRoom();
 
         //generateGrid();
@@ -55,16 +63,32 @@ public class GridManager : MonoBehaviour
 
         foreach (GameObject spawn in spawnPoints)
         {
-            rand = Random.Range(0, templates.normalTileSet.Length);
-            GameObject tilePrefab = Instantiate(templates.normalTileSet[rand], spawn.transform.position, templates.normalTileSet[rand].transform.rotation, holder.transform);
-            //Debug.Log(spawn.transform.position + new Vector3(4.5f, 4.5f, 0));
-            foreach (Transform child in tilePrefab.transform)
+            GameObject tilePrefab;
+
+            if (spawn.CompareTag("TileSpawnPoint"))
             {
-                //child.SetParent(tileHolder.transform);
-                //Debug.Log(child.name + " " + (int)(child.localPosition.x + child.parent.localPosition.x + child.parent.parent.localPosition.x + 5.5f - room.transform.InverseTransformPoint(child.transform.position).x) + " , " + (int)(child.localPosition.y + child.parent.localPosition.y + child.parent.parent.localPosition.y + 5.5f - room.transform.InverseTransformPoint(child.transform.position).y));
-                grid[(int)(room.transform.InverseTransformPoint(child.transform.position).x + 5.5f), (int)(room.transform.InverseTransformPoint(child.transform.position).y + 5.5f)] = child.GetComponent<Tile>();
-                
+                rand = Random.Range(0, templates.normalTileSet.Length);
+                tilePrefab = Instantiate(templates.normalTileSet[rand], spawn.transform.position, templates.normalTileSet[rand].transform.rotation, holder.transform);
+                foreach (Transform child in tilePrefab.transform)
+                {
+                    //child.SetParent(tileHolder.transform);
+                    //Debug.Log(child.name + " " + (int)(child.localPosition.x + child.parent.localPosition.x + child.parent.parent.localPosition.x + 5.5f - room.transform.InverseTransformPoint(child.transform.position).x) + " , " + (int)(child.localPosition.y + child.parent.localPosition.y + child.parent.parent.localPosition.y + 5.5f - room.transform.InverseTransformPoint(child.transform.position).y));
+                    grid[(int)(room.transform.InverseTransformPoint(child.transform.position).x + 5.5f), (int)(room.transform.InverseTransformPoint(child.transform.position).y + 5.5f)] = child.GetComponent<Tile>();
+
+                }
             }
+            else if(spawn.CompareTag("TileSpawnPoint2"))
+            {
+                rand = Random.Range(0, templates.threeByThreeTileSet.Length);
+                tilePrefab = Instantiate(templates.threeByThreeTileSet[rand], spawn.transform.position, templates.threeByThreeTileSet[rand].transform.rotation, holder.transform);
+                foreach (Transform child in tilePrefab.transform)
+                {
+                    //child.SetParent(tileHolder.transform);
+                    //Debug.Log(child.name + " " + (int)(child.localPosition.x + child.parent.localPosition.x + child.parent.parent.localPosition.x + 5.5f - room.transform.InverseTransformPoint(child.transform.position).x) + " , " + (int)(child.localPosition.y + child.parent.localPosition.y + child.parent.parent.localPosition.y + 5.5f - room.transform.InverseTransformPoint(child.transform.position).y));
+                    grid[(int)(room.transform.InverseTransformPoint(child.transform.position).x + 5.5f), (int)(room.transform.InverseTransformPoint(child.transform.position).y + 5.5f)] = child.GetComponent<Tile>();
+
+                }
+            }         
             Destroy(spawn);
         }
         GetComponentInParent<RoomManager>().ToggleRoom(false);

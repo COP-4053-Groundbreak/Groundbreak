@@ -6,12 +6,13 @@ using System;
 public class PlayerActions : MonoBehaviour
 {
     public bool canPickUpTile = true;
+    public bool canUseActive = true;
     [SerializeField] int pickupRange = 1;
     [SerializeField] public int throwRange = 1;
     [SerializeField] public Element heldTileElement;
     GameObject[] enemyList;
     TurnLogic turnLogic;
-
+    [SerializeField] HoldPlayerStats playerStats;
     Animator playerAnimator;
 
     private void Start()
@@ -20,8 +21,18 @@ public class PlayerActions : MonoBehaviour
         turnLogic = FindObjectOfType<TurnLogic>();
         heldTileElement = Element.Void;
         enemyList = GameObject.FindGameObjectsWithTag("Enemy");
+        FindObjectOfType<FindNewGridManager>().OnGridChanged += GridChanged;
 
     }
+
+    private void Update()
+    {
+        if (!canUseActive) 
+        {
+            turnLogic.activeButton.interactable = false;
+        }
+    }
+
     // Picks up a tile and stores what element it is
     public void PickUpTile(Tile tile) 
     {
@@ -88,8 +99,108 @@ public class PlayerActions : MonoBehaviour
         
     }
 
+    public void UseActiveItem(GameObject tile) 
+    {
+        if (!canUseActive) 
+        {
+            return;
+        }
+        tile.GetComponent<TileClickable>().updateDistanceToPlayer();
+        switch (playerStats.playerActiveItem.itemName) 
+        {
+            
+            case ActiveItem.ActiveItemName.Sword:
+                if (tile.GetComponent<Tile>().gameObjectAbove && tile.GetComponent<Tile>().gameObjectAbove.CompareTag("Enemy") && tile.GetComponent<TileClickable>().GetDistance() <= 1) 
+                {
+                    tile.GetComponent<Tile>().gameObjectAbove.GetComponent<EnemyStateManager>().DealDamage(10);
+                    canUseActive = false;
+                    playerAnimator.SetTrigger("Attack");
+                    SoundManagerScript.PlaySound("playerSword");
+                    StartCoroutine(Duration(playerStats.playerActiveItem.GetCooldown(), turnLogic.turnCount));
+                }
+                break;
+            case ActiveItem.ActiveItemName.Bow:
+                if (tile.GetComponent<Tile>().gameObjectAbove && tile.GetComponent<Tile>().gameObjectAbove.CompareTag("Enemy") && tile.GetComponent<TileClickable>().GetDistance() <= 3)
+                {
+                    tile.GetComponent<Tile>().gameObjectAbove.GetComponent<EnemyStateManager>().DealDamage(5);
+                    canUseActive = false;
+                    playerAnimator.SetTrigger("Ranged");
+                    SoundManagerScript.PlaySound("playerBow");
+                    StartCoroutine(Duration(playerStats.playerActiveItem.GetCooldown(), turnLogic.turnCount));
+                }
+                break;
+            case ActiveItem.ActiveItemName.BlinkRune:
+                if (tile.GetComponent<Tile>().gameObjectAbove == null && tile.GetComponent<TileClickable>().GetDistance() <= 3)
+                {
+                    gameObject.GetComponent<PlayerMovement>().TeleportTo(tile);
+                    canUseActive = false;
+                    SoundManagerScript.PlaySound("playerTeleport");
+                    StartCoroutine(Duration(playerStats.playerActiveItem.GetCooldown(), turnLogic.turnCount));
+
+                }
+                break;
+            case ActiveItem.ActiveItemName.FireballScroll:
+                if (tile.GetComponent<Tile>().gameObjectAbove == null && tile.GetComponent<TileClickable>().GetDistance() <= throwRange)
+                {
+                    Element temp = tile.GetComponent<Tile>().getElement();
+                    tile.GetComponent<Tile>().setElement(Element.Air);
+                    ReactionManager.TileOnTile(Element.Fire, tile.GetComponent<Tile>());
+                    canUseActive = false;
+                    tile.GetComponent<Tile>().setElement(temp);
+                    StartCoroutine(Duration(playerStats.playerActiveItem.GetCooldown(), turnLogic.turnCount));
+                }
+                break;
+            case ActiveItem.ActiveItemName.RepulsionWand:
+                if (tile.GetComponent<Tile>().gameObjectAbove && tile.GetComponent<Tile>().gameObjectAbove.CompareTag("Enemy") && tile.GetComponent<TileClickable>().GetDistance() <= 3)
+                {
+                    Vector2 diff = new Vector2(tile.GetComponent<Tile>().gameObjectAbove.GetComponent<EnemyStateManager>().enemyX -  gameObject.GetComponent<PlayerMovement>().playerX,
+                                                tile.GetComponent<Tile>().gameObjectAbove.GetComponent<EnemyStateManager>().enemyY - gameObject.GetComponent<PlayerMovement>().playerY).normalized;
+                    ReactionManager.pushGO(gameObject, diff, 1, tile.GetComponent<Tile>().gameObjectAbove);
+                    canUseActive = false;
+                    StartCoroutine(Duration(playerStats.playerActiveItem.GetCooldown(), turnLogic.turnCount));
+                }
+                break;
+            case ActiveItem.ActiveItemName.AttractionWand:
+                if (tile.GetComponent<Tile>().gameObjectAbove && tile.GetComponent<Tile>().gameObjectAbove.CompareTag("Enemy") && tile.GetComponent<TileClickable>().GetDistance() <= 3)
+                {
+                    Vector2 diff = new Vector2(tile.GetComponent<Tile>().gameObjectAbove.GetComponent<EnemyStateManager>().enemyX - gameObject.GetComponent<PlayerMovement>().playerX,
+                                                tile.GetComponent<Tile>().gameObjectAbove.GetComponent<EnemyStateManager>().enemyY - gameObject.GetComponent<PlayerMovement>().playerY).normalized;
+                    ReactionManager.pullGO(gameObject, -diff, 1, tile.GetComponent<Tile>().gameObjectAbove);
+                    canUseActive = false;
+                    StartCoroutine(Duration(playerStats.playerActiveItem.GetCooldown(), turnLogic.turnCount));
+                }
+                break;
+        }
+        
+    }
+
     public void ResetActions() 
     {
         canPickUpTile = true;
     }
+
+    IEnumerator Duration(int duration, int startTurn)
+    {
+        
+        yield return new WaitUntil(() => Check(startTurn, duration));
+        canUseActive = true;
+        turnLogic.activeButton.interactable = true;
+    }
+
+
+    private bool Check(int startTurn, int duration)
+    {
+        //Debug.LogError(turnLogic.turnCount + " " + startTurn + " " + duration + " " + (duration + startTurn));
+        if (turnLogic.turnCount == startTurn + duration || !turnLogic.isCombatPhase)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    private void GridChanged(object sender, System.EventArgs e)
+    {
+        canUseActive = true;
+    }
+
 }
