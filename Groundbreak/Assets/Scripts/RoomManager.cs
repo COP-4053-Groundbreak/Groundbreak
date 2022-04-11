@@ -10,7 +10,7 @@ public class RoomManager : MonoBehaviour
         // THIS BREAKS IF THE START ROOM IS RENAMED
         // DO THIS ANOTHER WAY WHEN I CAN SEE PAST NULL REFS
         // -N
-        if (gameObject.name != "StartRoomV2") 
+        if (gameObject.name != "StartRoomV2" || gameObject.name != "StartRoomLevel2")
         {
             foreach (Transform child in transform)
             {
