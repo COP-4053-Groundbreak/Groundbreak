@@ -114,7 +114,7 @@ public class ConsumableItem
 
     public static ConsumableItem GetRandomConsumableItem() 
     {
-        int itemIndex = Random.Range(0, 1);
+        int itemIndex = Random.Range(0, 7);
         switch (itemIndex)
         {
             case 0:

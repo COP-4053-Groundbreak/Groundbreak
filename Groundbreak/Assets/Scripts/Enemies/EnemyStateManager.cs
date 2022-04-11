@@ -381,7 +381,7 @@ public class EnemyStateManager : MonoBehaviour
             if(attackCounter == 1){
                 // Debug.Log("We attacked!");
                 Invoke("TurnOffAnimation", 1);
-                StartCoroutine(DamageDelay(player));
+                StartCoroutine(DamageDelay(player, enemyPos, playerPos));
                 // wait 1 second turn off animation. 
             }
             // reset to idle state.
@@ -394,7 +394,7 @@ public class EnemyStateManager : MonoBehaviour
         animator.SetBool("isAttacking", false);
     }
 
-    IEnumerator DamageDelay(GameObject player) 
+    IEnumerator DamageDelay(GameObject player,Vector2 enemyPos, Vector2 playerPos) 
     {
         if(animator.GetBool("isAttacking") == true){
             Debug.Log(attackClipLength);
@@ -448,6 +448,12 @@ public class EnemyStateManager : MonoBehaviour
             }
 
             player.GetComponent<PlayerStats>().DealDamage(damageToDeal);
+
+            if(gameObject.name.Contains("Troll")){
+                 Vector2 diff = new Vector2(enemyPos.x -  playerPos.x,
+                                                enemyPos.y - playerPos.y);
+                    ReactionManager.pushGO(gameObject, -diff, 1, player);
+            }
         }
     }
 
