@@ -37,7 +37,7 @@ public class Tile : MonoBehaviour {
         for (int i = 0; i < 3; i++){
             for (int j = 0; j < 3; j++){
                 bool notCenter = !(i == 1 && j == 1);
-                if (notCenter && gridManager.inBounds(x + add[i], y + add[j])){
+                if (notCenter && gridManager.inBounds(x + add[i], y + add[j]) && (i==1 || j==1)){
                     //Debug.Log($"{x + add[i]},{y + add[j]} is in bounds!");
                     addNeighbor(gridManager.getTile(x + add[i], y + add[j]));
                 }   
@@ -114,10 +114,11 @@ public class Tile : MonoBehaviour {
 
         // Following for visualization purposes
         this.GetComponent<Renderer>().material.SetColor("_Color", newColor);
+        this.transform.GetChild(0).GetComponent<Renderer>().material.SetColor("_Color", newColor);
         // Set Tile Element symbol to new element
-        if (transform.childCount > 0){
+        if (transform.childCount > 1){
             //Debug.Log("I am with child");
-            transform.GetChild(0).GetComponent<elemVisual>().setSymbol();
+            transform.GetChild(1).GetComponent<elemVisual>().setSymbol();
         }
     }
     public void setMovementModifier(int a){

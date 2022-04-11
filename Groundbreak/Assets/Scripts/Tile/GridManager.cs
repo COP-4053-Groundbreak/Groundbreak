@@ -43,6 +43,12 @@ public class GridManager : MonoBehaviour
             t.findNeighbors(this);
         }
     }
+    
+    /*private void Update() {
+        if (Input.GetKeyDown(KeyCode.Alpha6)){
+            recolorAll();
+        }    
+    }*/
 
     public void SpawnTilesInRoom()
     {
@@ -64,33 +70,6 @@ public class GridManager : MonoBehaviour
         GetComponentInParent<RoomManager>().ToggleRoom(false);
 
     }
-
-    /*
-    void generateGrid(){
-        grid = new Tile[width, height];
-        
-
-
-        
-        Element[] arr = {Element.Air, Element.Earth, Element.Fire, Element.Water, Element.Base, Element.Void};
-        int arr_len = arr.Length;
-        // Place down tiles and set their elements
-        for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
-                grid[x,y] = Instantiate(tilePrefab, new Vector3(x,y), Quaternion.identity, tileHolder.transform);
-                grid[x,y].name = $"Tile {x} {y}";
-                grid[x,y].setElement(arr[Random.Range(0, arr_len)]);
-            }
-        }
-        // Necessary to find neighbors after procedural generation
-        foreach (Tile a in grid){
-            a.findNeighbors();
-            a.setLF((LandFeature)Random.Range(0,6));
-        }
-
-        grid[0,0].setElement(Element.Base);
-    }*/
-
 
     public int getHeight(){
         return height;
@@ -115,14 +94,7 @@ public class GridManager : MonoBehaviour
         return (cond1 && cond2 && cond3 && cond4);
     }
 
-    // Assuming we have the bottom right corner of a room with spawned tiles, this should get the
-    // relative position of any gameobject
-    public  Vector2 getRelativePos(float newX, float newY){
-        int x = (int)newX;
-        int y = (int)newY;
-
-        return new Vector2(newX - bottomLeftCorner.x, newY - bottomLeftCorner.y);
-    }
+    
     public Tile getTile(float x, float y){
         //Debug.Log($"Getting tile at {x},{y}");
         return grid[(int)x, (int)y];
@@ -130,6 +102,13 @@ public class GridManager : MonoBehaviour
     
     public Tile[,] getGrid() {
         return grid;
+    }
+
+    // For debugging only
+    public void recolorAll(){
+        foreach(Tile tile in grid){
+            tile.setElement(tile.myElement);
+        }
     }
 
 }
