@@ -374,4 +374,10 @@ public class PlayerMovement : MonoBehaviour
         grid[playerX, playerY].gameObjectAbove = this.gameObject;
         yield break;
     }
+
+    public void TeleportTo(GameObject destination) 
+    {
+        gameObject.transform.position = destination.transform.position;
+        UpdateTilesAfterMove();
+    }
 }

@@ -28,7 +28,7 @@ public class TurnLogic : MonoBehaviour
     // Buttons and canvass references 
     [SerializeField] Button endTurnButton;
     [SerializeField] Button moveButton;
-    [SerializeField] Button activeButton;
+    public Button activeButton;
     [SerializeField] Button throwTileButton;
     [SerializeField] GameObject battleCanvas;
 

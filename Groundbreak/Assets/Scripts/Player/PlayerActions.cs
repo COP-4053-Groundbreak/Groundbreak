@@ -23,6 +23,15 @@ public class PlayerActions : MonoBehaviour
         enemyList = GameObject.FindGameObjectsWithTag("Enemy");
 
     }
+
+    private void Update()
+    {
+        if (!canUseActive) 
+        {
+            turnLogic.activeButton.interactable = false;
+        }
+    }
+
     // Picks up a tile and stores what element it is
     public void PickUpTile(Tile tile) 
     {
@@ -101,13 +110,40 @@ public class PlayerActions : MonoBehaviour
                     tile.GetComponent<Tile>().gameObjectAbove.GetComponent<EnemyStateManager>().DealDamage(10);
                     canUseActive = false;
                     playerAnimator.SetTrigger("Attack");
+                    SoundManagerScript.PlaySound("playerSword");
+                    StartCoroutine(Duration(1, turnLogic.turnCount));
                 }
                 break;
             case ActiveItem.ActiveItemName.Bow:
+                if (tile.GetComponent<Tile>().gameObjectAbove && tile.GetComponent<Tile>().gameObjectAbove.CompareTag("Enemy") && tile.GetComponent<TileClickable>().GetDistance() <= 3)
+                {
+                    tile.GetComponent<Tile>().gameObjectAbove.GetComponent<EnemyStateManager>().DealDamage(5);
+                    canUseActive = false;
+                    playerAnimator.SetTrigger("Attack");
+                    SoundManagerScript.PlaySound("playerBow");
+                    StartCoroutine(Duration(1, turnLogic.turnCount));
+                }
                 break;
             case ActiveItem.ActiveItemName.BlinkRune:
+                if (tile.GetComponent<Tile>().gameObjectAbove == null && tile.GetComponent<TileClickable>().GetDistance() <= 3)
+                {
+                    gameObject.GetComponent<PlayerMovement>().TeleportTo(tile);
+                    canUseActive = false;
+                    SoundManagerScript.PlaySound("playerTeleport");
+                    StartCoroutine(Duration(2, turnLogic.turnCount));
+
+                }
                 break;
             case ActiveItem.ActiveItemName.FireballScroll:
+                if (tile.GetComponent<Tile>().gameObjectAbove == null && tile.GetComponent<TileClickable>().GetDistance() <= throwRange)
+                {
+                    Element temp = tile.GetComponent<Tile>().getElement();
+                    tile.GetComponent<Tile>().setElement(Element.Air);
+                    ReactionManager.TileOnTile(Element.Fire, tile.GetComponent<Tile>());
+                    canUseActive = false;
+                    tile.GetComponent<Tile>().setElement(temp);
+                    StartCoroutine(Duration(3, turnLogic.turnCount));
+                }
                 break;
             case ActiveItem.ActiveItemName.RepulsionWand:
                 break;
@@ -121,4 +157,21 @@ public class PlayerActions : MonoBehaviour
     {
         canPickUpTile = true;
     }
+
+    IEnumerator Duration(int duration, int startTurn)
+    {
+        yield return new WaitUntil(() => Check(startTurn, duration));
+        canUseActive = true;
+    }
+
+
+    private bool Check(int startTurn, int duration)
+    {
+        if (turnLogic.turnCount == startTurn + duration || !turnLogic.isCombatPhase)
+        {
+            return true;
+        }
+        return false;
+    }
+
 }

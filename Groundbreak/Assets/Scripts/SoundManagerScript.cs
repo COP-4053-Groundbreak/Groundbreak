@@ -24,6 +24,9 @@ public class SoundManagerScript : MonoBehaviour
     public static AudioClip pickupTileSound;
     public static AudioClip throwTileSound;
     public static AudioClip playerTakeDamageSound;
+    public static AudioClip playerSword;
+    public static AudioClip playerBow;
+    public static AudioClip playerTeleport;
 
     // Effect Sounds
     public static AudioClip magmaSound;
@@ -103,6 +106,9 @@ public class SoundManagerScript : MonoBehaviour
         throwTileSound = Resources.Load<AudioClip>("throwtile");
         playerTakeDamageSound = Resources.Load<AudioClip>("playerdamage");
         footstepSound = Resources.Load<AudioClip>("footstep");
+        playerSword = Resources.Load<AudioClip>("PlayerSword");
+        playerBow = Resources.Load<AudioClip>("PlayerBow");
+        playerTeleport = Resources.Load<AudioClip>("teleport");
 
         // mushroom
         mushroomAttackSound = Resources.Load<AudioClip>("mushroomPunch");
@@ -260,6 +266,15 @@ public class SoundManagerScript : MonoBehaviour
                 break;
             case "mud":
                 audioSrc.PlayOneShot(mudSound);
+                break;
+            case "playerSword":
+                audioSrc.PlayOneShot(playerSword);
+                break;
+            case "playerBow":
+                audioSrc.PlayOneShot(playerBow);
+                break;
+            case "playerTeleport":
+                audioSrc.PlayOneShot(playerTeleport);
                 break;
         }
     }
