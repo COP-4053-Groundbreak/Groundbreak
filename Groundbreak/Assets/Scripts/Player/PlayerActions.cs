@@ -21,6 +21,7 @@ public class PlayerActions : MonoBehaviour
         turnLogic = FindObjectOfType<TurnLogic>();
         heldTileElement = Element.Void;
         enemyList = GameObject.FindGameObjectsWithTag("Enemy");
+        FindObjectOfType<FindNewGridManager>().OnGridChanged += GridChanged;
 
     }
 
@@ -119,7 +120,7 @@ public class PlayerActions : MonoBehaviour
                 {
                     tile.GetComponent<Tile>().gameObjectAbove.GetComponent<EnemyStateManager>().DealDamage(5);
                     canUseActive = false;
-                    playerAnimator.SetTrigger("Attack");
+                    playerAnimator.SetTrigger("Ranged");
                     SoundManagerScript.PlaySound("playerBow");
                     StartCoroutine(Duration(1, turnLogic.turnCount));
                 }
@@ -130,7 +131,7 @@ public class PlayerActions : MonoBehaviour
                     gameObject.GetComponent<PlayerMovement>().TeleportTo(tile);
                     canUseActive = false;
                     SoundManagerScript.PlaySound("playerTeleport");
-                    StartCoroutine(Duration(2, turnLogic.turnCount));
+                    StartCoroutine(Duration(3, turnLogic.turnCount));
 
                 }
                 break;
@@ -142,12 +143,28 @@ public class PlayerActions : MonoBehaviour
                     ReactionManager.TileOnTile(Element.Fire, tile.GetComponent<Tile>());
                     canUseActive = false;
                     tile.GetComponent<Tile>().setElement(temp);
-                    StartCoroutine(Duration(3, turnLogic.turnCount));
+                    StartCoroutine(Duration(4, turnLogic.turnCount));
                 }
                 break;
             case ActiveItem.ActiveItemName.RepulsionWand:
+                if (tile.GetComponent<Tile>().gameObjectAbove && tile.GetComponent<Tile>().gameObjectAbove.CompareTag("Enemy") && tile.GetComponent<TileClickable>().GetDistance() <= 3)
+                {
+                    Vector2 diff = new Vector2(tile.GetComponent<Tile>().gameObjectAbove.GetComponent<EnemyStateManager>().enemyX -  gameObject.GetComponent<PlayerMovement>().playerX,
+                                                tile.GetComponent<Tile>().gameObjectAbove.GetComponent<EnemyStateManager>().enemyY - gameObject.GetComponent<PlayerMovement>().playerY).normalized;
+                    ReactionManager.pushGO(gameObject, diff, 1, tile.GetComponent<Tile>().gameObjectAbove);
+                    canUseActive = false;
+                    StartCoroutine(Duration(2, turnLogic.turnCount));
+                }
                 break;
             case ActiveItem.ActiveItemName.AttractionWand:
+                if (tile.GetComponent<Tile>().gameObjectAbove && tile.GetComponent<Tile>().gameObjectAbove.CompareTag("Enemy") && tile.GetComponent<TileClickable>().GetDistance() <= 3)
+                {
+                    Vector2 diff = new Vector2(tile.GetComponent<Tile>().gameObjectAbove.GetComponent<EnemyStateManager>().enemyX - gameObject.GetComponent<PlayerMovement>().playerX,
+                                                tile.GetComponent<Tile>().gameObjectAbove.GetComponent<EnemyStateManager>().enemyY - gameObject.GetComponent<PlayerMovement>().playerY).normalized;
+                    ReactionManager.pullGO(gameObject, -diff, 1, tile.GetComponent<Tile>().gameObjectAbove);
+                    canUseActive = false;
+                    StartCoroutine(Duration(2, turnLogic.turnCount));
+                }
                 break;
         }
         
@@ -160,18 +177,26 @@ public class PlayerActions : MonoBehaviour
 
     IEnumerator Duration(int duration, int startTurn)
     {
+        
         yield return new WaitUntil(() => Check(startTurn, duration));
         canUseActive = true;
+        turnLogic.activeButton.interactable = true;
     }
 
 
     private bool Check(int startTurn, int duration)
     {
+        //Debug.LogError(turnLogic.turnCount + " " + startTurn + " " + duration + " " + (duration + startTurn));
         if (turnLogic.turnCount == startTurn + duration || !turnLogic.isCombatPhase)
         {
             return true;
         }
         return false;
+    }
+
+    private void GridChanged(object sender, System.EventArgs e)
+    {
+        canUseActive = true;
     }
 
 }

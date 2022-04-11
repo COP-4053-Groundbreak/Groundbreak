@@ -8,7 +8,7 @@ public class HoldPlayerStats : ScriptableObject
 {
     public PlayerConsumableInventory playerConsumableInventory = new PlayerConsumableInventory();
     public PlayerPassiveInventory playerPassiveInventory = new PlayerPassiveInventory();
-    public ActiveItem playerActiveItem = new ActiveItem {itemName = ActiveItem.ActiveItemName.BlinkRune};
+    public ActiveItem playerActiveItem = new ActiveItem {itemName = ActiveItem.ActiveItemName.AttractionWand};
     private void OnEnable()
     {
         
