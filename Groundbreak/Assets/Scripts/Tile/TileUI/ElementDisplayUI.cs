@@ -11,6 +11,7 @@ public class ElementDisplayUI : MonoBehaviour
     private void Start() {
         gridManager = FindObjectOfType<GridManager>();
         FindObjectOfType<FindNewGridManager>().OnGridChanged += GridChanged;
+        if (gridManager == null) Debug.Log("JESUS CHRIST");
         // Create Element UI
         foreach (Tile t in gridManager.grid){
             Instantiate(elemVisual, t.gameObject.transform.position, Quaternion.identity, t.transform);
@@ -25,7 +26,7 @@ public class ElementDisplayUI : MonoBehaviour
             foreach (Tile t in gridManager.grid){
                 Debug.Log("Looking through children");
                 if (t.transform.childCount > 0){
-                    GameObject elemVisual = t.transform.GetChild(0).gameObject;
+                    GameObject elemVisual = t.transform.GetChild(1).gameObject;
                     elemVisual.SetActive(!elemVisual.gameObject.activeInHierarchy);
                     Debug.Log($"After the change, the GO is now {elemVisual.gameObject.activeInHierarchy}");
                 }

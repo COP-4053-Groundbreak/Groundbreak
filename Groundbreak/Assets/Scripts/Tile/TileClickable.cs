@@ -9,6 +9,7 @@ public class TileClickable : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     TurnLogic turnLogic;
     int distance = -1;
     Tile lastTileHovered;
+    int effectIndicatorRange = 0;
     private void Start()
     {
         // Gets Reference to player
@@ -82,7 +83,7 @@ public class TileClickable : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     {
         
         GameObject ThisTile = eventData.pointerCurrentRaycast.gameObject;
-        // -P: lastTileHovered = ThisTile.GetComponent<Tile>();
+        lastTileHovered = ThisTile.GetComponent<Tile>();
         if (ThisTile.GetComponent<TilePathNode>() == null) 
         {
             return;
@@ -92,19 +93,95 @@ public class TileClickable : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
             return;
         }
         Player.GetComponent<PlayerMovement>().ShowLine(ThisTile.GetComponent<TilePathNode>().GetX(), ThisTile.GetComponent<TilePathNode>().GetY());
-        // -P: foreach(Tile neighbor in lastTileHovered.neighbors)
-            // -P: neighbor.GetComponent<Renderer>().material.color = Color.yellow;
+        
+        if (turnLogic.isThrowPhase && lastTileHovered.GetComponent<TileClickable>().GetDistance() <= Player.GetComponent<PlayerActions>().throwRange) {
+            Element activeElement = Player.GetComponent<PlayerActions>().heldTileElement;
+            if (lastTileHovered != null && activeElement != Element.Void) {
+                Element passiveElement = lastTileHovered.myElement;
+                
+                // Show reaction with enemy
+                if (lastTileHovered.gameObjectAbove != null && lastTileHovered.gameObjectAbove.tag == "Enemy") {
+                    passiveElement = lastTileHovered.gameObjectAbove.GetComponent<EnemyStateManager>().myElement;
+                } 
+                
+                Debug.Log("Active elem" + activeElement);
+                Debug.Log("Passive elem" + passiveElement);
+                switch((int)activeElement + (int)passiveElement) {
+                    case ((int)Element.Air + (int)Element.Earth): // Sandstorm 
+                        effectIndicatorRange = ReactionManager.SANDSTORM_RANGE;
+                        break;
+                    case ((int)Element.Earth + (int)Element.Fire): // Magma 
+                        effectIndicatorRange = 0;
+                        break;
+                    case ((int)Element.Water + (int)Element.Earth): // Mud
+                        effectIndicatorRange = 0;
+                        break;
+                    case ((int)Element.Water + (int)Element.Fire): // Smoke 
+                        effectIndicatorRange = 0;
+                        break;
+                    case ((int)Element.Air + (int)Element.Fire): // Fireball 
+                        effectIndicatorRange = ReactionManager.FIREBALL_RANGE;
+                        break;
+                    case ((int)Element.Air + (int)Element.Water): // Storm 
+                        effectIndicatorRange = ReactionManager.STORM_RANGE;
+                        break;
+                    default: // Same elem reaction
+                        effectIndicatorRange = 1;
+                        break;
+                }
+
+                lastTileHovered.transform.GetChild(0).GetComponent<Renderer>().material.color = Color.yellow;
+                showRange(effectIndicatorRange, lastTileHovered, new List<Tile>());
+            }     
+        }
+    }
+
+    public void showRange(int range, Tile startTile, List<Tile> neighborsVisited){
+        // Base case: We've looked as many tiles away as desired
+        if (range == 0){
+            startTile.transform.GetChild(0).GetComponent<Renderer>().material.color = Color.yellow;
+            return;
+        }
+
+        // Look at current tiles neighbors
+        foreach(Tile neighbor in startTile.neighbors){
+            // If haven't visited before, color
+            if (!neighborsVisited.Contains(neighbor)){
+                Debug.Log($"Unvisited tile at {neighbor.name}");
+                neighbor.transform.GetChild(0).GetComponent<Renderer>().material.color = Color.yellow;
+                neighborsVisited.Add(startTile);
+
+                // Repeat but looking at one less set of neighbors, starting at neighbor
+                showRange(range - 1, neighbor, neighborsVisited);
+            }
+        }
+    }
+
+
+    public void clearEffectRangeIndicator(){
+        foreach (Tile t in ReactionManager.gridManager.grid){
+            // In throw range
+            bool hasTile = Player.GetComponent<PlayerActions>().heldTileElement != Element.Void;
+            if (Player.GetComponent<PlayerActions>().throwRange >= t.GetComponent<TileClickable>().GetDistance() && hasTile){
+                t.transform.GetChild(0).GetComponent<Renderer>().material.color = Color.white;
+            } else { // Outside throw range
+                t.transform.GetChild(0).GetComponent<Renderer>().material.color = Color.clear;
+            }
+        }
     }
 
     // Clear line when mouse leaves the tile
     void IPointerExitHandler.OnPointerExit(PointerEventData eventData) 
     {
-        Player.GetComponent<PlayerMovement>().ClearLine();
-        // -P: Debug.Log($"Set {lastTileHovered.name}'s neighbors to original color!");
-        // -P: foreach(Tile neighbor in lastTileHovered.neighbors)
-            // -P: neighbor.setElement(neighbor.myElement);
+         Player.GetComponent<PlayerMovement>().ClearLine();
+        Debug.Log($"Exit");
         
+        if (turnLogic.isThrowPhase){
+            clearEffectRangeIndicator();
+        }     
     }
+
+    
 
     public void updateDistanceToPlayer() 
     {

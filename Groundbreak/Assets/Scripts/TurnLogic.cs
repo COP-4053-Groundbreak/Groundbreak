@@ -69,6 +69,7 @@ public class TurnLogic : MonoBehaviour
     {
         if (isPlayerTurn) 
         {
+            clearRangeIndicator();
             if (CheckForRoomClear()) 
             {
                 return;
@@ -94,15 +95,19 @@ public class TurnLogic : MonoBehaviour
         isMovementPhase = true;
         isThrowPhase = false;
         isActivePhase = false;
+
+        clearRangeIndicator();
     }
 
     // Switch to throw / pick up phase
     public void ThrowPressed()
     {
-        if (!throwTileButton) 
-        {
-            Debug.Log("HERE");
+        if (!throwTileButton) Debug.Log("HERE");
+
+        if(playerActions.heldTileElement != Element.Void){
+           showRangeIndicator(); 
         }
+
         throwTileButton.interactable = false;
         moveButton.interactable = true;
         activeButton.interactable = true;
@@ -406,4 +411,32 @@ public class TurnLogic : MonoBehaviour
         endTurnButton.interactable = toggle;
     }
 
+    public void showRangeIndicator(){
+        float x = playerActions.gameObject.GetComponent<PlayerMovement>().playerX;
+        float y = playerActions.gameObject.GetComponent<PlayerMovement>().playerY;
+        
+        Tile playerTile = ReactionManager.gridManager.getTile(x, y);
+        playerTile.transform.GetChild(0).GetComponent<Renderer>().material.color = Color.white;
+        x = playerTile.transform.position.x;
+        y = playerTile.transform.position.y;
+
+        Collider2D[] results = Physics2D.OverlapCircleAll(new Vector2(x,y), playerActions.throwRange);
+
+        foreach (Collider2D col in results){
+            Debug.Log(col.gameObject.name);
+            if (col.tag == "Tile" && playerActions.throwRange >= col.gameObject.GetComponent<TileClickable>().GetDistance()){
+                col.transform.GetChild(0).GetComponent<Renderer>().material.color = Color.white;
+                // Debug.Log("This should be white");
+            }   
+        }
+    }
+    
+    public void clearRangeIndicator(){
+        foreach (Tile t in ReactionManager.gridManager.grid){
+            Renderer rendComp = t.transform.GetChild(0).GetComponent<Renderer>();
+            if (rendComp.material.color == Color.white){
+                rendComp.material.color = Color.clear;
+            }
+        }
+    }
 }

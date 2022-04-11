@@ -9,7 +9,7 @@ public class PlayerActions : MonoBehaviour
     public bool canUseActive = true;
     [SerializeField] int pickupRange = 1;
     [SerializeField] public int throwRange = 1;
-    [SerializeField] Element heldTileElement;
+    [SerializeField] public Element heldTileElement;
     GameObject[] enemyList;
     TurnLogic turnLogic;
     [SerializeField] HoldPlayerStats playerStats;
@@ -68,6 +68,10 @@ public class PlayerActions : MonoBehaviour
                 FindObjectOfType<PlayerMovement>().ClearLine();
                 Debug.Log(heldTileElement);
                 
+                // Set indicator range if in throw phase
+                if (turnLogic.isThrowPhase){
+                    // turnLogic.showRangeIndicator();
+                }
             }
             
         }
