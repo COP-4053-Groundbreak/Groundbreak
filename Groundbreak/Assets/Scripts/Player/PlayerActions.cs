@@ -112,7 +112,7 @@ public class PlayerActions : MonoBehaviour
                     canUseActive = false;
                     playerAnimator.SetTrigger("Attack");
                     SoundManagerScript.PlaySound("playerSword");
-                    StartCoroutine(Duration(1, turnLogic.turnCount));
+                    StartCoroutine(Duration(playerStats.playerActiveItem.GetCooldown(), turnLogic.turnCount));
                 }
                 break;
             case ActiveItem.ActiveItemName.Bow:
@@ -122,7 +122,7 @@ public class PlayerActions : MonoBehaviour
                     canUseActive = false;
                     playerAnimator.SetTrigger("Ranged");
                     SoundManagerScript.PlaySound("playerBow");
-                    StartCoroutine(Duration(1, turnLogic.turnCount));
+                    StartCoroutine(Duration(playerStats.playerActiveItem.GetCooldown(), turnLogic.turnCount));
                 }
                 break;
             case ActiveItem.ActiveItemName.BlinkRune:
@@ -131,7 +131,7 @@ public class PlayerActions : MonoBehaviour
                     gameObject.GetComponent<PlayerMovement>().TeleportTo(tile);
                     canUseActive = false;
                     SoundManagerScript.PlaySound("playerTeleport");
-                    StartCoroutine(Duration(3, turnLogic.turnCount));
+                    StartCoroutine(Duration(playerStats.playerActiveItem.GetCooldown(), turnLogic.turnCount));
 
                 }
                 break;
@@ -143,7 +143,7 @@ public class PlayerActions : MonoBehaviour
                     ReactionManager.TileOnTile(Element.Fire, tile.GetComponent<Tile>());
                     canUseActive = false;
                     tile.GetComponent<Tile>().setElement(temp);
-                    StartCoroutine(Duration(4, turnLogic.turnCount));
+                    StartCoroutine(Duration(playerStats.playerActiveItem.GetCooldown(), turnLogic.turnCount));
                 }
                 break;
             case ActiveItem.ActiveItemName.RepulsionWand:
@@ -153,7 +153,7 @@ public class PlayerActions : MonoBehaviour
                                                 tile.GetComponent<Tile>().gameObjectAbove.GetComponent<EnemyStateManager>().enemyY - gameObject.GetComponent<PlayerMovement>().playerY).normalized;
                     ReactionManager.pushGO(gameObject, diff, 1, tile.GetComponent<Tile>().gameObjectAbove);
                     canUseActive = false;
-                    StartCoroutine(Duration(2, turnLogic.turnCount));
+                    StartCoroutine(Duration(playerStats.playerActiveItem.GetCooldown(), turnLogic.turnCount));
                 }
                 break;
             case ActiveItem.ActiveItemName.AttractionWand:
@@ -163,7 +163,7 @@ public class PlayerActions : MonoBehaviour
                                                 tile.GetComponent<Tile>().gameObjectAbove.GetComponent<EnemyStateManager>().enemyY - gameObject.GetComponent<PlayerMovement>().playerY).normalized;
                     ReactionManager.pullGO(gameObject, -diff, 1, tile.GetComponent<Tile>().gameObjectAbove);
                     canUseActive = false;
-                    StartCoroutine(Duration(2, turnLogic.turnCount));
+                    StartCoroutine(Duration(playerStats.playerActiveItem.GetCooldown(), turnLogic.turnCount));
                 }
                 break;
         }
