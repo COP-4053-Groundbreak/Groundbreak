@@ -41,9 +41,6 @@ public class TurnLogic : MonoBehaviour
 
     DisplayInitiative displayInitiative;
 
-    // Debug
-    public LineRenderer circleRenderer;
-
     private void Start()
     {
         displayInitiative = FindObjectOfType<DisplayInitiative>();
@@ -93,9 +90,6 @@ public class TurnLogic : MonoBehaviour
     {
         moveButton.interactable = false;
         throwTileButton.interactable = true;
-        Tile playerTile = ReactionManager.gridManager.getTile(playerActions.gameObject.transform.position.x, playerActions.gameObject.transform.position.y);
-        clearRangeIndicator();
-        activeButton.interactable = true;
 
         isMovementPhase = true;
         isThrowPhase = false;
@@ -109,12 +103,6 @@ public class TurnLogic : MonoBehaviour
         {
             Debug.Log("HERE");
         }
-        
-        if(playerActions.heldTileElement != Element.Void){
-           showRangeIndicator(); 
-        }
-        
-        
         throwTileButton.interactable = false;
         moveButton.interactable = true;
         activeButton.interactable = true;
@@ -331,7 +319,6 @@ public class TurnLogic : MonoBehaviour
     // Ends combat in a room and generates colliders for impassable terrain
     public void EndCombat()
     {
-        MovePressed();
         battleCanvas.SetActive(false);
         isCombatPhase = false;
         CreateVoidColliders();
@@ -419,32 +406,4 @@ public class TurnLogic : MonoBehaviour
         endTurnButton.interactable = toggle;
     }
 
-    public void showRangeIndicator(){
-
-        float x = playerActions.gameObject.GetComponent<PlayerMovement>().playerX;
-        float y = playerActions.gameObject.GetComponent<PlayerMovement>().playerY;
-        
-        Tile playerTile = ReactionManager.gridManager.getTile(x, y);
-        playerTile.transform.GetChild(0).GetComponent<Renderer>().material.color = Color.white;
-        x = playerTile.transform.position.x;
-        y = playerTile.transform.position.y;
-
-        Collider2D[] results = Physics2D.OverlapCircleAll(new Vector2(x,y), playerActions.throwRange);
-
-        foreach (Collider2D col in results){
-            Debug.Log(col.gameObject.name);
-            if (col.tag == "Tile" && playerActions.throwRange >= col.gameObject.GetComponent<TileClickable>().GetDistance()){
-                col.transform.GetChild(0).GetComponent<Renderer>().material.color = Color.white;
-                // Debug.Log("This should be white");
-            }   
-        }
-    }
-    public void clearRangeIndicator(){
-        foreach (Tile t in ReactionManager.gridManager.grid){
-            Renderer rendComp = t.transform.GetChild(0).GetComponent<Renderer>();
-            if (rendComp.material.color == Color.white){
-                rendComp.material.color = Color.clear;
-            }
-        }
-    }
 }

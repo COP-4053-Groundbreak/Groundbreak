@@ -6,7 +6,7 @@ using UnityEngine;
 public class ReactionManager : MonoBehaviour
 {
     public static GameObject effectPrefab;
-    [SerializeField] public static GridManager gridManager;
+    [SerializeField] static GridManager gridManager;
     public static Dictionary<int, Sprite> comboToVisual = new Dictionary<int, Sprite>();
 
     public static List<Effect> existingEffects;

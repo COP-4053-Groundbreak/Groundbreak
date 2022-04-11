@@ -28,19 +28,20 @@ public class Effect : MonoBehaviour {
 
     // Some effects should be processed immediately upon creation (i.e. mud, smoke)
     public void Initialize(Element a, Element b, Vector2 pos){
-        id = (int)a + (int)b;
-        gridManager = FindObjectOfType<GridManager>();  
-        myPos = pos;
-        myAnimator = GetComponent<Animator>();
-        //currRoom = gridManager.transform.parent.gameObject;
-        //Vector2 localPos = currRoom.transform.InverseTransformPoint(transform.position);
-        //posX = (int)(localPos.x);
-        //posY = (int)(localPos.y);
-        // Debug.LogWarning($"Init effect at {pos.x},{pos.y}");
-        tileUnderEffect = gridManager.getTile(pos.x, pos.y);
-        myAnimator.SetInteger("effectID", id);
-        switch(id) {
-            case ((int)Element.Air + (int)Element.Earth): // Sandstorm 
+          id = (int)a + (int)b;
+          gridManager = FindObjectOfType<GridManager>();  
+          myPos = pos;
+          myAnimator = GetComponent<Animator>();
+          
+          //currRoom = gridManager.transform.parent.gameObject;
+          //Vector2 localPos = currRoom.transform.InverseTransformPoint(transform.position);
+          //posX = (int)(localPos.x);
+          //posY = (int)(localPos.y);
+          // Debug.LogWarning($"Init effect at {pos.x},{pos.y}");
+          tileUnderEffect = gridManager.getTile(pos.x, pos.y);
+          myAnimator.SetInteger("effectID", id);
+          switch(id) {
+              case ((int)Element.Air + (int)Element.Earth): // Sandstorm 
                 effectName = "sandstorm";
                 Debug.Log("Sandstorm down effect time!"); 
                 sandStormDownEffect(tileUnderEffect, ReactionManager.SANDSTORM_RANGE, new List<Tile>(), new List<GameObject>());
@@ -51,8 +52,8 @@ public class Effect : MonoBehaviour {
             case ((int)Element.Earth + (int)Element.Fire): // Magma 
                 effectName = "magma";
                 if (tileUnderEffect.gameObjectAbove != null){
-                        if (tileUnderEffect.gameObjectAbove.tag == "Player" || tileUnderEffect.gameObjectAbove.tag == "Enemy"){
-                            dealDamageToChar(tileUnderEffect.gameObjectAbove, ReactionManager.MAGMA_DMG);
+                    if (tileUnderEffect.gameObjectAbove.tag == "Player" || tileUnderEffect.gameObjectAbove.tag == "Enemy"){
+                        dealDamageToChar(tileUnderEffect.gameObjectAbove, ReactionManager.MAGMA_DMG);
                     }
                 }
                 this.transform.localScale = new Vector2(2,3);
@@ -449,7 +450,7 @@ public class Effect : MonoBehaviour {
             // neighbor.GetComponent<Renderer>().material.color = Color.yellow; // TESTING NEIGHBORS INDICATOR
             // If haven't visited before, do effect
             if (!neighborsVisited.Contains(neighbor)){
-                neighbor.GetComponent<Renderer>().material.SetColor("_Color", Color.yellow);
+                //neighbor.GetComponent<Renderer>().material.SetColor("_Color", Color.yellow);
                 Debug.Log($"Unvisited tile at {neighbor.name}");
                 if (neighbor.gameObjectAbove != null) Debug.Log($"On Tile at {neighbor.transform.position} there is a {neighbor.gameObjectAbove.name}");
                 // Make sure there's something to pull and that it's a character
