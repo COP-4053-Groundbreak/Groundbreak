@@ -13,7 +13,6 @@ public class RoomManager : MonoBehaviour
         // -N
 
         // Had to comment this out of toggle " || gameObject.name != "StartRoomLevel2""
-        Debug.LogError(SceneManager.GetActiveScene().name + "," + gameObject.name);
         if (gameObject.name != "StartRoomV2")
         {
             foreach (Transform child in transform)
@@ -26,7 +25,6 @@ public class RoomManager : MonoBehaviour
         }
         if(SceneManager.GetActiveScene().name == "Tutorial" && gameObject.name == "R")
         {
-            Debug.LogError("kill me");
             foreach (Transform child in transform)
             {
                 if (!(child.CompareTag("SpawnPoint") || child.CompareTag("PlayerDetector")))
