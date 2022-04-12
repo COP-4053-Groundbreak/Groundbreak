@@ -81,7 +81,6 @@ public class TileClickable : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     // -P before them
     void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData) 
     {
-        
         GameObject ThisTile = eventData.pointerCurrentRaycast.gameObject;
         lastTileHovered = ThisTile.GetComponent<Tile>();
         if (ThisTile.GetComponent<TilePathNode>() == null) 
