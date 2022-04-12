@@ -39,7 +39,7 @@ public class RoomManager : MonoBehaviour
 
     private void Start()
     {
-        //StartCoroutine(DelayAndShow());
+        StartCoroutine(DelayAndShow());
     }
 
     IEnumerator DelayAndShow() 
