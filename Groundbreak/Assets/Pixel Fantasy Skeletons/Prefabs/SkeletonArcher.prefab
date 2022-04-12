@@ -101,7 +101,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.18, y: 1.2}
+  m_Size: {x: 1.18, y: 1.39}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -150,6 +150,10 @@ MonoBehaviour:
   swordDamage: 10
   mageDamage: 15
   bossDamage: 20
+  goblinDamage: 10
+  treeDamage: 10
+  mushroomDamage: 10
+  trollDamage: 15
   listOfTiles: []
   startHealth: 50
   pfHealthBar: {fileID: 8601539936103537149, guid: 9c241cd300c70dd42bfc6fd13cca7c4b, type: 3}
@@ -181,8 +185,8 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.18, y: 1.2}
-    newSize: {x: 1.18, y: 1.2}
+    oldSize: {x: 1.18, y: 1.39}
+    newSize: {x: 1.18, y: 1.39}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
