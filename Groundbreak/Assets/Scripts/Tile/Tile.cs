@@ -20,6 +20,12 @@ public class Tile : MonoBehaviour {
         setElement(this.myElement);
         gameObjectAbove = null;
         tl = FindObjectOfType<TurnLogic>();
+        if (this.GetComponent<SpriteRenderer>().sprite.name.Contains("barrel")){
+           /* Debug.Log("Spawning barrel!");
+            staticObjAbove = Instantiate(new GameObject("barrel"), transform.position, Quaternion.identity);
+            staticObjAbove.AddComponent<Rigidbody2D>();
+            staticObjAbove.AddComponent<BoxCollider2D>();*/
+        }
     }
 
     // Finds up to 8 neighbors around this tile. Does so using a PhysicsOverlap circle which detects
@@ -109,11 +115,13 @@ public class Tile : MonoBehaviour {
             default: // grey
                 isThrowable = false;
                 newColor = Color.grey;
+                this.GetComponent<Renderer>().material.SetColor("_Color", newColor);
                 break;
         }
 
         // Following for visualization purposes
-        this.GetComponent<Renderer>().material.SetColor("_Color", newColor);
+        
+        // this.GetComponent<Renderer>().material.SetColor("_Color", newColor);
         // Set Tile Element symbol to new element
         if (transform.childCount > 1){
             //Debug.Log("I am with child");
