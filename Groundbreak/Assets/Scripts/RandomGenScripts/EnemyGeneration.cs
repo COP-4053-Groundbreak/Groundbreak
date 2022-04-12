@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EnemyGeneration : MonoBehaviour
 {
@@ -27,6 +28,12 @@ public class EnemyGeneration : MonoBehaviour
     {
         //Debug.Log("Inside Start function for EnemyGeneration");
         templates = FindObjectOfType<EnemyTemplates>();
+
+        if (SceneManager.GetActiveScene().name == "Tutorial") 
+        {
+            return;
+        }
+
 
         if (spawned == false)
         {

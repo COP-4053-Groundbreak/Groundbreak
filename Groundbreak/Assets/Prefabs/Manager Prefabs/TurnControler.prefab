@@ -45,9 +45,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isMovementPhase: 1
   isThrowPhase: 0
+  isActivePhase: 0
   isCombatPhase: 0
+  actorList: []
+  listOfInitative: 
   endTurnButton: {fileID: 0}
   moveButton: {fileID: 0}
+  activeButton: {fileID: 0}
   throwTileButton: {fileID: 0}
   battleCanvas: {fileID: 0}
   empty: {fileID: 2465788029501398272, guid: 96bb0479eabb1c447aa5aa02c2acf4eb, type: 3}
+  turnCount: 0
