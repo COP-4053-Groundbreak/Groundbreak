@@ -42,7 +42,7 @@ public class GridManager : MonoBehaviour
 
         //generateGrid();
 
-        Debug.Log(grid[0, 0].getElement());
+        //Debug.Log(grid[0, 0].getElement());
 
     }
 
