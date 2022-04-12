@@ -13,7 +13,7 @@ public class RoomManager : MonoBehaviour
         // -N
 
         // Had to comment this out of toggle " || gameObject.name != "StartRoomLevel2""
-        if (gameObject.name != "StartRoomV2")
+        if (gameObject.name != "StartRoomV2" && (SceneManager.GetActiveScene().name == "Level2" && gameObject.name != "StartRoomLevel2"))
         {
             foreach (Transform child in transform)
             {
@@ -37,7 +37,7 @@ public class RoomManager : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(DelayAndShow());
+        //StartCoroutine(DelayAndShow());
     }
 
     IEnumerator DelayAndShow() 
