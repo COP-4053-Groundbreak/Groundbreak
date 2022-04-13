@@ -20,6 +20,9 @@ public class Tile : MonoBehaviour {
         setElement(this.myElement);
         gameObjectAbove = null;
         tl = FindObjectOfType<TurnLogic>();
+        for (int i = 0; i < this.transform.childCount; i++)
+            this.transform.GetChild(i).gameObject.SetActive(true);
+
         if (this.GetComponent<SpriteRenderer>().sprite.name.Contains("barrel")){
            /* Debug.Log("Spawning barrel!");
             staticObjAbove = Instantiate(new GameObject("barrel"), transform.position, Quaternion.identity);
@@ -98,34 +101,34 @@ public class Tile : MonoBehaviour {
         Color newColor;
         switch(newElement){
             case Element.Air: // green
-                newColor = Color.green;
+                newColor = new Color(0, 1, 0, 0.25f);
                 break;
             case Element.Earth: // brown
-                newColor = new Color(210f/255f, 180f/255f, 140f/255f);
+                newColor = new Color(210f/255f, 180f/255f, 140f/255f, 0.25f);
                 break;
             case Element.Fire: // red
-                newColor = Color.red;
+                newColor = new Color(1, 0, 0, 0.25f);
                 break;
             case Element.Water: // blue
-                newColor = Color.blue;
+                newColor = new Color(0, 1, 0, 0.25f);
                 break;
             case Element.Base: // white
-                newColor = Color.white;
+                newColor = new Color(1, 1, 1, 0.25f);
                 break;
             default: // grey
                 isThrowable = false;
-                newColor = Color.grey;
+                newColor = new Color(0.5f, 0.5f, 0.5f, 0.25f);
                 this.GetComponent<Renderer>().material.SetColor("_Color", newColor);
                 break;
         }
-
+        // Debug.Log("HI MY NAME IS " + transform.GetChild(0).name);
         // Following for visualization purposes
-        
-        // this.GetComponent<Renderer>().material.SetColor("_Color", newColor);
+        this.transform.GetChild(0).GetComponent<Renderer>().material.SetColor("_Color", newColor);
+        // Debug.Log("HI MY COLOR IS " + transform.GetChild(0).GetComponent<Renderer>().material.color);
         // Set Tile Element symbol to new element
-        if (transform.childCount > 1){
+        if (transform.childCount > 2){
             //Debug.Log("I am with child");
-            transform.GetChild(1).GetComponent<elemVisual>().setSymbol();
+            transform.GetChild(2).GetComponent<elemVisual>().setSymbol();
         }
     }
     public void setMovementModifier(int a){

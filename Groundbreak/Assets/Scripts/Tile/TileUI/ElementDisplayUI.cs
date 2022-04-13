@@ -26,7 +26,7 @@ public class ElementDisplayUI : MonoBehaviour
             foreach (Tile t in gridManager.grid){
                 Debug.Log("Looking through children");
                 if (t.transform.childCount > 0){
-                    GameObject elemVisual = t.transform.GetChild(1).gameObject;
+                    GameObject elemVisual = t.transform.GetChild(2).gameObject;
                     elemVisual.SetActive(!elemVisual.gameObject.activeInHierarchy);
                     Debug.Log($"After the change, the GO is now {elemVisual.gameObject.activeInHierarchy}");
                 }
