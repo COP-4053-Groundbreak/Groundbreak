@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-
+using UnityEngine.SceneManagement;
 
 public class GridManager : MonoBehaviour
 {
@@ -38,12 +38,35 @@ public class GridManager : MonoBehaviour
         bottomLeftCorner = new Vector2((int)(this.room.transform.position.x - 5.0f), (int)(this.room.transform.position.y - 5.0f));
         room = this.gameObject;
 
-        SpawnTilesInRoom();
+        if (SceneManager.GetActiveScene().name != "Tutorial")
+        {
+            SpawnTilesInRoom();
+        }
+        else 
+        {
+            AddTilesToGridTutorial();
+        }
 
         //generateGrid();
 
         //Debug.Log(grid[0, 0].getElement());
 
+    }
+
+    private void AddTilesToGridTutorial()
+    {
+        Debug.Log("hewwo");
+        foreach (Transform tilePrefab in transform.parent.Find("TileHolder")) 
+        {
+            foreach (Transform child in tilePrefab.transform)
+            {
+                //child.SetParent(tileHolder.transform);
+                //Debug.Log(child.name + " " + (int)(child.localPosition.x + child.parent.localPosition.x + child.parent.parent.localPosition.x + 5.5f - room.transform.InverseTransformPoint(child.transform.position).x) + " , " + (int)(child.localPosition.y + child.parent.localPosition.y + child.parent.parent.localPosition.y + 5.5f - room.transform.InverseTransformPoint(child.transform.position).y));
+                grid[(int)(room.transform.InverseTransformPoint(child.transform.position).x + 5.5f), (int)(room.transform.InverseTransformPoint(child.transform.position).y + 5.5f)] = child.GetComponent<Tile>();
+
+            }
+        }
+        GetComponentInParent<RoomManager>().ToggleRoom(false);
     }
 
     void Start(){

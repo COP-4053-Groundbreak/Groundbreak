@@ -17,10 +17,11 @@ public class PlayerDetector : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //Debug.Log("Collision with player has happened");
-
+        
         //PlayerRoom.currentRoom = currentRoom;
         if (collision.CompareTag("Player"))
         {
+            
             foreach (Transform child in currentRoom.transform)
             {
                 //Debug.Log("Inside foreach");
