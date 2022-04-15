@@ -167,7 +167,7 @@ public class EnemyStateManager : MonoBehaviour
     {
         
         yield return new WaitForSeconds(2.95f);
-        SceneManager.LoadSceneAsync("EndScene");
+        LevelManager.LoadLevel2();
     }
 
     GameObject currRoom;

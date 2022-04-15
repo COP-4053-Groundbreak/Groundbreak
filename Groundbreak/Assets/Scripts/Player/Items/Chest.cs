@@ -7,7 +7,7 @@ public class Chest : MonoBehaviour
     [SerializeField] Sprite OpenSprite;
     PassiveItemManager passiveItemManager;
     bool full = true;
-    private int passiveConsumableActive = 2;
+    private int passiveConsumableActive = 1;
     private void Start()
     {
         passiveItemManager = FindObjectOfType<PassiveItemManager>();

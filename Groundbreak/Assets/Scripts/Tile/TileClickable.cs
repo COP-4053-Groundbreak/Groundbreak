@@ -172,7 +172,10 @@ public class TileClickable : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     // Clear line when mouse leaves the tile
     void IPointerExitHandler.OnPointerExit(PointerEventData eventData) 
     {
-         Player.GetComponent<PlayerMovement>().ClearLine();
+        if (Player.GetComponent<PlayerMovement>() != null)
+        {
+            Player.GetComponent<PlayerMovement>().ClearLine();
+        }
         Debug.Log($"Exit");
         
         if (turnLogic.isThrowPhase){

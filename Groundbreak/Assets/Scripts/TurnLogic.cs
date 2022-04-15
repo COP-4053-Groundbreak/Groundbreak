@@ -439,4 +439,9 @@ public class TurnLogic : MonoBehaviour
             }
         }
     }
+
+    public void TESTSWITCHLEVEL() 
+    {
+        LevelManager.LoadLevel2();
+    }
 }

@@ -55,18 +55,23 @@ public class ReactionManager : MonoBehaviour
         effectPrefab = Resources.Load("Effect") as GameObject;
         if (effectPrefab == null)
             Debug.Log("WHY");
-        
-        // Add air reactions to table
-        comboToVisual.Add((int)Element.Air + (int)Element.Earth, Resources.Load<Sprite>("Assets/Sprites/Effects/sandstorm.png"));
-        comboToVisual.Add((int)Element.Air + (int)Element.Fire, Resources.Load<Sprite>("Assets/Sprites/Effects/spreadfire.png"));
-        comboToVisual.Add((int)Element.Air + (int)Element.Water, Resources.Load<Sprite>("Assets/Sprites/Effects/storm.png"));
 
-        // Add earth reactions to table
-        comboToVisual.Add((int)Element.Earth + (int)Element.Water, Resources.Load<Sprite>("Assets/Sprites/Effects/mud.png"));
-        comboToVisual.Add((int)Element.Earth + (int)Element.Fire, Resources.Load<Sprite>("Assets/Sprites/Effects/magma.png"));
+        // Dont add reactions if they already exist
+        // Added for level transition -N
+        if (!comboToVisual.ContainsKey((int)Element.Air + (int)Element.Earth))
+        {
+            // Add air reactions to table
+            comboToVisual.Add((int)Element.Air + (int)Element.Earth, Resources.Load<Sprite>("Assets/Sprites/Effects/sandstorm.png"));
+            comboToVisual.Add((int)Element.Air + (int)Element.Fire, Resources.Load<Sprite>("Assets/Sprites/Effects/spreadfire.png"));
+            comboToVisual.Add((int)Element.Air + (int)Element.Water, Resources.Load<Sprite>("Assets/Sprites/Effects/storm.png"));
 
-        // Add fire reactions to table
-        comboToVisual.Add((int)Element.Fire + (int)Element.Water, Resources.Load<Sprite>("Assets/Sprites/Effects/smoke.png"));
+            // Add earth reactions to table
+            comboToVisual.Add((int)Element.Earth + (int)Element.Water, Resources.Load<Sprite>("Assets/Sprites/Effects/mud.png"));
+            comboToVisual.Add((int)Element.Earth + (int)Element.Fire, Resources.Load<Sprite>("Assets/Sprites/Effects/magma.png"));
+
+            // Add fire reactions to table
+            comboToVisual.Add((int)Element.Fire + (int)Element.Water, Resources.Load<Sprite>("Assets/Sprites/Effects/smoke.png"));
+        }
     }
     
     // Reactions will always occur between two different objects, each with an element
