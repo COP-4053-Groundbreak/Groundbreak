@@ -162,9 +162,9 @@ public class TileClickable : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
             // In throw range
             bool hasTile = Player.GetComponent<PlayerActions>().heldTileElement != Element.Void;
             if (Player.GetComponent<PlayerActions>().throwRange >= t.GetComponent<TileClickable>().GetDistance() && hasTile){
-                t.transform.GetChild(0).GetComponent<Renderer>().material.color = Color.white;
+                t.transform.GetChild(1).GetComponent<Renderer>().material.color = Color.white;
             } else { // Outside throw range
-                t.transform.GetChild(0).GetComponent<Renderer>().material.color = Color.clear;
+                t.transform.GetChild(1).GetComponent<Renderer>().material.color = Color.clear;
             }
         }
     }
