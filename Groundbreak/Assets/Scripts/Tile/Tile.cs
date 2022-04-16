@@ -25,7 +25,7 @@ public class Tile : MonoBehaviour {
             this.transform.GetChild(i).gameObject.SetActive(true);
 
         mySprite = this.GetComponent<SpriteRenderer>().sprite;
-        if (this.GetComponent<SpriteRenderer>().sprite.name.Contains("barrel")){
+        if (mySprite != null && this.GetComponent<SpriteRenderer>().sprite.name.Contains("barrel")){
            /* Debug.Log("Spawning barrel!");
             staticObjAbove = Instantiate(new GameObject("barrel"), transform.position, Quaternion.identity);
             staticObjAbove.AddComponent<Rigidbody2D>();
