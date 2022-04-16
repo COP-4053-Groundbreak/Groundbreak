@@ -101,16 +101,18 @@ public class Tile : MonoBehaviour {
     public void setElement(Element newElement){ 
         if (myElement == Element.Void){
             this.GetComponent<SpriteRenderer>().sprite = mySprite;
+            Debug.Log("In it baby");
         }
         myElement = newElement;
         Color newColor;
 
         switch(newElement){
-            case Element.Air: // green
-                newColor = new Color(0, 1, 0, 0.25f);
+            case Element.Air: // cyan
+                newColor = Color.cyan;
+                newColor = new Color(newColor.r, newColor.g, newColor.b, 0.25f);
                 break;
-            case Element.Earth: // brown
-                newColor = new Color(210f/255f, 180f/255f, 140f/255f, 0.25f);
+            case Element.Earth: // green
+                newColor = new Color(0, 1, 0, 0.25f);
                 break;
             case Element.Fire: // red
                 newColor = new Color(1, 0, 0, 0.25f);
