@@ -6,19 +6,25 @@ using UnityEngine.UI;
 
 public class DisplayHeldTile : MonoBehaviour
 {
+    Image myImage;
     private void Start()
     {
-        GetComponent<Image>().color = Color.clear;
+        myImage = GetComponent<Image>();
+        myImage.color = Color.clear;
     }
     public void DisplayTile(GameObject tile) 
     {
-       GetComponent<Image>().sprite = tile.GetComponent<SpriteRenderer>().sprite;
-       GetComponent<Image>().color = tile.GetComponent<Renderer>().material.color;
+       myImage.sprite = tile.GetComponent<SpriteRenderer>().sprite;
+       myImage.color = tile.transform.GetChild(0).GetComponent<Renderer>().material.color;
+       myImage.color = new Color(myImage.color.r, myImage.color.g, myImage.color.b);
+       Debug.Log("BB" + this.transform.childCount);
+       Image p = this.transform.GetChild(0).GetComponent<Image>();
+       p.sprite = tile.transform.GetChild(2).GetComponent<SpriteRenderer>().sprite;
     }
 
     public void ClearTile() 
     {
-        GetComponent<Image>().sprite = null;
-        GetComponent<Image>().color = Color.clear;
+        myImage.sprite = null;
+        myImage.color = Color.clear;
     }
 }

@@ -416,7 +416,7 @@ public class TurnLogic : MonoBehaviour
         float y = playerActions.gameObject.GetComponent<PlayerMovement>().playerY;
         
         Tile playerTile = ReactionManager.gridManager.getTile(x, y);
-        playerTile.transform.GetChild(0).GetComponent<Renderer>().material.color = Color.white;
+        playerTile.transform.GetChild(1).GetComponent<Renderer>().material.color = Color.white;
         x = playerTile.transform.position.x;
         y = playerTile.transform.position.y;
 
@@ -425,7 +425,7 @@ public class TurnLogic : MonoBehaviour
         foreach (Collider2D col in results){
             Debug.Log(col.gameObject.name);
             if (col.tag == "Tile" && playerActions.throwRange >= col.gameObject.GetComponent<TileClickable>().GetDistance()){
-                col.transform.GetChild(0).GetComponent<Renderer>().material.color = Color.white;
+                col.transform.GetChild(1).GetComponent<Renderer>().material.color = Color.white;
                 // Debug.Log("This should be white");
             }   
         }
@@ -433,7 +433,7 @@ public class TurnLogic : MonoBehaviour
     
     public void clearRangeIndicator(){
         foreach (Tile t in ReactionManager.gridManager.grid){
-            Renderer rendComp = t.transform.GetChild(0).GetComponent<Renderer>();
+            Renderer rendComp = t.transform.GetChild(1).GetComponent<Renderer>();
             if (rendComp.material.color == Color.white){
                 rendComp.material.color = Color.clear;
             }

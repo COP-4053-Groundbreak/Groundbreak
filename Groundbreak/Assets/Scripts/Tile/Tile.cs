@@ -15,6 +15,7 @@ public class Tile : MonoBehaviour {
     public List<Tile> neighbors;
     public bool isThrowable = true;
     private TurnLogic tl;
+    private Sprite mySprite;
 
     private void Start() {
         setElement(this.myElement);
@@ -23,6 +24,7 @@ public class Tile : MonoBehaviour {
         for (int i = 0; i < this.transform.childCount; i++)
             this.transform.GetChild(i).gameObject.SetActive(true);
 
+        mySprite = this.GetComponent<SpriteRenderer>().sprite;
         if (this.GetComponent<SpriteRenderer>().sprite.name.Contains("barrel")){
            /* Debug.Log("Spawning barrel!");
             staticObjAbove = Instantiate(new GameObject("barrel"), transform.position, Quaternion.identity);
@@ -97,8 +99,12 @@ public class Tile : MonoBehaviour {
         return myElement;
     }
     public void setElement(Element newElement){ 
+        if (myElement == Element.Void){
+            this.GetComponent<SpriteRenderer>().sprite = mySprite;
+        }
         myElement = newElement;
         Color newColor;
+
         switch(newElement){
             case Element.Air: // green
                 newColor = new Color(0, 1, 0, 0.25f);
@@ -110,17 +116,19 @@ public class Tile : MonoBehaviour {
                 newColor = new Color(1, 0, 0, 0.25f);
                 break;
             case Element.Water: // blue
-                newColor = new Color(0, 1, 0, 0.25f);
+                newColor = new Color(0, 0, 1, 0.25f);
                 break;
             case Element.Base: // white
                 newColor = new Color(1, 1, 1, 0.25f);
                 break;
             default: // grey
                 isThrowable = false;
-                newColor = new Color(0.5f, 0.5f, 0.5f, 0.25f);
-                this.GetComponent<Renderer>().material.SetColor("_Color", newColor);
+                newColor = new Color(0, 0, 0, 0.65f);
+                setVoid();
+                //this.GetComponent<Renderer>().material.SetColor("_Color", newColor);
                 break;
         }
+        
         // Debug.Log("HI MY NAME IS " + transform.GetChild(0).name);
         // Following for visualization purposes
         this.transform.GetChild(0).GetComponent<Renderer>().material.SetColor("_Color", newColor);
@@ -130,6 +138,10 @@ public class Tile : MonoBehaviour {
             //Debug.Log("I am with child");
             transform.GetChild(2).GetComponent<elemVisual>().setSymbol();
         }
+    }
+
+    public void setVoid(){
+        this.GetComponent<SpriteRenderer>().sprite = null;
     }
     public void setMovementModifier(int a){
         movementModifier = a;

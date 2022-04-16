@@ -129,7 +129,7 @@ public class TileClickable : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
                         break;
                 }
 
-                lastTileHovered.transform.GetChild(0).GetComponent<Renderer>().material.color = Color.yellow;
+                lastTileHovered.transform.GetChild(1).GetComponent<Renderer>().material.color = Color.yellow;
                 showRange(effectIndicatorRange, lastTileHovered, new List<Tile>());
             }     
         }
@@ -138,7 +138,7 @@ public class TileClickable : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     public void showRange(int range, Tile startTile, List<Tile> neighborsVisited){
         // Base case: We've looked as many tiles away as desired
         if (range == 0){
-            startTile.transform.GetChild(0).GetComponent<Renderer>().material.color = Color.yellow;
+            startTile.transform.GetChild(1).GetComponent<Renderer>().material.color = Color.yellow;
             return;
         }
 
@@ -147,7 +147,7 @@ public class TileClickable : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
             // If haven't visited before, color
             if (!neighborsVisited.Contains(neighbor)){
                 Debug.Log($"Unvisited tile at {neighbor.name}");
-                neighbor.transform.GetChild(0).GetComponent<Renderer>().material.color = Color.yellow;
+                neighbor.transform.GetChild(1).GetComponent<Renderer>().material.color = Color.yellow;
                 neighborsVisited.Add(startTile);
 
                 // Repeat but looking at one less set of neighbors, starting at neighbor
