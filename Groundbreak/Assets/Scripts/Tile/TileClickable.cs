@@ -136,6 +136,9 @@ public class TileClickable : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     }
 
     public void showRange(int range, Tile startTile, List<Tile> neighborsVisited){
+        Debug.Log("Showing effect range");
+        if (!turnLogic.isCombatPhase)
+            return;
         // Base case: We've looked as many tiles away as desired
         if (range == 0){
             startTile.transform.GetChild(1).GetComponent<Renderer>().material.color = Color.yellow;
@@ -158,6 +161,7 @@ public class TileClickable : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
 
 
     public void clearEffectRangeIndicator(){
+        Debug.Log("Clearing!");
         foreach (Tile t in ReactionManager.gridManager.grid){
             // In throw range
             bool hasTile = Player.GetComponent<PlayerActions>().heldTileElement != Element.Void;

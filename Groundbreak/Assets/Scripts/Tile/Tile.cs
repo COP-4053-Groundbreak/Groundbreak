@@ -131,7 +131,7 @@ public class Tile : MonoBehaviour {
                 break;
         }
         
-        // Debug.Log("HI MY NAME IS " + transform.GetChild(0).name);
+        Debug.Log("HI MY NAME IS " + transform.name);
         // Following for visualization purposes
         this.transform.GetChild(0).GetComponent<Renderer>().material.SetColor("_Color", newColor);
         // Debug.Log("HI MY COLOR IS " + transform.GetChild(0).GetComponent<Renderer>().material.color);
@@ -152,9 +152,9 @@ public class Tile : MonoBehaviour {
         return movementModifier;
     }
     private void OnTriggerEnter2D(Collider2D other) {
-        if (other.gameObject.tag == "Chest")
+        if (other.gameObject.tag == "Chest" || other.gameObject.tag == "Barrel")
             staticObjAbove = other.gameObject;
-        if (other.gameObject.tag == "Enemy" || other.gameObject.tag == "Player" || other.gameObject.tag == "Chest"){
+        if (other.gameObject.tag == "Enemy" || other.gameObject.tag == "Player" || other.gameObject.tag == "Chest" || other.gameObject.tag == "Barrel"){
             //if (other.gameObject.tag == "Player") Debug.LogWarning("Player entered a tile!");
             gameObjectAbove = other.gameObject;
         }
