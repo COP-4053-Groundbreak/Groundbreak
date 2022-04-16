@@ -82,6 +82,7 @@ public class Pathfinding: MonoBehaviour
                         closedList.Add(neighborNode);
                         continue;
                     }
+
                 }
 
                 // calculate the cost it would take to get to that neighbor node using this tile
