@@ -744,7 +744,20 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: ThrowPressed
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 8730317363273094053, guid: d486947c41becee4e9296bd386f7f6cc, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8730317363273094053, guid: d486947c41becee4e9296bd386f7f6cc, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 49.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8730317363273094053, guid: d486947c41becee4e9296bd386f7f6cc, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -49.3
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 8843463823588153623, guid: d486947c41becee4e9296bd386f7f6cc, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: d486947c41becee4e9296bd386f7f6cc, type: 3}
 --- !u!1 &1073104268 stripped
 GameObject:
