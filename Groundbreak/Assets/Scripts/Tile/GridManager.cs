@@ -74,7 +74,8 @@ public class GridManager : MonoBehaviour
             t.findNeighbors(this);
         }
     }
-
+    int count2 = 0;
+    int count3 = 0;
     public void SpawnTilesInRoom()
     {
 
@@ -88,10 +89,13 @@ public class GridManager : MonoBehaviour
                 tilePrefab = Instantiate(templates.normalTileSet[rand], spawn.transform.position, templates.normalTileSet[rand].transform.rotation, holder.transform);
                 foreach (Transform child in tilePrefab.transform)
                 {
+                    if (child.tag != "Tile")
+                        continue;
+                    count2++;
                     //child.SetParent(tileHolder.transform);
                     //Debug.Log(child.name + " " + (int)(child.localPosition.x + child.parent.localPosition.x + child.parent.parent.localPosition.x + 5.5f - room.transform.InverseTransformPoint(child.transform.position).x) + " , " + (int)(child.localPosition.y + child.parent.localPosition.y + child.parent.parent.localPosition.y + 5.5f - room.transform.InverseTransformPoint(child.transform.position).y));
                     grid[(int)(room.transform.InverseTransformPoint(child.transform.position).x + 5.5f), (int)(room.transform.InverseTransformPoint(child.transform.position).y + 5.5f)] = child.GetComponent<Tile>();
-
+                    //Debug.Log("Added 2x2");
                 }
             }
             else if(spawn.CompareTag("TileSpawnPoint2"))
@@ -100,16 +104,19 @@ public class GridManager : MonoBehaviour
                 tilePrefab = Instantiate(templates.threeByThreeTileSet[rand], spawn.transform.position, templates.threeByThreeTileSet[rand].transform.rotation, holder.transform);
                 foreach (Transform child in tilePrefab.transform)
                 {
+                    if (child.tag != "Tile")
+                        continue;
+                    count3++;
                     //child.SetParent(tileHolder.transform);
                     //Debug.Log(child.name + " " + (int)(child.localPosition.x + child.parent.localPosition.x + child.parent.parent.localPosition.x + 5.5f - room.transform.InverseTransformPoint(child.transform.position).x) + " , " + (int)(child.localPosition.y + child.parent.localPosition.y + child.parent.parent.localPosition.y + 5.5f - room.transform.InverseTransformPoint(child.transform.position).y));
                     grid[(int)(room.transform.InverseTransformPoint(child.transform.position).x + 5.5f), (int)(room.transform.InverseTransformPoint(child.transform.position).y + 5.5f)] = child.GetComponent<Tile>();
-
+                    //Debug.Log("Added 3x3");
                 }
             }         
             Destroy(spawn);
         }
         GetComponentInParent<RoomManager>().ToggleRoom(false);
-
+        Debug.Log($"Added {count2} 2x2 and {count3} 3x3");
     }
 
     public int getHeight(){

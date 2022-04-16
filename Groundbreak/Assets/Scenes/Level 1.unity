@@ -720,6 +720,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: ActivePressed
       objectReference: {fileID: 0}
+    - target: {fileID: 4830046982696719232, guid: d486947c41becee4e9296bd386f7f6cc, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.0009
+      objectReference: {fileID: 0}
     - target: {fileID: 6254342985067010917, guid: d486947c41becee4e9296bd386f7f6cc, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1322,6 +1326,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6142988430305187813, guid: 377dfad67cacf7b428531ab86e80d448, type: 3}
+      propertyPath: threeByThreeTileSet.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6142988430305187813, guid: 377dfad67cacf7b428531ab86e80d448, type: 3}
+      propertyPath: threeByThreeTileSet.Array.data[0]
+      value: 
+      objectReference: {fileID: 659620091120100032, guid: e912c3f56bc9a1b418cd4c97128347a6, type: 3}
+    - target: {fileID: 6142988430305187813, guid: 377dfad67cacf7b428531ab86e80d448, type: 3}
+      propertyPath: threeByThreeTileSet.Array.data[1]
+      value: 
+      objectReference: {fileID: 659620091120100032, guid: 49b2625943c1aa847a9771ad10be324e, type: 3}
+    - target: {fileID: 6142988430305187813, guid: 377dfad67cacf7b428531ab86e80d448, type: 3}
+      propertyPath: threeByThreeTileSet.Array.data[2]
+      value: 
+      objectReference: {fileID: 659620091120100032, guid: e912c3f56bc9a1b418cd4c97128347a6, type: 3}
+    - target: {fileID: 6142988430305187813, guid: 377dfad67cacf7b428531ab86e80d448, type: 3}
+      propertyPath: threeByThreeTileSet.Array.data[3]
+      value: 
+      objectReference: {fileID: 659620091120100032, guid: e912c3f56bc9a1b418cd4c97128347a6, type: 3}
+    - target: {fileID: 6142988430305187813, guid: 377dfad67cacf7b428531ab86e80d448, type: 3}
+      propertyPath: threeByThreeTileSet.Array.data[4]
+      value: 
+      objectReference: {fileID: 659620091120100032, guid: e912c3f56bc9a1b418cd4c97128347a6, type: 3}
+    - target: {fileID: 6142988430305187813, guid: 377dfad67cacf7b428531ab86e80d448, type: 3}
+      propertyPath: threeByThreeTileSet.Array.data[5]
+      value: 
+      objectReference: {fileID: 659620091120100032, guid: e912c3f56bc9a1b418cd4c97128347a6, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 377dfad67cacf7b428531ab86e80d448, type: 3}
 --- !u!1001 &1936969901
