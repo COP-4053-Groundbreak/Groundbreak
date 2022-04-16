@@ -106,6 +106,7 @@ public class PlayerMovement : MonoBehaviour
     private bool startFlag = false;
     private void Update()
     {
+        UpdateTilesAfterMove();
         movementSpeed = gameObject.GetComponent<PlayerStats>().GetMovementPerTurn();
         localPos = currentRoom.transform.InverseTransformPoint(transform.position);
         playerX = (int)(localPos.x + 5.5);
