@@ -335,7 +335,7 @@ public class TurnLogic : MonoBehaviour
     }
 
     // Destroys all children of void tiles
-    void DestroyVoidColliders() 
+    public void DestroyVoidColliders() 
     {
         tiles = FindObjectsOfType<Tile>();
         GameObject[] allChildren = new GameObject[transform.childCount];
@@ -366,7 +366,7 @@ public class TurnLogic : MonoBehaviour
     }
 
     // Creates children for void tiles and gives them box colliders
-    void CreateVoidColliders() 
+    public void CreateVoidColliders() 
     {
         tiles = FindObjectsOfType<Tile>();
         foreach (Tile tile in tiles)

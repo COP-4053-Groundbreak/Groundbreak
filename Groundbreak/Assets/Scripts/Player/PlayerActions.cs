@@ -72,6 +72,11 @@ public class PlayerActions : MonoBehaviour
                 if (turnLogic.isThrowPhase){
                     // turnLogic.showRangeIndicator();
                 }
+                if (!turnLogic.isCombatPhase) 
+                {
+                    turnLogic.DestroyVoidColliders();
+                    turnLogic.CreateVoidColliders();
+                }
             }
             
         }
