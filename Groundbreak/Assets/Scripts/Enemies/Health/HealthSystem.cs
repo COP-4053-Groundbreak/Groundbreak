@@ -15,6 +15,10 @@ public class HealthSystem
         return health;
     }
 
+    public int getMaxHealth(){
+        return healthMax;
+    }
+
     public void SetHealth(int healthAmmount){
         health = healthAmmount;
     }

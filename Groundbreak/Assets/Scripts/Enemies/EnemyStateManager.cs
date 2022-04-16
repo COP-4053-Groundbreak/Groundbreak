@@ -17,6 +17,7 @@ public class EnemyStateManager : MonoBehaviour
     public bool elementOnEnemy;
     // currentState will hold a reference to the active state in the state machine. 
     EnemyBaseState currentState;
+    Tile firstDestinationTile;
     // Rigidbody of the enemy, used for patrolling/movement
     // new Rigidbody2D rigidbody2D;
     Pathfinding pathfinding;
@@ -81,6 +82,7 @@ public class EnemyStateManager : MonoBehaviour
     public float period = 0.0f;
 
     float attackClipLength;
+    int canRetreat;
 
     // Enemy position variables -N
     public int enemyX;
@@ -88,6 +90,7 @@ public class EnemyStateManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        canRetreat = 2;
         // elementSymbol.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(elementToLoad);
         // get animation clip length
         AnimationClip[] clips = animator.runtimeAnimatorController.animationClips;
@@ -164,7 +167,7 @@ public class EnemyStateManager : MonoBehaviour
     {
         
         yield return new WaitForSeconds(2.95f);
-        SceneManager.LoadSceneAsync("EndScene");
+        LevelManager.LoadLevel2();
     }
 
     GameObject currRoom;
@@ -280,9 +283,6 @@ public class EnemyStateManager : MonoBehaviour
                     //  enemy.mySpriteRenderer.transform.localScale.x = -1;
             }
 
-            // check if we are 30% health or lower, if so retreat. 
-
-    
             //do attack or move.
             // check if melee enemy is within a 1 block radius of player. && will have to check which state we are in and if its enemy turn (not implemented yet)
             if((gameObject.name.Contains("Archer") || gameObject.name.Contains("Wizard") || gameObject.name.Contains("Zombie"))  && distanceBetweenPlayerAndEnemy <= visibilityRange && attackCounter == 0){
@@ -327,6 +327,41 @@ public class EnemyStateManager : MonoBehaviour
                 attackCounter = 1;
                 isEnemyTurn = false;
             }
+
+            // if we get here, lets check if we are at 30% health or lower, if so lets retreat. 
+            if (healthSystem.GetHealth() <= 0.3 * healthSystem.getMaxHealth() && attackCounter == 0){
+                if (isSliding) 
+                {
+                    SlideThisObjectAlongPath(slidingPath);
+                }
+                Tile tileUnderEnemy;
+                tileUnderEnemy = ReactionManager.gridManager.getTile(enemyX, enemyY);
+                while(canRetreat != 0){
+                    foreach (Tile tile in tileUnderEnemy.neighbors) {
+                        Vector2 tilePosition = new Vector2(tile.transform.position.x + 5, tile.transform.position.y + 5);
+                        if(Vector2.Distance(tilePosition, playerPos) > distanceBetweenPlayerAndEnemy && tile.getElement() != Element.Void){
+                            if(canRetreat == 2){
+                                firstDestinationTile = tile;
+                            }
+                            // MoveEnemy(tilePosition.x, tilePosition.y);
+                            canRetreat = canRetreat - 1;
+                            if(canRetreat == 1){
+                                Debug.Log("ding");
+                                foreach(Tile finalDestinationTile in firstDestinationTile.neighbors) {
+                                    Vector2 finalDestPosition = new Vector2(finalDestinationTile.transform.position.x + 5, finalDestinationTile.transform.position.y + 5);
+                                    if(Vector2.Distance(finalDestPosition, playerPos) > Vector2.Distance(tilePosition, playerPos) && finalDestinationTile.getElement() != Element.Void){
+                                        MoveEnemy(finalDestPosition.x, finalDestPosition.y);
+                                    }
+                                }
+                                canRetreat = 0;
+                            }
+                        }
+                    }
+                    canRetreat = 0;
+                }
+                canRetreat = 2;
+                isEnemyTurn = false;
+            }
             // if we hit this we need to move closer to the player. 
             else if(distanceBetweenPlayerAndEnemy > 1.42){
                 if (isSliding) 
@@ -345,7 +380,7 @@ public class EnemyStateManager : MonoBehaviour
                 }
                 listOfTiles.RemoveAt(0);
                 while(enemyMovementRemaining != 0){
-                    Debug.Log("START" + enemyMovementRemaining);
+                    // Debug.Log("START" + enemyMovementRemaining);
                     if(listOfTiles != null){
                         // null check if there is no path, it would crash. ex: enemy is stuck in a wall of void. 
                         if(listOfTiles != null){

@@ -12,7 +12,7 @@ public class PlayerDoor : MonoBehaviour
         if(currentTeleporter != null)
         {
             transform.position = currentTeleporter.GetComponent<Door>().GetDestination().position;
-
+            //Debug.LogError("Object " + currentRoom.name);
             foreach (Transform child in currentRoom.transform)
             {
                 //Debug.Log("Inside foreach");
@@ -23,6 +23,7 @@ public class PlayerDoor : MonoBehaviour
                 }
                 else
                 {
+                    //Debug.LogError("Set " + child.name);
                     //Debug.Log("set an object as false");
                     child.gameObject.SetActive(false);
                 }
