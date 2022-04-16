@@ -59,18 +59,31 @@ public class PlayerStats : MonoBehaviour
 
     public void DealDamage(int damage) 
     {
-        playerAnimator.SetTrigger("Hit");
+        
         SoundManagerScript.PlaySound("playerdamage");
         currentHealth = currentHealth - (damage - armor);
         if (OnHealthChanged != null)
         {
             OnHealthChanged(this, EventArgs.Empty);
         }
-        if (currentHealth <= 0) 
+        if (currentHealth <= 0)
         {
             // Trigger Game over
-            SceneManager.LoadSceneAsync("Menu");
+            StartCoroutine(WaitAndDie());
         }
+        else 
+        {
+            playerAnimator.SetTrigger("Hit");
+        }
+
+    }
+
+    IEnumerator WaitAndDie() 
+    {
+        FindObjectOfType<PlayerHealthBar>().gameObject.SetActive(false);
+        playerAnimator.SetTrigger("Die");
+        yield return new WaitForSeconds(2f);
+        SceneManager.LoadSceneAsync("Menu");
     }
 
     // Getters
