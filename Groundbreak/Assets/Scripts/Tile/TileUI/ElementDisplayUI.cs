@@ -6,7 +6,7 @@ public class ElementDisplayUI : MonoBehaviour
 {
     [SerializeField] GridManager gridManager;
     [SerializeField] GameObject elemVisual;
-    
+
     // Start is called before the first frame update
     private void Start() {
         gridManager = FindObjectOfType<GridManager>();
