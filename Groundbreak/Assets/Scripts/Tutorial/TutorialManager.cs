@@ -2,13 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class TutorialManager : MonoBehaviour
 {
     List<string> dialogue = new List<string>();
     int index = 0;
-
+    bool roomCleared = false;
     [SerializeField] GameObject textGo;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,9 +29,13 @@ public class TutorialManager : MonoBehaviour
         dialogue.Add("Glove: When you throw a tile onto another tile, their elements will combine and create an effect. For example, if you threw a fire tile onto an air tile it would make a fireball!");
         dialogue.Add("Player: That sounds useful, lets go try it out!");
 
-        dialogue.Add("Glove: Looks like there is a mean skeleton over there, since there is an enemy in this room, you are now in combat and cant move freely. You can see whos turn it is in the top right, you get to go first! The skeleton is far away now, so move closer to him by clicking on a tile within your movement range which you can see in the top left. A path of arrows will show the path you will take!");
+        dialogue.Add("Glove: Looks like there is a mean skeleton over there, since there is an enemy in this room, you are now in combat and cant move freely. You can see whos turn it is in the top right, you get to go first! ");
+        dialogue.Add("The skeleton is far away now, so move closer to him by clicking on a tile within your movement range which you can see in the top left. A path of arrows will show the path you will take!");
 
-        dialogue.Add("Glove: The skeleton is closer to you now and you can throw a tile at him. Right click on a green air tile to pick it up. You can also press space to view the elemental symbols of each tile. Now, To make a fireball you can either throw that tile onto a fire tile near the skeleton, or throw it directly onto the skeleton. Since his element is fire, designated by the fire symbol by his health bar, any tile throw onto him will interact like it was thrown onto a fire tile. To throw the tile, click the throw tile button on the bottom of the screen to switch to throw tile mode, and left click either the skeleton or a fire tile.");
+        dialogue.Add("Glove: The skeleton is closer to you now and you can throw a tile at him. Right click on a cyan air tile to pick it up. You can also press space to view the elemental symbols of each tile. ");
+        dialogue.Add("Now, To make a fireball you can either throw that tile onto a fire tile near the skeleton, or throw it directly onto the skeleton. ");
+        dialogue.Add("Since his element is fire, designated by the fire symbol by his health bar, any tile throw onto him will interact like it was thrown onto a fire tile. ");
+        dialogue.Add("To throw the tile, click the throw tile button on the bottom of the screen to switch to throw tile mode, and left click either the skeleton or a fire tile.");
 
         dialogue.Add("Glove: Great you killed the skeleton! Now that the all enemies are dead, press end turn to end combat and be able to free roam again! Go through the next door when you are ready.");
 
@@ -37,11 +43,12 @@ public class TutorialManager : MonoBehaviour
 
         dialogue.Add("Glove: Congrats on clearing the room! You may have noticed the chest on the top right of the room, walk over to it now to open it!");
 
-        dialogue.Add("Glove: You now have one of each category of item!. Passive items like speed boots give you passive bonuses. Active items like the bow can be used in combat on a cooldown. Consumable items like the health potion can be used for a one time effect, Though be careful, if you use a potion like the speed potion outside of combat, it will run out before you reach the next room! Go on through the final door when you are ready.");
+        dialogue.Add("Glove: You now have one of each category of item!. Hit I to see them! Passive items like speed boots give you passive bonuses. Active items like the bow can be used in combat on a cooldown. ");
+        dialogue.Add("Consumable items like the health potion can be used for a one time effect, Though be careful, if you use a potion like the speed potion outside of combat, it will run out before you reach the next room! ");
 
         dialogue.Add("Glove: Egads! A Coven of wizards! To use your bow, click on the bow icon on the bottom of the screen and left click the wizard closest to you. Great, now defeat the rest of the skeletons and finish this fight!");
 
-        dialogue.Add("Glove:Good job getting this far, to get out of here you must go through two more floors. The first is the dungeon inhabited by these skeletons, while the second is a jungle filled with more dangerous creatures. But with your skill im sure you will prevail!");
+        dialogue.Add("Glove:Good job getting this far, to get out of here you must go through two more floors. But with your skill im sure you will prevail!");
 
         StartCoroutine(WaitAndStart());
         ChangeState(false);
@@ -50,7 +57,11 @@ public class TutorialManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (roomCleared) 
+        {
+            IncrementIndex();
+            roomCleared = false;
+        }
     }
 
     IEnumerator WaitAndStart() 
@@ -72,9 +83,17 @@ public class TutorialManager : MonoBehaviour
 
     public void ClickedNext() 
     {
-        if (index == 4) 
+        if (index >= 25) 
+        {
+            SceneManager.LoadScene("Menu");
+        }
+        if (index == 4 || index == 12 || index == 14 || index == 18 || index == 19 || index == 20 || index == 21 || index == 23 || index > 23) 
         {
             ChangeState(false);
+        }
+        if (index == 14) 
+        {
+            StartCoroutine(WaitAndStart());
         }
         if (index >= dialogue.Count)
         {
@@ -103,5 +122,9 @@ public class TutorialManager : MonoBehaviour
         DisplayText();
     }
 
+    public void RoomCleared() 
+    {
+        roomCleared = true;
+    }
 
 }

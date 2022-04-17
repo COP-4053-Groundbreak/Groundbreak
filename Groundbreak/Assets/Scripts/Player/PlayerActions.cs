@@ -87,8 +87,10 @@ public class PlayerActions : MonoBehaviour
     // tile game object passed in and the held tile or whatever way you want to implement it
     public void ThrowTile(GameObject tile) 
     {
-        Debug.Log($"Attemptint to throw a {tile.GetComponent<Tile>().myElement}");
         // Debug.LogWarning(tile.GetComponent<TileClickable>().GetDistance());
+        if (tile == null) Debug.Log("Lol!");
+        if (turnLogic == null) Debug.Log("LAWL!");
+        if (tile.GetComponent<TileClickable>() == null) Debug.Log("LOL!");
         if (turnLogic.GetIsPlayerTurn() && heldTileElement != Element.Void && tile.GetComponent<TileClickable>().GetDistance() <= throwRange) 
         {
             playerAnimator.SetTrigger("Throw");

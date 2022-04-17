@@ -6,7 +6,7 @@ public class ElementDisplayUI : MonoBehaviour
 {
     [SerializeField] GridManager gridManager;
     [SerializeField] GameObject elemVisual;
-    
+
     // Start is called before the first frame update
     private void Start() {
         gridManager = FindObjectOfType<GridManager>();
@@ -26,7 +26,7 @@ public class ElementDisplayUI : MonoBehaviour
             foreach (Tile t in gridManager.grid){
                 Debug.Log("Looking through children");
                 if (t.transform.childCount > 0){
-                    GameObject elemVisual = t.transform.GetChild(2).gameObject;
+                    GameObject elemVisual = t.transform.Find("elemVisual(Clone)").gameObject;
                     elemVisual.SetActive(!elemVisual.gameObject.activeInHierarchy);
                     Debug.Log($"After the change, the GO is now {elemVisual.gameObject.activeInHierarchy}");
                 }

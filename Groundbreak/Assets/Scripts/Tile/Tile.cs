@@ -15,7 +15,7 @@ public class Tile : MonoBehaviour {
     public List<Tile> neighbors;
     public bool isThrowable = true;
     private TurnLogic tl;
-    private Sprite mySprite;
+    [SerializeField] public Sprite fillerSprite;
 
     private void Start() {
         setElement(this.myElement);
@@ -23,14 +23,6 @@ public class Tile : MonoBehaviour {
         tl = FindObjectOfType<TurnLogic>();
         for (int i = 0; i < this.transform.childCount; i++)
             this.transform.GetChild(i).gameObject.SetActive(true);
-
-        mySprite = this.GetComponent<SpriteRenderer>().sprite;
-        if (mySprite != null && this.GetComponent<SpriteRenderer>().sprite.name.Contains("barrel")){
-           /* Debug.Log("Spawning barrel!");
-            staticObjAbove = Instantiate(new GameObject("barrel"), transform.position, Quaternion.identity);
-            staticObjAbove.AddComponent<Rigidbody2D>();
-            staticObjAbove.AddComponent<BoxCollider2D>();*/
-        }
     }
 
     // Finds up to 8 neighbors around this tile. Does so using a PhysicsOverlap circle which detects
@@ -63,32 +55,6 @@ public class Tile : MonoBehaviour {
      public void setEffect(Effect newEffect){
         myEffect = newEffect;
     }
-    public void setLF(LandFeature newLand){
-        string text = "";
-        myLandFeature = newLand;
-        switch(myLandFeature){
-            case LandFeature.Dungeon: // Dungeon
-                text = "Dun";
-                break;
-            case LandFeature.Hay: // Hay
-                text = "Hay";
-                break;
-            case LandFeature.Mountainous: // Mountainous
-                text = "Mou";
-                break;
-            case LandFeature.Sandy: // Sandy
-                text = "San";
-                break;
-            case LandFeature.Woods: // Woods
-                text = "Woo";
-                break;
-            default: // None
-                text = "Non";
-                break;
-        }
-
-        Debug.Log($"LandFeature of {name} set to {text}");
-    }
     public void addNeighbor(Tile myNeighbor){
         neighbors.Add(myNeighbor);
     }
@@ -100,8 +66,9 @@ public class Tile : MonoBehaviour {
     }
     public void setElement(Element newElement){ 
         if (myElement == Element.Void){
-            this.GetComponent<SpriteRenderer>().sprite = mySprite;
-            Debug.Log("In it baby");
+            this.GetComponent<SpriteRenderer>().sprite = fillerSprite;
+            Transform deco = this.transform.Find("decoration");
+            if (deco != null) deco.gameObject.SetActive(true);
         }
         myElement = newElement;
         Color newColor;
@@ -126,8 +93,9 @@ public class Tile : MonoBehaviour {
             default: // grey
                 isThrowable = false;
                 newColor = new Color(0, 0, 0, 0.65f);
-                setVoid();
-                //this.GetComponent<Renderer>().material.SetColor("_Color", newColor);
+                this.GetComponent<SpriteRenderer>().sprite = null;
+                Transform deco = this.transform.Find("decoration");
+                if (deco != null) deco.gameObject.SetActive(false);
                 break;
         }
         
@@ -138,13 +106,10 @@ public class Tile : MonoBehaviour {
         // Set Tile Element symbol to new element
         if (transform.childCount > 2){
             //Debug.Log("I am with child");
-            transform.GetChild(2).GetComponent<elemVisual>().setSymbol();
+            transform.Find("elemVisual(Clone)").GetComponent<elemVisual>().setSymbol();
         }
     }
 
-    public void setVoid(){
-        this.GetComponent<SpriteRenderer>().sprite = null;
-    }
     public void setMovementModifier(int a){
         movementModifier = a;
     }
