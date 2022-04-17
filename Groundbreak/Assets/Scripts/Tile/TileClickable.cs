@@ -93,7 +93,7 @@ public class TileClickable : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
         }
         Player.GetComponent<PlayerMovement>().ShowLine(ThisTile.GetComponent<TilePathNode>().GetX(), ThisTile.GetComponent<TilePathNode>().GetY());
         
-        if (turnLogic.isThrowPhase && lastTileHovered.GetComponent<TileClickable>().GetDistance() <= Player.GetComponent<PlayerActions>().throwRange) {
+        if (turnLogic.GetIsPlayerTurn() && turnLogic.isThrowPhase && lastTileHovered.GetComponent<TileClickable>().GetDistance() <= Player.GetComponent<PlayerActions>().throwRange) {
             Element activeElement = Player.GetComponent<PlayerActions>().heldTileElement;
             if (lastTileHovered != null && activeElement != Element.Void) {
                 Element passiveElement = lastTileHovered.myElement;
@@ -128,6 +128,7 @@ public class TileClickable : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
                         effectIndicatorRange = 1;
                         break;
                 }
+                if (passiveElement == Element.Void) effectIndicatorRange = 0;
 
                 lastTileHovered.transform.GetChild(1).GetComponent<Renderer>().material.color = Color.yellow;
                 showRange(effectIndicatorRange, lastTileHovered, new List<Tile>());

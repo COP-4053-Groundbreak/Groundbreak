@@ -102,6 +102,7 @@ public class TurnLogic : MonoBehaviour
     // Switch to throw / pick up phase
     public void ThrowPressed()
     {
+        Debug.Log("Throw range is " + playerActions.throwRange);
         if (!throwTileButton) Debug.Log("HERE");
 
         if(playerActions.heldTileElement != Element.Void){
@@ -326,6 +327,7 @@ public class TurnLogic : MonoBehaviour
     {
         battleCanvas.SetActive(false);
         isCombatPhase = false;
+        isThrowPhase = false;
         CreateVoidColliders();
 
         // Destroy all effects

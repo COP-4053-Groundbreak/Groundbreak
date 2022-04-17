@@ -20,7 +20,7 @@ public class DisplayHeldTile : MonoBehaviour
        myImage.color = tile.transform.GetChild(0).GetComponent<Renderer>().material.color;
        myImage.color = new Color(myImage.color.r, myImage.color.g, myImage.color.b);
 
-       symbolImage.sprite = tile.transform.GetChild(2).GetComponent<SpriteRenderer>().sprite;
+       symbolImage.sprite = tile.transform.Find("elemVisual(Clone)").GetComponent<SpriteRenderer>().sprite;
        symbolImage.color = Color.black;
     }
 
