@@ -46,10 +46,27 @@ public class EnemyGeneration : MonoBehaviour
                 rand = Random.Range(0, templates.enemiesFloorOne.Length);
                 posRand = Random.Range(0, spawnPointHolder.transform.childCount-1);
 
+                GameObject currentPoint = spawnPointHolder.transform.GetChild(posRand).gameObject;
+                EnemySpawner spawnPont = currentPoint.GetComponent<EnemySpawner>();
+                
+                /*
+                while(spawnPont == null || spawnPont.active == false)
+                {
+                    posRand = Random.Range(0, spawnPointHolder.transform.childCount - 1);
+                    currentPoint = spawnPointHolder.transform.GetChild(posRand).gameObject;
+                    spawnPont = currentPoint.GetComponent<EnemySpawner>();
+                    Debug.Log("While Loop Test");
+                }*/
+
+                if(spawnPont == null || spawnPont.validPoint == false)
+                    Debug.Log("Da enemy spawn thing did a mess up");
                 //Debug.Log("posRand = " + posRand);
                 //Debug.Log("spawnPointHolder.transform.childCount-1 = " + (spawnPointHolder.transform.childCount - 1));
 
+               
+
                 //Check if we used this position already
+                /*
                 for (int j = 0; j < counter; j++)
                 {
                     //If we hit a match increament and if
@@ -62,6 +79,11 @@ public class EnemyGeneration : MonoBehaviour
                     }
 
                 }
+                */
+
+
+
+
                 //getting random postition
                 spawnHere = spawnPointHolder.transform.GetChild(posRand);
 
@@ -72,6 +94,7 @@ public class EnemyGeneration : MonoBehaviour
                 occupied[counter] = posRand;
                 counter++;
 
+                spawnPont.setInvalid(spawnPont);
                 currentEnemy.SetActive(false);
             }
             spawned = true;
