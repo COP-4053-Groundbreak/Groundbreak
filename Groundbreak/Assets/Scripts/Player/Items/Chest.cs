@@ -11,6 +11,22 @@ public class Chest : MonoBehaviour
     private void Start()
     {
         passiveItemManager = FindObjectOfType<PassiveItemManager>();
+
+        int rand = Random.RandomRange(0, 9);
+
+        if (rand <= 1)
+        {
+            passiveConsumableActive = 2;
+        }
+        else if (rand <= 4)
+        {
+            passiveConsumableActive = 0;
+        }
+        else 
+        {
+            passiveConsumableActive = 1;
+        }
+
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

@@ -32,9 +32,9 @@ public class UIPassiveInventory : MonoBehaviour
     public void SetPassiveInventory(PlayerPassiveInventory passiveInventory, bool playerOrShop)
     {
         passiveInventory.UpdateItemList += Inventory_UpdateItemList;
+/*        passiveInventory.AddItem(new PassiveItem { itemName = PassiveItem.PassiveItemName.AirPendant, amount = 1 }, playerStats);
         passiveInventory.AddItem(new PassiveItem { itemName = PassiveItem.PassiveItemName.AirPendant, amount = 1 }, playerStats);
-        passiveInventory.AddItem(new PassiveItem { itemName = PassiveItem.PassiveItemName.AirPendant, amount = 1 }, playerStats);
-        passiveInventory.AddItem(new PassiveItem { itemName = PassiveItem.PassiveItemName.AirPendant, amount = 1 }, playerStats);
+        passiveInventory.AddItem(new PassiveItem { itemName = PassiveItem.PassiveItemName.AirPendant, amount = 1 }, playerStats);*/
         this.passiveInventory = passiveInventory;
         RefreshInventory();
     }
