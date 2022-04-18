@@ -286,6 +286,7 @@ public class EnemyStateManager : MonoBehaviour
             //do attack or move.
             // check if melee enemy is within a 1 block radius of player. && will have to check which state we are in and if its enemy turn (not implemented yet)
             if((gameObject.name.Contains("Archer") || gameObject.name.Contains("Wizard") || gameObject.name.Contains("Zombie"))  && distanceBetweenPlayerAndEnemy <= visibilityRange && attackCounter == 0){
+                Debug.Log("In attaack%");
                 // play animation.
                 animator.SetBool("isAttacking", true);
                 // play archer sound
@@ -327,9 +328,9 @@ public class EnemyStateManager : MonoBehaviour
                 attackCounter = 1;
                 isEnemyTurn = false;
             }
-
             // if we get here, lets check if we are at 30% health or lower, if so lets retreat. 
-            if (healthSystem.GetHealth() <= 0.3 * healthSystem.getMaxHealth() && attackCounter == 0){
+            else if (healthSystem.GetHealth() <= 0.3 * healthSystem.getMaxHealth() && attackCounter == 0){
+                Debug.Log("In retreat%");
                 if (isSliding) 
                 {
                     SlideThisObjectAlongPath(slidingPath);
@@ -361,9 +362,11 @@ public class EnemyStateManager : MonoBehaviour
                 }
                 canRetreat = 2;
                 isEnemyTurn = false;
+                
             }
             // if we hit this we need to move closer to the player. 
             else if(distanceBetweenPlayerAndEnemy > 1.42){
+                Debug.Log("In normal move%");
                 if (isSliding) 
                 {
                     SlideThisObjectAlongPath(slidingPath);
