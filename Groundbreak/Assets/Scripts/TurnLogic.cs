@@ -318,8 +318,7 @@ public class TurnLogic : MonoBehaviour
 
         displayInitiative.SetList(actorList);
         actorList.Add(FindObjectOfType<PlayerMovement>().gameObject);
-        
-
+        MovePressed();
     }
 
     // Ends combat in a room and generates colliders for impassable terrain
@@ -328,6 +327,7 @@ public class TurnLogic : MonoBehaviour
         battleCanvas.SetActive(false);
         isCombatPhase = false;
         isThrowPhase = false;
+        isMovementPhase = true;
         CreateVoidColliders();
 
         // Destroy all effects
