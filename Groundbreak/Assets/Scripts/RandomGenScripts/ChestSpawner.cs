@@ -32,7 +32,7 @@ public class ChestSpawner : MonoBehaviour
                     randX = Random.Range(0, RoomWidth);
                     randY = Random.Range(0, RoomHeight);
                     localPos = transform.position + new Vector3(randX, randY);
-                    Debug.Log("While Loop Test");
+                    //Debug.Log("While Loop Test");
                 } while ((gridManager.grid[randX, randY].gameObjectAbove &&
                                               (gridManager.grid[randX, randY].gameObjectAbove.CompareTag("Barrel") || gridManager.grid[randX, randY].gameObjectAbove.CompareTag("Enemy"))));
 

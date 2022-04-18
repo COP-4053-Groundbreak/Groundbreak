@@ -36,7 +36,6 @@ public class EnemyGeneration : MonoBehaviour
             return;
         }
 
-
         if (spawned == false)
         {
             numOfEnemies = Random.Range(1, numOfPossibleEnemies) + 1;
@@ -82,11 +81,22 @@ public class EnemyGeneration : MonoBehaviour
             }
             spawned = true;
 
-            //Delete all the enemy spawnPoints
-            foreach (Transform child in spawnPointHolder.transform)
-            {
-                Destroy(child.gameObject);
-            }
+
+            StartCoroutine(DelayAndShow(spawnPointHolder, 5f));
+        }
+    }
+
+    IEnumerator DelayAndShow(GameObject spawnPointHolder, float delayTime)
+    {
+        yield return new WaitForSeconds(delayTime);
+        Kill(spawnPointHolder);
+    }
+
+    public void Kill(GameObject spawnPointHolder)
+    {
+        foreach (Transform child in spawnPointHolder.transform)
+        {
+            Destroy(child.gameObject);
         }
     }
 }
