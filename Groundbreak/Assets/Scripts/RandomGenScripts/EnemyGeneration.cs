@@ -14,6 +14,7 @@ public class EnemyGeneration : MonoBehaviour
     [SerializeField] GameObject spawnPointHolder;
     private Transform spawnHere;
     private GameObject currentEnemy;
+    GridManager gridManager;
 
     public int test;
 
@@ -28,6 +29,7 @@ public class EnemyGeneration : MonoBehaviour
     {
         //Debug.Log("Inside Start function for EnemyGeneration");
         templates = FindObjectOfType<EnemyTemplates>();
+        gridManager = gameObject.transform.Find("ThisRoomGridManager").GetComponent<GridManager>();
 
         if (SceneManager.GetActiveScene().name == "Tutorial") 
         {
@@ -42,59 +44,39 @@ public class EnemyGeneration : MonoBehaviour
             {
                 spawned = false;
 
+                Vector3 localPos;
+                int pointX;
+                int pointY;
+
                 //Getting random numbers
                 rand = Random.Range(0, templates.enemiesFloorOne.Length);
-                posRand = Random.Range(0, spawnPointHolder.transform.childCount-1);
+                GameObject currentPoint;
+                EnemySpawner spawnPont;
 
-                GameObject currentPoint = spawnPointHolder.transform.GetChild(posRand).gameObject;
-                EnemySpawner spawnPont = currentPoint.GetComponent<EnemySpawner>();
-                
-                /*
-                while(spawnPont == null || spawnPont.active == false)
+                do
                 {
                     posRand = Random.Range(0, spawnPointHolder.transform.childCount - 1);
                     currentPoint = spawnPointHolder.transform.GetChild(posRand).gameObject;
                     spawnPont = currentPoint.GetComponent<EnemySpawner>();
+
+                    localPos = gameObject.transform.InverseTransformPoint(currentPoint.transform.position);
+                    pointY = (int)(localPos.y - 5.5f);
+                    pointX = (int)(localPos.x - 5.5f);
+
                     Debug.Log("While Loop Test");
-                }*/
+                } while (spawnPont == null && (gridManager.grid[pointX, pointY].gameObjectAbove.CompareTag("Barrel") ||
+                                               gridManager.grid[pointX, pointY].gameObjectAbove.CompareTag("Enemy") ||
+                                               gridManager.grid[pointX, pointY].gameObjectAbove.GetComponent<Tile>().myElement == Element.Void));
+
 
                 if(spawnPont == null || spawnPont.validPoint == false)
-                    Debug.Log("Da enemy spawn thing did a mess up");
-                //Debug.Log("posRand = " + posRand);
-                //Debug.Log("spawnPointHolder.transform.childCount-1 = " + (spawnPointHolder.transform.childCount - 1));
+                    Debug.LogWarning("Da enemy spawn thing did a mess up");
 
-               
-
-                //Check if we used this position already
-                /*
-                for (int j = 0; j < counter; j++)
-                {
-                    //If we hit a match increament and if
-                    if (posRand == occupied[counter])
-                    {
-                        posRand++;
-                        //if we reach the limit go back to 0
-                        if (posRand == spawnPointHolder.transform.childCount - 1)
-                            posRand = 0;
-                    }
-
-                }
-                */
-
-
-
-
-                //getting random postition
-                spawnHere = spawnPointHolder.transform.GetChild(posRand);
+                localPos.x = pointX;
+                localPos.y = pointY;
 
                 //Make the enemy
-                currentEnemy = Instantiate(templates.enemiesFloorOne[rand], spawnHere.position, templates.enemiesFloorOne[rand].transform.rotation, gameObject.transform);
-
-                //Store the postion the enemy spawned then increament
-                occupied[counter] = posRand;
-                counter++;
-
-                spawnPont.setInvalid(spawnPont);
+                currentEnemy = Instantiate(templates.enemiesFloorOne[rand], gridManager.grid[pointX, pointY].transform.position, templates.enemiesFloorOne[rand].transform.rotation, gameObject.transform);
                 currentEnemy.SetActive(false);
             }
             spawned = true;

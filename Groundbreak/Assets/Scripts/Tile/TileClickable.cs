@@ -181,7 +181,7 @@ public class TileClickable : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
         {
             Player.GetComponent<PlayerMovement>().ClearLine();
         }
-        Debug.Log($"Exit");
+        //Debug.Log($"Exit");
         
         if (turnLogic.isThrowPhase){
             clearEffectRangeIndicator();

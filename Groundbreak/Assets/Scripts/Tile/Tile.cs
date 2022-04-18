@@ -99,7 +99,7 @@ public class Tile : MonoBehaviour {
                 break;
         }
         
-        Debug.Log("HI MY NAME IS " + transform.name);
+        //Debug.Log("HI MY NAME IS " + transform.name);
         // Following for visualization purposes
         this.transform.GetChild(0).GetComponent<Renderer>().material.SetColor("_Color", newColor);
         // Debug.Log("HI MY COLOR IS " + transform.GetChild(0).GetComponent<Renderer>().material.color);

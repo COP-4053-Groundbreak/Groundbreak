@@ -163,7 +163,7 @@ public class TurnLogic : MonoBehaviour
                 CheckForRoomClear();
                 // This is equivilent to starting a turn
                 turnCount++;
-                Debug.Log("Turn " + turnCount + " has started");
+                //Debug.Log("Turn " + turnCount + " has started");
                 for (int i = 0; i < actorList.Count; i++)
                 {
                     if (actorList[i] == null) 
@@ -210,7 +210,7 @@ public class TurnLogic : MonoBehaviour
             }
             
             // loop thru actors and see which has highest initative.
-            Debug.Log("Count:" +listOfInitative.Count);
+            //Debug.Log("Count:" +listOfInitative.Count);
             for (int i = 0; i < actorList.Count; i++){
                 // check initative.
                 if(listOfInitative.Count == 0){

@@ -22,18 +22,23 @@ public class EnemySpawner : MonoBehaviour
         currentPoint.validPoint = false;
     }
 
-    private void OnTriggerExit2D(Collider2D other)
+    private void OnCollisionEnter(Collision other)
     {
-        if(other.CompareTag("Enemy") || other.CompareTag("Barrel"))
+        Debug.Log("Spawner Collided with something");
+
+        if (other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("Barrel"))
         {
             Debug.Log("Collided with enemy or barrel");
             validPoint = false;
         }
-        else if(other.CompareTag("Tile"))
+        else if(other.gameObject.CompareTag("Tile"))
         {
+            Debug.Log("Collided with Void");
+
             Tile tile = other.gameObject.GetComponent<Tile>();
             if(tile != null && tile.myElement == Element.Void)
             {
+                Debug.Log("Collided with Void");
                 validPoint = false;
             }
         }

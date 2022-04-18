@@ -47,7 +47,7 @@ public class RoomSpawner : MonoBehaviour
         {
             if (maxRooms == false)
             {
-                Debug.Log("maxRooms == false, roomLimit == " + templates.roomLimit + ", currentRooms == " + templates.rooms.Count);
+                //Debug.Log("maxRooms == false, roomLimit == " + templates.roomLimit + ", currentRooms == " + templates.rooms.Count);
                 if (openingDirection == 1)
                 {
                     //Need to spawn a room with a BOTTOM door
@@ -76,7 +76,7 @@ public class RoomSpawner : MonoBehaviour
             }
             else
             {
-                Debug.Log("maxRooms == True, roomLimit == " + templates.roomLimit + ", currentRooms == " + templates.rooms.Count);
+                //Debug.Log("maxRooms == True, roomLimit == " + templates.roomLimit + ", currentRooms == " + templates.rooms.Count);
                 if (openingDirection == 1)
                 {
                     //Need to spawn a room with just a BOTTOM door
