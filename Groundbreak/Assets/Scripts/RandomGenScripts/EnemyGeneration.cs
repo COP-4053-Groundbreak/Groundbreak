@@ -60,13 +60,14 @@ public class EnemyGeneration : MonoBehaviour
                     spawnPont = currentPoint.GetComponent<EnemySpawner>();
 
                     localPos = gameObject.transform.InverseTransformPoint(currentPoint.transform.position);
-                    pointY = (int)(localPos.y - 5.5f);
-                    pointX = (int)(localPos.x - 5.5f);
+                    pointY = (int)(localPos.y + 5.5f);
+                    pointX = (int)(localPos.x + 5.5f);
 
                     Debug.Log("While Loop Test");
-                } while (spawnPont == null && (gridManager.grid[pointX, pointY].gameObjectAbove.CompareTag("Barrel") ||
-                                               gridManager.grid[pointX, pointY].gameObjectAbove.CompareTag("Enemy") ||
-                                               gridManager.grid[pointX, pointY].gameObjectAbove.GetComponent<Tile>().myElement == Element.Void));
+                    
+                } while ((gridManager.grid[pointX, pointY].gameObjectAbove && 
+                                               (gridManager.grid[pointX, pointY].gameObjectAbove.CompareTag("Barrel") || gridManager.grid[pointX, pointY].gameObjectAbove.CompareTag("Enemy"))) ||
+                                               gridManager.grid[pointX, pointY].myElement == Element.Void);
 
 
                 if(spawnPont == null || spawnPont.validPoint == false)
@@ -74,8 +75,8 @@ public class EnemyGeneration : MonoBehaviour
 
                 localPos.x = pointX;
                 localPos.y = pointY;
-
                 //Make the enemy
+                //Debug.LogWarning(gridManager.grid + " " + pointX + " " + pointY);
                 currentEnemy = Instantiate(templates.enemiesFloorOne[rand], gridManager.grid[pointX, pointY].transform.position, templates.enemiesFloorOne[rand].transform.rotation, gameObject.transform);
                 currentEnemy.SetActive(false);
             }

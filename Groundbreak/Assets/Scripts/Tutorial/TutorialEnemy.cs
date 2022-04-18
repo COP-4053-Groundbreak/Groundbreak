@@ -6,9 +6,12 @@ public class TutorialEnemy : MonoBehaviour
 {
     private void OnDestroy()
     {
-        if (FindObjectsOfType<EnemyStateManager>().Length <= 0) 
+        if (FindObjectsOfType<EnemyStateManager>() != null && FindObjectsOfType<EnemyStateManager>().Length <= 0) 
         {
-            FindObjectOfType<TutorialManager>().RoomCleared();
+            if (FindObjectOfType<TutorialManager>() != null) 
+            {
+                FindObjectOfType<TutorialManager>().RoomCleared();
+            }
         }
     }
 }
