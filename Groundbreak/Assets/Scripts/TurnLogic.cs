@@ -151,6 +151,7 @@ public class TurnLogic : MonoBehaviour
 
     IEnumerator TurnCycle() 
     {
+        yield return new WaitForSeconds(.3f);
         // add temp object to get into while loop without messy do while
         listOfInitative.Add(-1);
         // lets loop while we have initatives to take care of.
