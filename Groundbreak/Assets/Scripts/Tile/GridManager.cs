@@ -120,7 +120,7 @@ public class GridManager : MonoBehaviour
             Destroy(spawn);
         }
         GetComponentInParent<RoomManager>().ToggleRoom(false);
-        Debug.Log($"Added {count2} 2x2 and {count3} 3x3");
+        //Debug.Log($"Added {count2} 2x2 and {count3} 3x3");
     }
 
     public int getHeight(){

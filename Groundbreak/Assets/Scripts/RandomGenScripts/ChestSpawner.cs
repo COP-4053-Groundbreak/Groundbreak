@@ -11,6 +11,7 @@ public class ChestSpawner : MonoBehaviour
     [SerializeField] GameObject Chest;
     private Transform posChest;
     private GameObject currentChest;
+    GridManager gridManager;
 
     private int randX;
     private int randY;
@@ -21,12 +22,22 @@ public class ChestSpawner : MonoBehaviour
         luck = Random.Range(0, ChestSpawn);
         if(luck == 1)
         {
+            Debug.Log("A chest should spawn in " + gameObject);
             if (Spawned == false)
             {
-                randX = Random.Range(0, RoomWidth) - 5;
-                randY = Random.Range(0, RoomHeight) - 5;
+                gridManager = gameObject.transform.Find("ThisRoomGridManager").GetComponent<GridManager>();
+                Vector3 localPos;   
+                do
+                {
+                    randX = Random.Range(0, RoomWidth);
+                    randY = Random.Range(0, RoomHeight);
+                    localPos = transform.position + new Vector3(randX, randY);
+                    Debug.Log("While Loop Test");
+                } while ((gridManager.grid[randX, randY].gameObjectAbove &&
+                                              (gridManager.grid[randX, randY].gameObjectAbove.CompareTag("Barrel") || gridManager.grid[randX, randY].gameObjectAbove.CompareTag("Enemy"))));
 
-                currentChest = Instantiate(Chest, transform.position + new Vector3(randX, randY), transform.rotation, gameObject.transform);
+
+                currentChest = Instantiate(Chest, gridManager.grid[randX, randY].transform.position, transform.rotation, gameObject.transform);
        
                 Spawned = true;
                 currentChest.SetActive(false);

@@ -63,7 +63,7 @@ public class EnemyGeneration : MonoBehaviour
                     pointY = (int)(localPos.y + 5.5f);
                     pointX = (int)(localPos.x + 5.5f);
 
-                    Debug.Log("While Loop Test");
+                    //Debug.Log("While Loop Test");
                     
                 } while ((gridManager.grid[pointX, pointY].gameObjectAbove && 
                                                (gridManager.grid[pointX, pointY].gameObjectAbove.CompareTag("Barrel") || gridManager.grid[pointX, pointY].gameObjectAbove.CompareTag("Enemy"))) ||
