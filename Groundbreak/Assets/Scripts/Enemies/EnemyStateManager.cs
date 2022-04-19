@@ -346,8 +346,9 @@ public class EnemyStateManager : MonoBehaviour
                 Tile tileUnderEnemy;
                 tileUnderEnemy = ReactionManager.gridManager.getTile(enemyX, enemyY);
                 while(canRetreat != 0){
+                    
                     foreach (Tile tile in tileUnderEnemy.neighbors) {
-                        Vector2 tilePosition = new Vector2(tile.transform.position.x + 5, tile.transform.position.y + 5);
+                        Vector2 tilePosition = new Vector2(tile.gameObject.GetComponent<TilePathNode>().GetX(), tile.gameObject.GetComponent<TilePathNode>().GetY());
                         if(Vector2.Distance(tilePosition, playerPos) > distanceBetweenPlayerAndEnemy && tile.getElement() != Element.Void){
                             if(canRetreat == 2){
                                 firstDestinationTile = tile;
@@ -357,7 +358,7 @@ public class EnemyStateManager : MonoBehaviour
                             if(canRetreat == 1){
                                 Debug.Log("ding");
                                 foreach(Tile finalDestinationTile in firstDestinationTile.neighbors) {
-                                    Vector2 finalDestPosition = new Vector2(finalDestinationTile.transform.position.x + 5, finalDestinationTile.transform.position.y + 5);
+                                    Vector2 finalDestPosition = new Vector2(finalDestinationTile.gameObject.GetComponent<TilePathNode>().GetX(), finalDestinationTile.gameObject.GetComponent<TilePathNode>().GetY());
                                     if(Vector2.Distance(finalDestPosition, playerPos) > Vector2.Distance(tilePosition, playerPos) && finalDestinationTile.getElement() != Element.Void){
                                         MoveEnemy(finalDestPosition.x, finalDestPosition.y);
                                     }

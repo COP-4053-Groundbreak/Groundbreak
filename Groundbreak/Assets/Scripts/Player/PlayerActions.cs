@@ -14,7 +14,7 @@ public class PlayerActions : MonoBehaviour
     TurnLogic turnLogic;
     [SerializeField] HoldPlayerStats playerStats;
     Animator playerAnimator;
-
+    [SerializeField] GameObject teleportEff;
     private void Start()
     {
         playerAnimator = GetComponent<Animator>();
@@ -139,10 +139,7 @@ public class PlayerActions : MonoBehaviour
             case ActiveItem.ActiveItemName.BlinkRune:
                 if (tile.GetComponent<Tile>().gameObjectAbove == null && tile.GetComponent<TileClickable>().GetDistance() <= 3)
                 {
-                    gameObject.GetComponent<PlayerMovement>().TeleportTo(tile);
-                    canUseActive = false;
-                    SoundManagerScript.PlaySound("playerTeleport");
-                    StartCoroutine(Duration(playerStats.playerActiveItem.GetCooldown(), turnLogic.turnCount));
+                    StartCoroutine(WaitAndBlink(tile));
 
                 }
                 break;
@@ -179,6 +176,18 @@ public class PlayerActions : MonoBehaviour
                 break;
         }
         
+    }
+
+    IEnumerator WaitAndBlink(GameObject tile) 
+    {
+        
+        canUseActive = false;
+        SoundManagerScript.PlaySound("playerTeleport");
+        GameObject temp = Instantiate(teleportEff, gameObject.transform);
+        yield return new WaitForSeconds(.3f);
+        gameObject.GetComponent<PlayerMovement>().TeleportTo(tile);
+        StartCoroutine(Duration(playerStats.playerActiveItem.GetCooldown(), turnLogic.turnCount));
+        Destroy(temp);
     }
 
     public void ResetActions() 
