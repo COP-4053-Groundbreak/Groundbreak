@@ -964,6 +964,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: EndCombat
       objectReference: {fileID: 0}
+    - target: {fileID: 2214122347716333635, guid: d486947c41becee4e9296bd386f7f6cc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4830046981248449150, guid: d486947c41becee4e9296bd386f7f6cc, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1552,6 +1556,14 @@ PrefabInstance:
       propertyPath: initiativeText
       value: 
       objectReference: {fileID: 1073104277}
+    - target: {fileID: 2386272146608191887, guid: 09256a8c1befb4f43ba13a3c23fcde2a, type: 3}
+      propertyPath: airPendantSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 2c0d6491b3197964ab4f86650e04661a, type: 3}
+    - target: {fileID: 2386272146608191887, guid: 09256a8c1befb4f43ba13a3c23fcde2a, type: 3}
+      propertyPath: earthPendantSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: f4c647a0ace477b459be3ac1b67925d5, type: 3}
     - target: {fileID: 2386272147329664842, guid: 09256a8c1befb4f43ba13a3c23fcde2a, type: 3}
       propertyPath: m_RootOrder
       value: 4

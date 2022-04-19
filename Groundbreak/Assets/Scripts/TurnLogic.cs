@@ -436,6 +436,10 @@ public class TurnLogic : MonoBehaviour
     }
     
     public void clearRangeIndicator(){
+        if (!ReactionManager.gridManager) 
+        {
+            return;
+        }
         foreach (Tile t in ReactionManager.gridManager.grid){
             Renderer rendComp = t.transform.GetChild(1).GetComponent<Renderer>();
             if (rendComp.material.color == Color.white){
