@@ -46,4 +46,10 @@ public class HealthSystem
             OnHealthChanged(this, EventArgs.Empty);
         }
     }
+
+    public void SetMax(int max) 
+    {
+        //healthMax = max;
+    }
+
 }
