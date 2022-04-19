@@ -63,7 +63,8 @@ public class EnemyStateManager : MonoBehaviour
     public int enemyMovementRemaining;
     public int initiative = 0;
     // integer, each block will be 1 unit or however we coded it. 
-    public int visibilityRange = 2;
+    public float visibilityRange;
+    public float customRange;
     // attack stats:
     // posible for enemy to miss, 0 miss, 1 attack. rename this to attackChance or something. 
     // public bool canAttack;
@@ -90,6 +91,13 @@ public class EnemyStateManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if(gameObject.name.Contains("Wizard") || gameObject.name.Contains("Zombie")){
+            customRange = 2.42f;
+        }
+        if(gameObject.name.Contains("Archer")){
+            customRange = 3f;
+        }
+        visibilityRange = customRange;
         canRetreat = 2;
         // elementSymbol.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(elementToLoad);
         // get animation clip length
