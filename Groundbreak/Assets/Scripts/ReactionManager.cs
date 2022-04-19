@@ -156,10 +156,19 @@ public class ReactionManager : MonoBehaviour
         // Does the tile thrown at have an enemy above it?
         // If so, then thrownAt will become an enemy gameobject
         // If not, then just do the normal tile
-        if (thrownAt.GetComponent<Tile>().gameObjectAbove != null)
+
+        if (thrownAt.GetComponent<Tile>().gameObjectAbove != null )
             thrownAt = thrownAt.GetComponent<Tile>().gameObjectAbove;
+        if (thrownAt.tag == "Barrel" ){
+            Vector2 pos = thrownAt.transform.position;
+            GameObject currRoom = FindObjectOfType<GridManager>().gameObject.transform.parent.gameObject;
+            pos = currRoom.transform.InverseTransformPoint(thrownAt.transform.position);
+            pos = pos + new Vector2(5.5f,5.5f);
+            thrownAt = gridManager.grid[(int) pos.x, (int)pos.y].gameObject; 
+        }
+        
         Debug.Log($"Upon further look, {thrownAt.name} is catching");
-        if (thrownAt.tag == "Tile"){
+        if (thrownAt.tag == "Tile" || thrownAt.tag == "Barrel"){
             Debug.Log("Element was thrown at a tile!");
             thrownAt.GetComponent<Tile>().myEffect = TileOnTile(thrownElem, thrownAt.GetComponent<Tile>());
         } else if (thrownAt.tag == "Enemy"){
