@@ -379,8 +379,9 @@ public class Effect : MonoBehaviour {
         Tile endTile = gridManager.getTile(postPullX, postPullY);
         
         // There's a character at the tile we're being pulled into
-        if (endTile.gameObjectAbove != null && (endTile.gameObjectAbove.tag == "Enemy" || endTile.gameObjectAbove.tag == "Player")){
-            dealCrashDamage(endTile.gameObjectAbove, pullable);
+        if (endTile.gameObjectAbove != null ){
+            if (endTile.gameObjectAbove.tag == "Enemy" || endTile.gameObjectAbove.tag == "Player")
+                dealCrashDamage(endTile.gameObjectAbove, pullable);
             postPullX = (int)pullableX;
             postPullY = (int)pullableY;
         }
@@ -394,6 +395,9 @@ public class Effect : MonoBehaviour {
             pullable.GetComponent<PlayerMovement>().endMove();
             pullable.GetComponent<PlayerMovement>().UpdateTilesAfterMove();
         }
+        endTile.gameObjectAbove = pullable;
+        
+
         Debug.Log($"Player new position is {pullable.transform.position}");
     }
     private void dealCrashDamage(GameObject char1, GameObject char2){
@@ -405,7 +409,7 @@ public class Effect : MonoBehaviour {
     private void dealDamageToChar(GameObject character, int damageAmount){
         if (character.gameObject.tag == "Player")
             character.gameObject.GetComponentInParent<PlayerStats>().DealDamage(damageAmount);
-        else
+        else if (character.gameObject.tag == "Enemy")
             character.gameObject.GetComponent<EnemyStateManager>().DealDamage(damageAmount);
     }
     // Works recursively. Pulls units x tiles away, only ONCE

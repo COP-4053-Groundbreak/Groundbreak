@@ -159,7 +159,7 @@ public class ReactionManager : MonoBehaviour
 
         if (thrownAt.GetComponent<Tile>().gameObjectAbove != null )
             thrownAt = thrownAt.GetComponent<Tile>().gameObjectAbove;
-        if (thrownAt.tag == "Barrel" ){
+        if (thrownAt.tag == "Barrel" || thrownAt.tag == "Chest"){
             Vector2 pos = thrownAt.transform.position;
             GameObject currRoom = FindObjectOfType<GridManager>().gameObject.transform.parent.gameObject;
             pos = currRoom.transform.InverseTransformPoint(thrownAt.transform.position);
