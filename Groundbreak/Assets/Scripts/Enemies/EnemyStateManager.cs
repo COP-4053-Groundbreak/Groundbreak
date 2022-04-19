@@ -39,10 +39,10 @@ public class EnemyStateManager : MonoBehaviour
     public int swordDamage = 10;
     public int mageDamage = 15;
     public int bossDamage = 20;
-    public int goblinDamage = 10;
+    public int goblinDamage = 15;
     public int treeDamage = 10;
-    public int mushroomDamage = 10;
-    public int trollDamage = 15;
+    public int mushroomDamage = 5;
+    public int trollDamage = 20;
 
 
     // blocking
