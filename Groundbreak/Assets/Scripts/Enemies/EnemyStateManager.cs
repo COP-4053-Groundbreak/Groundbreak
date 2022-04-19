@@ -634,4 +634,16 @@ public class EnemyStateManager : MonoBehaviour
     {
         currRoom = FindObjectOfType<GridManager>().gameObject.transform.parent.gameObject;
     }
+
+    private void OnDestroy()
+    {
+        if (FindObjectsOfType<EnemyStateManager>().Length == 0) 
+        {
+            if (FindObjectOfType<TurnLogic>())
+            {
+                FindObjectOfType<TurnLogic>().EndCombat();
+            }
+        }
+    }
+
 }
