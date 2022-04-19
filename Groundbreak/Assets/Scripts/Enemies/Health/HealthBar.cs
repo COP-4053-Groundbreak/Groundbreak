@@ -13,7 +13,7 @@ public class HealthBar : MonoBehaviour
     }
 
     private void healthSystem_OnHealthChanged(object sender, System.EventArgs e){
-        healthSystem.SetMax(FindObjectOfType<PlayerStats>().GetMaxHealth());
+        
         transform.Find("Bar").localScale = new Vector3(healthSystem.GetHealthPercent(), 2);
     }
 

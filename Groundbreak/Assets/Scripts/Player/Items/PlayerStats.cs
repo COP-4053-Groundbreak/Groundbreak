@@ -136,6 +136,10 @@ public class PlayerStats : MonoBehaviour
     public void ModifyMaxHealth(int value)
     {
         maxHealth += value;
+        if (OnHealthChanged != null)
+        {
+            OnHealthChanged(this, EventArgs.Empty);
+        }
     }
     public void ModifyMovementSpeed(int value)
     {

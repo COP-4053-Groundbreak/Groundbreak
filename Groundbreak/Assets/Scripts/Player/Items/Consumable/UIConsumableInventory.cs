@@ -31,14 +31,14 @@ public class UIConsumableInventory : MonoBehaviour
     {
         this.consumableInventory = comsumableInventory;
         comsumableInventory.UpdateItemList += Inventory_UpdateItemList;
-/*        comsumableInventory.AddItem(new ConsumableItem { itemName = ConsumableItem.ItemName.smallHealthPotion, amount = 3 });
-        comsumableInventory.AddItem(new ConsumableItem { itemName = ConsumableItem.ItemName.largeHealthPotion, amount = 2 });
-        comsumableInventory.AddItem(new ConsumableItem { itemName = ConsumableItem.ItemName.smallSpeedPotion, amount = 3 });
-        comsumableInventory.AddItem(new ConsumableItem { itemName = ConsumableItem.ItemName.largeSpeedPotion, amount = 2 });
-        comsumableInventory.AddItem(new ConsumableItem { itemName = ConsumableItem.ItemName.smallStoneSkinPotion, amount = 3 });
-        comsumableInventory.AddItem(new ConsumableItem { itemName = ConsumableItem.ItemName.largeStoneSkinPotion, amount = 2 });
-        comsumableInventory.AddItem(new ConsumableItem { itemName = ConsumableItem.ItemName.smallStrengthPotion, amount = 3 });
-        comsumableInventory.AddItem(new ConsumableItem { itemName = ConsumableItem.ItemName.largeStrengthPotion, amount = 2 });*/
+        comsumableInventory.AddItem(new ConsumableItem { itemName = ConsumableItem.ItemName.smallHealthPotion, amount = 1 });
+        //comsumableInventory.AddItem(new ConsumableItem { itemName = ConsumableItem.ItemName.largeHealthPotion, amount = 2 });
+        //comsumableInventory.AddItem(new ConsumableItem { itemName = ConsumableItem.ItemName.smallSpeedPotion, amount = 3 });
+        //comsumableInventory.AddItem(new ConsumableItem { itemName = ConsumableItem.ItemName.largeSpeedPotion, amount = 2 });
+        //comsumableInventory.AddItem(new ConsumableItem { itemName = ConsumableItem.ItemName.smallStoneSkinPotion, amount = 3 });
+        //comsumableInventory.AddItem(new ConsumableItem { itemName = ConsumableItem.ItemName.largeStoneSkinPotion, amount = 2 });
+        //comsumableInventory.AddItem(new ConsumableItem { itemName = ConsumableItem.ItemName.smallStrengthPotion, amount = 3 });
+        //comsumableInventory.AddItem(new ConsumableItem { itemName = ConsumableItem.ItemName.largeStrengthPotion, amount = 2 });
         RefreshInventory();
     }
     // On the event, refresh the inventory visuals

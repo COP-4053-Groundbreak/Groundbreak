@@ -50,10 +50,24 @@ public class ConsumableItem
         {
 
             case ItemName.smallHealthPotion:
-                playerStats.ModifyHealth(playerStats.GetHealth() + 30);
+                if (playerStats.GetHealth() + 30 < playerStats.GetMaxHealth())
+                {
+                    playerStats.ModifyHealth(30);
+                }
+                else 
+                {
+                    playerStats.MaxOutHealth();
+                }
                 break;
             case ItemName.largeHealthPotion:
-                playerStats.ModifyHealth(playerStats.GetHealth() + 60);
+                if (playerStats.GetHealth() + 60 < playerStats.GetMaxHealth())
+                {
+                    playerStats.ModifyHealth(60);
+                }
+                else
+                {
+                    playerStats.MaxOutHealth();
+                }
                 break;
             case ItemName.smallSpeedPotion:
                 playerStats.ModifyMovementSpeed(10);

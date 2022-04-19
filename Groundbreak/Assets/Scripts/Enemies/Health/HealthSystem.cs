@@ -9,6 +9,7 @@ public class HealthSystem
     public HealthSystem(int healthMax){
         this.healthMax = healthMax;
         health = healthMax;
+
     }
 
     public int GetHealth(){
@@ -45,11 +46,6 @@ public class HealthSystem
         if(OnHealthChanged != null){
             OnHealthChanged(this, EventArgs.Empty);
         }
-    }
-
-    public void SetMax(int max) 
-    {
-        //healthMax = max;
     }
 
 }

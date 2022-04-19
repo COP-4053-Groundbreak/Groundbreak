@@ -91,6 +91,7 @@ public class TurnLogic : MonoBehaviour
     {
         moveButton.interactable = false;
         throwTileButton.interactable = true;
+        activeButton.interactable = true;
 
         isMovementPhase = true;
         isThrowPhase = false;
