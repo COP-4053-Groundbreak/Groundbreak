@@ -160,7 +160,7 @@ public class DisplayInitiative : MonoBehaviour
 
     private void GridChanged(object sender, System.EventArgs e)
     {
-        numRepeated = 1;
+        numRepeated = 0;
         StartDisplay();
     }
 
@@ -183,7 +183,7 @@ public class DisplayInitiative : MonoBehaviour
 
     public void ResetRepeat() 
     {
-        numRepeated = 1;
+        numRepeated = 0;
     }
 
 }

@@ -29,7 +29,7 @@ public class ToolTipController : MonoBehaviour
         KeepTooltipOnScreen(toolTip);
         if (holdPlayerInformation != null)
         {
-            if (holdPlayerInformation.playerConsumableInventory.GetItemList().Count <= 0 && holdPlayerInformation.playerPassiveInventory.GetItemList().Count <= 0)
+            if (holdPlayerInformation.playerConsumableInventory.GetItemList().Count <= 0 && holdPlayerInformation.playerPassiveInventory.GetItemList().Count <= 0 && holdPlayerInformation.playerActiveItem == null)
             {
                 HideToolTip();
             }
@@ -58,6 +58,19 @@ public class ToolTipController : MonoBehaviour
         toolTip.SetActive(true);
 
         toolTip.GetComponentInChildren<TextMeshProUGUI>().text = consumableItem.GetDescription();
+        toolTip.transform.position = position;
+        toolTipPos = position;
+    }
+
+    public void ShowToolTip(Vector3 position, ActiveItem activeItem)
+    {
+        if (toolTip == null)
+        {
+            toolTip = GameObject.FindWithTag("ToolTipItem");
+        }
+        toolTip.SetActive(true);
+
+        toolTip.GetComponentInChildren<TextMeshProUGUI>().text = activeItem.GetDescription();
         toolTip.transform.position = position;
         toolTipPos = position;
     }

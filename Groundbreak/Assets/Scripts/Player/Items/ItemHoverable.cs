@@ -36,9 +36,13 @@ public class ItemHoverable : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         {
             toolTipController.ShowToolTip(transform.position, itemGameObject.GetComponent<PassiveItemClickable>().passiveItem);
         }
-        else if (itemGameObject.GetComponent<ConsumableItemClickable>() != null) 
+        else if (itemGameObject.GetComponent<ConsumableItemClickable>() != null)
         {
             toolTipController.ShowToolTip(transform.position, itemGameObject.GetComponent<ConsumableItemClickable>().consumableItem);
+        }
+        else if (itemGameObject.GetComponent<ActiveItemClickable>() != null) 
+        {
+            toolTipController.ShowToolTip(transform.position, itemGameObject.GetComponent<ActiveItemClickable>().activeItem);
         }
     }
 

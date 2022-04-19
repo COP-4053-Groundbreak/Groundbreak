@@ -11,6 +11,14 @@ public class ActiveItemClickable : MonoBehaviour
     public Action onRightClick;
     public ActiveItem activeItem;
 
+    [SerializeField] HoldPlayerStats playerStats;
+
+    private void Update()
+    {
+        activeItem = playerStats.playerActiveItem;
+    }
+
+
     public void OnPointerClick(PointerEventData eventData)
     {
         if (eventData.button == 0)
