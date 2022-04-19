@@ -36,7 +36,6 @@ Transform:
   - {fileID: 7231885511054343958}
   - {fileID: 5019035831053755645}
   - {fileID: 2569319371454961204}
-  - {fileID: 4861197748122110233}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -177,7 +176,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 6575406824767901331}
+    m_TransformParent: {fileID: 5186312796674864388}
     m_Modifications:
     - target: {fileID: 2434032262738465668, guid: 040442b44548dbc4e817e86d6da6c26a, type: 3}
       propertyPath: m_SortingOrder
@@ -185,11 +184,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6976457465001912775, guid: 040442b44548dbc4e817e86d6da6c26a, type: 3}
       propertyPath: m_Name
-      value: SkullFull
+      value: decoration
       objectReference: {fileID: 0}
     - target: {fileID: 7330994509393498876, guid: 040442b44548dbc4e817e86d6da6c26a, type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7330994509393498876, guid: 040442b44548dbc4e817e86d6da6c26a, type: 3}
       propertyPath: m_LocalScale.x
@@ -201,7 +200,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7330994509393498876, guid: 040442b44548dbc4e817e86d6da6c26a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7330994509393498876, guid: 040442b44548dbc4e817e86d6da6c26a, type: 3}
       propertyPath: m_LocalPosition.y
@@ -241,11 +240,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 040442b44548dbc4e817e86d6da6c26a, type: 3}
---- !u!4 &4861197748122110233 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7330994509393498876, guid: 040442b44548dbc4e817e86d6da6c26a, type: 3}
-  m_PrefabInstance: {fileID: 2795219359512026085}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5589929438428552843
 PrefabInstance:
   m_ObjectHideFlags: 0
