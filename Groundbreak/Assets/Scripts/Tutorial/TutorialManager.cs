@@ -37,13 +37,13 @@ public class TutorialManager : MonoBehaviour
         dialogue.Add("Since his element is fire, designated by the fire symbol by his health bar, any tile throw onto him will interact like it was thrown onto a fire tile. ");
         dialogue.Add("To throw the tile, click the [throw tile] button on the bottom of the screen to switch to [throw tile] mode, and left click either the skeleton or a fire tile.");
 
-        dialogue.Add("Glove: Great you killed the skeleton! Now that the all enemies are dead, press [end turn] to end combat and be able to free roam again! Go through the next door when you are ready.");
+        dialogue.Add("Glove: Great you killed the skeleton! Now that the all enemies are dead, you will be able to free roam again! Go through the next door when you are ready.");
 
         dialogue.Add("Glove: Ooh this room has two skeletons! To view what reactions you can make press [TAB] To bring up the quick reference along with your stats. Good luck!");
 
-        dialogue.Add("Glove: Congrats on clearing the room! You may have noticed the chest on the top right of the room, press [end turn] to walk over to it and open it!");
+        dialogue.Add("Glove: Congrats on clearing the room! You may have noticed the chest on the top right of the room, walk over to it and open it!");
 
-        dialogue.Add("Glove: You now have one of each category of item!. Hit [i] to see them! Passive items like speed boots give you passive bonuses. Active items like the bow can be used in combat on a cooldown. ");
+        dialogue.Add("Glove: You now have one of each category of item!. Press [i] to see them! Passive items like speed boots give you passive bonuses. Active items like the bow can be used in combat on a cooldown. ");
         dialogue.Add("Consumable items like the health potion can be used for a one time effect, Though be careful, if you use a potion like the speed potion outside of combat, it will run out before you reach the next room! ");
 
         dialogue.Add("Glove: Egads! A Coven of wizards! To use your bow, click on the bow icon on the bottom of the screen and left click the wizard closest to you. Great, now defeat the rest of the skeletons and finish this fight!");
