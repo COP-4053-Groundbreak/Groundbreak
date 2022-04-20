@@ -17,14 +17,14 @@ public class TutorialManager : MonoBehaviour
         dialogue.Add("Player: Ugh my head");
         dialogue.Add("Player: Where the heck am I??");
         dialogue.Add("Player: I must have fallen into a dungeon.");
-        dialogue.Add("Player: whats that over there, A glove?");
+        dialogue.Add("Player: Whats that over there, A glove?");
         dialogue.Add("Use WSAD to move!");
 
         dialogue.Add("Glove: Finally, you have no idea how long ive been stuck down here!");
         dialogue.Add("Player: !?! You can talk????");
         dialogue.Add("Glove: You bet I can! Im no ordinary glove, i'm the legendary glove of -");
-        dialogue.Add("Player: Dont care");
-        dialogue.Add("Glove: You seem to be stuck down here, but I can help get you out! This dungeon is made up of tiles embued with elements and using my strength you can pick them up and throw them!");
+        dialogue.Add("Player: Dont care, can you help me get out?");
+        dialogue.Add("Glove: I sure can! This dungeon is made up of tiles embued with elements and using my strength you can pick them up and throw them!");
         dialogue.Add("Player: How would that help?");
         dialogue.Add("Glove: When you throw a tile onto another tile, their elements will combine and create an effect. For example, if you threw a fire tile onto an air tile it would make a fireball!");
         dialogue.Add("Player: That sounds useful, lets go try it out!");

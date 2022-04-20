@@ -326,6 +326,10 @@ public class TurnLogic : MonoBehaviour
     // Ends combat in a room and generates colliders for impassable terrain
     public void EndCombat()
     {
+        if (!battleCanvas) 
+        {
+            return;
+        }
         battleCanvas.SetActive(false);
         isCombatPhase = false;
         isThrowPhase = false;
@@ -335,7 +339,10 @@ public class TurnLogic : MonoBehaviour
         // Destroy all effects
         ReactionManager.destroyAllEffects();
 
-        FindObjectOfType<PlayerActions>().canPickUpTile = true;
+        if (FindObjectOfType<PlayerActions>()) 
+        {
+            FindObjectOfType<PlayerActions>().canPickUpTile = true;
+        }
     }
 
     // Destroys all children of void tiles

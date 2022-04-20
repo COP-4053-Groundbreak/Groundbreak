@@ -18,6 +18,14 @@ public class DisplayActiveItem : MonoBehaviour
     void Update()
     {
         activeItem = holdPlayerStats.playerActiveItem;
-        display.GetComponent<Image>().sprite = activeItem.GetSprite();
+        if (activeItem != null)
+        {
+            display.GetComponent<Image>().enabled = true;
+            display.GetComponent<Image>().sprite = activeItem.GetSprite();
+        }
+        else 
+        {
+            display.GetComponent<Image>().enabled = false;
+        }
     }
 }
