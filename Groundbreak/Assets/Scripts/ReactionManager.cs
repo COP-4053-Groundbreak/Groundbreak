@@ -222,9 +222,6 @@ public class ReactionManager : MonoBehaviour
                     neighbor.setElement(thrownElem);
             }
 
-            // Consume the element
-            enemy.GetComponent<EnemyStateManager>().myElement = Element.Base;
-
             return null;
         } 
         
