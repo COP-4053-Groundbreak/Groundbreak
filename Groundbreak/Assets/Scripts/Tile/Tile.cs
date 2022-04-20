@@ -106,9 +106,7 @@ public class Tile : MonoBehaviour {
         // Set Tile Element symbol to new element
         if (transform.childCount > 3){
             //Debug.Log("I am with child");
-            elemVisual ev = transform.Find("elemVisual(Clone)").GetComponent<elemVisual>();
-            ev.setSymbol();
-
+            transform.Find("elemVisual(Clone)").GetComponent<elemVisual>().setSymbol();
         }
     }
 
