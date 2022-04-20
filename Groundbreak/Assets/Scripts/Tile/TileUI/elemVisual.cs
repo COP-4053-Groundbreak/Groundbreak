@@ -23,6 +23,7 @@ public class elemVisual : MonoBehaviour
     // Sets symbol of UI to whatever element its parent tile is
     public void setSymbol(){
         idx = ReactionManager.elementToIdx(transform.parent.GetComponent<Tile>().getElement());
+        Debug.Log("Index is *" + idx);
          // Debug.Log((idx>=0 && idx < 4) ? "In Bounds of array": $"Out of bounds of array val {idx}");
         this.gameObject.GetComponent<SpriteRenderer>().sprite = (idx < 4) ? elementSymbols[idx] : null;
     }
