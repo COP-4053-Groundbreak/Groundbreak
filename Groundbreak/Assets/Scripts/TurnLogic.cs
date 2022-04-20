@@ -343,6 +343,7 @@ public class TurnLogic : MonoBehaviour
         {
             FindObjectOfType<PlayerActions>().canPickUpTile = true;
         }
+        clearRangeIndicator();
     }
 
     // Destroys all children of void tiles
