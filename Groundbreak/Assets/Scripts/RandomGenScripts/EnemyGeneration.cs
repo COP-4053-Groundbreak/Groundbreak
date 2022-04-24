@@ -62,7 +62,7 @@ public class EnemyGeneration : MonoBehaviour
                     localPos = gameObject.transform.InverseTransformPoint(currentPoint.transform.position);
                     pointY = (int)(localPos.y + 5.5f);
                     pointX = (int)(localPos.x + 5.5f);
-                    Debug.LogError(gridManager.grid[pointX, pointY].gameObjectAbove);
+                    //Debug.LogError(gridManager.grid[pointX, pointY].gameObjectAbove);
                     //Debug.Log("While Loop Test");
 
                 } while ((gridManager.grid[pointX, pointY].gameObjectAbove != null && 
