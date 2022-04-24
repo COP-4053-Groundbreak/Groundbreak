@@ -22,6 +22,16 @@ public class ItemAssets : MonoBehaviour
     public Sprite airPendantSprite;
     public Sprite initiativeWandSprite;
 
+    // Lv 2
+    public Sprite cheeseSprite;
+    public Sprite mercuryBootsSprite;
+    public Sprite heavyShieldSprite;
+    public Sprite fireStaffSprite;
+    public Sprite waterStaffSprite;
+    public Sprite earthStaffSprite;
+    public Sprite airStaffSprite;
+    public Sprite wildWandSprite;
+
     // Consumable Items
     public Sprite smallHealthPotion;
     public Sprite largeHealthPotion;
