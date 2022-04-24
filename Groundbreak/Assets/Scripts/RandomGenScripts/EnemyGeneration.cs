@@ -54,6 +54,7 @@ public class EnemyGeneration : MonoBehaviour
 
                 do
                 {
+                    
                     posRand = Random.Range(0, spawnPointHolder.transform.childCount - 1);
                     currentPoint = spawnPointHolder.transform.GetChild(posRand).gameObject;
                     spawnPont = currentPoint.GetComponent<EnemySpawner>();
@@ -61,10 +62,10 @@ public class EnemyGeneration : MonoBehaviour
                     localPos = gameObject.transform.InverseTransformPoint(currentPoint.transform.position);
                     pointY = (int)(localPos.y + 5.5f);
                     pointX = (int)(localPos.x + 5.5f);
-
+                    Debug.LogError(gridManager.grid[pointX, pointY].gameObjectAbove);
                     //Debug.Log("While Loop Test");
-                    
-                } while ((gridManager.grid[pointX, pointY].gameObjectAbove && 
+
+                } while ((gridManager.grid[pointX, pointY].gameObjectAbove != null && 
                                                (gridManager.grid[pointX, pointY].gameObjectAbove.CompareTag("Barrel") || gridManager.grid[pointX, pointY].gameObjectAbove.CompareTag("Enemy"))) ||
                                                gridManager.grid[pointX, pointY].myElement == Element.Void);
 
@@ -77,6 +78,7 @@ public class EnemyGeneration : MonoBehaviour
                 //Make the enemy
                 //Debug.LogWarning(gridManager.grid + " " + pointX + " " + pointY);
                 currentEnemy = Instantiate(templates.enemiesFloorOne[rand], gridManager.grid[pointX, pointY].transform.position, templates.enemiesFloorOne[rand].transform.rotation, gameObject.transform);
+                gridManager.grid[pointX, pointY].gameObjectAbove = currentEnemy;
                 currentEnemy.SetActive(false);
             }
             spawned = true;
