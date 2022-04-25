@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 public class PassiveItemManager : MonoBehaviour
 {
     [SerializeField] float pickUpTime = 1f;
@@ -15,7 +16,15 @@ public class PassiveItemManager : MonoBehaviour
 
     public void AddRandomItem(GameObject chest)
     {
-        PassiveItem item = PassiveItem.GetRandomPassiveItem();
+        PassiveItem item;
+        if (SceneManager.GetActiveScene().name == "Level2")
+        {
+            item = PassiveItem.GetRandomHighPassiveItem();
+        }
+        else 
+        {
+            item = PassiveItem.GetRandomPassiveItem();
+        }
         chest.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = item.GetSprite();
         chest.transform.GetChild(1).GetComponent<TextMeshPro>().text = item.GetEffect();
         chest.transform.GetChild(2).gameObject.SetActive(true);
