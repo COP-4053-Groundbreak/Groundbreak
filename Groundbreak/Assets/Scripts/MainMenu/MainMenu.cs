@@ -8,4 +8,8 @@ public class MainMenu : MonoBehaviour
     public void PlayGame(){
         SceneManager.LoadSceneAsync("Level 1");
     }
+
+    public void PlayTutorial(){
+        SceneManager.LoadSceneAsync("Tutorial");
+    }
 }
