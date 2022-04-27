@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.SceneManagement;
 
 public class PlayerActions : MonoBehaviour
 {
@@ -103,7 +104,14 @@ public class PlayerActions : MonoBehaviour
             heldTileElement = Element.Void;
             FindObjectOfType<DisplayHeldTile>().ClearTile();
         }
-        
+        if (SceneManager.GetActiveScene().name == "Tutorial")
+        {
+            //Debug.LogError(FindObjectOfType<TutorialManager>().GetIndex());
+            if (FindObjectOfType<TutorialManager>().GetIndex() == 19)
+            {
+                FindObjectOfType<TutorialManager>().IncrementIndex();
+            }
+        }
     }
 
     public void UseActiveItem(GameObject tile) 

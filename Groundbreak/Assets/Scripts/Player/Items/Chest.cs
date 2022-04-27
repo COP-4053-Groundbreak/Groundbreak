@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Chest : MonoBehaviour
 {
@@ -49,6 +50,15 @@ public class Chest : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         GetComponent<SpriteRenderer>().sprite = OpenSprite;
+
+        if (SceneManager.GetActiveScene().name == "Tutorial")
+        {
+            passiveItemManager.AddRandomItem(this.gameObject);
+            passiveItemManager.AddRandomConsumableItem(this.gameObject);
+            passiveItemManager.AddRandomActiveItem(this.gameObject);
+            
+        }
+        else
         if (passiveConsumableActive == 0)
         {
             passiveItemManager.AddRandomItem(this.gameObject);

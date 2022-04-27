@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class PlayerMovement : MonoBehaviour
 {
     // 10 movement speed is 1 tile, used so we can have say 2 tiles take 3 points of movement without needing float math
@@ -123,12 +123,21 @@ public class PlayerMovement : MonoBehaviour
         }
         if (!turnLogic.isCombatPhase) 
         {
+
             // Get movement input and check if its 0
             float xInput = Input.GetAxisRaw("Horizontal");
             float yInput = Input.GetAxisRaw("Vertical");
+
+
+            if (SceneManager.GetActiveScene().name == "Tutorial" && GameObject.FindGameObjectWithTag("Tutorial"))
+            {
+                xInput = 0;
+                yInput = 0;
+                
+            }
+
             isFreemoving = (xInput != 0 || yInput != 0);
             freeMovementDistance = new Vector2(xInput, yInput);
-
             // Set animation for running
             if (isFreemoving)
             {
@@ -178,6 +187,12 @@ public class PlayerMovement : MonoBehaviour
     // Move player to a spot if they have the movement points remaining
     public void MovePlayer(int distance, float x, float y) 
     {
+        // Dont move in dialogue
+        if (SceneManager.GetActiveScene().name == "Tutorial" && GameObject.FindGameObjectWithTag("Tutorial"))
+        {
+            return;
+        }
+
         if (isSliding || !turnLogic.isCombatPhase) 
         {
             return;
@@ -200,7 +215,18 @@ public class PlayerMovement : MonoBehaviour
             isSliding = true;
             playerAnimator.SetBool("IsWalking", true);
             UpdateTilesAfterMove();
+
+
+            if (SceneManager.GetActiveScene().name == "Tutorial")
+            {
+                if (FindObjectOfType<TutorialManager>().GetIndex() == 15)
+                {
+                    FindObjectOfType<TutorialManager>().IncrementIndex();
+                }
+            }
+
         }
+
         
     }
 
@@ -277,7 +303,11 @@ public class PlayerMovement : MonoBehaviour
     // Draws line along the path the character takes
     public void ShowLine(float x, float y) 
     {
-        
+        // Dont show in dialogue
+        if (SceneManager.GetActiveScene().name == "Tutorial" && GameObject.FindGameObjectWithTag("Tutorial"))
+        {
+            return;
+        }
         // Dont show line if we are in throw phase, are moving, or not in combat
         if (!turnLogic) 
         {
