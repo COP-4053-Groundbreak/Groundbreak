@@ -33,7 +33,7 @@ public class UIPassiveInventory : MonoBehaviour
     {
         passiveInventory.UpdateItemList += Inventory_UpdateItemList;
         //passiveInventory.AddItem(new PassiveItem { itemName = PassiveItem.PassiveItemName.AirPendant, amount = 1 }, playerStats);
-        StartCoroutine(Pain());
+        //StartCoroutine(Pain());
         //passiveInventory.AddItem(new PassiveItem { itemName = PassiveItem.PassiveItemName.SpeedBoots, amount = 1 }, playerStats);
         this.passiveInventory = passiveInventory;
         RefreshInventory();
@@ -48,7 +48,7 @@ public class UIPassiveInventory : MonoBehaviour
     IEnumerator Pain() 
     {
         yield return new WaitForSeconds(.5f);
-        passiveInventory.AddItem(new PassiveItem { itemName = PassiveItem.PassiveItemName.HealthRing, amount = 1 }, playerStats);
+        //passiveInventory.AddItem(new PassiveItem { itemName = PassiveItem.PassiveItemName.HealthRing, amount = 1 }, playerStats);
     }
 
     public void RefreshInventory()
