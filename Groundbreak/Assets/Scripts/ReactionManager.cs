@@ -15,31 +15,31 @@ public class ReactionManager : MonoBehaviour
 
     // Game balance variables for effects
     // MAGMA VARIABLES:
-    [SerializeField] public static int MAGMA_DMG = 12;
+    [SerializeField] public static int MAGMA_DMG = 15;
     [SerializeField] public static int MAGMA_DUR = 2;
 
     // SANDSTORM VARIABLES:
-    [SerializeField] public static int SANDSTORM_DMG = 5;
+    [SerializeField] public static int SANDSTORM_DMG = 10;
     [SerializeField] public static int SANDSTORM_DUR = 2;
     [SerializeField] public static int SANDSTORM_RANGE = 2;
     
     // STORM VARIABLES:
     [SerializeField] public static int STORM_RANGE = 2;
-    [SerializeField] public static int STORM_DMG = 5;
+    [SerializeField] public static int STORM_DMG = 10;
     [SerializeField] public static int STORM_DUR = 2;
     
     // FIREBALL VARIABLES:
-    [SerializeField] public static int FIREBALL_DMG = 30;
+    [SerializeField] public static int FIREBALL_DMG = 20;
     [SerializeField] public static int FIREBALL_RANGE = 2;
     [SerializeField] public static int FIREBALL_DUR = 0;
 
     // SMOKE VARIABLES:
     [SerializeField] public static int SMOKE_RANGE_PLAYER_MOD = 1;
     [SerializeField] public static int SMOKE_RANGE_ENEMY_MOD = 2;
-    [SerializeField] public static int SMOKE_DUR = 2;
+    [SerializeField] public static int SMOKE_DUR = 4;
 
     // MUD VARIABLES
-    [SerializeField] public static int MUD_DUR = 2;
+    [SerializeField] public static int MUD_DUR = 4;
     [SerializeField] public static int MUD_DEBUFF = 1;
 
     // Damage from two units colliding from a push or pull

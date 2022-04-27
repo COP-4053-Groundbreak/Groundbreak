@@ -36,15 +36,16 @@ public class EnemyStateManager : MonoBehaviour
     // attacking
     public int attackCounter = 0;
     public int archerDamage = 5;
-    public int swordDamage = 10;
+    public int swordDamage = 15;
+    int greenswordDamage = 20;
     public int mageDamage = 15;
     public int bossDamage = 20;
-    public int goblinDamage = 15;
+    public int goblinDamage = 25;
     public int treeDamage = 10;
     public int mushroomDamage = 5;
-    public int trollDamage = 20;
+    public int trollDamage = 30;
 
-
+    int retreatCounter = 0;
     // blocking
     bool triedToBlock = false;
     bool playSound = false;
@@ -109,6 +110,9 @@ public class EnemyStateManager : MonoBehaviour
         }
         turnLogic = FindObjectOfType<TurnLogic>();
         if(gameObject.name.Contains("Mushroom")){
+            enemyMovementRemaining = 5;
+        }
+        if(gameObject.name.Contains("Goblin")){
             enemyMovementRemaining = 4;
         }
         else{
@@ -337,8 +341,10 @@ public class EnemyStateManager : MonoBehaviour
                 isEnemyTurn = false;
             }
             // if we get here, lets check if we are at 30% health or lower, if so lets retreat. 
-            else if (healthSystem.GetHealth() <= 0.3 * healthSystem.getMaxHealth() && attackCounter == 0){
-                Debug.Log("In retreat%");
+            else if (healthSystem.GetHealth() <= 0.3 * healthSystem.getMaxHealth() && attackCounter == 0 && retreatCounter <= 2){
+                Debug.Log("In retreat WHAT RETREAT COUNT ARE WE ON?");
+                Debug.Log(retreatCounter);
+                retreatCounter = retreatCounter + 1;
                 if (isSliding) 
                 {
                     SlideThisObjectAlongPath(slidingPath);
@@ -481,7 +487,7 @@ public class EnemyStateManager : MonoBehaviour
                 damageToDeal = swordDamage;
                 break;
             case "GreenSkeletonWarrior":
-                damageToDeal = swordDamage;
+                damageToDeal = greenswordDamage;
                 break;
             case "Fantasy Zombie":
                 damageToDeal = bossDamage;
