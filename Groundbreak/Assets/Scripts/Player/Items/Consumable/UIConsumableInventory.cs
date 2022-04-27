@@ -31,7 +31,7 @@ public class UIConsumableInventory : MonoBehaviour
     {
         this.consumableInventory = comsumableInventory;
         comsumableInventory.UpdateItemList += Inventory_UpdateItemList;
-        comsumableInventory.AddItem(new ConsumableItem { itemName = ConsumableItem.ItemName.smallHealthPotion, amount = 1 });
+        //comsumableInventory.AddItem(new ConsumableItem { itemName = ConsumableItem.ItemName.smallHealthPotion, amount = 1 });
         //comsumableInventory.AddItem(new ConsumableItem { itemName = ConsumableItem.ItemName.largeHealthPotion, amount = 2 });
         //comsumableInventory.AddItem(new ConsumableItem { itemName = ConsumableItem.ItemName.smallSpeedPotion, amount = 3 });
         //comsumableInventory.AddItem(new ConsumableItem { itemName = ConsumableItem.ItemName.largeSpeedPotion, amount = 2 });
