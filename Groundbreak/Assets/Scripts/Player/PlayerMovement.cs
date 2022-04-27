@@ -29,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float freeMoveSpeed = 5f;
     TurnLogic turnLogic;
     // Bool to check when the player is moving during non turn based movement
-    bool isFreemoving = false;
+    public bool isFreemoving = false;
 
     DisplayMovement displayMovement;
 

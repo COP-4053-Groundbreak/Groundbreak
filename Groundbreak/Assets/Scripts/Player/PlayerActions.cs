@@ -48,6 +48,12 @@ public class PlayerActions : MonoBehaviour
                     return;
                 }
             }
+
+            if (FindObjectOfType<PlayerMovement>().isSliding || FindObjectOfType<PlayerMovement>().isFreemoving) 
+            {
+                return;
+            }
+
             // Cant pickup tile with somehting on top of it
             if (tile.gameObjectAbove == null)
             {
