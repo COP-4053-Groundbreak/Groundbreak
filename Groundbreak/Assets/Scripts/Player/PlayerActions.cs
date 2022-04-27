@@ -49,7 +49,7 @@ public class PlayerActions : MonoBehaviour
                 }
             }
 
-            if (FindObjectOfType<PlayerMovement>().isSliding || FindObjectOfType<PlayerMovement>().isFreemoving) 
+            if (FindObjectOfType<PlayerMovement>().isSliding || (FindObjectOfType<PlayerMovement>().isFreemoving && !FindObjectOfType<TurnLogic>().isCombatPhase)) 
             {
                 return;
             }

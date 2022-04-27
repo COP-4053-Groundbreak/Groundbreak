@@ -12,4 +12,10 @@ public class MainMenu : MonoBehaviour
     public void PlayTutorial(){
         SceneManager.LoadSceneAsync("Tutorial");
     }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
 }
