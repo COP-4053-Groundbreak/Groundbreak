@@ -96,13 +96,13 @@ public class EnemyStateManager : MonoBehaviour
         if(gameObject.name.Contains("Zombie")){
             customRange = 3f;
         }
-        if(gameObject.name.Contains("Wizard")){
+        else if(gameObject.name.Contains("Wizard")){
             customRange = 3f;
         }
-        if(gameObject.name.Contains("Archer")){
+        else if(gameObject.name.Contains("Archer")){
             customRange = 4f;
         }
-        if(gameObject.name.Contains("Troll")){
+        else if(gameObject.name.Contains("Troll")){
             customRange = 3f;
         }
         else{
