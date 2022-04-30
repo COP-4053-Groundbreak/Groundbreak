@@ -2207,8 +2207,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1693627450376305844}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 15.741523, y: -14.092693, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3437070677838532227}
@@ -6613,8 +6613,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3437070677838532227}
-  - component: {fileID: 5445369737585164870}
   - component: {fileID: 8885615768129205421}
+  - component: {fileID: 5445369737585164870}
   - component: {fileID: 204533500128355222}
   - component: {fileID: 7494195710931344699}
   m_Layer: 0
@@ -6646,18 +6646,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5445369737585164870
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4380242576829322985}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78971f91b0339a548b63f1ab73050f25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &8885615768129205421
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6668,6 +6656,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 74cbd66a106c81648b8420f9ba317cf6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5445369737585164870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4380242576829322985}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78971f91b0339a548b63f1ab73050f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &204533500128355222
@@ -6685,7 +6685,6 @@ MonoBehaviour:
   Spawned: 0
   RoomWidth: 10
   RoomHeight: 10
-  ChestSpawn: 3
   Chest: {fileID: 8396762822579587563, guid: 9fbd856e733bf6443b47a4a3ce8cba92, type: 3}
 --- !u!114 &7494195710931344699
 MonoBehaviour:
@@ -9008,7 +9007,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6423187645174873343}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2c0d85f7dd0617b47a05130d5f1dcf2e, type: 3}
   m_Name: 
