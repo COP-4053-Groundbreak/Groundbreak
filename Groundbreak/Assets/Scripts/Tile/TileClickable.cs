@@ -26,7 +26,7 @@ public class TileClickable : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
             return;
         }
         GameObject ThisTile = eventData.pointerCurrentRaycast.gameObject;
-        if (turnLogic.isMovementPhase)
+        if (turnLogic.isMovementPhase && turnLogic.isCombatPhase)
         {
             // Left click
             if (eventData.button == 0)

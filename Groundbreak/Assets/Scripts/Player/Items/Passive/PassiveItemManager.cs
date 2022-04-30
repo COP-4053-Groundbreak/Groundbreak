@@ -8,6 +8,8 @@ public class PassiveItemManager : MonoBehaviour
     [SerializeField] float pickUpTime = 1f;
     PlayerStats playerStats;
     public HoldPlayerStats holdPlayerStats;
+    bool accepted = false;
+    bool rejected = false;
     private void Start()
     {
         playerStats = FindObjectOfType<PlayerStats>();
@@ -28,6 +30,7 @@ public class PassiveItemManager : MonoBehaviour
         chest.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = item.GetSprite();
         chest.transform.GetChild(1).GetComponent<TextMeshPro>().text = item.GetEffect();
         chest.transform.GetChild(2).gameObject.SetActive(true);
+        chest.transform.GetChild(4).gameObject.SetActive(true);
         StartCoroutine(WaitAndAddItem(chest, item));
 
     }
@@ -38,6 +41,7 @@ public class PassiveItemManager : MonoBehaviour
         chest.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = item.GetSprite();
         chest.transform.GetChild(1).GetComponent<TextMeshPro>().text = item.GetDescription();
         chest.transform.GetChild(2).gameObject.SetActive(true);
+        chest.transform.GetChild(4).gameObject.SetActive(true);
         StartCoroutine(WaitAndAddConsumableItem(chest, item));
     }
     public void AddRandomActiveItem(GameObject chest)
@@ -45,7 +49,10 @@ public class PassiveItemManager : MonoBehaviour
         ActiveItem item = ActiveItem.GetRandomActiveItem();
         chest.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = item.GetSprite();
         chest.transform.GetChild(1).GetComponent<TextMeshPro>().text = item.GetDescription();
+        chest.transform.GetChild(2).gameObject.GetComponentInChildren<TextMeshPro>().SetText("Replace");
         chest.transform.GetChild(2).gameObject.SetActive(true);
+        chest.transform.GetChild(3).gameObject.SetActive(true);
+        chest.transform.GetChild(4).gameObject.SetActive(true);
         StartCoroutine(WaitAndAddActiveItem(chest, item));
     }
 
@@ -58,27 +65,55 @@ public class PassiveItemManager : MonoBehaviour
     // Enumerator to have a delay before item is added
     IEnumerator WaitAndAddItem(GameObject chest, PassiveItem item)
     {
-        yield return new WaitForSeconds(pickUpTime);
+        accepted = false;
+        rejected = false;
+        yield return new WaitUntil(() => accepted);
         holdPlayerStats.playerPassiveInventory.AddItem(item, playerStats);
         chest.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = null;
         chest.transform.GetChild(1).GetComponent<TextMeshPro>().text = "";
         chest.transform.GetChild(2).gameObject.SetActive(false);
+        chest.transform.GetChild(4).gameObject.SetActive(false);
+        accepted = false;
+        rejected = false;
     }
 
     IEnumerator WaitAndAddConsumableItem(GameObject chest, ConsumableItem item)
     {
-        yield return new WaitForSeconds(pickUpTime);
+        accepted = false;
+        rejected = false;
+        yield return new WaitUntil(() => accepted);
         FindObjectOfType<UIConsumableInventoryController>().uIInventory.consumableInventory.AddItem(item);
         chest.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = null;
         chest.transform.GetChild(1).GetComponent<TextMeshPro>().text = "";
         chest.transform.GetChild(2).gameObject.SetActive(false);
+        chest.transform.GetChild(4).gameObject.SetActive(false);
+        accepted = false;
+        rejected = false;
     }
     IEnumerator WaitAndAddActiveItem(GameObject chest, ActiveItem item)
     {
-        yield return new WaitForSeconds(pickUpTime);
-        holdPlayerStats.playerActiveItem = item;
+        accepted = false;
+        rejected = false;
+        yield return new WaitUntil(() => accepted || rejected);
+        if (accepted) 
+        {
+            holdPlayerStats.playerActiveItem = item;
+        }
         chest.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = null;
         chest.transform.GetChild(1).GetComponent<TextMeshPro>().text = "";
         chest.transform.GetChild(2).gameObject.SetActive(false);
+        chest.transform.GetChild(3).gameObject.SetActive(false);
+        chest.transform.GetChild(4).gameObject.SetActive(false);
+        accepted = false;
+        rejected = false;
+    }
+
+    public void Accept() 
+    {
+        accepted = true;
+    }
+    public void Reject()
+    {
+        rejected = true;
     }
 }

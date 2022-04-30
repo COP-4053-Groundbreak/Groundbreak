@@ -7,7 +7,7 @@ public class ChestSpawner : MonoBehaviour
     [SerializeField] bool Spawned = false;
     [SerializeField] int RoomWidth;
     [SerializeField] int RoomHeight;
-    [SerializeField] int ChestSpawn;
+    int ChestSpawn = 2;
     [SerializeField] GameObject Chest;
     private Transform posChest;
     private GameObject currentChest;
