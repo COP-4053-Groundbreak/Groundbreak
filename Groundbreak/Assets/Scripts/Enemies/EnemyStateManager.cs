@@ -35,15 +35,16 @@ public class EnemyStateManager : MonoBehaviour
 
     // attacking
     public int attackCounter = 0;
-    public int archerDamage = 5;
-    public int swordDamage = 15;
+    int archerDamage = 10;
+    int swordDamage = 15;
     int greenswordDamage = 20;
-    public int mageDamage = 15;
-    public int bossDamage = 20;
-    public int goblinDamage = 25;
-    public int treeDamage = 10;
-    public int mushroomDamage = 5;
-    public int trollDamage = 30;
+    int greenMageDamage = 20;
+    int mageDamage = 15;
+    int bossDamage = 20;
+    int goblinDamage = 25;
+    int treeDamage = 10;
+    int mushroomDamage = 10;
+    int trollDamage = 30;
 
     int retreatCounter = 0;
     // blocking
@@ -92,11 +93,20 @@ public class EnemyStateManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(gameObject.name.Contains("Wizard") || gameObject.name.Contains("Zombie")){
-            customRange = 2.42f;
+        if(gameObject.name.Contains("Zombie")){
+            customRange = 3f;
+        }
+        if(gameObject.name.Contains("Wizard")){
+            customRange = 3f;
         }
         if(gameObject.name.Contains("Archer")){
+            customRange = 4f;
+        }
+        if(gameObject.name.Contains("Troll")){
             customRange = 3f;
+        }
+        else{
+            customRange = 1.42f;
         }
         visibilityRange = customRange;
         canRetreat = 2;
@@ -114,6 +124,12 @@ public class EnemyStateManager : MonoBehaviour
         }
         if(gameObject.name.Contains("Goblin")){
             enemyMovementRemaining = 4;
+        }
+        if(gameObject.name.Contains("Warrior")){
+            enemyMovementRemaining = 3;
+        }
+        if(gameObject.name.Contains("Troll")){
+            enemyMovementRemaining = 3;
         }
         else{
             enemyMovementRemaining = 2;
@@ -317,7 +333,7 @@ public class EnemyStateManager : MonoBehaviour
                 // damage gets dealt when we turn off the animation. 
                 isEnemyTurn = false;
             }
-            else if((gameObject.name.Contains("Warrior") || gameObject.name.Contains("Tree")  || gameObject.name.Contains("Goblin") || gameObject.name.Contains("Mushroom") || gameObject.name.Contains("Troll")  )  && distanceBetweenPlayerAndEnemy <= 1.42 && attackCounter == 0){
+            else if((gameObject.name.Contains("Warrior") || gameObject.name.Contains("Tree")  || gameObject.name.Contains("Goblin") || gameObject.name.Contains("Mushroom") || gameObject.name.Contains("Troll")  )  && distanceBetweenPlayerAndEnemy <= visibilityRange && attackCounter == 0){
                 // play animation.
                 animator.SetBool("isAttacking", true);
                 // play sound clip
@@ -481,7 +497,7 @@ public class EnemyStateManager : MonoBehaviour
                 damageToDeal = mageDamage;
                 break;
             case "GreenSkeletonWizard":
-                damageToDeal = mageDamage;
+                damageToDeal = greenMageDamage;
                 break;
             case "SkeletonWarrior":
                 damageToDeal = swordDamage;
