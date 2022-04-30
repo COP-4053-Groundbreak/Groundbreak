@@ -168,7 +168,7 @@ MonoBehaviour:
   mySpriteRenderer: {fileID: 1482483640718570294}
   animator: {fileID: 1482483640718570295}
   elementOnEnemy: 0
-  slideSpeed: 1
+  slideSpeed: 2
   slidingPath: []
   isSliding: 0
   attackCounter: 0
@@ -185,9 +185,10 @@ MonoBehaviour:
   pfHealthBar: {fileID: 8601539936103537149, guid: 9c241cd300c70dd42bfc6fd13cca7c4b, type: 3}
   elementSymbol: {fileID: 656180300502052948, guid: 631a5f24fa1041d4ea416e3a54a061d1, type: 3}
   alive: 1
-  enemyMovementRemaining: 4
+  enemyMovementRemaining: 5
   initiative: 0
   visibilityRange: 2
+  customRange: 0
   myElement: 1
   width: 0
   height: 0

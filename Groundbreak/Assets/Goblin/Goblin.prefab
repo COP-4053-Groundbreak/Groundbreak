@@ -172,21 +172,16 @@ MonoBehaviour:
   slidingPath: []
   isSliding: 0
   attackCounter: 0
-  archerDamage: 5
-  swordDamage: 10
-  mageDamage: 15
-  bossDamage: 20
-  goblinDamage: 10
-  treeDamage: 10
   listOfTiles: []
   startHealth: 50
   pfHealthBar: {fileID: 8601539936103537149, guid: 9c241cd300c70dd42bfc6fd13cca7c4b, type: 3}
-  elementSymbol: {fileID: 656180300502052948, guid: 631a5f24fa1041d4ea416e3a54a061d1, type: 3}
+  elementSymbol: {fileID: 8201707521368900702, guid: add1c9e90abdf104f80ac5dc8925fb00, type: 3}
   alive: 1
   enemyMovementRemaining: 0
   initiative: 0
   visibilityRange: 2
-  myElement: 1
+  customRange: 0
+  myElement: 8
   width: 0
   height: 0
   period: 0
