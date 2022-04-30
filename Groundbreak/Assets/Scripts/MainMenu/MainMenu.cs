@@ -5,6 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+    GameObject optionsMenu;
+    private void Start(){
+        optionsMenu = this.transform.parent.Find("OptionsMenu").gameObject;
+    }
     public void PlayGame(){
         SceneManager.LoadSceneAsync("Level 1");
     }
@@ -16,6 +20,11 @@ public class MainMenu : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    public void OpenOptions(){
+        optionsMenu.SetActive(true);
+        this.gameObject.SetActive(false);
     }
 
 }
