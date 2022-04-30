@@ -6,8 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class PlayerStats : MonoBehaviour
 {
-    [SerializeField] int currentHealth = 100;
-    [SerializeField] int maxHealth = 100;
+    [SerializeField] int currentHealth = 50;
+    [SerializeField] int maxHealth = 50;
     [SerializeField] int movementPerTurn = 20;
     // Armor stat so we can have items reduce damage
     [SerializeField] int armor = 0;
@@ -20,7 +20,7 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] int initiative = 3;
 
     // Starting variables to compare to
-    public int startingHealth = 100;
+    public int startingHealth = 50;
     public int startingMovement = 20;
     public int startingArmor = 0;
     public int startingInitiative = 3;

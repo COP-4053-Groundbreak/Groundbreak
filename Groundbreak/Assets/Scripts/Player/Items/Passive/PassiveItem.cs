@@ -71,35 +71,35 @@ public class PassiveItem {
         switch (itemName)
         {
             case PassiveItemName.HealthRing:
-                return "Health Ring \n+50 HP";
+                return "Health Ring \n+25 HP";
             case PassiveItemName.SpeedBoots:
                 return "Speed Boots \n+1 Movement Range";
             case PassiveItemName.LightShield:
                 return "Light Shield \n+1 Armor";
             case PassiveItemName.FirePendant:
-                return "Fire Pendant \n+25% Fire Strength";
+                return "Fire Pendant \n+20% Fire Strength";
             case PassiveItemName.WaterPendant:
-                return "Water Pendant \n+25% Water Strength";
+                return "Water Pendant \n+20% Water Strength";
             case PassiveItemName.EarthPendant:
-                return "Earth Pendant \n+25% Earth Strength";
+                return "Earth Pendant \n+20% Earth Strength";
             case PassiveItemName.AirPendant:
-                return "Air Pendant \n+25% Air Strength";
+                return "Air Pendant \n+20% Air Strength";
             case PassiveItemName.InitiativeWand:
                 return "Initative Wand \n+2 Initiative";
             case PassiveItemName.Cheese:
-                return "Cheese? \n+75 HP";
+                return "Cheese? \n+50 HP";
             case PassiveItemName.MercuryBoots:
                 return "Mercury Boots \n+2 Movement Range";
             case PassiveItemName.HeavyShield:
                 return "Heavy Shield \n+5 Armor";
             case PassiveItemName.FireStaff:
-                return "Fire Staff \n+25% Fire Strength";
+                return "Fire Staff \n+30% Fire Strength";
             case PassiveItemName.WaterStaff:
-                return "Water Staff \n+25% Water Strength";
+                return "Water Staff \n+30% Water Strength";
             case PassiveItemName.EarthStaff:
-                return "Earth Staff \n+25% Earth Strength";
+                return "Earth Staff \n+30% Earth Strength";
             case PassiveItemName.AirStaff:
-                return "Air Staff \n+25% Air Strength";
+                return "Air Staff \n+30% Air Strength";
             case PassiveItemName.WildWand:
                 return "Wild Wand \n+4 Initiative";
         }
@@ -169,8 +169,8 @@ public class PassiveItem {
         switch (itemName)
         {
             case PassiveItem.PassiveItemName.HealthRing:
-                playerStats.ModifyHealth(50);
-                playerStats.ModifyMaxHealth(50);
+                playerStats.ModifyHealth(25);
+                playerStats.ModifyMaxHealth(25);
                 break;
             case PassiveItem.PassiveItemName.SpeedBoots:
                 playerStats.ModifyMovementSpeed(10);
@@ -179,24 +179,24 @@ public class PassiveItem {
                 playerStats.ModifyArmor(1);
                 break;
             case PassiveItem.PassiveItemName.FirePendant:
-                playerStats.ModifyFireMod(0.25f);
+                playerStats.ModifyFireMod(0.2f);
                 break;
             case PassiveItem.PassiveItemName.WaterPendant:
-                playerStats.ModifyWaterMod(0.25f);
+                playerStats.ModifyWaterMod(0.2f);
                 break;
             case PassiveItem.PassiveItemName.EarthPendant:
-                playerStats.ModifyEarthMod(0.25f);
+                playerStats.ModifyEarthMod(0.2f);
                 break;
             case PassiveItem.PassiveItemName.AirPendant:
                 
-                playerStats.ModifyAirMod(0.25f);
+                playerStats.ModifyAirMod(0.2f);
                 break;
             case PassiveItem.PassiveItemName.InitiativeWand:
                 playerStats.ModifyInitiative(2);
                 break;
             case PassiveItem.PassiveItemName.Cheese:
-                playerStats.ModifyHealth(75);
-                playerStats.ModifyMaxHealth(75);
+                playerStats.ModifyHealth(50);
+                playerStats.ModifyMaxHealth(50);
                 break;
             case PassiveItem.PassiveItemName.MercuryBoots:
                 playerStats.ModifyMovementSpeed(20);
@@ -205,17 +205,17 @@ public class PassiveItem {
                 playerStats.ModifyArmor(5);
                 break;
             case PassiveItem.PassiveItemName.FireStaff:
-                playerStats.ModifyFireMod(0.5f);
+                playerStats.ModifyFireMod(0.3f);
                 break;
             case PassiveItem.PassiveItemName.WaterStaff:
-                playerStats.ModifyWaterMod(0.5f);
+                playerStats.ModifyWaterMod(0.3f);
                 break;
             case PassiveItem.PassiveItemName.EarthStaff:
-                playerStats.ModifyEarthMod(0.5f);
+                playerStats.ModifyEarthMod(0.3f);
                 break;
             case PassiveItem.PassiveItemName.AirStaff:
 
-                playerStats.ModifyAirMod(0.5f);
+                playerStats.ModifyAirMod(0.3f);
                 break;
             case PassiveItem.PassiveItemName.WildWand:
                 playerStats.ModifyInitiative(4);
@@ -228,8 +228,8 @@ public class PassiveItem {
         switch (itemName)
         {
             case PassiveItem.PassiveItemName.HealthRing:
-                playerStats.ModifyHealth(-50);
-                playerStats.ModifyMaxHealth(-50);
+                playerStats.ModifyHealth(-25);
+                playerStats.ModifyMaxHealth(-25);
                 break;
             case PassiveItem.PassiveItemName.SpeedBoots:
                 playerStats.ModifyMovementSpeed(-10);
@@ -238,23 +238,23 @@ public class PassiveItem {
                 playerStats.ModifyArmor(-1);
                 break;
             case PassiveItem.PassiveItemName.FirePendant:
-                playerStats.ModifyFireMod(-0.25f);
+                playerStats.ModifyFireMod(-0.2f);
                 break;
             case PassiveItem.PassiveItemName.WaterPendant:
-                playerStats.ModifyWaterMod(-0.25f);
+                playerStats.ModifyWaterMod(-0.2f);
                 break;
             case PassiveItem.PassiveItemName.EarthPendant:
-                playerStats.ModifyEarthMod(-0.25f);
+                playerStats.ModifyEarthMod(-0.2f);
                 break;
             case PassiveItem.PassiveItemName.AirPendant:
-                playerStats.ModifyAirMod(-0.25f);
+                playerStats.ModifyAirMod(-0.2f);
                 break;
             case PassiveItem.PassiveItemName.InitiativeWand:
                 playerStats.ModifyInitiative(-2);
                 break;
             case PassiveItem.PassiveItemName.Cheese:
-                playerStats.ModifyHealth(-75);
-                playerStats.ModifyMaxHealth(-75);
+                playerStats.ModifyHealth(-50);
+                playerStats.ModifyMaxHealth(-50);
                 break;
             case PassiveItem.PassiveItemName.MercuryBoots:
                 playerStats.ModifyMovementSpeed(-20);
@@ -263,17 +263,17 @@ public class PassiveItem {
                 playerStats.ModifyArmor(-5);
                 break;
             case PassiveItem.PassiveItemName.FireStaff:
-                playerStats.ModifyFireMod(-0.5f);
+                playerStats.ModifyFireMod(-0.3f);
                 break;
             case PassiveItem.PassiveItemName.WaterStaff:
-                playerStats.ModifyWaterMod(-0.5f);
+                playerStats.ModifyWaterMod(-0.3f);
                 break;
             case PassiveItem.PassiveItemName.EarthStaff:
-                playerStats.ModifyEarthMod(-0.5f);
+                playerStats.ModifyEarthMod(-0.3f);
                 break;
             case PassiveItem.PassiveItemName.AirStaff:
 
-                playerStats.ModifyAirMod(-0.5f);
+                playerStats.ModifyAirMod(-0.3f);
                 break;
             case PassiveItem.PassiveItemName.WildWand:
                 playerStats.ModifyInitiative(-4);

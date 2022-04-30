@@ -58,10 +58,14 @@ public class TurnLogic : MonoBehaviour
         // add player gameobject to list
         actorList.Add(FindObjectOfType<PlayerMovement>().gameObject);
         // Possibly needed on room change
-        StartCombat();
-        // Start not in players turn, check for initative in coroutine 
-        endTurnButton.interactable = false;
-        StartCoroutine(TurnCycle());
+        if (FindObjectsOfType<EnemyStateManager>().Length != 0) 
+        {
+            StartCombat();
+            // Start not in players turn, check for initative in coroutine 
+            endTurnButton.interactable = false;
+            StartCoroutine(TurnCycle());
+        }
+
     }
 
     // Called by end turn button
@@ -317,7 +321,7 @@ public class TurnLogic : MonoBehaviour
         DestroyVoidColliders();
         playerActions.gameObject.GetComponent<Animator>().SetBool("IsWalking", false);
         SoundManagerScript.EndSound("footstep");
-
+        displayInitiative = FindObjectOfType<DisplayInitiative>();
         displayInitiative.SetList(actorList);
         actorList.Add(FindObjectOfType<PlayerMovement>().gameObject);
         MovePressed();
@@ -408,13 +412,16 @@ public class TurnLogic : MonoBehaviour
         // add player gameobject to list
         
         actorList.Add(FindObjectOfType<PlayerMovement>().gameObject);
-        StartCombat();
-        
-        //Debug.LogWarning("AAAAAAA");
-        listOfInitative.Clear();
-        StopAllCoroutines();
-        endTurnButton.interactable = false;
-        StartCoroutine(TurnCycle());
+        if (enemyStateManagers.Length != 0) 
+        {
+            StartCombat();
+
+            //Debug.LogWarning("AAAAAAA");
+            listOfInitative.Clear();
+            StopAllCoroutines();
+            endTurnButton.interactable = false;
+            StartCoroutine(TurnCycle());
+        }
         
     }
 

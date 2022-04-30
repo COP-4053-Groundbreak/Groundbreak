@@ -377,6 +377,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4855570277867705894, guid: 09256a8c1befb4f43ba13a3c23fcde2a, type: 3}
+      propertyPath: pause
+      value: 
+      objectReference: {fileID: 564655717}
     - target: {fileID: 5844959550086187887, guid: 09256a8c1befb4f43ba13a3c23fcde2a, type: 3}
       propertyPath: uIInventory
       value: 
@@ -415,6 +419,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8225c3ec9e556f141ac6add92ff61ea0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &209636853 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4855570277867705894, guid: 09256a8c1befb4f43ba13a3c23fcde2a, type: 3}
+  m_PrefabInstance: {fileID: 209636850}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5eb9bb9e86286204bbe8e122a11416db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &321411177 stripped
@@ -487,6 +502,30 @@ PrefabInstance:
     - target: {fileID: 2214122347716333635, guid: d486947c41becee4e9296bd386f7f6cc, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2269366853854545716, guid: d486947c41becee4e9296bd386f7f6cc, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 209636853}
+    - target: {fileID: 2269366853854545716, guid: d486947c41becee4e9296bd386f7f6cc, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ResetGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 2724553500666369436, guid: d486947c41becee4e9296bd386f7f6cc, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 209636853}
+    - target: {fileID: 2724553500666369436, guid: d486947c41becee4e9296bd386f7f6cc, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: QuitGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 4531870820348092688, guid: d486947c41becee4e9296bd386f7f6cc, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 209636853}
+    - target: {fileID: 4531870820348092688, guid: d486947c41becee4e9296bd386f7f6cc, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LoadMenu
       objectReference: {fileID: 0}
     - target: {fileID: 4830046981647279528, guid: d486947c41becee4e9296bd386f7f6cc, type: 3}
       propertyPath: m_RootOrder
@@ -576,6 +615,14 @@ PrefabInstance:
       propertyPath: uIInventoryControler
       value: 
       objectReference: {fileID: 209636851}
+    - target: {fileID: 5542488751680989357, guid: d486947c41becee4e9296bd386f7f6cc, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 209636853}
+    - target: {fileID: 5542488751680989357, guid: d486947c41becee4e9296bd386f7f6cc, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ResumeGame
+      objectReference: {fileID: 0}
     - target: {fileID: 6254342985067010917, guid: d486947c41becee4e9296bd386f7f6cc, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -701,6 +748,11 @@ GameObject:
 --- !u!1 &564655716 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6254342983591421952, guid: d486947c41becee4e9296bd386f7f6cc, type: 3}
+  m_PrefabInstance: {fileID: 564655703}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &564655717 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 371737943096302313, guid: d486947c41becee4e9296bd386f7f6cc, type: 3}
   m_PrefabInstance: {fileID: 564655703}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &602568028
@@ -1438,6 +1490,18 @@ PrefabInstance:
       propertyPath: currentRoom
       value: 
       objectReference: {fileID: 18519257}
+    - target: {fileID: 108454171, guid: 987b2a0b0be862a47bef7518b8207d9c, type: 3}
+      propertyPath: maxHealth
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 108454171, guid: 987b2a0b0be862a47bef7518b8207d9c, type: 3}
+      propertyPath: currentHealth
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 108454171, guid: 987b2a0b0be862a47bef7518b8207d9c, type: 3}
+      propertyPath: startingHealth
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 108454172, guid: 987b2a0b0be862a47bef7518b8207d9c, type: 3}
       propertyPath: teleportEff
       value: 
