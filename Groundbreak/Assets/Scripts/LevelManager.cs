@@ -9,4 +9,9 @@ public static class LevelManager
     {
         SceneManager.LoadScene("Level2");
     }
+
+    public static void LoadWin() 
+    {
+        SceneManager.LoadScene("Menu");
+    }
 }

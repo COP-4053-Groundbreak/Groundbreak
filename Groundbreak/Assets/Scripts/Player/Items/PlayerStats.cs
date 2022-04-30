@@ -38,16 +38,16 @@ public class PlayerStats : MonoBehaviour
     {
         playerAnimator = gameObject.GetComponent<Animator>();
         // Disabled so items can be added at the start
-/*        maxHealth = startingHealth;
-        currentHealth = startingHealth;
-        movementPerTurn = startingMovement;
-        armor = startingArmor;
-        initiative = startingInitiative;
-        fireMod = startingFire;
-        waterMod = startingWater;
-        earthMod = startingEarth;
-        airMod = startingAir;*/
-
+        /*        maxHealth = startingHealth;
+                currentHealth = startingHealth;
+                movementPerTurn = startingMovement;
+                armor = startingArmor;
+                initiative = startingInitiative;
+                fireMod = startingFire;
+                waterMod = startingWater;
+                earthMod = startingEarth;
+                airMod = startingAir;*/
+        ModifyAirMod(999);
         // Create healthbar
         Transform healthBarTransform = Instantiate(playerHealthBar.transform, gameObject.transform);
         Vector3 healthBarLocalPosition = new Vector3(0, (float)1);

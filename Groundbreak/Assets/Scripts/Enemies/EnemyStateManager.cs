@@ -191,11 +191,20 @@ public class EnemyStateManager : MonoBehaviour
         currentState.EnterState(this);
     }
 
-    IEnumerator WaitAndWin() 
+    IEnumerator WaitAndSpawnLadder() 
     {
         
         yield return new WaitForSeconds(2.95f);
-        LevelManager.LoadLevel2();
+
+        if (gameObject.name.Contains("Troll"))
+        {
+            LevelManager.LoadWin();
+        }
+        else 
+        {
+            Instantiate(Resources.Load("Ladder"), transform.position, transform.rotation);
+        }
+        
     }
 
     GameObject currRoom;
@@ -216,8 +225,8 @@ public class EnemyStateManager : MonoBehaviour
             currentState.UpdateState(this);
         }
         if(healthSystem != null && healthSystem.GetHealth() <= 0 && alive == true){
-            if (this.gameObject.name.Contains("Zombie"))
-                StartCoroutine(WaitAndWin());
+            if (this.gameObject.name.Contains("Zombie") || this.gameObject.name.Contains("Troll"))
+                StartCoroutine(WaitAndSpawnLadder());
             Destroy(gameObject, (float)3);
             SwitchState(DeathState);
             turnLogic.listOfInitative.Remove(this.initiative);
