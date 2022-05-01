@@ -41,10 +41,10 @@ public class EnemyStateManager : MonoBehaviour
     int greenMageDamage = 20;
     int mageDamage = 15;
     int bossDamage = 20;
-    int goblinDamage = 25;
+    int goblinDamage = 15;
     int treeDamage = 10;
     int mushroomDamage = 10;
-    int trollDamage = 30;
+    int trollDamage = 25;
 
     int retreatCounter = 0;
     // blocking
@@ -94,16 +94,16 @@ public class EnemyStateManager : MonoBehaviour
     void Start()
     {
         if(gameObject.name.Contains("Zombie")){
-            customRange = 3f;
+            customRange = 2.42f;
         }
         else if(gameObject.name.Contains("Wizard")){
-            customRange = 3f;
+            customRange = 2f;
         }
         else if(gameObject.name.Contains("Archer")){
-            customRange = 4f;
+            customRange = 3f;
         }
         else if(gameObject.name.Contains("Troll")){
-            customRange = 3f;
+            customRange = 2f;
         }
         else{
             customRange = 1.42f;
@@ -129,7 +129,7 @@ public class EnemyStateManager : MonoBehaviour
             enemyMovementRemaining = 3;
         }
         else if(gameObject.name.Contains("Troll")){
-            enemyMovementRemaining = 3;
+            enemyMovementRemaining = 2;
         }
         else{
             enemyMovementRemaining = 2;
@@ -392,7 +392,7 @@ public class EnemyStateManager : MonoBehaviour
                             if(canRetreat == 0){
                                 Debug.Log("ding");
                                 foreach(Tile finalDestinationTile in firstDestinationTile.neighbors) {
-                                    if(finalDestinationTile.getElement() == Element.Void){
+                                    if(finalDestinationTile.getElement() == Element.Void || finalDestinationTile.gameObjectAbove.CompareTag("Barrel") || finalDestinationTile.gameObjectAbove.CompareTag("Enemy")){
                                         continue;
                                     }
                                     Vector2 finalDestPosition = new Vector2(finalDestinationTile.gameObject.GetComponent<TilePathNode>().GetX(), finalDestinationTile.gameObject.GetComponent<TilePathNode>().GetY());
@@ -453,11 +453,18 @@ public class EnemyStateManager : MonoBehaviour
                     }
                 }
                 if(gameObject.name.Contains("Mushroom")){
-                    Debug.Log("4");
+                    enemyMovementRemaining = 5;
+                }
+                else if(gameObject.name.Contains("Goblin")){
                     enemyMovementRemaining = 4;
                 }
+                else if(gameObject.name.Contains("Warrior")){
+                    enemyMovementRemaining = 3;
+                }
+                else if(gameObject.name.Contains("Troll")){
+                    enemyMovementRemaining = 2;
+                }
                 else{
-                    Debug.Log("2");
                     enemyMovementRemaining = 2;
                 }
                 isEnemyTurn = false;
