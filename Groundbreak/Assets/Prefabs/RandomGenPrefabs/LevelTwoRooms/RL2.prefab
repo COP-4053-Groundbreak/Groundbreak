@@ -10214,7 +10214,6 @@ MonoBehaviour:
   Spawned: 0
   RoomWidth: 10
   RoomHeight: 10
-  ChestSpawn: 3
   Chest: {fileID: 8396762822579587563, guid: 9fbd856e733bf6443b47a4a3ce8cba92, type: 3}
 --- !u!114 &8277001938500238184
 MonoBehaviour:
@@ -10232,6 +10231,7 @@ MonoBehaviour:
   roomWidth: 10
   roomHeight: 10
   numOfPossibleEnemies: 4
+  MinNumOfPossibleEnemies: 2
   spawnPointHolder: {fileID: 2783204058811896700}
   test: 0
 --- !u!1 &8342600689474192403

@@ -534,6 +534,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 8199655}
+    - target: {fileID: 2214122347716333635, guid: d486947c41becee4e9296bd386f7f6cc, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2269366853854545716, guid: d486947c41becee4e9296bd386f7f6cc, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1246,6 +1250,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5187298613164351630, guid: 377dfad67cacf7b428531ab86e80d448, type: 3}
+      propertyPath: enemiesRanged.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5187298613164351630, guid: 377dfad67cacf7b428531ab86e80d448, type: 3}
+      propertyPath: enemiesFloorOne.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5187298613164351630, guid: 377dfad67cacf7b428531ab86e80d448, type: 3}
+      propertyPath: enemiesRanged.Array.data[0]
+      value: 
+      objectReference: {fileID: 3857721949896168738, guid: b83ea3cb950d81d47a3631b522191215, type: 3}
+    - target: {fileID: 5187298613164351630, guid: 377dfad67cacf7b428531ab86e80d448, type: 3}
+      propertyPath: enemiesRanged.Array.data[1]
+      value: 
+      objectReference: {fileID: 2072216480951150570, guid: 55ecc4fe57ef3984ca34951cd293f360, type: 3}
+    - target: {fileID: 5187298613164351630, guid: 377dfad67cacf7b428531ab86e80d448, type: 3}
+      propertyPath: enemiesFloorOne.Array.data[3]
+      value: 
+      objectReference: {fileID: 1105098630958343719, guid: 71d23497f347a7246b2d1d79c571b352, type: 3}
+    - target: {fileID: 5187298613164351630, guid: 377dfad67cacf7b428531ab86e80d448, type: 3}
+      propertyPath: enemiesFloorOne.Array.data[4]
+      value: 
+      objectReference: {fileID: 3857721949896168738, guid: b83ea3cb950d81d47a3631b522191215, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 377dfad67cacf7b428531ab86e80d448, type: 3}
 --- !u!1001 &1936969901
