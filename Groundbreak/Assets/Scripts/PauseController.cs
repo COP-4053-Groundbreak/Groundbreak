@@ -35,6 +35,7 @@ public class PauseController : MonoBehaviour
         playerStats.playerConsumableInventory = null;
         playerStats.playerActiveItem = null;
         Time.timeScale = 1f;
+        Seed.playerInput = false;
         SceneManager.LoadScene("Menu");
     }
     public void QuitGame()
@@ -43,6 +44,7 @@ public class PauseController : MonoBehaviour
         playerStats.playerConsumableInventory = null;
         playerStats.playerActiveItem = null;
         Time.timeScale = 1f;
+        Seed.playerInput = false;
         Application.Quit();
     }
 
@@ -60,6 +62,7 @@ public class PauseController : MonoBehaviour
         playerStats.playerPassiveInventory = null;
         playerStats.playerConsumableInventory = null;
         playerStats.playerActiveItem = null;
+        Seed.playerInput = false;
         SceneManager.LoadScene("Level 1");
     }
 
