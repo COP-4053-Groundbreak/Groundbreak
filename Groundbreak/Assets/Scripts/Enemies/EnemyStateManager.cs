@@ -462,7 +462,9 @@ public class EnemyStateManager : MonoBehaviour
                 }
                 isEnemyTurn = false;
             }
-            if(attackCounter == 1){
+
+
+            if (attackCounter == 1){
                 // Debug.Log("We attacked!");
                 Invoke("TurnOffAnimation", 1);
                 StartCoroutine(DamageDelay(player, enemyPos, playerPos));
@@ -637,7 +639,7 @@ public class EnemyStateManager : MonoBehaviour
         }
         else
         {
-            stopEnemyMovement();
+            stopEnemyMovementAttack();
         }
     }
 
@@ -665,7 +667,118 @@ public class EnemyStateManager : MonoBehaviour
         if(gameObject.name.Contains("Troll")){
             SoundManagerScript.EndSound("trollWalk");
         }
+
     }
+
+    public void stopEnemyMovementAttack()
+    {
+        waypointIndex = 0;
+        isSliding = false;
+        animator.SetBool("isMoving", false);
+        isPlayingFootstep = false;
+        if (gameObject.name.Contains("Skeleton"))
+        {
+            SoundManagerScript.EndSound("skeletonfootstep");
+        }
+        if (gameObject.name.Contains("Zombie"))
+        {
+            SoundManagerScript.EndSound("zombiefootstep");
+        }
+        if (gameObject.name.Contains("Tree"))
+        {
+            SoundManagerScript.EndSound("treeWalking");
+        }
+        if (gameObject.name.Contains("Goblin"))
+        {
+            SoundManagerScript.EndSound("goblinWalk");
+        }
+        if (gameObject.name.Contains("Mushroom"))
+        {
+            SoundManagerScript.EndSound("mushroomWalk");
+        }
+        if (gameObject.name.Contains("Troll"))
+        {
+            SoundManagerScript.EndSound("trollWalk");
+        }
+
+        // get enemy pos now relitive -N
+        Vector2 enemyPos = new Vector2(enemyX, enemyY);
+        // Debug.Log("Eenemy pos " + enemyPos);
+        //get player pos
+        GameObject player = FindObjectOfType<PlayerMovement>().gameObject; // .transform.position; //gameObject.GetComponent<Player>().transform.position;
+                                                                           // Position is now relitive -N
+        Vector2 playerPos = new Vector2(player.GetComponent<PlayerMovement>().playerX, player.GetComponent<PlayerMovement>().playerY);
+        // Debug.Log("Player position: " + playerPos);
+        var distanceBetweenPlayerAndEnemy = Vector2.Distance(enemyPos, playerPos);
+
+        //do attack or move.
+        // check if melee enemy is within a 1 block radius of player. && will have to check which state we are in and if its enemy turn (not implemented yet)
+        Debug.LogError(distanceBetweenPlayerAndEnemy);
+        if ((gameObject.name.Contains("Archer") || gameObject.name.Contains("Wizard") || gameObject.name.Contains("Zombie")) && distanceBetweenPlayerAndEnemy <= visibilityRange && attackCounter == 0)
+        {
+            //Debug.LogError("In attaack%");
+            // play animation.
+            animator.SetBool("isAttacking", true);
+            // play archer sound
+            if (gameObject.name.Contains("Archer"))
+            {
+                SoundManagerScript.PlaySound("arrowshot");
+            }
+            // play wizard sound
+            if (gameObject.name.Contains("Wizard"))
+            {
+                SoundManagerScript.PlaySound("spellcast");
+            }
+            if (gameObject.name.Contains("Zombie"))
+            {
+                SoundManagerScript.PlaySound("zombieattack");
+            }
+            // sets attackCounter to 1 so we do not attack again and play the animation twice.
+            attackCounter = 1;
+            // damage gets dealt when we turn off the animation. 
+            isEnemyTurn = false;
+        }
+        else if ((gameObject.name.Contains("Warrior") || gameObject.name.Contains("Tree") || gameObject.name.Contains("Goblin") || gameObject.name.Contains("Mushroom") || gameObject.name.Contains("Troll")) && distanceBetweenPlayerAndEnemy <= visibilityRange && attackCounter == 0)
+        {
+            //Debug.LogError("In attaack%");
+            // play animation.
+            animator.SetBool("isAttacking", true);
+            // play sound clip
+            if (gameObject.name.Contains("Warrior"))
+            {
+                SoundManagerScript.PlaySound("sword");
+            }
+            if (gameObject.name.Contains("Tree"))
+            {
+                SoundManagerScript.PlaySound("treeAttack");
+            }
+            if (gameObject.name.Contains("Goblin"))
+            {
+                SoundManagerScript.PlaySound("goblinAttack");
+            }
+            if (gameObject.name.Contains("Mushroom"))
+            {
+                SoundManagerScript.PlaySound("mushroomAttack");
+            }
+            if (gameObject.name.Contains("Troll"))
+            {
+                SoundManagerScript.PlaySound("trollAttack");
+            }
+            // sets attackCounter to 1 so we do not attack again and play the animation twice.
+            attackCounter = 1;
+            isEnemyTurn = false;
+        }
+
+        if (attackCounter == 1)
+        {
+            // Debug.Log("We attacked!");
+            Invoke("TurnOffAnimation", 1);
+            StartCoroutine(DamageDelay(player, enemyPos, playerPos));
+            // wait 1 second turn off animation. 
+        }
+
+    }
+
 
     private void GridChanged(object sender, System.EventArgs e)
     {
