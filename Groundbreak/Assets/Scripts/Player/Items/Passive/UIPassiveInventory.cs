@@ -34,7 +34,24 @@ public class UIPassiveInventory : MonoBehaviour
         passiveInventory.UpdateItemList += Inventory_UpdateItemList;
         //passiveInventory.AddItem(new PassiveItem { itemName = PassiveItem.PassiveItemName.AirPendant, amount = 1 }, playerStats);
         //StartCoroutine(Pain());
-        //passiveInventory.AddItem(new PassiveItem { itemName = PassiveItem.PassiveItemName.SpeedBoots, amount = 1 }, playerStats);
+/*        passiveInventory.AddItem(new PassiveItem { itemName = PassiveItem.PassiveItemName.SpeedBoots, amount = 1 }, playerStats);
+        passiveInventory.AddItem(new PassiveItem { itemName = PassiveItem.PassiveItemName.HealthRing, amount = 1 }, playerStats);
+        passiveInventory.AddItem(new PassiveItem { itemName = PassiveItem.PassiveItemName.LightShield, amount = 1 }, playerStats);
+        passiveInventory.AddItem(new PassiveItem { itemName = PassiveItem.PassiveItemName.InitiativeWand, amount = 1 }, playerStats);
+        passiveInventory.AddItem(new PassiveItem { itemName = PassiveItem.PassiveItemName.AirPendant, amount = 1 }, playerStats);
+        passiveInventory.AddItem(new PassiveItem { itemName = PassiveItem.PassiveItemName.FirePendant, amount = 1 }, playerStats);
+        passiveInventory.AddItem(new PassiveItem { itemName = PassiveItem.PassiveItemName.WaterPendant, amount = 1 }, playerStats);
+        passiveInventory.AddItem(new PassiveItem { itemName = PassiveItem.PassiveItemName.EarthPendant, amount = 1 }, playerStats);
+
+        passiveInventory.AddItem(new PassiveItem { itemName = PassiveItem.PassiveItemName.MercuryBoots, amount = 1 }, playerStats);
+        passiveInventory.AddItem(new PassiveItem { itemName = PassiveItem.PassiveItemName.Cheese, amount = 1 }, playerStats);
+        passiveInventory.AddItem(new PassiveItem { itemName = PassiveItem.PassiveItemName.HeavyShield, amount = 1 }, playerStats);
+        passiveInventory.AddItem(new PassiveItem { itemName = PassiveItem.PassiveItemName.WildWand, amount = 1 }, playerStats);
+        passiveInventory.AddItem(new PassiveItem { itemName = PassiveItem.PassiveItemName.AirStaff, amount = 1 }, playerStats);
+        passiveInventory.AddItem(new PassiveItem { itemName = PassiveItem.PassiveItemName.FireStaff, amount = 1 }, playerStats);
+        passiveInventory.AddItem(new PassiveItem { itemName = PassiveItem.PassiveItemName.WaterStaff, amount = 1 }, playerStats);
+        passiveInventory.AddItem(new PassiveItem { itemName = PassiveItem.PassiveItemName.EarthStaff, amount = 1 }, playerStats);*/
+
         this.passiveInventory = passiveInventory;
         RefreshInventory();
     }
