@@ -12,6 +12,8 @@ public class ToolTipController : MonoBehaviour
     private void Start()
     {
         canvas = GameObject.Find("FreeRoamCanvas").GetComponent<Canvas>();
+        holdPlayerInformation.playerConsumableInventory = new PlayerConsumableInventory();
+        holdPlayerInformation.playerPassiveInventory = new PlayerPassiveInventory();
     }
 
     private void Update()
@@ -29,7 +31,7 @@ public class ToolTipController : MonoBehaviour
         KeepTooltipOnScreen(toolTip);
         if (holdPlayerInformation != null)
         {
-            if (holdPlayerInformation.playerConsumableInventory.GetItemList().Count <= 0 && holdPlayerInformation.playerPassiveInventory.GetItemList().Count <= 0 && holdPlayerInformation.playerActiveItem == null)
+            if (holdPlayerInformation?.playerConsumableInventory?.GetItemList().Count <= 0 && holdPlayerInformation?.playerPassiveInventory?.GetItemList().Count <= 0 && holdPlayerInformation?.playerActiveItem == null)
             {
                 HideToolTip();
             }
