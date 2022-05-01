@@ -392,7 +392,10 @@ public class EnemyStateManager : MonoBehaviour
                             if(canRetreat == 0){
                                 Debug.Log("ding");
                                 foreach(Tile finalDestinationTile in firstDestinationTile.neighbors) {
-                                    if(finalDestinationTile.getElement() == Element.Void || finalDestinationTile.gameObjectAbove.CompareTag("Barrel") || finalDestinationTile.gameObjectAbove.CompareTag("Enemy")){
+                                    if(finalDestinationTile.gameObjectAbove != null || finalDestinationTile.staticObjAbove != null){
+                                        continue;
+                                    }
+                                    if(finalDestinationTile.getElement() == Element.Void){
                                         continue;
                                     }
                                     Vector2 finalDestPosition = new Vector2(finalDestinationTile.gameObject.GetComponent<TilePathNode>().GetX(), finalDestinationTile.gameObject.GetComponent<TilePathNode>().GetY());
@@ -475,6 +478,7 @@ public class EnemyStateManager : MonoBehaviour
                 // Debug.Log("We attacked!");
                 Invoke("TurnOffAnimation", 1);
                 StartCoroutine(DamageDelay(player, enemyPos, playerPos));
+                attackCounter = 0;
                 // wait 1 second turn off animation. 
             }
             // reset to idle state.
@@ -647,6 +651,7 @@ public class EnemyStateManager : MonoBehaviour
         else
         {
             stopEnemyMovementAttack();
+            // stopEnemyMovement();
         }
     }
 
@@ -721,31 +726,7 @@ public class EnemyStateManager : MonoBehaviour
         //do attack or move.
         // check if melee enemy is within a 1 block radius of player. && will have to check which state we are in and if its enemy turn (not implemented yet)
         //Debug.LogError(distanceBetweenPlayerAndEnemy);
-        if ((gameObject.name.Contains("Archer") || gameObject.name.Contains("Wizard") || gameObject.name.Contains("Zombie")) && distanceBetweenPlayerAndEnemy <= visibilityRange && attackCounter == 0)
-        {
-            //Debug.LogError("In attaack%");
-            // play animation.
-            animator.SetBool("isAttacking", true);
-            // play archer sound
-            if (gameObject.name.Contains("Archer"))
-            {
-                SoundManagerScript.PlaySound("arrowshot");
-            }
-            // play wizard sound
-            if (gameObject.name.Contains("Wizard"))
-            {
-                SoundManagerScript.PlaySound("spellcast");
-            }
-            if (gameObject.name.Contains("Zombie"))
-            {
-                SoundManagerScript.PlaySound("zombieattack");
-            }
-            // sets attackCounter to 1 so we do not attack again and play the animation twice.
-            attackCounter = 1;
-            // damage gets dealt when we turn off the animation. 
-            isEnemyTurn = false;
-        }
-        else if ((gameObject.name.Contains("Warrior") || gameObject.name.Contains("Tree") || gameObject.name.Contains("Goblin") || gameObject.name.Contains("Mushroom") || gameObject.name.Contains("Troll")) && distanceBetweenPlayerAndEnemy <= visibilityRange && attackCounter == 0)
+        if ((gameObject.name.Contains("Warrior") || gameObject.name.Contains("Tree") || gameObject.name.Contains("Goblin") || gameObject.name.Contains("Mushroom") || gameObject.name.Contains("Troll")) && distanceBetweenPlayerAndEnemy <= visibilityRange && attackCounter == 0)
         {
             //Debug.LogError("In attaack%");
             // play animation.
