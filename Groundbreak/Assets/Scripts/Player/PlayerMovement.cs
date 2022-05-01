@@ -265,10 +265,21 @@ public class PlayerMovement : MonoBehaviour
         else 
         {
             // Reset after we reach the end of the move
-            endMove();
+            endMoveToggle();
         }
     }
     public void endMove(){
+        waypointIndex = 0;
+        SoundManagerScript.EndSound("footstep");
+        isSliding = false;
+        playerAnimator.SetBool("IsWalking", false);
+        UpdateTilesAfterMove();
+        // Check if mouse is above tile and show line
+        PossiblyShowTile();
+    }
+
+    public void endMoveToggle()
+    {
         waypointIndex = 0;
         SoundManagerScript.EndSound("footstep");
         turnLogic.ToggleEndTurn(true);
