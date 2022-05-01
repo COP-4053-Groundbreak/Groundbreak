@@ -109,7 +109,7 @@ public class EnemyStateManager : MonoBehaviour
             customRange = 1.42f;
         }
         visibilityRange = customRange;
-        canRetreat = 2;
+        canRetreat = 1;
         // elementSymbol.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(elementToLoad);
         // get animation clip length
         AnimationClip[] clips = animator.runtimeAnimatorController.animationClips;
@@ -122,13 +122,13 @@ public class EnemyStateManager : MonoBehaviour
         if(gameObject.name.Contains("Mushroom")){
             enemyMovementRemaining = 5;
         }
-        if(gameObject.name.Contains("Goblin")){
+        else if(gameObject.name.Contains("Goblin")){
             enemyMovementRemaining = 4;
         }
-        if(gameObject.name.Contains("Warrior")){
+        else if(gameObject.name.Contains("Warrior")){
             enemyMovementRemaining = 3;
         }
-        if(gameObject.name.Contains("Troll")){
+        else if(gameObject.name.Contains("Troll")){
             enemyMovementRemaining = 3;
         }
         else{
@@ -366,7 +366,7 @@ public class EnemyStateManager : MonoBehaviour
                 isEnemyTurn = false;
             }
             // if we get here, lets check if we are at 30% health or lower, if so lets retreat. 
-            else if (healthSystem.GetHealth() <= 0.3 * healthSystem.getMaxHealth() && attackCounter == 0 && retreatCounter <= 2){
+            else if (healthSystem.GetHealth() <= 0.3 * healthSystem.getMaxHealth() && attackCounter == 0 && retreatCounter <= 1){
                 Debug.Log("In retreat WHAT RETREAT COUNT ARE WE ON?");
                 Debug.Log(retreatCounter);
                 retreatCounter = retreatCounter + 1;
@@ -384,12 +384,12 @@ public class EnemyStateManager : MonoBehaviour
                         }
                         Vector2 tilePosition = new Vector2(tile.gameObject.GetComponent<TilePathNode>().GetX(), tile.gameObject.GetComponent<TilePathNode>().GetY());
                         if(Vector2.Distance(tilePosition, playerPos) > distanceBetweenPlayerAndEnemy && tile.getElement() != Element.Void){
-                            if(canRetreat == 2){
+                            if(canRetreat == 1){
                                 firstDestinationTile = tile;
                             }
                             // MoveEnemy(tilePosition.x, tilePosition.y);
                             canRetreat = canRetreat - 1;
-                            if(canRetreat == 1){
+                            if(canRetreat == 0){
                                 Debug.Log("ding");
                                 foreach(Tile finalDestinationTile in firstDestinationTile.neighbors) {
                                     if(finalDestinationTile.getElement() == Element.Void){
@@ -406,7 +406,7 @@ public class EnemyStateManager : MonoBehaviour
                     }
                     canRetreat = 0;
                 }
-                canRetreat = 2;
+                canRetreat = 1;
                 isEnemyTurn = false;
                 
             }
