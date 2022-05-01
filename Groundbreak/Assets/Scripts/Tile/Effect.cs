@@ -64,7 +64,8 @@ public class Effect : MonoBehaviour {
             case ((int)Element.Water + (int)Element.Earth): // Mud
                 effectName = "mud";
                 tileUnderEffect.setMovementModifier(tileUnderEffect.getMovementModifier() - ReactionManager.MUD_DEBUFF);
-                dealDamageToChar(tileUnderEffect.gameObjectAbove, ReactionManager.MUD_DMG);
+                if (tileUnderEffect.gameObjectAbove != null)
+                    dealDamageToChar(tileUnderEffect.gameObjectAbove, ReactionManager.MUD_DMG);
                 myDuration = ReactionManager.MUD_DUR;
                 this.transform.localScale = new Vector2(2,3);
                 this.GetComponent<BoxCollider2D>().size = new Vector2(0.1f,0.1f);
@@ -75,15 +76,20 @@ public class Effect : MonoBehaviour {
                 effectName = "smoke";
                 myDuration = ReactionManager.SMOKE_DUR;
                 this.transform.localScale = new Vector2(5,5);
-                dealDamageToChar(tileUnderEffect.gameObjectAbove, ReactionManager.SMOKE_DMG);
+                if (tileUnderEffect.gameObjectAbove != null)
+                    dealDamageToChar(tileUnderEffect.gameObjectAbove, ReactionManager.SMOKE_DMG);
                 this.GetComponent<BoxCollider2D>().size = new Vector2(0.1f,0.1f);
                 this.transform.position = this.transform.position + new Vector3(0,0.5f);
                 break;
             case ((int)Element.Air + (int)Element.Fire): // Fireball 
                 effectName = "fireball";
-                if (tileUnderEffect.gameObjectAbove != null)
+                if (tileUnderEffect.gameObjectAbove != null){
+                    Debug.Log("We in here");
                     dealDamageToChar(tileUnderEffect.gameObjectAbove, ReactionManager.FIREBALL_DMG);
+                    Debug.Log("B"+tileUnderEffect.gameObjectAbove);
+                }
                 fireballEffect(tileUnderEffect, ReactionManager.FIREBALL_RANGE, new List<Tile>(), new List<GameObject>());
+                Debug.Log(tileUnderEffect.gameObjectAbove);
                 this.transform.localScale = new Vector2(5,5);
                 this.GetComponent<BoxCollider2D>().size = new Vector2(0.1f,0.1f);
                 myDuration = ReactionManager.FIREBALL_DUR;
@@ -105,6 +111,7 @@ public class Effect : MonoBehaviour {
         this.name = effectName;
         //GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>($"Sprites/Effects/{effectName}");
         tileUnderEffect.setEffect(this);
+        Debug.Log("C"+tileUnderEffect.gameObjectAbove);
     }
     
     public void reduceFireballDuration(){
@@ -128,7 +135,8 @@ public class Effect : MonoBehaviour {
                 case ((int)Element.Water + (int)Element.Earth): // Mud
                     // Don't think anything needs to be done if mud is entered, it's an effect that
                     // impacts the player BEFORE entering it and not while on it.
-                    dealDamageToChar(other.gameObject, ReactionManager.MUD_DMG);
+                    if (other.gameObject != null)
+                        dealDamageToChar(other.gameObject, ReactionManager.MUD_DMG);
                     if (other.gameObject.tag == "Player"){
                         PlayerMovement moveMng = other.gameObject.GetComponent<PlayerMovement>();
                         if (moveMng.currentMovementRemaining > 0){
@@ -145,7 +153,8 @@ public class Effect : MonoBehaviour {
                     }
                     break;
                 case ((int)Element.Water + (int)Element.Fire): // Smoke
-                    dealDamageToChar(other.gameObject, ReactionManager.SMOKE_DMG);
+                    if (other.gameObject != null)
+                        dealDamageToChar(other.gameObject, ReactionManager.SMOKE_DMG);
                     if (other.gameObject.tag == "Player"){
                         other.gameObject.GetComponent<PlayerActions>().throwRange -= ReactionManager.SMOKE_RANGE_PLAYER_MOD;
                     } else if (other.gameObject.tag == "Enemy"){
@@ -476,6 +485,7 @@ public class Effect : MonoBehaviour {
         }
     }
     private void fireballEffect(Tile startTile, int range, List<Tile> neighborsVisited, List<GameObject> charactersDamaged){
+
         // Debug.Log($"My name is {startTile.name} and I have {startTile.neighbors.Count} neighbors");
         // Base case: We've looked as many tiles away as desired
         if (range == 0){
@@ -487,7 +497,7 @@ public class Effect : MonoBehaviour {
             // neighbor.GetComponent<Renderer>().material.color = Color.yellow; // TESTING NEIGHBORS INDICATOR
             // If haven't visited before, do effect
             if (!neighborsVisited.Contains(neighbor)){
-                Debug.Log($"Unvisited tile at {neighbor.name}");
+                Debug.Log($"Unvisited tile at {neighbor.transform.position}");
                 // Make sure there's something to pull and that it's a character
                 if (neighbor.gameObjectAbove != null && (neighbor.gameObjectAbove.tag == "Enemy" || neighbor.gameObjectAbove.tag == "Player")){
                     if (!charactersDamaged.Contains(neighbor.gameObjectAbove)){
