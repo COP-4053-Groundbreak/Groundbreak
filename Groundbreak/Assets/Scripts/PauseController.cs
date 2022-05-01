@@ -15,11 +15,14 @@ public class PauseController : MonoBehaviour
             {
                 Time.timeScale = 1f;
                 pause.SetActive(false);
+                FindObjectOfType<SoundManagerScript>().gameObject.GetComponent<AudioSource>().UnPause();
+                
             }
             else 
             {
                 Time.timeScale = 0f;
                 pause.SetActive(true);
+                FindObjectOfType<SoundManagerScript>().gameObject.GetComponent<AudioSource>().Pause();
             }
         }
     }
