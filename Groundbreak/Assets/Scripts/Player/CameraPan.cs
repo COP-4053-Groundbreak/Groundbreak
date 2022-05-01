@@ -88,4 +88,11 @@ public class CameraPan : MonoBehaviour
         }
         
     }
+
+    public void SetZoom(float input) 
+    {
+        Camera camera = GetComponent<Camera>();
+        camera.orthographicSize = input;
+    }
+
 }
