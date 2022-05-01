@@ -377,7 +377,7 @@ public class EnemyStateManager : MonoBehaviour
                 Tile tileUnderEnemy;
                 tileUnderEnemy = ReactionManager.gridManager.getTile(enemyX, enemyY);
                 while(canRetreat != 0){
-                    
+                    //Debug.LogError("kill me");
                     foreach (Tile tile in tileUnderEnemy.neighbors) {
                         if(tile.getElement() == Element.Void){
                             continue;
@@ -720,7 +720,7 @@ public class EnemyStateManager : MonoBehaviour
 
         //do attack or move.
         // check if melee enemy is within a 1 block radius of player. && will have to check which state we are in and if its enemy turn (not implemented yet)
-        Debug.LogError(distanceBetweenPlayerAndEnemy);
+        //Debug.LogError(distanceBetweenPlayerAndEnemy);
         if ((gameObject.name.Contains("Archer") || gameObject.name.Contains("Wizard") || gameObject.name.Contains("Zombie")) && distanceBetweenPlayerAndEnemy <= visibilityRange && attackCounter == 0)
         {
             //Debug.LogError("In attaack%");

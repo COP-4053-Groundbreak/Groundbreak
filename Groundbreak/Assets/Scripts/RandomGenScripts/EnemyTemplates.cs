@@ -5,5 +5,5 @@ using UnityEngine;
 public class EnemyTemplates : MonoBehaviour
 {
     public GameObject[] enemiesFloorOne;
-    public GameObject[] enemiesFloorTwo;
+    public GameObject[] enemiesRanged;
 }

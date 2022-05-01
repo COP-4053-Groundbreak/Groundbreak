@@ -20,20 +20,27 @@ public class SeedButton : MonoBehaviour
     {
         if (SeedInputField == null)
             Debug.LogWarning("Fuck");
-        input = SeedInputField.GetComponent<TextMeshPro>().text;
-
-
-        Debug.Log(input);
+        input = SeedInputField.GetComponent<TextMeshProUGUI>().text;
 
         if(input != null || input != "")
         {
+            Debug.Log(input + "Was Confirmed as the seed!");
             Seed.gameSeed = input;
             Seed.playerInput = true;
+
             //Show Confirmation Message
+            GameObject Error = SeedInputField.transform.parent.transform.parent.transform.parent.Find("ErrorMessage").gameObject;
+            Error.SetActive(true);
+            Error.GetComponent<TextMeshProUGUI>().text = "Seed Was Entered!";
+            
         }
         else
         {
             //Show Error Message
+            GameObject Error = SeedInputField.transform.parent.Find("ErrorMessage").gameObject;
+            Error.SetActive(true);
+            Error.GetComponent<TextMeshProUGUI>().text = "Invalid Seed!";
+            
         }
         
 

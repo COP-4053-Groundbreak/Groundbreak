@@ -7,7 +7,7 @@ public class PauseController : MonoBehaviour
 {
     [SerializeField] GameObject pause;
     public bool isPaused = false;
-
+    [SerializeField] HoldPlayerStats playerStats;
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape)) 
@@ -31,12 +31,20 @@ public class PauseController : MonoBehaviour
 
     public void LoadMenu() 
     {
+        playerStats.playerPassiveInventory = null;
+        playerStats.playerConsumableInventory = null;
+        playerStats.playerActiveItem = null;
         Time.timeScale = 1f;
+        Seed.playerInput = false;
         SceneManager.LoadScene("Menu");
     }
     public void QuitGame()
     {
+        playerStats.playerPassiveInventory = null;
+        playerStats.playerConsumableInventory = null;
+        playerStats.playerActiveItem = null;
         Time.timeScale = 1f;
+        Seed.playerInput = false;
         Application.Quit();
     }
 
@@ -50,6 +58,19 @@ public class PauseController : MonoBehaviour
     public void ResetGame() 
     {
         Time.timeScale = 1f;
+
+        playerStats.playerPassiveInventory = null;
+        playerStats.playerConsumableInventory = null;
+        playerStats.playerActiveItem = null;
+        Seed.playerInput = false;
         SceneManager.LoadScene("Level 1");
     }
+
+    private void OnApplicationQuit()
+    {
+        playerStats.playerPassiveInventory = null;
+        playerStats.playerConsumableInventory = null;
+        playerStats.playerActiveItem = null;
+    }
+
 }

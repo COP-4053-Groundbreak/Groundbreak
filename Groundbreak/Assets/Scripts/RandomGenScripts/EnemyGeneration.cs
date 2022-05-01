@@ -11,6 +11,7 @@ public class EnemyGeneration : MonoBehaviour
     [SerializeField] int roomWidth;
     [SerializeField] int roomHeight;
     [SerializeField] int numOfPossibleEnemies;
+    [SerializeField] int MinNumOfPossibleEnemies;
     [SerializeField] GameObject spawnPointHolder;
     private Transform spawnHere;
     private GameObject currentEnemy;
@@ -38,8 +39,11 @@ public class EnemyGeneration : MonoBehaviour
 
         if (spawned == false)
         {
-            numOfEnemies = Random.Range(1, numOfPossibleEnemies) + 1;
-            for(int i=1; i< numOfEnemies; i++)
+            numOfEnemies = Random.Range(MinNumOfPossibleEnemies, numOfPossibleEnemies+1);
+
+            SpawnRanged();
+
+            for(int i=0; i<numOfEnemies-1; i++)
             {
                 spawned = false;
 
@@ -100,5 +104,48 @@ public class EnemyGeneration : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
+    }
+
+    public void SpawnRanged()
+    {
+        Debug.LogWarning("Ranged Spawned");
+
+        Vector3 localPos;
+        int pointX;
+        int pointY;
+
+        //Getting random numbers
+        rand = Random.Range(0, templates.enemiesRanged.Length);
+        GameObject currentPoint;
+        EnemySpawner spawnPont;
+
+        do
+        {
+
+            posRand = Random.Range(0, spawnPointHolder.transform.childCount - 1);
+            currentPoint = spawnPointHolder.transform.GetChild(posRand).gameObject;
+            spawnPont = currentPoint.GetComponent<EnemySpawner>();
+
+            localPos = gameObject.transform.InverseTransformPoint(currentPoint.transform.position);
+            pointY = (int)(localPos.y + 5.5f);
+            pointX = (int)(localPos.x + 5.5f);
+            //Debug.LogError(gridManager.grid[pointX, pointY].gameObjectAbove);
+            //Debug.Log("While Loop Test");
+
+        } while ((gridManager.grid[pointX, pointY].gameObjectAbove != null &&
+                                       (gridManager.grid[pointX, pointY].gameObjectAbove.CompareTag("Barrel") || gridManager.grid[pointX, pointY].gameObjectAbove.CompareTag("Enemy"))) ||
+                                       gridManager.grid[pointX, pointY].myElement == Element.Void);
+
+
+        if (spawnPont == null || spawnPont.validPoint == false)
+            Debug.LogWarning("Da enemy spawn thing did a mess up");
+
+        localPos.x = pointX;
+        localPos.y = pointY;
+        //Make the enemy
+        //Debug.LogWarning(gridManager.grid + " " + pointX + " " + pointY);
+        currentEnemy = Instantiate(templates.enemiesRanged[rand], gridManager.grid[pointX, pointY].transform.position, templates.enemiesFloorOne[rand].transform.rotation, gameObject.transform);
+        gridManager.grid[pointX, pointY].gameObjectAbove = currentEnemy;
+        currentEnemy.SetActive(false);
     }
 }

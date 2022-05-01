@@ -180,6 +180,7 @@ public class PlayerStats : MonoBehaviour
     public void ModifyInitiative(int value)
     {
         initiative += value;
+
     }
 
     // Get health as a percent for healthbar
@@ -191,6 +192,10 @@ public class PlayerStats : MonoBehaviour
     public void MaxOutHealth() 
     {
         currentHealth = maxHealth;
+        if (OnHealthChanged != null)
+        {
+            OnHealthChanged(this, EventArgs.Empty);
+        }
     }
 
     public void ModifyThrowRange(int value) 
