@@ -325,8 +325,8 @@ public class Effect : MonoBehaviour {
         Debug.LogWarning($" Pushing {pushable.gameObject.name} to {new Vector2(postPushX, postPushY)}");
         
         // There's a character at the tile we're being pushed into
-        if (endTile.gameObjectAbove != null && (endTile.gameObjectAbove.tag == "Enemy" || endTile.gameObjectAbove.tag == "Player")){
-            Debug.LogWarning("Someone's here!");
+        if (endTile.gameObjectAbove != null){
+            Debug.LogWarning("Something's here!");
             dealCrashDamage(endTile.gameObjectAbove, pushable);
             postPushX = pushableX;
             postPushY = pushableY;
