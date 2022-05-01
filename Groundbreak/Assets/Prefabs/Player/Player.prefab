@@ -204,7 +204,8 @@ MonoBehaviour:
   pathHolder: {fileID: 0}
   slideSpeed: 2
   isSliding: 0
-  freeMoveSpeed: 2
+  freeMoveSpeed: 3
+  isFreemoving: 0
   playerX: 0
   playerY: 0
   currentRoom: {fileID: 0}
@@ -256,6 +257,7 @@ MonoBehaviour:
   throwRange: 4
   heldTileElement: 0
   playerStats: {fileID: 11400000, guid: 2d7c87a59eadb1a44bed5572d4b4c559, type: 2}
+  teleportEff: {fileID: 0}
 --- !u!114 &1274333397
 MonoBehaviour:
   m_ObjectHideFlags: 0

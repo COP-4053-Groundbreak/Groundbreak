@@ -23,7 +23,7 @@ public class TutorialManager : MonoBehaviour
         dialogue.Add("Glove: Finally, you have no idea how long ive been stuck down here!");
         dialogue.Add("Player: !?! You can talk????");
         dialogue.Add("Glove: You bet I can! Im no ordinary glove, i'm the legendary glove of -");
-        dialogue.Add("Player: Dont care, can you help me get out?");
+        dialogue.Add("Player: Don't care, can you help me get out?");
         dialogue.Add("Glove: I sure can! This dungeon is made up of tiles embued with elements and using my strength you can pick them up and throw them!");
         dialogue.Add("Player: How would that help?");
         dialogue.Add("Glove: When you throw a tile onto another tile, their elements will combine and create an effect. For example, if you threw a fire tile onto an air tile it would make a fireball!");
