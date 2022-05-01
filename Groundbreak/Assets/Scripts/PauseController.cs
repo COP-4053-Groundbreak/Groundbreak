@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class PauseController : MonoBehaviour
 {
     [SerializeField] GameObject pause;
+    public bool isPaused = false;
 
     private void Update()
     {
@@ -16,13 +17,14 @@ public class PauseController : MonoBehaviour
                 Time.timeScale = 1f;
                 pause.SetActive(false);
                 FindObjectOfType<SoundManagerScript>().gameObject.GetComponent<AudioSource>().UnPause();
-                
+                isPaused = false;
             }
             else 
             {
                 Time.timeScale = 0f;
                 pause.SetActive(true);
                 FindObjectOfType<SoundManagerScript>().gameObject.GetComponent<AudioSource>().Pause();
+                isPaused = true;
             }
         }
     }
@@ -42,6 +44,7 @@ public class PauseController : MonoBehaviour
     {
         Time.timeScale = 1f;
         pause.SetActive(false);
+        isPaused = false;
     }
 
     public void ResetGame() 

@@ -22,7 +22,7 @@ public class ElementDisplayUI : MonoBehaviour
     // Should probably optimize but works for now
     private void Update() {
         // This should probably be done by some sort of control manager I believe
-        if (Input.GetKeyDown(KeyCode.Space)){
+        if (Input.GetKeyDown(KeyCode.Space) && !FindObjectOfType<PauseController>().isPaused){
             foreach (Tile t in gridManager.grid){
                 Debug.Log("Looking through children");
                 if (t.transform.childCount > 0){

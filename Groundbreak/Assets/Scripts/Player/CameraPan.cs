@@ -62,6 +62,12 @@ public class CameraPan : MonoBehaviour
 
     private void CameraZoom(Camera camera)
     {
+        if (FindObjectOfType<PauseController>().isPaused) 
+        {
+            return;
+        }
+
+
         if (Input.GetAxis("Mouse ScrollWheel") < 0f)
         {
             camera.orthographicSize += zoomSpeed;

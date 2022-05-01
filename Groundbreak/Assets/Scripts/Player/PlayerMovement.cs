@@ -121,7 +121,7 @@ public class PlayerMovement : MonoBehaviour
         {
             displayMovement.DisplayMovementText(currentMovementRemaining / 10);
         }
-        if (!turnLogic.isCombatPhase) 
+        if (!turnLogic.isCombatPhase && !FindObjectOfType<PauseController>().isPaused) 
         {
 
             // Get movement input and check if its 0
@@ -188,7 +188,7 @@ public class PlayerMovement : MonoBehaviour
     public void MovePlayer(int distance, float x, float y) 
     {
         // Dont move in dialogue
-        if (SceneManager.GetActiveScene().name == "Tutorial" && GameObject.FindGameObjectWithTag("Tutorial"))
+        if (SceneManager.GetActiveScene().name == "Tutorial" && GameObject.FindGameObjectWithTag("Tutorial") || FindObjectOfType<PauseController>().isPaused)
         {
             return;
         }
@@ -303,6 +303,10 @@ public class PlayerMovement : MonoBehaviour
     // Draws line along the path the character takes
     public void ShowLine(float x, float y) 
     {
+        if (FindObjectOfType<PauseController>().isPaused) 
+        {
+            return;
+        }
         // Dont show in dialogue
         if (SceneManager.GetActiveScene().name == "Tutorial" && GameObject.FindGameObjectWithTag("Tutorial"))
         {
