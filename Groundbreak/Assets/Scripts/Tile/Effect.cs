@@ -64,6 +64,7 @@ public class Effect : MonoBehaviour {
             case ((int)Element.Water + (int)Element.Earth): // Mud
                 effectName = "mud";
                 tileUnderEffect.setMovementModifier(tileUnderEffect.getMovementModifier() - ReactionManager.MUD_DEBUFF);
+                dealDamageToChar(tileUnderEffect.gameObjectAbove, ReactionManager.MUD_DMG);
                 myDuration = ReactionManager.MUD_DUR;
                 this.transform.localScale = new Vector2(2,3);
                 this.GetComponent<BoxCollider2D>().size = new Vector2(0.1f,0.1f);
@@ -74,6 +75,7 @@ public class Effect : MonoBehaviour {
                 effectName = "smoke";
                 myDuration = ReactionManager.SMOKE_DUR;
                 this.transform.localScale = new Vector2(5,5);
+                dealDamageToChar(tileUnderEffect.gameObjectAbove, ReactionManager.SMOKE_DMG);
                 this.GetComponent<BoxCollider2D>().size = new Vector2(0.1f,0.1f);
                 this.transform.position = this.transform.position + new Vector3(0,0.5f);
                 break;
@@ -126,6 +128,7 @@ public class Effect : MonoBehaviour {
                 case ((int)Element.Water + (int)Element.Earth): // Mud
                     // Don't think anything needs to be done if mud is entered, it's an effect that
                     // impacts the player BEFORE entering it and not while on it.
+                    dealDamageToChar(other.gameObject, ReactionManager.MUD_DMG);
                     if (other.gameObject.tag == "Player"){
                         PlayerMovement moveMng = other.gameObject.GetComponent<PlayerMovement>();
                         if (moveMng.currentMovementRemaining > 0){
@@ -142,6 +145,7 @@ public class Effect : MonoBehaviour {
                     }
                     break;
                 case ((int)Element.Water + (int)Element.Fire): // Smoke
+                    dealDamageToChar(other.gameObject, ReactionManager.SMOKE_DMG);
                     if (other.gameObject.tag == "Player"){
                         other.gameObject.GetComponent<PlayerActions>().throwRange -= ReactionManager.SMOKE_RANGE_PLAYER_MOD;
                     } else if (other.gameObject.tag == "Enemy"){
