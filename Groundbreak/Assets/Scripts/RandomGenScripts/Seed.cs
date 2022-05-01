@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class Seed : MonoBehaviour
 {
-    public string gameSeed = "Default";
-    public bool playerInput = false;
+    public static string gameSeed = "Default";
+    public static bool playerInput = false;
     public int currentSeed = 0;
 
 
