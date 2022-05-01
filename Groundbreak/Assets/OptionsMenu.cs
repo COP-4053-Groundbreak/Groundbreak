@@ -20,7 +20,6 @@ public class OptionsMenu : MonoBehaviour
         float currVol;
         audioMixer.GetFloat("MasterVolume", out currVol);
         currVol = Mathf.Pow(10, currVol / 20);
-        
 
         volumePercent.GetComponent<TextMeshProUGUI>().SetText((int)(currVol * 100) + "%");   
         volumePercent.transform.parent.Find("Volume Slider").GetComponent<Slider>().SetValueWithoutNotify(currVol);
@@ -32,6 +31,7 @@ public class OptionsMenu : MonoBehaviour
 
     public void setFullscreen(bool isFullscreen){
         Screen.fullScreen = isFullscreen;
+        Debug.Log("Set to " + isFullscreen);
     }
 
     public void BackToMenu(){
