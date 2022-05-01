@@ -125,7 +125,6 @@ public class SoundManagerScript : MonoBehaviour
         mudSound = Resources.Load<AudioClip>("mud"); 
         // getting the audioSource component.
         audioSrc = GetComponent<AudioSource> ();
-        audioSrc.volume = 0.1f;
     }
 
     // Update is called once per frame
