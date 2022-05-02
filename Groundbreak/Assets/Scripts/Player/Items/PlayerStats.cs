@@ -61,7 +61,11 @@ public class PlayerStats : MonoBehaviour
     {
         
         SoundManagerScript.PlaySound("playerdamage");
-        currentHealth = currentHealth - (damage - armor);
+        if (damage - armor >= 0) 
+        {
+            currentHealth = currentHealth - (damage - armor);
+        }
+        
         if (OnHealthChanged != null)
         {
             OnHealthChanged(this, EventArgs.Empty);
