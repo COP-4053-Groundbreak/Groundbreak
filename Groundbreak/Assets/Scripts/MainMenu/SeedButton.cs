@@ -28,6 +28,8 @@ public class SeedButton : MonoBehaviour
             Seed.gameSeed = input;
             Seed.playerInput = true;
 
+            Debug.LogWarning(Seed.gameSeed.GetHashCode() + " - Maybe");
+
             //Show Confirmation Message
             GameObject Error = SeedInputField.transform.parent.transform.parent.transform.parent.Find("ErrorMessage").gameObject;
             Error.SetActive(true);
