@@ -70,7 +70,7 @@ public class EnemyGeneration : MonoBehaviour
                     //Debug.Log("While Loop Test");
 
                 } while ((gridManager.grid[pointX, pointY].gameObjectAbove != null && 
-                                               (gridManager.grid[pointX, pointY].gameObjectAbove.CompareTag("Barrel") || gridManager.grid[pointX, pointY].gameObjectAbove.CompareTag("Enemy"))) ||
+                                               (gridManager.grid[pointX, pointY].gameObjectAbove.CompareTag("Chest") || gridManager.grid[pointX, pointY].gameObjectAbove.CompareTag("Barrel") || gridManager.grid[pointX, pointY].gameObjectAbove.CompareTag("Enemy"))) ||
                                                gridManager.grid[pointX, pointY].myElement == Element.Void);
 
 
