@@ -75,11 +75,11 @@ public class Effect : MonoBehaviour {
             case ((int)Element.Water + (int)Element.Fire): // Smoke 
                 effectName = "smoke";
                 myDuration = ReactionManager.SMOKE_DUR;
-                this.transform.localScale = new Vector2(5,5);
+                this.transform.localScale = new Vector2(2,2);
                 if (tileUnderEffect.gameObjectAbove != null)
                     dealDamageToChar(tileUnderEffect.gameObjectAbove, ReactionManager.SMOKE_DMG);
                 this.GetComponent<BoxCollider2D>().size = new Vector2(0.1f,0.1f);
-                this.transform.position = this.transform.position + new Vector3(0,0.5f);
+                this.transform.position = this.transform.position + new Vector3(0,0.1f);
                 break;
             case ((int)Element.Air + (int)Element.Fire): // Fireball 
                 effectName = "fireball";

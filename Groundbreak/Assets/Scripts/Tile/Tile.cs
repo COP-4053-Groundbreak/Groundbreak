@@ -115,6 +115,8 @@ public class Tile : MonoBehaviour {
         return movementModifier;
     }
     private void OnTriggerEnter2D(Collider2D other) {
+        if (other.tag == "Effect")
+            return;
         if (other.gameObject.tag == "Chest" || other.gameObject.tag == "Barrel")
             staticObjAbove = other.gameObject;
         if (other.gameObject.tag == "Enemy" || other.gameObject.tag == "Player" || other.gameObject.tag == "Chest" || other.gameObject.tag == "Barrel"){
@@ -130,6 +132,8 @@ public class Tile : MonoBehaviour {
         
     }
     private void OnTriggerExit2D(Collider2D other) {
+        if (other.name.Contains("fireball"))
+            return;
         //Debug.Log($"Exited {name}");
         // if (other.gameObject.tag == "Player") Debug.LogWarning("PlayerLeft!");
         if (other.gameObject.tag != "Effect"){
