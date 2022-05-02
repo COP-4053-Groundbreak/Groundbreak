@@ -7,7 +7,7 @@ public class ChestSpawner : MonoBehaviour
     [SerializeField] bool Spawned = false;
     [SerializeField] int RoomWidth;
     [SerializeField] int RoomHeight;
-    int ChestSpawn = 2;
+    int ChestSpawn = 10;
     [SerializeField] GameObject Chest;
     private Transform posChest;
     private GameObject currentChest;
@@ -20,7 +20,7 @@ public class ChestSpawner : MonoBehaviour
     void Start()
     {
         luck = Random.Range(0, ChestSpawn);
-        if(luck == 1)
+        if(luck >= 2)
         {
             Debug.Log("A chest should spawn in " + gameObject);
             if (Spawned == false)
