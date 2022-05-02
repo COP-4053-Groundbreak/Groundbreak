@@ -35,15 +35,15 @@ public class EnemyStateManager : MonoBehaviour
 
     // attacking
     public int attackCounter = 0;
-    int archerDamage = 10;
-    int swordDamage = 15;
-    int greenswordDamage = 20;
+    int archerDamage = 5;
+    int swordDamage = 10;
+    int greenswordDamage = 15;
     int greenMageDamage = 20;
     int mageDamage = 15;
     int bossDamage = 20;
-    int goblinDamage = 15;
+    int goblinDamage = 20;
     int treeDamage = 10;
-    int mushroomDamage = 10;
+    int mushroomDamage = 5;
     int trollDamage = 25;
 
     int retreatCounter = 0;
