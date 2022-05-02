@@ -14,7 +14,7 @@ public class TurnLogic : MonoBehaviour
     public bool isActivePhase = false;
     // Determines if combat is taking place
     public bool isCombatPhase = false;
-    float dummyTurnTime = 3f;
+    float dummyTurnTime = 3.5f;
     // Player movment and actions references
     PlayerMovement playerMovement;
     PlayerActions playerActions;

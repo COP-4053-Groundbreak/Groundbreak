@@ -65,7 +65,7 @@ public class GridManager : MonoBehaviour
                 //Debug.Log(child.name + " " + (int)(child.localPosition.x + child.parent.localPosition.x + child.parent.parent.localPosition.x + 5.5f ) + " , " + (int)(child.localPosition.y + child.parent.localPosition.y + child.parent.parent.localPosition.y + 5.5f ));
                 if (child.CompareTag("Tile")) 
                 {
-                    Debug.Log(child.name + " " + (int)(room.transform.InverseTransformPoint(child.transform.position).x + 5.5f) + " , " + (int)(room.transform.InverseTransformPoint(child.transform.position).y + 5.5f));
+                    //Debug.Log(child.name + " " + (int)(room.transform.InverseTransformPoint(child.transform.position).x + 5.5f) + " , " + (int)(room.transform.InverseTransformPoint(child.transform.position).y + 5.5f));
                     grid[(int)(room.transform.InverseTransformPoint(child.transform.position).x + 5.5f), (int)(room.transform.InverseTransformPoint(child.transform.position).y + 5.5f)] = child.GetComponent<Tile>();
                 }
 

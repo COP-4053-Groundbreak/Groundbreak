@@ -93,6 +93,13 @@ public class EnemyStateManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (SceneManager.GetActiveScene().name == "Tutorial") 
+        {
+            mageDamage = 10;
+            swordDamage = 5;
+        }
+
+
         if(gameObject.name.Contains("Zombie")){
             customRange = 3f;
         }

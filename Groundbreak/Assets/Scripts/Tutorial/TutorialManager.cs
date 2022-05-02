@@ -45,12 +45,12 @@ public class TutorialManager : MonoBehaviour
 
         dialogue.Add("Glove: Congrats on clearing the room! You may have noticed the chest on the top right of the room, walk over to it and open it!");
 
-        dialogue.Add("Glove: You now have one of each category of item!. Press [i] to see them! Passive items like speed boots give you passive bonuses. Active items like the bow can be used in combat on a cooldown. ");
+        dialogue.Add("Glove: You now have one of each category of item and a health potion!. Press [i] to see them! Passive items like speed boots give you passive bonuses. Active items like the bow can be used in combat on a cooldown. ");
         dialogue.Add("Consumable items like the health potion can be used for a one time effect, Though be careful, if you use a potion like the speed potion outside of combat, it will run out before you reach the next room! ");
 
         dialogue.Add("Glove: Egads! A Coven of wizards! To use your bow, click on the bow icon on the bottom of the screen and left click the wizard closest to you. Great, now defeat the rest of the skeletons and finish this!");
 
-        dialogue.Add("Glove:Good job getting this far, to get out of here you must go through two more floors. But with your skill im sure you will prevail!");
+        dialogue.Add("Glove:Good job getting this far, to get out of here you must go through two more floors, and the enemies ahead will do more damage than these ones did. But with your skill im sure you will prevail!");
 
         StartCoroutine(WaitAndStart());
         ChangeState(false);

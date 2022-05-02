@@ -56,6 +56,13 @@ public class PassiveItemManager : MonoBehaviour
         StartCoroutine(WaitAndAddActiveItem(chest, item));
     }
 
+    public void AddTutorial(GameObject chest)
+    {
+        holdPlayerStats.playerPassiveInventory.AddItem(PassiveItem.GetRandomPassiveItem(), playerStats);
+        FindObjectOfType<UIConsumableInventoryController>().uIInventory.consumableInventory.AddItem(ConsumableItem.GetRandomConsumableItem());
+        holdPlayerStats.playerActiveItem = new ActiveItem { itemName = ActiveItem.ActiveItemName.Bow};
+    }
+
     // Adding items
 
 

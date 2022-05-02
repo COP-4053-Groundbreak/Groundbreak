@@ -52,9 +52,7 @@ public class Chest : MonoBehaviour
 
         if (SceneManager.GetActiveScene().name == "Tutorial")
         {
-            passiveItemManager.AddRandomItem(this.gameObject);
-            passiveItemManager.AddRandomConsumableItem(this.gameObject);
-            passiveItemManager.AddRandomActiveItem(this.gameObject);
+            passiveItemManager.AddTutorial(this.gameObject);
             
         }
         else

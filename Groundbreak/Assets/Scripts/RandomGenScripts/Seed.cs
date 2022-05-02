@@ -15,7 +15,7 @@ public class Seed : MonoBehaviour
     public void Awake()
     {
         
-        Debug.LogWarning(gameSeed);
+        //Debug.LogWarning(gameSeed);
         //Debug.LogWarning(playerInput);
         const string chars = "ABCDEFGHIJKLMNOPRSTUVWXYZabcdefghijklmnopqrstupwxyz0123456789";
         if (!playerInput)
@@ -50,7 +50,7 @@ public class Seed : MonoBehaviour
             }
         }
         Debug.LogWarning(gameSeed);
-        Debug.LogError(num);
+        //Debug.LogError(num);
         Random.InitState(num); 
 
     }
