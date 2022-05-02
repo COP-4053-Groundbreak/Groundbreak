@@ -229,7 +229,10 @@ public class EnemyStateManager : MonoBehaviour
                 StartCoroutine(WaitAndSpawnLadder());
             Destroy(gameObject, (float)3);
             SwitchState(DeathState);
-            turnLogic.listOfInitative.Remove(this.initiative);
+            if (turnLogic.GetIsPlayerTurn()) 
+            {
+                turnLogic.listOfInitative.Remove(this.initiative);
+            }
             foreach (InitiativeText text in FindObjectsOfType<InitiativeText>()) 
             {
                 text.CheckAlive(gameObject.GetInstanceID());

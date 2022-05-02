@@ -47,7 +47,7 @@ public class PlayerStats : MonoBehaviour
                 waterMod = startingWater;
                 earthMod = startingEarth;
                 airMod = startingAir;*/
-        //ModifyAirMod(999);
+        ModifyFireMod(999);
         // Create healthbar
         Transform healthBarTransform = Instantiate(playerHealthBar.transform, gameObject.transform);
         Vector3 healthBarLocalPosition = new Vector3(0, (float)1);

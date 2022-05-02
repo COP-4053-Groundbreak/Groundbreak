@@ -12,6 +12,6 @@ public static class LevelManager
 
     public static void LoadWin() 
     {
-        SceneManager.LoadScene("Menu");
+        SceneManager.LoadScene("Win");
     }
 }

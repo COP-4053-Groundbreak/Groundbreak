@@ -52,7 +52,7 @@ public class PlayerStatsUIManager : MonoBehaviour
     {
         healthText.GetComponent<TextMeshProUGUI>().text = playerStats.GetHealth().ToString() + "/" + playerStats.GetMaxHealth().ToString();
         armorText.GetComponent<TextMeshProUGUI>().text = playerStats.GetArmor().ToString();
-        speedText.GetComponent<TextMeshProUGUI>().text = playerStats.GetMovementPerTurn().ToString();
+        speedText.GetComponent<TextMeshProUGUI>().text = (playerStats.GetMovementPerTurn() / 10).ToString();
         initiativeText.GetComponent<TextMeshProUGUI>().text = playerStats.GetInitiative().ToString();
 
         fireText.GetComponent<TextMeshProUGUI>().text = (playerStats.GetFireMod() * 100).ToString() + "%";

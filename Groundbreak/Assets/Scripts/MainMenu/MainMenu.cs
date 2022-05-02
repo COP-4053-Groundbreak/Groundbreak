@@ -27,4 +27,9 @@ public class MainMenu : MonoBehaviour
         this.gameObject.SetActive(false);
     }
 
+    public void LoadMenu() 
+    {
+        SceneManager.LoadScene("Menu");
+    }
+
 }

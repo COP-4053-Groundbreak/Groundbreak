@@ -387,6 +387,10 @@ public class PlayerMovement : MonoBehaviour
     // Destroy all the arrows
     public void ClearLine() 
     {
+        if (pathHolder == null) 
+        {
+            return;
+        }
         foreach (Transform child in pathHolder.transform) 
         {
             Destroy(child.gameObject);
