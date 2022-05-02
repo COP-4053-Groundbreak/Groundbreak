@@ -209,6 +209,7 @@ public class EnemyStateManager : MonoBehaviour
         }
         else 
         {
+            ReactionManager.gridManager.grid[enemyX, enemyY].setElement(Element.Base);
             Instantiate(Resources.Load("Ladder"), transform.position, transform.rotation);
         }
         

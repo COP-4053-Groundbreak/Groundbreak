@@ -14,5 +14,11 @@ public class FindNewGridManager : MonoBehaviour
             OnGridChanged(this, EventArgs.Empty);
             text.GetComponent<DisplayInitiative>().ResetRepeat();
         }
+
+        EnemyStateManager[] enemies = FindObjectsOfType<EnemyStateManager>();
+        foreach (EnemyStateManager enemy in enemies) 
+        {
+            ReactionManager.gridManager.grid[enemy.enemyX, enemy.enemyY].gameObjectAbove = enemy.gameObject;
+        }
     }
 }
