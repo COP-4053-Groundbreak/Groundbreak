@@ -25,6 +25,7 @@ public class GridManager : MonoBehaviour
 
     // Start is called before the first frame update
     void Awake(){
+        
         grid = new Tile[10, 10];
 
         test1 = GameObject.FindGameObjectsWithTag("TileSpawnPoint");

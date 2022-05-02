@@ -24,7 +24,8 @@ public class SeedButton : MonoBehaviour
 
         if(input != null || input != "")
         {
-            Debug.Log(input + "Was Confirmed as the seed!");
+            Debug.LogError(input + "Was Confirmed as the seed!");
+
             Seed.gameSeed = input;
             Seed.playerInput = true;
 

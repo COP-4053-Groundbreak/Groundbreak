@@ -108,7 +108,7 @@ public class EnemyGeneration : MonoBehaviour
 
     public void SpawnRanged()
     {
-        Debug.LogWarning("Ranged Spawned");
+        //Debug.LogWarning("Ranged Spawned");
 
         Vector3 localPos;
         int pointX;
