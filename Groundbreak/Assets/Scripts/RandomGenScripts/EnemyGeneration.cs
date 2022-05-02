@@ -145,7 +145,7 @@ public class EnemyGeneration : MonoBehaviour
         //Make the enemy
         //Debug.LogWarning(gridManager.grid + " " + pointX + " " + pointY);
         currentEnemy = Instantiate(templates.enemiesRanged[rand], gridManager.grid[pointX, pointY].transform.position, templates.enemiesFloorOne[rand].transform.rotation, gameObject.transform);
-        Debug.LogError("Setting at " + pointX + " " + pointY);
+        //Debug.LogError("Setting at " + pointX + " " + pointY);
         gridManager.grid[pointX, pointY].gameObjectAbove = currentEnemy;
         currentEnemy.SetActive(false);
     }
