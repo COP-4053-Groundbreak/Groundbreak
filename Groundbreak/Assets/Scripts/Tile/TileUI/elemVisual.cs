@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class elemVisual : MonoBehaviour
-{
+public class elemVisual : MonoBehaviour{
     // Elements stored in alphabetical ordered, accessible by bitshifting
     [SerializeField] Sprite[] elementSymbols;
     // Index in array of corresponding visual

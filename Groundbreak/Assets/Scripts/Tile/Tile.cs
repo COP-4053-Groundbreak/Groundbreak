@@ -104,10 +104,8 @@ public class Tile : MonoBehaviour {
         this.transform.GetChild(0).GetComponent<Renderer>().material.SetColor("_Color", newColor);
         // Debug.Log("HI MY COLOR IS " + transform.GetChild(0).GetComponent<Renderer>().material.color);
         // Set Tile Element symbol to new element
-        if (transform.childCount > 3){
-            //Debug.Log("I am with child");
-            transform.Find("elemVisual(Clone)").GetComponent<elemVisual>().setSymbol();
-        }
+        //Debug.Log("I am with child");
+        transform.Find("elemVisual(Clone)").GetComponent<elemVisual>().setSymbol();
     }
 
     public void setMovementModifier(int a){
