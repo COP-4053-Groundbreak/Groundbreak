@@ -132,7 +132,7 @@ public class Tile : MonoBehaviour {
         
     }
     private void OnTriggerExit2D(Collider2D other) {
-        if (other.name.Contains("fireball"))
+        if (other.tag == "Effect")
             return;
         //Debug.Log($"Exited {name}");
         // if (other.gameObject.tag == "Player") Debug.LogWarning("PlayerLeft!");
