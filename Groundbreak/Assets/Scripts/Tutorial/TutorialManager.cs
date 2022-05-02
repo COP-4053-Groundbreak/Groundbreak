@@ -96,6 +96,7 @@ public class TutorialManager : MonoBehaviour
         // End tutorial
         if (index >= 26) 
         {
+            FindObjectOfType<ToolTipController>().holdPlayerInformation.playerActiveItem = null;
             SceneManager.LoadScene("Menu");
         }
         // Dialogue finished, wait for trigger

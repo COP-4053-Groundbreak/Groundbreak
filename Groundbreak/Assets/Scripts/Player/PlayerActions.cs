@@ -44,7 +44,7 @@ public class PlayerActions : MonoBehaviour
         {
             if (SceneManager.GetActiveScene().name == "Tutorial")
             {
-                Debug.LogError(FindObjectOfType<TutorialManager>().GetIndex());
+                //Debug.LogError(FindObjectOfType<TutorialManager>().GetIndex());
                 if (FindObjectOfType<TutorialManager>().GetIndex() < 16)
                 {
                     return;
