@@ -36,8 +36,10 @@ public class PlayerDetector : MonoBehaviour
                     child.gameObject.SetActive(true);
                 }
             }
+            FindObjectOfType<CameraPan>().SetZoom(5f);
             FindObjectOfType<FindNewGridManager>().ChangedRoom();
             PlayerRoom.currentRoom = currentRoom;
+
         }
     }
 
