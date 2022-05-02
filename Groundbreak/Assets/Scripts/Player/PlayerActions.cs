@@ -8,6 +8,7 @@ public class PlayerActions : MonoBehaviour
 {
     public bool canPickUpTile = true;
     public bool canUseActive = true;
+    public bool canThrowTile = true;
     [SerializeField] int pickupRange = 1;
     [SerializeField] public int throwRange = 1;
     [SerializeField] public Element heldTileElement;
@@ -104,8 +105,9 @@ public class PlayerActions : MonoBehaviour
         if (tile == null) Debug.Log("Lol!");
         if (turnLogic == null) Debug.Log("LAWL!");
         if (tile.GetComponent<TileClickable>() == null) Debug.Log("LOL!");
-        if (turnLogic.GetIsPlayerTurn() && heldTileElement != Element.Void && tile.GetComponent<TileClickable>().GetDistance() <= throwRange) 
+        if (turnLogic.GetIsPlayerTurn() && heldTileElement != Element.Void && tile.GetComponent<TileClickable>().GetDistance() <= throwRange && canThrowTile) 
         {
+            canThrowTile = false;
             playerAnimator.SetTrigger("Throw");
             SoundManagerScript.PlaySound("throwtile");
             Debug.Log($"Actually threw a {tile.GetComponent<Tile>().myElement}");
@@ -213,6 +215,7 @@ public class PlayerActions : MonoBehaviour
     public void ResetActions() 
     {
         canPickUpTile = true;
+        canThrowTile = true;
     }
 
     IEnumerator Duration(int duration, int startTurn)
