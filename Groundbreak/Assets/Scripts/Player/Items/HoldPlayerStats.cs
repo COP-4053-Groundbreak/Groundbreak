@@ -40,6 +40,7 @@ public class HoldPlayerStats : ScriptableObject
         get { return PlayerActiveItem; }
         set { PlayerActiveItem = value; }
     }
+
     private void OnDestroy()
     {
 /*        level1consumable = PlayerConsumableInventory;

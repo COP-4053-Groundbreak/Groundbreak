@@ -17,6 +17,13 @@ public class PassiveItemManager : MonoBehaviour
         {
             //Debug.LogError("HERE");
             holdPlayerStats.Plz();
+
+            foreach (PassiveItem item in holdPlayerStats.playerPassiveInventory.GetItemList())
+            {
+                //Debug.LogError(item);
+                item.EquipPassiveItem(FindObjectOfType<PlayerStats>());
+            }
+
         }
     }
 
