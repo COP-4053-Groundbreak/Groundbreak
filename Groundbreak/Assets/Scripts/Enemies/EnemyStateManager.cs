@@ -416,10 +416,6 @@ public class EnemyStateManager : MonoBehaviour
                                     if(finalDestinationTile.getElement() == Element.Void){
                                         continue;
                                     }
-                                    Vector2 tilePosition2 = new Vector2(finalDestinationTile.gameObject.GetComponent<TilePathNode>().GetX(), finalDestinationTile.gameObject.GetComponent<TilePathNode>().GetY());
-                                    if(Vector2.Distance(tilePosition2, enemyPos) != 2){
-                                        continue;
-                                    }
                                     Vector2 finalDestPosition = new Vector2(finalDestinationTile.gameObject.GetComponent<TilePathNode>().GetX(), finalDestinationTile.gameObject.GetComponent<TilePathNode>().GetY());
                                     if(Vector2.Distance(finalDestPosition, playerPos) > Vector2.Distance(tilePosition, playerPos) && finalDestinationTile.getElement() != Element.Void){
                                         MoveEnemy(finalDestPosition.x, finalDestPosition.y);
