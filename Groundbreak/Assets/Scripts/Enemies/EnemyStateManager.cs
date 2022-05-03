@@ -93,6 +93,13 @@ public class EnemyStateManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (!currRoom)
+        {
+            currRoom = FindObjectOfType<GridManager>().gameObject.transform.parent.gameObject;
+        }
+        localPos = currRoom.transform.InverseTransformPoint(transform.position);
+        enemyX = (int)(localPos.x + 5.5f);
+        enemyY = (int)(localPos.y + 5.5f);
         if (SceneManager.GetActiveScene().name == "Tutorial") 
         {
             mageDamage = 10;
