@@ -13,7 +13,11 @@ public class PassiveItemManager : MonoBehaviour
     private void Start()
     {
         playerStats = FindObjectOfType<PlayerStats>();
-        
+        if (SceneManager.GetActiveScene().name == "Level2") 
+        {
+            //Debug.LogError("HERE");
+            holdPlayerStats.Plz();
+        }
     }
 
     public void AddRandomItem(GameObject chest)
@@ -124,6 +128,7 @@ public class PassiveItemManager : MonoBehaviour
     public void Accept() 
     {
         accepted = true;
+        holdPlayerStats.SaveItems();
     }
     public void Reject()
     {
