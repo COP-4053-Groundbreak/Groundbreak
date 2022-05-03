@@ -731,6 +731,11 @@ public class EnemyStateManager : MonoBehaviour
             SoundManagerScript.EndSound("trollWalk");
         }
 
+        if (healthSystem.GetHealth() <= 0) 
+        {
+            return;
+        }
+
         // get enemy pos now relitive -N
         Vector2 enemyPos = new Vector2(enemyX, enemyY);
         // Debug.Log("Eenemy pos " + enemyPos);
