@@ -20,7 +20,7 @@ public class ChestSpawner : MonoBehaviour
     void Start()
     {
         luck = Random.Range(0, ChestSpawn);
-        if(luck >= 2)
+        if(luck >= 1)
         {
             Debug.Log("A chest should spawn in " + gameObject);
             if (Spawned == false)

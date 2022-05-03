@@ -90,6 +90,12 @@ public class PassiveItemManager : MonoBehaviour
         rejected = false;
         yield return new WaitUntil(() => accepted);
         FindObjectOfType<UIConsumableInventoryController>().uIInventory.consumableInventory.AddItem(item);
+        int rand = Random.Range(0, 9);
+        //Debug.LogError(rand);
+        if (rand > 5) 
+        {
+            FindObjectOfType<UIConsumableInventoryController>().uIInventory.consumableInventory.AddItem(item);
+        }
         chest.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = null;
         chest.transform.GetChild(1).GetComponent<TextMeshPro>().text = "";
         chest.transform.GetChild(2).gameObject.SetActive(false);

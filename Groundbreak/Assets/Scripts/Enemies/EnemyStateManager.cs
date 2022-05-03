@@ -140,7 +140,7 @@ public class EnemyStateManager : MonoBehaviour
             enemyMovementRemaining = 4;
         }
         else if(gameObject.name.Contains("Warrior")){
-            enemyMovementRemaining = 3;
+            enemyMovementRemaining = 2;
         }
         else if(gameObject.name.Contains("Troll")){
             enemyMovementRemaining = 2;
@@ -480,7 +480,7 @@ public class EnemyStateManager : MonoBehaviour
                     enemyMovementRemaining = 4;
                 }
                 else if(gameObject.name.Contains("Warrior")){
-                    enemyMovementRemaining = 3;
+                    enemyMovementRemaining = 2;
                 }
                 else if(gameObject.name.Contains("Troll")){
                     enemyMovementRemaining = 2;

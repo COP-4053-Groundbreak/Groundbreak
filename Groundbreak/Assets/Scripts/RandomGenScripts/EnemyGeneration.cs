@@ -39,9 +39,9 @@ public class EnemyGeneration : MonoBehaviour
 
         if (spawned == false)
         {
-            numOfEnemies = Random.Range(MinNumOfPossibleEnemies, numOfPossibleEnemies+1);
+            numOfEnemies = Random.Range(MinNumOfPossibleEnemies+1, numOfPossibleEnemies+1);
 
-            SpawnRanged();
+            //SpawnRanged();
 
             for(int i=0; i<numOfEnemies-1; i++)
             {
