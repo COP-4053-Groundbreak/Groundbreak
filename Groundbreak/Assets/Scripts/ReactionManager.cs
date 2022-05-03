@@ -29,7 +29,7 @@ public class ReactionManager : MonoBehaviour
     [SerializeField] public static int STORM_DUR = 2;
     
     // FIREBALL VARIABLES:
-    [SerializeField] public static int FIREBALL_DMG = 10;
+    [SerializeField] public static int FIREBALL_DMG = 15;
     [SerializeField] public static int FIREBALL_RANGE = 1;
     [SerializeField] public static int FIREBALL_DUR = 0;
 
@@ -465,9 +465,21 @@ public class ReactionManager : MonoBehaviour
             dealDamageToChar(char2, ReactionManager.CRASH_DMG);
     }
 
-
+    GameObject currRoom;
+    Vector2 localPos;
     private void GridChanged(object sender, System.EventArgs e)
     {
         gridManager = FindObjectOfType<GridManager>();
+        EnemyStateManager[] enemies = FindObjectsOfType<EnemyStateManager>();
+        foreach (EnemyStateManager enemy in enemies)
+        {
+            currRoom = FindObjectOfType<GridManager>().gameObject.transform.parent.gameObject;
+            localPos = currRoom.transform.InverseTransformPoint(enemy.transform.position);
+            enemy.enemyX = (int)(localPos.x + 5.5f);
+            enemy.enemyY = (int)(localPos.y + 5.5f);
+            //Debug.LogError(gridManager.transform.parent.name);
+            //Debug.LogError("Setting at " + enemy.enemyX + " " + enemy.enemyY);
+            gridManager.grid[enemy.enemyX, enemy.enemyY].gameObjectAbove = enemy.gameObject;
+        }
     }
 }
