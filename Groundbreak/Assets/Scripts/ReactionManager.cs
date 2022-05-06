@@ -264,14 +264,16 @@ public class ReactionManager : MonoBehaviour
         }
         existingEffects = new List<Effect>();
     }
-    public static void reduceDuration(Effect eff){
+    public static bool reduceDuration(Effect eff){
         eff.myDuration--;
         // Debug.Log("Reducing duration to " + eff.myDuration);
         if (eff.myDuration <= 0){
-            //Debug.Log("DEEEESTRUCTIOOOOOON");
+            //Debug.LogError("DEEEESTRUCTIOOOOOON");
             existingEffects.Remove(eff);
             Destroy(eff.gameObject);
+            return true;
         }
+        return false;
     }
 
     private static void dealDamageToChar(GameObject character, int damageAmount){

@@ -51,6 +51,7 @@ public class DisplayInitiative : MonoBehaviour
             }
         }
 
+        //Debug.LogError(index + " " + list.Count());
         // Remove player and sort
         list.RemoveAt(index);
         list = list.OrderBy(d => d.GetComponent<EnemyStateManager>().initiative).ToList();
@@ -133,7 +134,7 @@ public class DisplayInitiative : MonoBehaviour
         {
             numRepeated = 0;
         }
-
+        //Debug.LogError((numRepeated) + " "+  transform.childCount);
         while (!transform.GetChild(numRepeated).GetComponent<InitiativeText>().isAlive) 
         {
             
@@ -155,6 +156,7 @@ public class DisplayInitiative : MonoBehaviour
             transform.GetChild(numRepeated).GetComponent<TextMeshProUGUI>().color = Color.red;
         }
         numRepeated++;
+        //Debug.LogError(numRepeated);
     }
 
 
