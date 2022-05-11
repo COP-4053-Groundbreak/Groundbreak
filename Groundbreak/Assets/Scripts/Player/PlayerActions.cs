@@ -14,7 +14,7 @@ public class PlayerActions : MonoBehaviour
     [SerializeField] public Element heldTileElement;
     GameObject[] enemyList;
     TurnLogic turnLogic;
-    [SerializeField] HoldPlayerStats playerStats;
+    public HoldPlayerStats playerStats;
     Animator playerAnimator;
     [SerializeField] GameObject teleportEff;
     private void Start()

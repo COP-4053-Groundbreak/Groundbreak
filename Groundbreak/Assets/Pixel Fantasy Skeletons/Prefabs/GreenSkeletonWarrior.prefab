@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2275167269694572739}
   - component: {fileID: 6334185500780002530}
   - component: {fileID: 1790735939}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: GreenSkeletonWarrior
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -146,12 +146,6 @@ MonoBehaviour:
   slidingPath: []
   isSliding: 0
   attackCounter: 0
-  archerDamage: 5
-  swordDamage: 10
-  mageDamage: 15
-  bossDamage: 20
-  goblinDamage: 10
-  treeDamage: 10
   listOfTiles: []
   startHealth: 40
   pfHealthBar: {fileID: 8601539936103537149, guid: 9c241cd300c70dd42bfc6fd13cca7c4b, type: 3}
@@ -160,6 +154,7 @@ MonoBehaviour:
   enemyMovementRemaining: 0
   initiative: 2
   visibilityRange: 1
+  customRange: 0
   myElement: 8
   width: 0
   height: 0
@@ -183,7 +178,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.2, y: 1.2}
+    oldSize: {x: 1.2, y: 1.22}
     newSize: {x: 1.68, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

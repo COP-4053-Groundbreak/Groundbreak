@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4391582383231909071}
   - component: {fileID: 1521670366984945095}
   - component: {fileID: 311998790}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: SkeletonWizard
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -146,12 +146,6 @@ MonoBehaviour:
   slidingPath: []
   isSliding: 0
   attackCounter: 0
-  archerDamage: 5
-  swordDamage: 10
-  mageDamage: 15
-  bossDamage: 20
-  goblinDamage: 10
-  treeDamage: 10
   listOfTiles: []
   startHealth: 30
   pfHealthBar: {fileID: 8601539936103537149, guid: 9c241cd300c70dd42bfc6fd13cca7c4b, type: 3}
@@ -160,6 +154,7 @@ MonoBehaviour:
   enemyMovementRemaining: 0
   initiative: 6
   visibilityRange: 2
+  customRange: 0
   myElement: 1
   width: 0
   height: 0

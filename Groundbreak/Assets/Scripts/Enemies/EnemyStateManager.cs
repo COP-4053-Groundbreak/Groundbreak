@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
-public class EnemyStateManager : MonoBehaviour
+public class EnemyStateManager : MonoBehaviour, IPointerDownHandler
 {
     bool isPlayingFootstep = false;
     // zombie health at start of player round
@@ -212,6 +213,7 @@ public class EnemyStateManager : MonoBehaviour
 
         if (gameObject.name.Contains("Troll"))
         {
+            FindObjectOfType<PlayerActions>().playerStats.playerActiveItem = null;
             LevelManager.LoadWin();
         }
         else 
@@ -806,5 +808,8 @@ public class EnemyStateManager : MonoBehaviour
             }
         }
     }
-
+    void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
+    {
+        FindObjectOfType<GridManager>().grid[enemyX, enemyY].gameObject.GetComponent<TileClickable>().PointerDownLogic(eventData);
+    }
 }

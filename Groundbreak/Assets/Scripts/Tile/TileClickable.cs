@@ -20,12 +20,23 @@ public class TileClickable : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     // Unity event handler only triggers when a click raycast hits the tile.
     void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
     {
+        PointerDownLogic(eventData);
+    }
+
+    public void PointerDownLogic(PointerEventData eventData)
+    {
         // Dont do anything not on player turn
-        if (!turnLogic.GetIsPlayerTurn()) 
+        if (!turnLogic.GetIsPlayerTurn())
         {
             return;
         }
-        GameObject ThisTile = eventData.pointerCurrentRaycast.gameObject;
+        GameObject ThisTile = eventData.pointerPressRaycast.gameObject;
+        if (ThisTile.GetComponent<EnemyStateManager>()) 
+        {
+            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), -Vector2.up);
+            ThisTile = hit.rigidbody.gameObject;
+        }
+        Debug.LogError(ThisTile.name);
         if (turnLogic.isMovementPhase && turnLogic.isCombatPhase)
         {
             // Left click
@@ -55,7 +66,7 @@ public class TileClickable : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
 
             }
         }
-        else if (turnLogic.isActivePhase) 
+        else if (turnLogic.isActivePhase)
         {
             // Left click
             if (eventData.button == 0)
@@ -177,6 +188,10 @@ public class TileClickable : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     // Clear line when mouse leaves the tile
     void IPointerExitHandler.OnPointerExit(PointerEventData eventData) 
     {
+        if (eventData?.pointerCurrentRaycast.gameObject?.GetComponent<EnemyStateManager>()) 
+        {
+            return;
+        }
         if (Player.GetComponent<PlayerMovement>() != null)
         {
             Player.GetComponent<PlayerMovement>().ClearLine();
