@@ -36,7 +36,7 @@ public class TileClickable : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
             RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), -Vector2.up);
             ThisTile = hit.rigidbody.gameObject;
         }
-        Debug.LogError(ThisTile.name);
+        //Debug.LogError(ThisTile.name);
         if (turnLogic.isMovementPhase && turnLogic.isCombatPhase)
         {
             // Left click

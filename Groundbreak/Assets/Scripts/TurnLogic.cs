@@ -445,7 +445,7 @@ public class TurnLogic : MonoBehaviour
         Collider2D[] results = Physics2D.OverlapCircleAll(new Vector2(x,y), playerActions.throwRange);
 
         foreach (Collider2D col in results){
-            Debug.Log(col.gameObject.name);
+            //Debug.Log(col.gameObject.name);
             if (col.tag == "Tile" && playerActions.throwRange >= col.gameObject.GetComponent<TileClickable>().GetDistance()){
                 col.transform.GetChild(1).GetComponent<Renderer>().material.color = Color.white;
                 // Debug.Log("This should be white");

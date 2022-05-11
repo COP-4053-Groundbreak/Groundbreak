@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1482483640718570280}
   - component: {fileID: 1482483640718570281}
   - component: {fileID: 6098100243554920513}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Goblin
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -178,7 +178,7 @@ MonoBehaviour:
   elementSymbol: {fileID: 8201707521368900702, guid: add1c9e90abdf104f80ac5dc8925fb00, type: 3}
   alive: 1
   enemyMovementRemaining: 0
-  initiative: 6
+  initiative: 7
   visibilityRange: 2
   customRange: 0
   myElement: 8
